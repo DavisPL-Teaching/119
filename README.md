@@ -39,7 +39,11 @@ git reset --hard origin/main
 There is no required textbook.
 The following textbooks are optional:
 
-- TBD
+- [**Python for Data Analysis.**](https://wesmckinney.com/pages/book.html) Wes McKinney. O'Reilly Media (2012).
+
+- [**Spark: The Definitive Guide : Big Data Processing Made Simple.**](https://www.oreilly.com/library/view/spark-the-definitive/9781491912201/) Bill Chambers and Matei Zaharia. O'Reilly Media (2018).
+
+- [**Big Data: Concepts, Technology, and Architecture.**](https://www.wiley.com/en-us/Big+Data%3A+Concepts%2C+Technology%2C+and+Architecture-p-9781119701828) Nandhini Abirami R, Seifedine Kadry, Amir H. Gandomi, and Balamurugan Balusamy. Wiley; 1st edition (2021).
 
 ## Course Description
 
@@ -58,7 +62,15 @@ I believe it is also open to computer science majors.
 
 By the end of the course, students will be able to:
 
-TBD
+- Understand and use Python for medium-scale data analysis problems
+
+- Understand the concepts of distributed computing and distributed data processing, including using tools like Spark, Hadoop, and MapReduce
+
+- Understand how software engineering tools and configuration are integrated into a data project, via tools like Git and the shell and other orchestration
+
+- Understand the concepts of distributed programming and interacting with database systems
+
+- Understand the basics advanced topics including programming over real-time and streaming data sources and using cloud platforms such as AWS, Azure, and Google Cloud.
 
 ## Course Topics
 
@@ -94,11 +106,10 @@ See `schedule.md`.
 
 ## Evaluation Criteria
 
-TBD: Update
-
-- **Homeworks (55%):** 5 assignments (due bi-weekly), plus homework 0
+- **Homeworks (40%):** 5 assignments (due bi-weekly), plus homework 0
 - **Participation (10%):** via in-class quizzes
-- **Final Exam (35%):** covering all topics covered in the course.
+- **Midterm (20%):** covering the first half and main concepts of the course
+- **Final Exam (30%):** covering all topics covered in the course.
 
 ## Grade Breakdown
 
