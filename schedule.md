@@ -54,7 +54,7 @@ I will try to keep it up to date, but please see Piazza for the latest informati
 
 ## Notes
 
-[^1] Possible advanced topics (depending on time):
+[^1]: Possible advanced topics (depending on time):
 streaming and real-time processing;
 distributed programming and distributed consistency requirements;
 cloud computing platforms, services, and resources.
