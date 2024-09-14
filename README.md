@@ -2,7 +2,9 @@
 
 [CS department link](https://cs.ucdavis.edu/schedules-classes/ecs-119-data-processing-pipelines)
 
-## Course Information
+## Welcome and Course Information
+
+Welcome! I am super excited to have you all here.
 
 - **Instructor:** Caleb Stanford
 - **TA:** Muhammad Hassnain
@@ -22,23 +24,17 @@ Clone the repo:
 git clone git@github.com:DavisPL-Teaching/119.git
 ```
 
-If you have local changes, but haven't committed them, you can stash and then pull
+If you make changes to the code after each lecture, you will need to discard them before pulling again.
+For example, you can run:
 ```shell
 git stash
 git pull
 ```
 
-Altneratively, if you want to save your work, you can back up your local changes and pull the latest version:
-```shell
-git fetch --all
-git branch backup-changes
-git reset --hard origin/main
-```
-
 ## Textbook
 
-There is no required textbook.
-The following textbooks are optional:
+There is no required textbook,
+but the following textbooks are optional:
 
 - [**Python for Data Analysis.**](https://wesmckinney.com/pages/book.html) Wes McKinney. O'Reilly Media (2012).
 
