@@ -18,7 +18,7 @@ I will try to keep it up to date, but please see Piazza for the latest informati
 |   | Oct 11 | Data Transformations |  | 3 |
 | 3 | Oct 14 |  |  | 3 |
 |   | Oct 16 | Outputs |  | 3 |
-|   | Oct 18 | Outputs |  | 3 |
+|   | Oct 18 | Outputs | HW1 due | 3 |
 | 4 | Oct 21 | Overflow |  |  |
 |   | Oct 23 | Section 1 Review |  |  |
 |   | Oct 25 | **Midterm** |  |  |
@@ -32,7 +32,7 @@ I will try to keep it up to date, but please see Piazza for the latest informati
 |   | Nov 1  |  |  | 4 |
 | 6 | Nov 4  | Parallelism Tools (MapReduce, Spark, Hadoop) |  | 5 |
 |   | Nov 6  |  |  | 5 |
-|   | Nov 8  |  |  | 5 |
+|   | Nov 8  |  | HW2 due | 5 |
 | 7 | Nov 11 | **No Class** (Veterans Day) |  |  |
 |   | Nov 13 | Advanced Programming in Spark |  | 6 |
 |   | Nov 15 |  |  | 6 |
@@ -45,7 +45,7 @@ I will try to keep it up to date, but please see Piazza for the latest informati
 |   | Nov 20 |  |  | 7 |
 |   | Nov 22 |  |  | 7 |
 | 9 | Nov 25 | Distributed Consistency[^1] |  | 8 |
-|   | Nov 27 |  |  | 8 |
+|   | Nov 27 |  | HW3 (final project) due | 8 |
 |   | Nov 29 | **No Class** (Thanksgiving) |
 | 10 | Dec 2 | Cloud Computing[^1] |  | 9 |
 |    | Dec 4 |  |  | 9 |
