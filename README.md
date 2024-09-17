@@ -1,7 +1,5 @@
 # ECS 119: Data Processing Pipelines - Fall Quarter 2024
 
-[CS department link](https://cs.ucdavis.edu/schedules-classes/ecs-119-data-processing-pipelines)
-
 ## Welcome and Course Information
 
 Welcome! I am super excited to have you all here.
@@ -13,6 +11,7 @@ Welcome! I am super excited to have you all here.
 - **Lectures:** Monday, Wednesday, Friday 3:10-4pm in Teaching and Learning Complex 3215
 - **Discussion section:** Mondays at 9am in Olson Hall 206.
 - **Final exam:** Wednesday, December 11, 6-8pm.
+- [CS department link](https://cs.ucdavis.edu/schedules-classes/ecs-119-data-processing-pipelines)
 
 ## Lectures
 
@@ -73,14 +72,14 @@ By the end of the course, students will be able to:
 
 - Understand advanced topics including programming over real-time and streaming data sources and using cloud platforms such as AWS, Azure, and Google Cloud.
 
-## Course Topics
+## Course Outline
 
-Summary of course contents include the following:
+Here is a rough course outline of what topics we will cover in more detail:
 
 1. Basics of big data processing
 - Sources of big data: databases, real-time data
 - Scripting in Python
-- Other tools: shell, shell scripting
+- Other tools: shell, shell scripting (time permitting)
 2. Software development tools
 - Debugging and IDE
 - Version control, eg. Git
@@ -120,8 +119,8 @@ See `schedule.md`.
 ## Evaluation Criteria
 
 - **Participation (10%):** via in-class quizzes
-- **Homeworks (40%):** 3 assignments, each assignment including a project component, plus homework 0
-- **Midterm (20%):** covering the first half and main concepts of the course
+- **Homeworks (45%):** 3 assignments, each assignment including a project component, plus homework 0
+- **Midterm (15%):** covering the first half and main concepts of the course
 - **Final Exam (30%):** covering all topics covered in the course.
 
 ## Grade Breakdown
@@ -145,18 +144,18 @@ This will be used to correct for the case that the assignments, midterm, and/or 
 
 ## Homeworks
 
-Homeworks will consist of programming assignments designed to bring together concepts we learned in class
+Homeworks will consist of programming assignments in Python designed to bring together concepts we learned in class
 and to give you practice using all of the tools we cover.
-
 There are 3 homeworks, plus homework 0, which is designed to help you install the relevant software for the course.
+
 Each homework will have a project component. That means that as part of homeworks 1, 2, and 3, you will put
 together progress towards data collection, data analysis, and a working pipeline for a project of your choice.
-I will provide detailed instructions in class and with each homework.
+I will provide detailed instructions in class and together with each homework when it is released.
 
 ## Homework Grading
 
 **Most important:** Your code must run to get credit!
-Frequently running and testing your code is an essential part of computer programming that can never be skipped.
+Frequently running and testing your code during development is an essential part of computer programming that can never be skipped.
 You must run Python on your code before each submission to ensure that it works.
 The graders do not have time to debug submissions, and code that does not run will generally receive either a 0 or at most 10% of partial credit.
 
@@ -175,7 +174,7 @@ Exams are closed-book, but you may bring a cheat sheet (single sided) to each ex
 
 **The exams may be lightly curved:**
 That means, for example, if 100 points are possible, it may be entered as out of a smaller number of points like 95 or 85 for the purposes of calculating your grade, if the average score of the class was low or if there were unexpectedly difficult questions.
-However, I cannot announce the curving strategy ahead of time.
+However, I will not announce the curving strategy ahead of time.
 
 ## GitHub Classroom and Gradescope
 
@@ -205,8 +204,7 @@ Zoom recordings will be made available on Canvas.
 
 AI collaboration is allowed and encouraged for homework assignments.
 However, the midterm and final exam will be in-class and closed-book.
-I caution that becoming too dependent on AI can prevent you from learning on your own including
-developing your own critical thinking skills, which may impact your exam scores.
+I caution that becoming too dependent on AI can prevent you from learning on your own including developing your own critical thinking skills.
 Please see also [Prof. Jason Lowe-Power's advice here](https://jlpteaching.github.io/comparch/syllabus/#using-generative-ai-tools).
 
 ## Collaboration Policy and Academic Integrity
