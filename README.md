@@ -1,8 +1,31 @@
 # ECS 119: Data Processing Pipelines - Fall Quarter 2024
 
+## Table of Contents
+
+1. [Welcome and Course Information](#welcome-and-course-information)
+2. [Lectures](#lectures)
+3. [Course Description](#course-description)
+4. [Prerequisites](#prerequisites)
+5. [Textbook](#textbook)
+6. [Learning Objectives](#learning-objectives)
+7. [Course Outline](#course-outline)
+8. [Course Schedule](#course-schedule)
+9. [Evaluation and Grade Breakdown](#evaluation-and-grade-breakdown)
+10. [Homeworks](#homeworks)
+11. [Homework Grading](#homework-grading)
+12. [Exams](#exams)
+13. [GitHub Classroom and Gradescope](#github-classroom-and-gradescope)
+14. [Attendance and Participation](#attendance-and-participation)
+15. [Lecture Recordings and Zoom](#lecture-recordings-and-zoom)
+16. [AI Policy](#ai-policy)
+17. [Collaboration Policy and Academic Integrity](#collaboration-policy-and-academic-integrity)
+18. [Late Policy](#late-policy)
+19. [Disclaimers](#disclaimers)
+20. [Contact and Office Hours](#contact-and-office-hours)
+
 ## Welcome and Course Information
 
-Welcome! I am super excited to have you all here.
+Welcome to ECS 119! I am super excited to have you here.
 
 - **Instructor:** Caleb Stanford
 - **TA:** Muhammad Hassnain
@@ -10,6 +33,7 @@ Welcome! I am super excited to have you all here.
 - **Units:** 4
 - **Lectures:** Monday, Wednesday, Friday 3:10-4pm in Teaching and Learning Complex 3215
 - **Discussion section:** Mondays at 9am in Olson Hall 206.
+- **Office hours::** TBD
 - **Final exam:** Wednesday, December 11, 6-8pm.
 - [CS department link](https://cs.ucdavis.edu/schedules-classes/ecs-119-data-processing-pipelines)
 
@@ -30,17 +54,6 @@ git stash
 git pull
 ```
 
-## Textbook
-
-There is no required textbook,
-but the following textbooks are optional:
-
-- [**Python for Data Analysis.**](https://wesmckinney.com/pages/book.html) Wes McKinney. O'Reilly Media (2012).
-
-- [**Spark: The Definitive Guide : Big Data Processing Made Simple.**](https://www.oreilly.com/library/view/spark-the-definitive/9781491912201/) Bill Chambers and Matei Zaharia. O'Reilly Media (2018).
-
-- [**Big Data: Concepts, Technology, and Architecture.**](https://www.wiley.com/en-us/Big+Data%3A+Concepts%2C+Technology%2C+and+Architecture-p-9781119701828) Nandhini Abirami R, Seifedine Kadry, Amir H. Gandomi, and Balamurugan Balusamy. Wiley; 1st edition (2021).
-
 ## Course Description
 
 Introduction to software systems for working with large datasets and managing data processing jobs.
@@ -55,6 +68,17 @@ I will assume the following prerequisites:
 
 This course is ideal for mid to upper-level undergraduate majors in **data science.**
 It is also open to computer science majors.
+
+## Textbook
+
+There is no required textbook.
+The following textbooks are optional:
+
+- [**Python for Data Analysis.**](https://wesmckinney.com/pages/book.html) Wes McKinney. O'Reilly Media (2012).
+
+- [**Spark: The Definitive Guide: Big Data Processing Made Simple.**](https://www.oreilly.com/library/view/spark-the-definitive/9781491912201/) Bill Chambers and Matei Zaharia. O'Reilly Media (2018).
+
+- [**Big Data: Concepts, Technology, and Architecture.**](https://www.wiley.com/en-us/Big+Data%3A+Concepts%2C+Technology%2C+and+Architecture-p-9781119701828) Nandhini Abirami R, Seifedine Kadry, Amir H. Gandomi, and Balamurugan Balusamy. Wiley; 1st edition (2021).
 
 ## Learning Objectives
 
@@ -116,16 +140,16 @@ Here is a rough course outline of what topics we will cover in more detail:
 
 See `schedule.md`.
 
-## Evaluation Criteria
+## Evaluation and Grade Breakdown
+
+Your grade is evaluated based on:
 
 - **Participation (10%):** via in-class quizzes
 - **Homeworks (45%):** 3 assignments, each assignment including a project component, plus homework 0
 - **Midterm (15%):** covering the first half and main concepts of the course
 - **Final Exam (30%):** covering all topics covered in the course.
 
-## Grade Breakdown
-
-The following are minimum cutoffs: if your grade is above the given percentage, you will definitely receive at least the given grade. However, I reserve the right to lower the cutoffs (i.e. you might get a better grade than what the table says).
+For the final (letter) grade, the following are minimum cutoffs. That is, if your grade is above the given percentage, you will definitely receive at least the given grade. However, I reserve the right to lower the cutoffs (i.e. you might get a better grade than what the table says).
 This will be used to correct for the case that the assignments, midterm, and/or final were harder than expected.
 
 | Percentage | Minimum Grade |
@@ -159,7 +183,7 @@ Frequently running and testing your code during development is an essential part
 You must run Python on your code before each submission to ensure that it works.
 The graders do not have time to debug submissions, and code that does not run will generally receive either a 0 or at most 10% of partial credit.
 
-Other than this, your assignments will be graded on the following two broad criteria: correctness and code quality.
+Other than this, for homeworks, your assignments will be graded on the following two broad criteria: correctness and code quality.
 The majority of the grade will be based on correctness.
 You may expect a rough rubric of 90% of the points for correctness and 10% for code quality.
 
