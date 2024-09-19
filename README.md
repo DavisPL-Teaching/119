@@ -8,8 +8,8 @@
 4. [Prerequisites](#prerequisites)
 5. [Textbook](#textbook)
 6. [Learning Objectives](#learning-objectives)
-7. [Course Outline](#course-outline)
-8. [Course Schedule](#course-schedule)
+7. [Course Schedule](#course-schedule)
+8. [Course Outline](#course-outline)
 9. [Evaluation and Grade Breakdown](#evaluation-and-grade-breakdown)
 10. [Homeworks](#homeworks)
 11. [Homework Grading](#homework-grading)
@@ -25,7 +25,7 @@
 
 ## Welcome and Course Information
 
-Welcome to ECS 119! I am super excited to have you here.
+Welcome to ECS 119! We are super excited to have you all here.
 
 - **Instructor:** Caleb Stanford
 - **TA:** Muhammad Hassnain
@@ -96,9 +96,14 @@ By the end of the course, students will be able to:
 
 - Understand advanced topics including programming over real-time and streaming data sources and using cloud platforms such as AWS, Azure, and Google Cloud.
 
+## Course Schedule
+
+See `schedule.md`.
+
 ## Course Outline
 
-Here is a rough course outline of what topics we will cover in more detail:
+Here is a rough course outline of what topics we will cover in more detail.
+Please note that all of the following are subject to change; see `schedule.md` and Piazza for more up-to-date information.
 
 1. Basics of big data processing
 - Sources of big data: databases, real-time data
@@ -135,10 +140,6 @@ Here is a rough course outline of what topics we will cover in more detail:
 - Distributed data structures, and distributed streaming
 - Cloud computing resources (S3, EC2, Lambda)
 - Cloud computing providers: AWS, Google Cloud, Azure
-
-## Course Schedule
-
-See `schedule.md`.
 
 ## Evaluation and Grade Breakdown
 
