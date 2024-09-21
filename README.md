@@ -20,8 +20,8 @@
 
 - [Grade Breakdown](#grade-breakdown)
 - [Attendance and Participation (10%)](#attendance-and-participation-10)
-- [Homeworks (45%)](#homeworks-45)
-- [Exams (45%)](#exams-45)
+- [Homeworks (50%)](#homeworks-50)
+- [Exams (40%)](#exams-40)
 - [Final Grade](#final-grade)
 
 ### Policies
@@ -131,8 +131,8 @@ See `schedule.md`.
 Your grade is evaluated based on:
 
 - **Participation (10%):** via in-class quizzes
-- **Homeworks (45%):** 3 assignments, each assignment including a project component, plus homework 0
-- **Midterm (15%):** covering the first half and main concepts of the course
+- **Homeworks (50%):** 3 assignments, each assignment including a project component, plus homework 0
+- **Midterm (10%):** covering the first half and main concepts of the course
 - **Final Exam (30%):** covering all topics covered in the course.
 
 ### Attendance and Participation (10%)
@@ -142,7 +142,7 @@ However, if you miss class, you may make up the in-class quizzes
 by watching the lectures or looking at slides and filling out your quiz responses offline.
 Quizzes may be made up until the end of the quarter (i.e., the last day of class).
 
-### Homeworks (45%)
+### Homeworks (50%)
 
 Homeworks will consist of programming assignments in Python designed to bring together concepts we learned in class
 and to give you practice using all of the tools we cover.
@@ -164,7 +164,7 @@ Is it readable, shareable, well-documented, well-commented, logically separated 
 Are your free response answers thoughtful?
 We will be using GitHub Classroom for homework submissions and grading.
 
-### Exams (45%)
+### Exams (40%)
 
 There will be a midterm and a final exam.
 Exams are closed-book, but you may bring a cheat sheet (single sided) to each exam.
