@@ -44,7 +44,7 @@ Welcome to ECS 119! I am super excited to have you all here.
 - **Units:** 4
 - **Lectures:** Monday, Wednesday, Friday 3:10-4pm in Teaching and Learning Complex 3215
 - **Discussion section:** Mondays at 9am in Olson Hall 206.
-- **Office hours::** See Piazza
+- **Office hours:** See Piazza
 - **Final exam:** Wednesday, December 11, 6-8pm.
 - [CS department link](https://cs.ucdavis.edu/schedules-classes/ecs-119-data-processing-pipelines)
 
