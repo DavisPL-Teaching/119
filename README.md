@@ -1,40 +1,17 @@
 # ECS 119: Data Processing Pipelines - Fall Quarter 2024
 
-## Table of Contents
+## Contents
 
-### Basic information
+1. [Welcome and Course Information](#welcome-and-course-information)
+2. [Lectures](#lectures)
+3. [Course Description](#course-description)
+4. [Schedule](#schedule)
+5. [Grade Breakdown](#grading)
+6. [Policies](#policies)
+7. [Disclaimers](#disclaimers)
+8. [Contact and Office Hours](#contact-and-office-hours)
 
-- [Welcome and Course Information](#welcome-and-course-information)
-- [Lectures](#lectures)
-- [Contact and Office Hours](#contact-and-office-hours)
-
-### Content
-
-- [Course Description](#course-description)
-- [Prerequisites](#prerequisites)
-- [Textbook](#textbook)
-- [Learning Objectives](#learning-objectives)
-- [Course Schedule](#course-schedule)
-
-### Grading
-
-- [Grade Breakdown](#grade-breakdown)
-- [Attendance and Participation (10%)](#attendance-and-participation-10)
-- [Homeworks (50%)](#homeworks-50)
-- [Exams (40%)](#exams-40)
-- [Final Grade](#final-grade)
-
-### Policies
-
-- [AI Policy](#ai-policy)
-- [Collaboration Policy and Academic Integrity](#collaboration-policy-and-academic-integrity)
-- [Late Policy](#late-policy)
-- [Lecture Recordings and Zoom](#lecture-recordings-and-zoom)
-- [Disclaimers](#disclaimers)
-
-## Basic information
-
-### Welcome and Course Information
+## Welcome and Course Information
 
 Welcome to ECS 119! I am super excited to have you all here.
 
@@ -46,14 +23,12 @@ Welcome to ECS 119! I am super excited to have you all here.
 - **Discussion section:** Mondays at 9am in Olson Hall 206.
 - **Office hours:** See Piazza
 - **Final exam:** Wednesday, December 11, 6-8pm.
-- [CS department link](https://cs.ucdavis.edu/schedules-classes/ecs-119-data-processing-pipelines)
+- **[Piazza](https://piazza.com/class/m12ef423uj5p5)**
 
-### Lectures
+## Lectures
 
 Most lectures will be live coding, and I will post the code for each lecture in this repository.
-To follow along with the lectures:
-
-Clone the repo:
+To follow along with the lectures, clone the repository:
 ```shell
 git clone git@github.com:DavisPL-Teaching/119.git
 ```
@@ -65,20 +40,16 @@ git stash
 git pull
 ```
 
-### Contact and Office Hours
+### Lecture Recordings and Zoom
 
-Please use the Piazza for questions related to course material.
-If you send me an email, I will most likely respond to post your question on Piazza :)
+If you miss class, you can make up the lectures (and class polls) at any time
+prior to the last day of class.
+All lectures will be broadcast and recorded on Zoom.
+However, this is a best-effort process, so please keep in mind that occasional technical
+difficulties are possible (e.g., lost video recording, poor audio).
+Zoom recordings will be made available on Canvas.
 
-Please ask all questions publicly, with one exception, if your post contains a large snippet of code.
-I encourage you to ask anonymously if you feel more comfortable.
-
-The instructor and TAs will be available during office hours for additional support on course material and assignments. The schedule of office hours can be found in a pinned post on Piazza.
-If you have a question that is more sensitive or unrelated to the course, please email me (at `cdstanford` `ucdavis` `edu`).
-
-## Content
-
-### Course Description
+## Course Description
 
 Introduction to software systems for working with large datasets and managing data processing jobs.
 Hands-on experience with scripting, data sources, data parallelism, data streams, software development and deployment infrastructure, and distributed computing.
@@ -120,27 +91,25 @@ By the end of the course, students will be able to:
 
 - Understand advanced topics including programming over real-time and streaming data sources and using cloud platforms such as AWS, Azure, and Google Cloud.
 
-### Course Schedule
+## Schedule
 
 See `schedule.md`.
 
-## Grading
-
-### Grade Breakdown
+## Grade Breakdown
 
 Your grade is evaluated based on:
 
-- **Participation (10%):** via in-class quizzes
+- **Participation (10%):** via in-class polls
 - **Homeworks (50%):** 3 assignments, each assignment including a project component, plus homework 0
 - **Midterm (10%):** covering the first half and main concepts of the course
 - **Final Exam (30%):** covering all topics covered in the course.
 
 ### Attendance and Participation (10%)
 
-To encourage class attendance, there are in class polls that are worth a small amount of credit.
-However, if you miss class, you may make up the in-class quizzes
-by watching the lectures or looking at slides and filling out your quiz responses offline.
-Quizzes may be made up until the end of the quarter (i.e., the last day of class).
+To encourage class attendance, there are in-class polls that are worth a small amount of credit.
+However, if you miss class, you may make up the polls
+by watching the lectures and filling out your responses offline.
+Polls may be made up at any time prior to the last day of class.
 
 The discussion section (on Mondays) is recommended, but not mandatory.
 It will be led by the TA and will also be recorded for those who cannot attend.
@@ -176,7 +145,7 @@ Exams will be graded on Gradescope.
 Exams will be curved.
 That means, for example, if 100 points are possible, it may be entered as out of a smaller number of points like 95 or 85 for the purposes of calculating your grade, if the average score of the class was low or if there were unexpectedly difficult questions.
 
-### Final grade
+### Final Grade
 
 For the final (letter) grade, the following are minimum cutoffs. That is, if your grade is above the given percentage, you will definitely receive at least the given grade. However, I reserve the right to lower the cutoffs (i.e. you might get a better grade than what the table says).
 This will be used to correct for the case that the assignments, midterm, and/or final were harder than expected.
@@ -241,14 +210,7 @@ Homeworks will generally be due at 11:59pm on the due date.
 However, I encourage you to update your assignments even after the deadline -- GitHub classroom will allow us to see both the state of the code at the time of the deadline as well as any recent changes.
 At grading time, we may choose to grade the more recent version at our discretion.
 
-### Lecture Recordings and Zoom
-
-If you miss class, all lectures will be broadcast and recorded on Zoom.
-However, this is a best-effort process, so please keep in mind that occasional technical
-difficulties are possible (e.g., lost video recording, poor audio).
-Zoom recordings will be made available on Canvas.
-
-### Disclaimers
+## Disclaimers
 
 Communication from the instructor will only be sent through official UC Davis email addresses and channels. Please be vigilant of job scams impersonating faculty members. For more information, visit [UC Davis Job Scams Prevention](https://icc.ucdavis.edu/find/scams).
 
@@ -256,3 +218,14 @@ Communication from the instructor will only be sent through official UC Davis em
 UC Davis has [policies against harassment and discrimination](https://hr.ucdavis.edu/departments/elr/preventing-discrimination-harassment).
 Be inclusive of your classmates in group discussions and in your questions and answers in class.
 If you need to, you may reach me by email to report an issue with a classmate.
+
+## Contact and Office Hours
+
+Please use the Piazza for questions related to course material.
+If you send me an email, I will most likely respond to post your question on Piazza :)
+
+Please ask all questions publicly, with one exception, if your post contains a large snippet of code.
+I encourage you to ask anonymously if you feel more comfortable.
+
+The instructor and TAs will be available during office hours for additional support on course material and assignments. The schedule of office hours can be found in a pinned post on Piazza.
+If you have a question that is more sensitive or unrelated to the course, please email me (at `cdstanford` `ucdavis` `edu`).
