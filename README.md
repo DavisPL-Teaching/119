@@ -142,6 +142,9 @@ However, if you miss class, you may make up the in-class quizzes
 by watching the lectures or looking at slides and filling out your quiz responses offline.
 Quizzes may be made up until the end of the quarter (i.e., the last day of class).
 
+The discussion section (on Mondays) is recommended, but not mandatory.
+It will be led by the TA and will also be recorded for those who cannot attend.
+
 ### Homeworks (50%)
 
 Homeworks will consist of programming assignments in Python designed to bring together concepts we learned in class
