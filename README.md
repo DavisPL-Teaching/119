@@ -6,7 +6,7 @@
 2. [Lectures](#lectures)
 3. [Course Description](#course-description)
 4. [Schedule](#schedule)
-5. [Grade Breakdown](#grading)
+5. [Grade Breakdown](#grade-breakdown)
 6. [Policies](#policies)
 7. [Disclaimers](#disclaimers)
 8. [Contact and Office Hours](#contact-and-office-hours)
