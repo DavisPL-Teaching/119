@@ -13,16 +13,16 @@ https://tinyurl.com/ypevcu9u
 
 Try this!
 
-1. Go to: https://github.com/DavisPL-Teaching/119
-
-2. You will need to create an account on GitHub and log in.
-
-3. You will need to have Git installed (typically installed with Xcode on Mac, or with Git for Windows). Follow the guide here:
+1. You will need to have Git installed (typically installed with Xcode on Mac, or with Git for Windows). Follow the guide here:
 
     https://www.atlassian.com/git/tutorials/install-git
 
     Feel free to work on this as I am talking and to get help from your neighbors.
     I can help with any issues after class.
+
+2. You will also need to create an account on GitHub and log in.
+
+3. Go to: https://github.com/DavisPL-Teaching/119
 
 4. If that's all set up, then click the green "Code" button, click "SSH", and click to copy the command:
 
@@ -76,13 +76,21 @@ format and saves it to a database, then queries the database for the
 top 100 most population-dense cities and outputs these to a file
 biggest_cities.txt.
 
-What are the components of a data processing pipeline?
 What do these scenarios have in common?
+Suggestions:
+- Write the data to CSV
 
-0.
-1.
-2.
-3.
+3 stages -- related to something called the "Extract, Transform, Load" model (ETL)
+
+What are the components of a data processing pipeline?
+
+0. Description of the task that you want to complete.
+1. Input source -- get your input from somewhere
+2. Processing stage -- do some transformations on your data,
+    add additional data fields, modify fields, calculate summary
+    statistics, etc.
+3. Output -- save the results to a file or a database; display
+    them to the user; etc.
 """
 
 """
@@ -93,35 +101,36 @@ Useful sites:
 - sklearn
 """
 
-# # Load the data from life-expectancy.csv into a pandas DataFrame
-# # Pandas documentation:
-# # https://pandas.pydata.org/docs/reference/api/pandas.read_csv.html
-# import pandas as pd
-# import csv
-# df = pd.read_csv("life-expectancy.csv")
+# Load the data from life-expectancy.csv into a pandas DataFrame
+# Pandas documentation:
+# https://pandas.pydata.org/docs/reference/api/pandas.read_csv.html
+import pandas as pd
+df = pd.read_csv("life-expectancy.csv")
 
-# # Print the first 5 rows of the DataFrame
-# print(df.head())
+# Print the first 5 rows of the DataFrame
+print("Hello")
+print(df.head())
 
 """
 Step 2: Do some processing
 """
 
-# # Print keys
-# print(df.keys())
+# Print keys
+print(df.keys())
 
-# # 2. Do some processing
-# min_year = df["Year"].min()
-# max_year = df["Year"].max()
-# avg = df["Period life expectancy at birth - Sex: all - Age: 0"].mean()
+min_year = df["Year"].min()
+max_year = df["Year"].max()
 
-# print("Min year:", min_year)
-# print("Max year:", max_year)
-# print("Average life expectancy:", avg)
+print("Minimum year: ", min_year)
+print("Maximum year: ", max_year)
+
+avg = df["Period life expectancy at birth - Sex: all - Age: 0"].mean()
+
+print("Average life expectancy: ", avg)
 
 # 3. Save the output
-# out = pd.DataFrame({"Min year": [min_year], "Max year": [max_year], "Average life expectancy": [avg]})
-# out.to_csv("output.csv", index=False)
+out = pd.DataFrame({"Min year": [min_year], "Max year": [max_year], "Average life expectancy": [avg]})
+out.to_csv("output.csv", index=False)
 
 # (Side note on gitignore)
 
@@ -132,7 +141,25 @@ We can view all of the above steps as something called
 a directed acyclic graph (DAG).
 What do I mean and how?
 
+It's a flow chart of input sources,
+processing stages (often called "operators"),
+and outputs.
+
+                       -> min ->
+(life-expectancy.csv)  -> max ->  output.csv
+                       -> avg ->
+
 Why is this useful?
+
+- We'll use this to think about parallelism
+- We'll use this to think about performance.
+
+=== Recap of what we covered today ===
+
+- Any data processing pipeline can be thought of as having 3 stages:
+    input source, processing, and output
+- Data processing pipelines can be drawn as directed acyclic graphs (DAGs).
+
 """
 
 """
