@@ -56,10 +56,9 @@ Hands-on experience with scripting, data sources, data parallelism, data streams
 
 ### Prerequisites
 
-The official prerequisites are ECS 116 or 165A.
 I will assume the following prerequisites:
-- Some prior exposure to databases
-- A basic ability to program (e.g. basic Python or C/C++ code). For example, I will assume the ability to write a program like [FizzBuzz](https://www.hackerrank.com/challenges/fizzbuzz/problem) (ECS 36A/36B/36C or equivalent).
+- Some prior exposure to databases (ECS 116 or 165A)
+- A basic ability to program (ECS 32A/32B or equivalent). For example, you should be able to write a program like [FizzBuzz](https://www.hackerrank.com/challenges/fizzbuzz/problem).
 
 This course is ideal for mid to upper-level undergraduate majors in **data science.**
 It is also open to computer science majors.
