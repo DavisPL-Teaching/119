@@ -11,8 +11,8 @@ I will try to keep it up to date, but please see Piazza for the latest informati
 | 0 | Sep 25 | Introduction and demos |  | 0 |
 |   | Sep 27 | Data processing basics |  | 1 |
 | 1 | Sep 30 |  |  | 1 |
-|   | Oct 2  | Development Tools |  | 2 |
-|   | Oct 4  |  | HW0 Due | 2 |
+|   | Oct 2  | Development Tools | HW0 Due | 2 |
+|   | Oct 4  |  |  | 2 |
 | 2 | Oct 7  | Data Sources |  | 3 |
 |   | Oct 9  |  |  | 3 |
 |   | Oct 11 | Data Transformations |  | 3 |
