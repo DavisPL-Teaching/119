@@ -86,14 +86,58 @@ What do these scenarios have in common?
 """
 
 """
-Step 0: Getting a data source
+Step 1: Getting a data source
 
 Useful sites:
 - https://ourworldindata.org/data
 - sklearn
 """
 
+# # Load the data from life-expectancy.csv into a pandas DataFrame
+# # Pandas documentation:
+# # https://pandas.pydata.org/docs/reference/api/pandas.read_csv.html
+# import pandas as pd
+# import csv
+# df = pd.read_csv("life-expectancy.csv")
+
+# # Print the first 5 rows of the DataFrame
+# print(df.head())
+
 """
+Step 2: Do some processing
+"""
+
+# # Print keys
+# print(df.keys())
+
+# # 2. Do some processing
+# min_year = df["Year"].min()
+# max_year = df["Year"].max()
+# avg = df["Period life expectancy at birth - Sex: all - Age: 0"].mean()
+
+# print("Min year:", min_year)
+# print("Max year:", max_year)
+# print("Average life expectancy:", avg)
+
+# 3. Save the output
+# out = pd.DataFrame({"Min year": [min_year], "Max year": [max_year], "Average life expectancy": [avg]})
+# out.to_csv("output.csv", index=False)
+
+# (Side note on gitignore)
+
+"""
+Graphical view
+
+We can view all of the above steps as something called
+a directed acyclic graph (DAG).
+What do I mean and how?
+
+Why is this useful?
+"""
+
+"""
+Design constraints
+
 What are some design constraints or limiting factors that data processing pipelines might have to deal with?
 
 1.
