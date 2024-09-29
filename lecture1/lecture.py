@@ -79,6 +79,7 @@ biggest_cities.txt.
 What do these scenarios have in common?
 Suggestions:
 - Write the data to CSV
+- ...
 
 3 stages -- related to something called the "Extract, Transform, Load" model (ETL)
 
@@ -182,7 +183,7 @@ https://github.com/DavisPL-Teaching/119/blob/main/schedule.md
 """
 === Closing with a quote from Patrice Koehl ===
 
-From [Patrice Koehl](https://www.cs.ucdavis.edu/~koehl/):
+From https://www.cs.ucdavis.edu/~koehl/:
 
     "
         Where is the wisdom we have lost in knowledge?

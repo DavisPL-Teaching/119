@@ -8,7 +8,7 @@ I will try to keep it up to date, but please see Piazza for the latest informati
 
 | Week | Date | Topic | Readings & HW | Lecture # |
 | --- | --- | --- | --- | --- |
-| 0 | Sep 25 | Introduction and demos |  | 0 |
+| 0 | Sep 25 | Introduction |  | 0 |
 |   | Sep 27 | Data processing basics |  | 1 |
 | 1 | Sep 30 |  |  | 1 |
 |   | Oct 2  | Development Tools | HW0 Due | 2 |
