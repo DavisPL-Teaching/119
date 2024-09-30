@@ -164,7 +164,9 @@ Why is this useful?
     input source, processing, and output
 - Data processing pipelines can be drawn as directed acyclic graphs (DAGs).
 
-=== Monday Sep 30 ===
+=======================================================================
+
+=== Monday, September 30 ===
 
 Announcements:
 
@@ -184,9 +186,9 @@ Plan for today:
 
     + exercises
 
-- Performance considerations
+- Measuring performance
 
-- Lecture 2 on software engineering and software development tools
+- Lecture 2: software engineering and software development tools
 
 === A tangent on pacing ===
 
@@ -219,7 +221,12 @@ Do the following:
 
 === Poll ===
 
+1. Which stage do you think is likely to be the most computationally intensive part of a data processing pipeline?
+
+2. Which ostage do you think is likely to present the biggest opportunity for failure cases, including crashes, ethical concerns or bias, or unexpected/wrong/faulty data?
+
 https://forms.gle/Kv39iq33KDjJy3ir6
+https://tinyurl.com/3tthzry7
 
 === Data processing pipelines as software ===
 
@@ -254,7 +261,24 @@ import pandas as pd
 
 LIFE_EXPECTANCY_CSV = "life-expectancy.csv"
 def get_life_expectancy_data():
+    """
+    This is called a docstring
+
+    TODO: Write documentation
+    """
     raise NotImplementedError
+
+"""
+Running the code
+
+It can be useful to have open a Python shell while developing Python code.
+
+There are two ways to run Python code from the command line:
+-
+-
+
+Let's try both
+"""
 
 # Step 2: Do some processing
 # min_year = df["Year"].min()
@@ -265,10 +289,20 @@ def get_life_expectancy_data():
 # print("Average life expectancy: ", avg)
 
 class LifeExpectancyData:
+    """
+    TODO: Write documentation
+    """
+
     def __init__():
+        """
+        TODO: Write documentation
+        """
         raise NotImplementedError
 
     def get_load_statistics():
+        """
+        TODO: Write documentation
+        """
         raise NotImplementedError
 
 # Tangent:
@@ -279,21 +313,22 @@ class LifeExpectancyData:
 # out.to_csv("output.csv", index=False)
 
 def save_to_csv():
+    """
+    TODO: Write documentation
+    """
     raise NotImplementedError
 
 """
 Let's revisit our criteria from before. How does this help?
-
-- Software design
-- Software testing
-- Software reuse
-- Collaborative development
-- Performance optimization
 """
+
+# - Software design
 
 # Exercise 1: Revise the class above so that the input is taken from an argument, instead of
 # provided as a hardcoded filename
 # TODO
+
+# - Software testing
 
 # Exercise 2: Validate the the input has the correct number of countries.
 # (Q: What is the correct number? A: More on this in a bit)
@@ -311,17 +346,22 @@ def test_get_life_expectancy_data():
     countries = data["Entity"].unique()
     assert len(countries) == 261
 
+# - Software reuse
+
 # Exercise 3:
 # Reuse the class to get input in a different way: from the user
 
-# Performance optimization?
-# (More on this shortly)
+# - Collaborative development
+# Why is the above code better for collaborative development?
+
+# - Performance optimization
+#   (More on this shortly)
 
 """
 === Design constraints ===
 
 Recall that we talkd on the first lecture about software components + design constraints.
-Let's talk a bit more about the design constraints bit.
+Let's talk more about the design constraints bit.
 
 What could go wrong in our toy pipeline above?
 Let's go through each stage at a time:
@@ -330,7 +370,6 @@ Let's go through each stage at a time:
 
 What could go wrong here?
 
--
 
 .
 .
@@ -345,76 +384,124 @@ What could go wrong here?
 
 """
 
+"""
+Problem: input data could be malformed
+"""
+
 # Exercise 4: Insert a syntax error into the CSV file. What happens?
 
-# Exercise 5: Insert private data into the CSV file. What happens?
+# Exercise 5: Insert a row with a value that is not a number. What happens?
 
-# Exercise 6: Insert a row with a missing value. What happens?
+# Solutions?
 
-# Exercise 7: Insert a row with a value that is not a number. What happens?
+"""
+Problem: input data could be wrong
+"""
 
-# Exercise 8: Delete a country or add a new country. What happens?
+# Exercise 6: Delete a country or add a new country. What happens?
+
+# Solutions?
+
+"""
+Problem: input data could be missing
+"""
+
+# Exercise 7: Insert a row with a missing value. What happens?
+
+# Solutions?
+
+"""
+Problem: input data could be private
+"""
+
+# Exercise 8: Insert private data into the CSV file. What happens?
+
+# Solutions?
 
 
 """
 2. Processing stage
 
 What could go wrong here?
+"""
 
--
-
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-
+"""
+Problem: software bugs
 """
 
 # Exercise 9: Introduce a software bug
 
+# Solutions?
+
+"""
+Problem: performance bugs
+"""
+
 # Exercise 10: Introduce a performance bug
 
+# Solutions?
+
+"""
+Problem: order-depenent and non-deterministic behavior
+"""
+
+# Exercise 11: Introduce order-dependent behavior into the pipeline
+
+# Exercise 12: Introduce non-deterministic behavior into the pipeline
+
+# Solutions?
 
 """
 3. Output stage
 
 What could go wrong here?
-
--
-
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-
 """
 
-# Exercise 11: Save the output to a file that already exists. What happens?
+"""
+Problem: output errors and exceptions
+"""
 
-# Exercise 12: Save the output to a file that is read-only. What happens?
+# Exercise 13: Save the output to a file that already exists. What happens?
+
+# Exercise 14: Call the program from a different working directory (CWD)
+# (Note: CWD)
+
+# Exercise 15: Save the output to a file that is read-only. What happens?
+
+# Exercise 16: Save the output to a file outside the current directory. What happens?
 
 # (other issues: symlinks, read permissions, busy/conflicting writes, etc.)
 
-# Exercise 13: Save the output to a file outside the current directory. What happens?
-
-# Exercise 14: Call the program from a different working directory (CWD)
-# CWD =
-
-# Exercise 15: Provide too much information as output or too little
+# Solutions?
 
 """
+Problem: output formatting
+
+Applications must agree on a common format for data exchange.
+"""
+
+# Exercise 17: save data to a CSV file with a wrong delimiter
+
+# Exercise 18: save data to a CSV file without escaping commas
+
+# Solutions?
+
+"""
+Problem: readability and usability concerns --
+    too much information, too little information, unhelpful information
+"""
+
+# Exercise 19: Provide too much information as output
+
+# Exercise 20: Provide too little information as output
+
+# Exercise 21: Provide unhelpful information as output
+
+# Solutions?
+
+"""
+In the second stage, we said that one thing that could
+
 One aspect of particular interest to us in this class is the performance in the second
 stage. How do we measure performance?
 
@@ -465,7 +552,22 @@ https://www.cs.ucdavis.edu/~koehl/:
 
     With apologies to T.S. Eliot.
 
+Data processing is all about extracting wisdom from data.
+But each of these steps can go wrong!
+
 From Edsgar Dijkstra:
 
     "Simplicity is a great virtue but it requires hard work to achieve it and education to appreciate it. And to make matters worse: complexity sells better."
+
+I'd like to encourage us to think about how to build pipelines that are as *simple* as possible
+-- organized into careful components, with helpful abstractions -- rather than having
+expanding components and needless complexity.
+
+Why? Simpler pipelines are more reliable, easier to develop, easier to understand, and easier to maintain.
+
+Tools are adopted not just because of what they can do, but because of how much they can do in the most
+intuitive and direct way possible.
+
+The tools we see in this class will help us achieve the right abstractions to achieve this simplicity.
+
 """
