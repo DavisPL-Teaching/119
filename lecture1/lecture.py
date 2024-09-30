@@ -102,38 +102,41 @@ Useful sites:
 - sklearn
 """
 
-# Load the data from life-expectancy.csv into a pandas DataFrame
-# Pandas documentation:
-# https://pandas.pydata.org/docs/reference/api/pandas.read_csv.html
-import pandas as pd
-df = pd.read_csv("life-expectancy.csv")
+# # Load the data from life-expectancy.csv into a pandas DataFrame
+# # Pandas documentation:
+# # https://pandas.pydata.org/docs/reference/api/pandas.read_csv.html
+# import pandas as pd
+# df = pd.read_csv("life-expectancy.csv")
 
-# Print the first 5 rows of the DataFrame
-print("Hello")
-print(df.head())
+# # Print the first 5 rows of the DataFrame
+# print("Hello")
+# print(df.head())
 
 """
 Step 2: Do some processing
 """
 
-# Print keys
-print(df.keys())
+# # Print keys
+# print(df.keys())
 
-min_year = df["Year"].min()
-max_year = df["Year"].max()
+# min_year = df["Year"].min()
+# max_year = df["Year"].max()
 
-print("Minimum year: ", min_year)
-print("Maximum year: ", max_year)
+# print("Minimum year: ", min_year)
+# print("Maximum year: ", max_year)
 
-avg = df["Period life expectancy at birth - Sex: all - Age: 0"].mean()
+# avg = df["Period life expectancy at birth - Sex: all - Age: 0"].mean()
 
-print("Average life expectancy: ", avg)
+# print("Average life expectancy: ", avg)
 
-# 3. Save the output
-out = pd.DataFrame({"Min year": [min_year], "Max year": [max_year], "Average life expectancy": [avg]})
-out.to_csv("output.csv", index=False)
+"""
+Stage 3. Save the output
+"""
 
-# (Side note on gitignore)
+# out = pd.DataFrame({"Min year": [min_year], "Max year": [max_year], "Average life expectancy": [avg]})
+# out.to_csv("output.csv", index=False)
+
+# # (Side note on gitignore)
 
 """
 Graphical view
@@ -161,35 +164,308 @@ Why is this useful?
     input source, processing, and output
 - Data processing pipelines can be drawn as directed acyclic graphs (DAGs).
 
+=== Monday Sep 30 ===
+
+Announcements:
+
+- Reminder: HW0 is due Wednesday
+
+- First discussion section was today, 9am (hope you made it!)
+
+Plan for today:
+
+- Start with the poll
+
+- Finish introduction to data processing pipelines
+
+    + data processing pipelines as software
+
+    + design constraints -- things that can go wrong, limiting factors
+
+    + exercises
+
+- Performance considerations
+
+- Lecture 2 on software engineering and software development tools
+
+=== A tangent on pacing ===
+
+- The pacing might be a bit slow right now for some of you -- especially if you have prior experience
+  with Python, pandas, Git, etc.
+  (HW0 results so far: 100% have used Python, 80% Pandas, 75% Git)
+
+- We do have varying levels of background including some who have not used some of these tools
+  before. So please be patient with us for the first few lectures.
+
+- 80% of you have only limited experience with command line in particular, so we will spend some additional
+  time in Lecture 2 on software development tools.
+
+- There will be a mid-quarter survey (around 4 weeks in) to see if we are going too slow or too fast
+  and I will adjust things accordingly!
+
+=== Following along ===
+
+Reminder to follow along:
+https://github.com/DavisPL-Teaching/119
+
+(I will go through the steps again in class)
+
+If you already cloned the repo, then this time, you need to get any code updates.
+Do the following:
+
+- git status
+- git stash
+- git pull
+
+=== Poll ===
+
+https://forms.gle/Kv39iq33KDjJy3ir6
+
+=== Data processing pipelines as software ===
+
+Some of you may know about tools like Jupyter notebooks, Google Colab, or Excel.
+(What is the most widely used data processing tool? Answer: ____)
+
+So why aren't we using those tools? :)
+
+In this course, I want to encourage us to think about data processing pipelines as real software.
+That means:
+- Software *design* matters: structuring code into modules, classes, functions
+- Software can be *tested*: validating functions, validating inputs, unit & integration tests
+- Software can be *reused* and maintained (not just a one-off script)
+- Software can be developed collaboratively (Git, GitHub)
+- Software can be optimized for performance (parallelism, distributed computing, etc.)
+
+It is a little more work to structure our code this way!
+But it helps ensure that our work is reusable and integrates well with other teams, projects, etc.
+
+Let's consider how to write the minimal data processing pipeline we saw last time
+as a more structured software pipeline.
+
+Useful tutorial on Pandas:
+https://pandas.pydata.org/docs/user_guide/10min.html
+https://pandas.pydata.org/docs/user_guide/indexing.html
 """
 
+import pandas as pd
+
+# Step 1: Getting a data source
+# df = pd.read_csv("life-expectancy.csv")
+
+LIFE_EXPECTANCY_CSV = "life-expectancy.csv"
+def get_life_expectancy_data():
+    raise NotImplementedError
+
+# Step 2: Do some processing
+# min_year = df["Year"].min()
+# max_year = df["Year"].max()
+# print("Minimum year: ", min_year)
+# print("Maximum year: ", max_year)
+# avg = df["Period life expectancy at birth - Sex: all - Age: 0"].mean()
+# print("Average life expectancy: ", avg)
+
+class LifeExpectancyData:
+    def __init__():
+        raise NotImplementedError
+
+    def get_load_statistics():
+        raise NotImplementedError
+
+# Tangent:
+# We can do all of the above with df.describe()
+
+# Step 3: save the output
+# out = pd.DataFrame({"Min year": [min_year], "Max year": [max_year], "Average life expectancy": [avg]})
+# out.to_csv("output.csv", index=False)
+
+def save_to_csv():
+    raise NotImplementedError
+
 """
-Design constraints
+Let's revisit our criteria from before. How does this help?
 
-What are some design constraints or limiting factors that data processing pipelines might have to deal with?
+- Software design
+- Software testing
+- Software reuse
+- Collaborative development
+- Performance optimization
+"""
 
-1.
-2.
-3.
-4.
+# Exercise 1: Revise the class above so that the input is taken from an argument, instead of
+# provided as a hardcoded filename
+# TODO
 
-=== Overview of course schedule ===
+# Exercise 2: Validate the the input has the correct number of countries.
+# (Q: What is the correct number? A: More on this in a bit)
+
+# We can use pytest for testing
+# conda list pytest
+# conda install pytest
+import pytest
+
+# How pytest works:
+# Unskip to run test
+@pytest.mark.skip
+def test_get_life_expectancy_data():
+    data = get_life_expectancy_data()
+    countries = data["Entity"].unique()
+    assert len(countries) == 261
+
+# Exercise 3:
+# Reuse the class to get input in a different way: from the user
+
+# Performance optimization?
+# (More on this shortly)
+
+"""
+=== Design constraints ===
+
+Recall that we talkd on the first lecture about software components + design constraints.
+Let's talk a bit more about the design constraints bit.
+
+What could go wrong in our toy pipeline above?
+Let's go through each stage at a time:
+
+1. Input stage
+
+What could go wrong here?
+
+-
+
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+
+"""
+
+# Exercise 4: Insert a syntax error into the CSV file. What happens?
+
+# Exercise 5: Insert private data into the CSV file. What happens?
+
+# Exercise 6: Insert a row with a missing value. What happens?
+
+# Exercise 7: Insert a row with a value that is not a number. What happens?
+
+# Exercise 8: Delete a country or add a new country. What happens?
+
+
+"""
+2. Processing stage
+
+What could go wrong here?
+
+-
+
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+
+"""
+
+# Exercise 9: Introduce a software bug
+
+# Exercise 10: Introduce a performance bug
+
+
+"""
+3. Output stage
+
+What could go wrong here?
+
+-
+
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+
+"""
+
+# Exercise 11: Save the output to a file that already exists. What happens?
+
+# Exercise 12: Save the output to a file that is read-only. What happens?
+
+# (other issues: symlinks, read permissions, busy/conflicting writes, etc.)
+
+# Exercise 13: Save the output to a file outside the current directory. What happens?
+
+# Exercise 14: Call the program from a different working directory (CWD)
+# CWD =
+
+# Exercise 15: Provide too much information as output or too little
+
+"""
+One aspect of particular interest to us in this class is the performance in the second
+stage. How do we measure performance?
+
+=== Performance ===
+
+Three key performance metrics:
+
+- Throughput
+
+- Latency
+
+- Memory usage
+
+Let's measure the performance of our toy pipeline.
+
+Timeit:
+https://docs.python.org/3/library/timeit.html
+
+Example syntax:
+timeit.timeit('"-".join(str(n) for n in range(100))', number=10000)
+"""
+
+import timeit
+
+def measure_throughput():
+    raise NotImplementedError
+
+def measure_latency():
+    raise NotImplementedError
+
+def measure_memory_usage():
+    raise NotImplementedError
+
+"""
+=== Overview of the rest of the course ===
 
 Overview of the schedule (tentative), posted at:
 https://github.com/DavisPL-Teaching/119/blob/main/schedule.md
 
-"""
+=== Closing quotes ===
 
-"""
-=== Closing with a quote from Patrice Koehl ===
+From Patrice Koehl:
+https://www.cs.ucdavis.edu/~koehl/:
 
-From https://www.cs.ucdavis.edu/~koehl/:
-
-    "
-        Where is the wisdom we have lost in knowledge?
-        Where is the knowledge we have lost in information?
-        Where is the information we have lost in data?
-    "
+    "Where is the wisdom we have lost in knowledge?
+    Where is the knowledge we have lost in information?
+    Where is the information we have lost in data?"
 
     With apologies to T.S. Eliot.
+
+From Edsgar Dijkstra:
+
+    "Simplicity is a great virtue but it requires hard work to achieve it and education to appreciate it. And to make matters worse: complexity sells better."
 """
