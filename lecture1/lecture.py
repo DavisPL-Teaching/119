@@ -170,6 +170,24 @@ Why is this useful?
 
 (See README.md for announcements and plan.)
 
+=== Following along ===
+
+Reminder to follow along:
+https://github.com/DavisPL-Teaching/119
+
+(I will go through the steps again in class)
+
+Navigate to the directory you want:
+- ls to show directories
+- cd <directory> to move into the directory
+
+If you already cloned the repo, then this time, you need to get any code updates.
+Do the following:
+
+- git status
+- git stash
+- git pull
+
 === A tangent on pacing ===
 
 - The pacing might be a bit slow right now for some of you -- especially if you have prior experience
@@ -185,20 +203,6 @@ Why is this useful?
 - There will be a mid-quarter survey (around 4 weeks in) to see if we are going too slow or too fast
   and I will adjust things accordingly!
 
-=== Following along ===
-
-Reminder to follow along:
-https://github.com/DavisPL-Teaching/119
-
-(I will go through the steps again in class)
-
-If you already cloned the repo, then this time, you need to get any code updates.
-Do the following:
-
-- git status
-- git stash
-- git pull
-
 === Poll ===
 
 1. Which stage do you think is likely to be the most computationally intensive part of a data processing pipeline?
@@ -211,7 +215,7 @@ https://tinyurl.com/3tthzry7
 === Data processing pipelines as software ===
 
 Some of you may know about tools like Jupyter notebooks, Google Colab, or Excel.
-(What is the most widely used data processing tool? Answer: ____)
+(What is the most widely used data processing tool? Answer: Excel)
 
 So why aren't we using those tools? :)
 
@@ -237,16 +241,21 @@ https://pandas.pydata.org/docs/user_guide/indexing.html
 import pandas as pd
 
 # Step 1: Getting a data source
+# creating a DataFrame
+# DataFrame is just a table: it has rows and columns, and importantly,
+# each column has a type (all items in the column must share the same
+# type, e.g., string, number, etc.)
 # df = pd.read_csv("life-expectancy.csv")
 
-LIFE_EXPECTANCY_CSV = "life-expectancy.csv"
-def get_life_expectancy_data():
+def get_life_expectancy_data(filename):
     """
     This is called a docstring
 
-    TODO: Write documentation
+    Take in CSV data from life-expectancy.csv
+    Return a DataFrame of the data.
     """
-    raise NotImplementedError
+    df = pd.read_csv(filename)
+    return df
 
 """
 Running the code
@@ -254,8 +263,8 @@ Running the code
 It can be useful to have open a Python shell while developing Python code.
 
 There are two ways to run Python code from the command line:
--
--
+- python3 lecture.py
+- python3 -i lecture.py
 
 Let's try both
 """
@@ -270,19 +279,37 @@ Let's try both
 
 class LifeExpectancyData:
     """
-    TODO: Write documentation
+    Our data will include:
+    - maximum year
+    - minimum year
+    - average of all the life expectancies
     """
 
-    def __init__():
+    def __init__(self):
         """
-        TODO: Write documentation
-        """
-        raise NotImplementedError
+        Initialize fields
 
-    def get_load_statistics():
+        self keyword: refers to the object itself
         """
-        TODO: Write documentation
+        self.min = None
+        self.max = None
+        self.avg = None
+
+    def load_statistics(self, df):
         """
+        Read in data from the DataFrame
+        and store it in our clas
+        """
+        self.min = df["Year"].min()
+        self.max = df["Year"].max()
+        self.avg = df["Period life expectancy at birth - Sex: all - Age: 0"].mean()
+
+    def save_to_file(self, filename):
+        out = pd.DataFrame({"Min year": [self.min], "Max year": [self.max], "Average life expectancy": [self.avg]})
+        out.to_csv(filename, index=False)
+
+    def get_from_user(self):
+        # Instead of loading from a file, get the data via user input.
         raise NotImplementedError
 
 # Tangent:
@@ -291,12 +318,7 @@ class LifeExpectancyData:
 # Step 3: save the output
 # out = pd.DataFrame({"Min year": [min_year], "Max year": [max_year], "Average life expectancy": [avg]})
 # out.to_csv("output.csv", index=False)
-
-def save_to_csv():
-    """
-    TODO: Write documentation
-    """
-    raise NotImplementedError
+# Do this above
 
 """
 Let's revisit our criteria from before. How does this help?
@@ -306,7 +328,6 @@ Let's revisit our criteria from before. How does this help?
 
 # Exercise 1: Revise the class above so that the input is taken from an argument, instead of
 # provided as a hardcoded filename
-# TODO
 
 # - Software testing
 
@@ -319,17 +340,39 @@ Let's revisit our criteria from before. How does this help?
 import pytest
 
 # How pytest works:
-# Unskip to run test
-@pytest.mark.skip
+# Any function with the prefix test_ is considered
+# a test.
+# We can run all tests with pytest lecture.py
+# We can use @pytest.mark.skip decorator to skip
+# tests -- nskip to run test
+# @pytest.mark.skip
 def test_get_life_expectancy_data():
-    data = get_life_expectancy_data()
+    data = get_life_expectancy_data("life-expectancy.csv")
     countries = data["Entity"].unique()
     assert len(countries) == 261
+
+# 261 countries!
+# (This is a property of our dataset -- which countries
+# get included or not is a geopolitical and ethical question)
 
 # - Software reuse
 
 # Exercise 3:
 # Reuse the class to get input in a different way: from the user
+# TODO try this exercise.
+
+"""
+Recap of what we covered today:
+
+- Data processing pipelines as software
+
+- Software design best practices, modularity, and reuse
+
+- A little bit about data validation -- i.e. determining whether
+  whatever assumptions we have about the data may actually be
+  correct.
+
+"""
 
 # - Collaborative development
 # Why is the above code better for collaborative development?
