@@ -372,19 +372,34 @@ Recap of what we covered today:
   whatever assumptions we have about the data may actually be
   correct.
 
+===============================================================
+
+=== Wednesday, Oct 2 ===
+
+=== Poll ===
+
+https://forms.gle/q33kY95XQjUNGk8A6
+https://tinyurl.com/4x7pvkr6
 """
 
+# Continuing with reasons to think of data processing pipelines as software:
+
 # - Collaborative development
-# Why is the above code better for collaborative development?
+# Why is the above code design better for collaborative development?
 
 # - Performance optimization
 #   (More on this shortly)
 
-"""
-=== Design constraints ===
+# - In general: anticipating things that could go wrong
+#   (this point is a good transition to the next section)
 
-Recall that we talkd on the first lecture about software components + design constraints.
-Let's talk more about the design constraints bit.
+"""
+=== Failures and risks ===
+
+Recall that we talked on the first lecture about software components + design constraints.
+More specifically, we are most worried about failures and risks
+which might invalidate our pipeline (wrong results)
+or cause it to misbehave (crash or worse).
 
 What could go wrong in our toy pipeline above?
 Let's go through each stage at a time:
@@ -393,18 +408,10 @@ Let's go through each stage at a time:
 
 What could go wrong here?
 
-
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-
+- Malformed data and type mismatches
+- Wrong data
+- Missing data
+- Private data
 """
 
 """
@@ -446,6 +453,10 @@ Problem: input data could be private
 2. Processing stage
 
 What could go wrong here?
+
+- Software bugs
+- Performance bugs
+- Nondeterminism
 """
 
 """
@@ -465,7 +476,7 @@ Problem: performance bugs
 # Solutions?
 
 """
-Problem: order-depenent and non-deterministic behavior
+Problem: order-dependent and non-deterministic behavior
 """
 
 # Exercise 11: Introduce order-dependent behavior into the pipeline
@@ -478,6 +489,11 @@ Problem: order-depenent and non-deterministic behavior
 3. Output stage
 
 What could go wrong here?
+
+- System errors and exceptions
+- Output formatting
+- Readability
+- Usability
 """
 
 """
@@ -524,9 +540,8 @@ Problem: readability and usability concerns --
 
 """
 In the second stage, we said that one thing that could
-
-One aspect of particular interest to us in this class is the performance in the second
-stage. How do we measure performance?
+go wrong was performance bugs.
+How do we measure performance?
 
 === Performance ===
 

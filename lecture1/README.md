@@ -48,3 +48,23 @@ Plan for today:
 - Measuring performance
 
 Next up is Lecture 2: software engineering and software development tools.
+
+## Wednesday, October 2
+
+Announcements:
+
+- HW0 due today (11:59pm)
+
+- For those still having installation difficulties:
+  Please come to office hours! Hassnain has OH today 5-6pm.
+  If this time doesn't work for you, please let us know after class and we will schedule another installation help time.
+
+Plan for today:
+
+- Failures and risks
+
+  + Issues with input data
+  + Software bugs, performance, and defects
+  + Output failures and usability
+
+- Measuring performance
