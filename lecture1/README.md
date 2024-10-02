@@ -55,9 +55,11 @@ Announcements:
 
 - HW0 due today (11:59pm)
 
-- For those still having installation difficulties:
-  Please come to office hours! Hassnain has OH today 5-6pm.
-  If this time doesn't work for you, please let us know after class and we will schedule another installation help time.
+- We are still working on resolving some installation issues
+  (on Windows in particular -- Mac issues should be mostly resolved,
+  let us know if not.)
+  This won't affect your HW0 score!
+  Please come to OH today 5-6pm if this applies to you.
 
 Plan for today:
 
