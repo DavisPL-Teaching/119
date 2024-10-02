@@ -9,16 +9,16 @@ I will try to keep it up to date, but please see Piazza for the latest informati
 | Week | Date | Topic | Readings & HW | Lecture # |
 | --- | --- | --- | --- | --- |
 | 0 | Sep 25 | Introduction |  | 0 |
-|   | Sep 27 | Data processing basics |  | 1 |
+|   | Sep 27 | Data Processing & Software |  | 1 |
 | 1 | Sep 30 |  |  | 1 |
-|   | Oct 2  | Development Tools | HW0 Due | 2 |
+|   | Oct 2  |  | HW0 Due | 2 |
 |   | Oct 4  |  |  | 2 |
-| 2 | Oct 7  | Data Sources |  | 3 |
+| 2 | Oct 7  | Software Development Tools |  | 3 |
 |   | Oct 9  |  |  | 3 |
-|   | Oct 11 | Data Transformations |  | 3 |
-| 3 | Oct 14 |  |  | 3 |
-|   | Oct 16 | Outputs |  | 3 |
-|   | Oct 18 | Outputs | HW1 due | 3 |
+|   | Oct 11 |  |  | 3 |
+| 3 | Oct 14 | Data Sources, Validation, and Cleaning |  | 3 |
+|   | Oct 16 |  |  | 3 |
+|   | Oct 18 | Data Transformations & Outputs | HW1 due | 3 |
 | 4 | Oct 21 | Overflow |  |  |
 |   | Oct 23 | Section 1 Review |  |  |
 |   | Oct 25 | **Midterm** |  |  |
