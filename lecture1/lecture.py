@@ -378,11 +378,14 @@ Recap of what we covered today:
 
 === Poll ===
 
+Which of the following is a good reason to structure data processing software using well-abstracted modules, functions, and classes? (select all that apply)
+
 https://forms.gle/q33kY95XQjUNGk8A6
 https://tinyurl.com/4x7pvkr6
 """
 
-# Continuing with reasons to think of data processing pipelines as software:
+# (Finishing up)
+# Reasons to think of data processing pipelines as software:
 
 # - Collaborative development
 # Why is the above code design better for collaborative development?
@@ -392,6 +395,16 @@ https://tinyurl.com/4x7pvkr6
 
 # - In general: anticipating things that could go wrong
 #   (this point is a good transition to the next section)
+
+"""
+=== Main function ===
+
+Last time, we used python3 -i lecture.py to run
+the code interactively.
+Let's look at another common way to test out our Python code
+by putting a basic pipeline into a main function at the
+bottom of the file.
+"""
 
 """
 === Failures and risks ===
@@ -433,6 +446,19 @@ Problem: input data could be wrong
 # Solutions?
 
 """
+Discussion questions:
+- If we download multiple versions of this data
+  from different sources (for example, from Wikipedia, from GitHub,
+  etc.) are they likely to have the same countries? Why or why not?
+
+- What can be done to help validate our data has the right set
+  of countries?
+
+- How might choosing a different set of countries affect the
+  app we are using?
+"""
+
+"""
 Problem: input data could be missing
 """
 
@@ -447,7 +473,6 @@ Problem: input data could be private
 # Exercise 8: Insert private data into the CSV file. What happens?
 
 # Solutions?
-
 
 """
 2. Processing stage
@@ -609,3 +634,6 @@ intuitive and direct way possible.
 The tools we see in this class will help us achieve the right abstractions to achieve this simplicity.
 
 """
+
+if __name__ == "__main__":
+    raise NotImplementedError

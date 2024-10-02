@@ -55,11 +55,17 @@ Announcements:
 
 - HW0 due today (11:59pm)
 
-- We are still working on resolving some installation issues
-  (on Windows in particular -- Mac issues should be mostly resolved,
-  let us know if not.)
-  This won't affect your HW0 score!
-  Please come to OH today 5-6pm if this applies to you.
+- We are still working on resolving some installation issues.
+
+  + some issues on Windows were due to winutils + Java version
+  + ensure that Java is installed and try downgrading to Java 11
+  + Please come to OH today 5-6pm if this applies to you!
+
+  Notes:
+  + This won't affect your HW0 score.
+  + We won't need Spark until the 2nd or 3rd homework, so
+    if everything else is working, you should be OK for the time
+    being.
 
 Plan for today:
 
