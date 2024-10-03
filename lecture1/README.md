@@ -67,6 +67,8 @@ Announcements:
     if everything else is working, you should be OK for the time
     being.
 
+- CS minors: DOES count as a upper-div req for CS minor
+
 Plan for today:
 
 - Failures and risks

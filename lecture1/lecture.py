@@ -40,7 +40,8 @@ Try this!
    Lastly type `python3 lecture.py`. You should see the message below.
 """
 
-print("Hello, ECS 119!")
+# CUT -- moved to bottom
+# print("Hello, ECS 119!")
 
 """
 If some step above didn't work, you may be missing some of the software we
@@ -376,9 +377,13 @@ Recap of what we covered today:
 
 === Wednesday, Oct 2 ===
 
+Once again, to follow along: git stash, git pull
+
 === Poll ===
 
 Which of the following is a good reason to structure data processing software using well-abstracted modules, functions, and classes? (select all that apply)
+
+- (options cut)
 
 https://forms.gle/q33kY95XQjUNGk8A6
 https://tinyurl.com/4x7pvkr6
@@ -388,7 +393,7 @@ https://tinyurl.com/4x7pvkr6
 # Reasons to think of data processing pipelines as software:
 
 # - Collaborative development
-# Why is the above code design better for collaborative development?
+#   Why is the above code design better for collaborative development?
 
 # - Performance optimization
 #   (More on this shortly)
@@ -401,6 +406,7 @@ https://tinyurl.com/4x7pvkr6
 
 Last time, we used python3 -i lecture.py to run
 the code interactively.
+
 Let's look at another common way to test out our Python code
 by putting a basic pipeline into a main function at the
 bottom of the file.
@@ -410,6 +416,7 @@ bottom of the file.
 === Failures and risks ===
 
 Recall that we talked on the first lecture about software components + design constraints.
+
 More specifically, we are most worried about failures and risks
 which might invalidate our pipeline (wrong results)
 or cause it to misbehave (crash or worse).
@@ -431,19 +438,54 @@ What could go wrong here?
 Problem: input data could be malformed
 """
 
-# Exercise 4: Insert a syntax error into the CSV file. What happens?
+# Exercise 4: Insert a syntax error by adding an extra comma into the CSV file. What happens?
+
+# A: that row gets shifted over by one
+# All data in each column is now misaligned;
+# some columns contain a mix of year and life expectancy data.
 
 # Exercise 5: Insert a row with a value that is not a number. What happens?
 
+# A: changing the year on just one entry to a string,
+# the "Year" field turned into a string field.
+
+# Reminder about dataframes: every column has a uniform
+# type. (Integer, string, real/float value, etc.)
+
+# Take home point: even a single mislabeled or
+# malformed row can mess up the entire DataFrame
+
 # Solutions?
+
+# - be careful about input data (get your data from
+# a good source and ensure that it's well formed)
+
+# - validation: write and run unit tests to check
+#   check that the input data has the properties we
+#   want.
+
+# e.g.: write a test_year function that goes through
+# the year column and checks that we have integers.
 
 """
 Problem: input data could be wrong
 """
 
+# Example:
+# Code with correct input data:
+# avg. 61.61799192059744
+# Code with incorrect input data:
+# avg.: 48242.7791579047
+
 # Exercise 6: Delete a country or add a new country. What happens?
 
+# Deleting a country:
+# 61.67449487559832 instead of 61.61799192059744
+# (very slightly different)
+
 # Solutions?
+
+# Put extra effort into validating your data!
 
 """
 Discussion questions:
@@ -456,6 +498,12 @@ Discussion questions:
 
 - How might choosing a different set of countries affect the
   app we are using?
+
+Recap from today:
+
+- Python main functions (ways to run code: python3 lecture.py (main function), python3 -i lecture.py (main function + interactive), pytest lecture.py to run unit tests)
+- what can go wrong in a pipeline?
+- input data issues & validation.
 """
 
 """
@@ -635,5 +683,35 @@ The tools we see in this class will help us achieve the right abstractions to ac
 
 """
 
+# What a main function is: the default thing that you run when
+# running a program.
+# Sometimes called an "entrypoint"
+# __name__: a variable that stores the name of the module being run
+
+# print("Hello from outside of main function")
+
 if __name__ == "__main__":
-    raise NotImplementedError
+    # Insert code here that we want to be run by default when the
+    # program is executed.
+
+    # print("Hello from inside of main function")
+
+    print("Hello, ECS 119!")
+
+    # What we can do: add additional code here
+    # to test various functions.
+    # Simple & convenient way to test out your code.
+
+    df = get_life_expectancy_data("life-expectancy.csv")
+
+    stats_summary = LifeExpectancyData()
+    stats_summary.load_statistics(df)
+
+    stats_summary.save_to_file("output.csv")
+
+# Test file: main_test.py
+
+# What have we found? If importing lecture.py as
+# a library, the main function (above) doesn't get run.
+# If running it directly from the terminal,
+# the main function does get run.
