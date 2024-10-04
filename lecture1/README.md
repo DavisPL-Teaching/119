@@ -83,6 +83,8 @@ Plan for today:
 
 Announcements:
 
+- HW0 scores will be posted soon
+
 - Installation: if you are still having trouble on Windows, please try the following options:
   https://piazza.com/class/m12ef423uj5p5/post/25
 
@@ -90,7 +92,7 @@ Announcements:
 
   Option 1: Install everything through pip
   Option 2: Windows Subsystem for Linux (WSL)
-  Option 3: GitHub Codespaces
+  Option 3: GitHub Codespaces (doesn't work on Firefox for some reason)
 
 - My OH 4-5pm
 
@@ -99,3 +101,9 @@ Plan for today:
 - Start with poll
 
 - Finish lecture 1.
+
+  + Finish the discussion of things that can go wrong in your pipeline
+
+  + Talk about performance
+
+  + Further exercises (if we have time)

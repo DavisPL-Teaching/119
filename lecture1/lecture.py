@@ -515,22 +515,34 @@ Following along: git stash, git pull
 
 1. Which of the following are common problems with input data that you might encounter in the real world and in industry?
 
+- (poll options cut)
+
 (Just for fun:)
 2. How many countries are there in the world?
 
 https://forms.gle/QRbiL3cJm6iKkxsW6
 https://tinyurl.com/5n95yyku
 
+Common answers:
+
+- 193: UN Members
+- 195: UN Members + Observers
+- 197: UN Members + Observers + Widely recognized
+- 200-300something: if including all partially recognized countries or territories.
+
+As we saw before, our dataset happens to have 261.
+- e.g.: our dataset did not include all countries with some form of
+  limited recognition, e.g. Somaliland
+  but it would include the 193, 195, or 197 above.
+
 Further resources:
 
 - https://en.wikipedia.org/wiki/List_of_states_with_limited_recognition
 
-- CGP Grey: https://www.youtube.com/watch?v=4AivEQmfPpk
+- CGP Grey: How many countries are there? https://www.youtube.com/watch?v=4AivEQmfPpk
 
-=== Rewriting our pipeline one more time ===
-
-Before we continue, let's rewrite our pipeline one last time as a function
-(I will explain why in a moment -- this is so we can easily measure its performance).
+In any dataset in the real world, it is common for there to be some
+subjective inclusion criteria or measurement choices.
 
 """
 
@@ -539,9 +551,25 @@ Before we continue, let's rewrite our pipeline one last time as a function
 
 What could go wrong here?
 
-- Software bugs
-- Performance bugs
-- Nondeterminism
+- Software bugs -- pipeline is not correct (gives the wrong answer)
+- Performance bugs -- pipeline is correct but is slow
+- Nondeterminism -- pipelines to produce different answers on different runs
+
+    This is actually very common in the data processing world!
+    - e.g.: your pipeline may be a stream of data and every time you run
+    it you are running on a different snapshot, or "window" of the data
+    - e.g.: your pipeline measures something in real time, such as timing
+    - a calculation that requires a random subset of the data (e.g.,
+      statistical random sample)
+    - Neural network?
+    - Running a neural network or large language model with different versions
+      (e.g., different version of GPT every time you call the GPT API)
+    - ML model with stochastic components
+    - Due to parallel and distributed computing
+        If you decide to parallelize your pipeline, and you do it incorrectly,
+        depending on the order in which different operations complete you
+        might get a different answer.
+
 """
 
 """
@@ -553,7 +581,52 @@ What could go wrong here?
 - Output formatting
 - Readability
 - Usability
+
+Often output might be: saving to a file or saving to a database, or even
+saving data to a cloud framework or cloud provider;
+and all of three of these cases could fail.
+e.g. error: you don't have permissions to the file; file already exists;
+not enough memory on the machine/cloud instance; etc.
+
+Summary: whenever saving output, there is the possibility that the save operation
+might fail
+
+Output formatting: make sure to use a good library!
+Things like Pandas will help here -- formatting requirements already solved
+
+When displaying output directly to the user:
+- Are you displaying the most relevant information?
+- Are you displaying too much information?
+- Are you displaying too little information?
+- Are you displaying confusing/incomprehensible information?
+
+e.g.: displaying 10 items we might have a different strategy than if
+we want to display 10,000
+
+example: review dataframe display function
+    - dataframe: display header row, first 5 rows, last 5 rows
+    - shrink the window size ==> fields get replaced by "..."
+
+There are some exercises at the bottom of the file.
+
+=== Rewriting our pipeline one more time ===
+
+Before we continue, let's rewrite our pipeline one last time as a function
+(I will explain why in a moment -- this is so we can easily measure its performance).
+
 """
+
+# Rewriting our pipeline one last time, as a single function
+def pipeline(input_file, output_file):
+    # 1. Input stage
+    df = get_life_expectancy_data(input_file)
+
+    # 2. Processing stage
+    stats_summary = LifeExpectancyData()
+    stats_summary.load_statistics(df)
+
+    # 3. Output stage
+    stats_summary.save_to_file(output_file)
 
 """
 === Performance ===
@@ -566,6 +639,61 @@ Three key performance metrics:
 
 - Throughput
 
+    What is throughput?
+    How fast the pipeline runs, measured per input row or input item.
+
+    Running time almost always varies depending on the size of the input
+    dataset!
+    Often linear: the more input items, the longer it will take to run
+    So it's useful to think about the time per input item.
+
+    Throughput is the inverse of this:
+    Definition / formula:
+        (Number of input items) / (Total running time).
+
+Let's take our pipeline and measure the total running time & the throughput.
+"""
+
+# Use the timeit library -- library that allows us to measure the running
+# time of a Python function
+import timeit
+
+def f():
+    pipeline("life-expectancy.csv", "output.csv")
+
+# timeit.timeit(f, number=100)
+# We see a linear behavior!
+# 100 times: 0.35s
+# 1000 times: 3.28s
+# 10000 times: 33.4s
+# Running time is roughly linear in the size of the input!
+
+def measure_throughput():
+
+    # Get the number of input items
+    # Hardcoded
+    num_input_items = 20755
+
+    # Get the number of runs
+    # Hardcoded
+    num_runs = 1000
+
+    execution_time = timeit.timeit(f, number=num_runs)
+
+    print(f"Execution time for {num_runs}: {execution_time}")
+
+    print(f"Execution time per input run: {execution_time / num_runs}")
+
+    ans = execution_time / (num_runs * num_input_items)
+    print(f"Execution time per input run, per input data item (1/throughput): {ans}")
+
+    # The actual number we want: throughput
+    print(f"Throughput: {1 / ans} items/second")
+
+    # Answer: about 6,000,000 items (or rows) per second!
+    # Pandas is very fast.
+
+"""
 - Latency
 
 - Memory usage
@@ -578,15 +706,6 @@ https://docs.python.org/3/library/timeit.html
 Example syntax:
 timeit.timeit('"-".join(str(n) for n in range(100))', number=10000)
 """
-
-import timeit
-
-def measure_throughput(pipeline):
-    raise NotImplementedError
-
-    # execution_time = timeit.timeit('pipeline()', globals=globals(), number=100)
-
-    # print(f"Execution time for 100 runs: {execution_time} seconds")
 
 def measure_latency(pipeline):
     raise NotImplementedError
@@ -741,12 +860,8 @@ if __name__ == "__main__":
     # to test various functions.
     # Simple & convenient way to test out your code.
 
-    df = get_life_expectancy_data("life-expectancy.csv")
-
-    stats_summary = LifeExpectancyData()
-    stats_summary.load_statistics(df)
-
-    stats_summary.save_to_file("output.csv")
+    # Call our pipeline
+    pipeline("life-expectancy.csv", "output.csv")
 
 # Test file: main_test.py
 
