@@ -535,6 +535,73 @@ Before we continue, let's rewrite our pipeline one last time as a function
 """
 
 """
+2. Processing stage
+
+What could go wrong here?
+
+- Software bugs
+- Performance bugs
+- Nondeterminism
+"""
+
+"""
+3. Output stage
+
+What could go wrong here?
+
+- System errors and exceptions
+- Output formatting
+- Readability
+- Usability
+"""
+
+"""
+=== Performance ===
+
+In the second stage, we said that one thing that could
+go wrong was performance bugs.
+How do we measure performance?
+
+Three key performance metrics:
+
+- Throughput
+
+- Latency
+
+- Memory usage
+
+Let's measure the performance of our toy pipeline.
+
+Timeit:
+https://docs.python.org/3/library/timeit.html
+
+Example syntax:
+timeit.timeit('"-".join(str(n) for n in range(100))', number=10000)
+"""
+
+import timeit
+
+def measure_throughput(pipeline):
+    raise NotImplementedError
+
+    # execution_time = timeit.timeit('pipeline()', globals=globals(), number=100)
+
+    # print(f"Execution time for 100 runs: {execution_time} seconds")
+
+def measure_latency(pipeline):
+    raise NotImplementedError
+
+def measure_memory_usage(pipeline):
+    # There are ways to do this in Python through external libraries.
+    # We will cover this later.
+
+    raise NotImplementedError
+
+"""
+=== Additional exercises (skip depending on time) ===
+"""
+
+"""
 Problem: input data could be missing
 """
 
@@ -549,16 +616,6 @@ Problem: input data could be private
 # Exercise 8: Insert private data into the CSV file. What happens?
 
 # Solutions?
-
-"""
-2. Processing stage
-
-What could go wrong here?
-
-- Software bugs
-- Performance bugs
-- Nondeterminism
-"""
 
 """
 Problem: software bugs
@@ -585,17 +642,6 @@ Problem: order-dependent and non-deterministic behavior
 # Exercise 12: Introduce non-deterministic behavior into the pipeline
 
 # Solutions?
-
-"""
-3. Output stage
-
-What could go wrong here?
-
-- System errors and exceptions
-- Output formatting
-- Readability
-- Usability
-"""
 
 """
 Problem: output errors and exceptions
@@ -638,48 +684,6 @@ Problem: readability and usability concerns --
 # Exercise 21: Provide unhelpful information as output
 
 # Solutions?
-
-"""
-In the second stage, we said that one thing that could
-go wrong was performance bugs.
-How do we measure performance?
-
-=== Performance ===
-
-Three key performance metrics:
-
-- Throughput
-
-- Latency
-
-- Memory usage
-
-Let's measure the performance of our toy pipeline.
-
-Timeit:
-https://docs.python.org/3/library/timeit.html
-
-Example syntax:
-timeit.timeit('"-".join(str(n) for n in range(100))', number=10000)
-"""
-
-import timeit
-
-def measure_throughput(pipeline):
-    raise NotImplementedError
-
-    # execution_time = timeit.timeit('pipeline()', globals=globals(), number=100)
-
-    # print(f"Execution time for 100 runs: {execution_time} seconds")
-
-def measure_latency():
-    raise NotImplementedError
-
-def measure_memory_usage(pipeline):
-    # There are ways to do this in Python through external libraries.
-    # We will cover this later.
-
-    raise NotImplementedError
 
 """
 === Overview of the rest of the course ===
