@@ -504,6 +504,34 @@ Recap from today:
 - Python main functions (ways to run code: python3 lecture.py (main function), python3 -i lecture.py (main function + interactive), pytest lecture.py to run unit tests)
 - what can go wrong in a pipeline?
 - input data issues & validation.
+
+===============================================================
+
+=== Friday, Oct 4 ===
+
+Following along: git stash, git pull
+
+=== Poll ===
+
+1. Which of the following are common problems with input data that you might encounter in the real world and in industry?
+
+(Just for fun:)
+2. How many countries are there in the world?
+
+https://forms.gle/QRbiL3cJm6iKkxsW6
+https://tinyurl.com/5n95yyku
+
+Further resources:
+
+- https://en.wikipedia.org/wiki/List_of_states_with_limited_recognition
+
+- CGP Grey: https://www.youtube.com/watch?v=4AivEQmfPpk
+
+=== Rewriting our pipeline one more time ===
+
+Before we continue, let's rewrite our pipeline one last time as a function
+(I will explain why in a moment -- this is so we can easily measure its performance).
+
 """
 
 """
@@ -637,13 +665,20 @@ timeit.timeit('"-".join(str(n) for n in range(100))', number=10000)
 
 import timeit
 
-def measure_throughput():
+def measure_throughput(pipeline):
     raise NotImplementedError
+
+    # execution_time = timeit.timeit('pipeline()', globals=globals(), number=100)
+
+    # print(f"Execution time for 100 runs: {execution_time} seconds")
 
 def measure_latency():
     raise NotImplementedError
 
-def measure_memory_usage():
+def measure_memory_usage(pipeline):
+    # There are ways to do this in Python through external libraries.
+    # We will cover this later.
+
     raise NotImplementedError
 
 """
