@@ -306,7 +306,11 @@ class LifeExpectancyData:
         self.avg = df["Period life expectancy at birth - Sex: all - Age: 0"].mean()
 
     def save_to_file(self, filename):
-        out = pd.DataFrame({"Min year": [self.min], "Max year": [self.max], "Average life expectancy": [self.avg]})
+        out = pd.DataFrame({
+            "Min year": [self.min],
+            "Max year": [self.max],
+            "Average life expectancy": [self.avg],
+        })
         out.to_csv(filename, index=False)
 
     def get_from_user(self):
