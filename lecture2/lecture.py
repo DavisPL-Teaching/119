@@ -1,7 +1,8 @@
 """
 Lecture 2: The Shell
 
-This lecture will cover the shell (or terminal), including:
+This lecture will cover the shell (AKA: terminal or command line),
+including:
 
 - command line basics: cd, ls, cat, less, touch, text editors
 
@@ -13,8 +14,9 @@ This lecture will cover the shell (or terminal), including:
 
 - pattern matching: grep, find, awk, sed
 
+Background:
 I will assume no background on the shell other than the
-basic commands we have already been typing in class.
+one or two basic commands we have been typing in class.
 (Like `python3 lecture.py`)
 
 ===== Introduction =====
@@ -64,7 +66,15 @@ interaction happens "under the hood":
 3. Much of code development, building, configuration, management, input,
    and output happens through the shell in the real world.
 
-Examples:
+Let's open up the shell now.
+"""
+
+# Mac: Cmd+Space Terminal
+# VSCode: Ctrl+` (backtick)
+# GitHub Codespaces: Bottom part of the screen
+
+"""
+Examples where programmers and data scientists regularly use the shell:
 
 - You have bought a new server machine from Dell, and you want to connect to
   it to install some software on it.
@@ -82,7 +92,14 @@ Or even, simply:
 Or even more simply:
 
 - You have a program, and you want to run it.
+"""
 
+# python3 lecture.py
+print("Welcome to ECS Lecture 2.")
+
+# Quitting: Ctrl-C, Ctrl-D
+
+"""
 === What is the Shell? ===
 
 The shell is a way to talk to your computer, run arbitrary commands,
@@ -113,8 +130,6 @@ What do these programs have in common?
 Let's try running a couple of these to remind ourselves how these work.
 """
 
-print("Welcome to ECS Lecture 2.")
-
 # Try:
 # python3, ls, pytest, conda
 
@@ -141,6 +156,9 @@ def ls_2():
 # In addition to ., there is another special output: ..
 
 """
+Common theme:
+Everything we can do in the shell, we can also do in Python directly.
+
 === Getting started: informational commands ===
 
 The most important thing you need to know when opening a shell is
@@ -337,6 +355,8 @@ Things we want to cover:
 
 - How Git works
 
+- Shell combinators (|| && > < >> <<) -- often useful
+
 - Using the shell for cleaning, filtering, finding, and modifying files
 
   + cf.: grep, find, sed, awk
@@ -362,5 +382,13 @@ https://github.com/ibigio/shell-ai
 Future of the shell:
 - https://www.youtube.com/watch?v=dMrfLCjtHM4
 - https://dl.acm.org/doi/pdf/10.1145/3458336.3465296
+
+Regular expressions:
+
+- Regex debugger: https://regex101.com/
+
+- Regex explainer: https://regexr.com/
+
+  Example to try for a URL: [a-zA-Z]+\.[a-z]+( |\.|\n)
 
 """

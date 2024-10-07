@@ -6,9 +6,9 @@ Announcements:
 
 - HW0 and participation grades posted
 
-- HW1
-
-- Schedule update
+- You can receive partial credit for submitting HW0 late.
+  HW0 is used to associate your email with your name/ID, so you
+  will need to submit HW0 before seeing any of your participation scores.
 
 Plan for today:
 
