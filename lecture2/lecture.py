@@ -12,7 +12,7 @@ including:
 
 - git basics: status, add, push, commit, pull, rebase, branch
 
-- pattern matching: grep, find, awk, sed
+- searching / pattern matching: find, grep, awk, sed
 
 Background:
 I will assume no background on the shell other than the
@@ -97,6 +97,7 @@ Or even more simply:
 # python3 lecture.py
 print("Welcome to ECS Lecture 2.")
 
+# python3 -i lecture.py
 # Quitting: Ctrl-C, Ctrl-D
 
 """
@@ -133,31 +134,73 @@ Let's try running a couple of these to remind ourselves how these work.
 # Try:
 # python3, ls, pytest, conda
 
+# ls: doesn't show hidden folders and files
+# On Mac: anything starting with a . is hidden
+
+# To show hidden + other metadata
+# ls -alh
+# ^^^^^^^ TL;DR use this to show all the stuff in a folder
+
 """
 Can we do this in Python?
 
 Sure!
 """
 
+# os is the operating system library
+# i.e.: how Python interacts with the operating system
 import os
 
 def ls_1():
+    # Listdir: input a folder, show me all the files
+    # and folders inside it
     # The . refers to the current directory
+    # Also includes hidden files/folders.
     print(os.listdir("."))
 
+ls_1()
+
+# What's the . folder?
+# That stands for the current, or working directory
+# for the program
+
+# In python it's often useful to call into another
+# command -- you can think of this as basically calling into the shell from Python.
+
+# Library for running other commands
 import subprocess
 
 def ls_2():
     subprocess.run(["ls", "-alh"])
 
-# ls_1()
-# ls_2()
+ls_2()
+# ^^^^ same output as if I ran the command line directly
 
-# In addition to ., there is another special output: ..
+# In addition to ., there is another special folder: ..
 
 """
 Common theme:
 Everything we can do in the shell, we can also do in Python directly.
+But, sometimes in Python we just directly call into
+commands, and knowing shell syntax is important as it
+gives a very powerful way for Python programs to interact
+with the outside world.
+
+=== Recap ===
+
+What we have learned:
+1. The shell is a very powerful "glue code" system that is
+   how all programs interact on your operating system
+2. Knowing the shell is useful for example for configuration,
+   input, output, running commands in other languages,
+   running and configuring other tools, etc.
+   (Basically: if you can't find a library for it, may
+    have to resort to using the shell)
+3. It's also the main way that we interact with programs
+  and run/test/debug our code.
+4. We saw how to run basic commands like ls and ls -alh,
+   special folders and hidden folders, and what that
+   means.
 
 === Getting started: informational commands ===
 
@@ -389,6 +432,6 @@ Regular expressions:
 
 - Regex explainer: https://regexr.com/
 
-  Example to try for a URL: [a-zA-Z]+\.[a-z]+( |\.|\n)
+  Example to try for a URL: [a-zA-Z]+\\.[a-z]+( |\\.|\n)
 
 """

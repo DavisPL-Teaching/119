@@ -28,6 +28,11 @@ return to data processing in Pandas starting from Lecture 3
 parallel/distributed data processing as soon as possible but likely
 not until halfway through the quarter.
 
+### Following along
+
+`git status`, `git stash`, and then `git pull`
+`cd lecture2` -- the same `python3 -i lecture.py`
+
 ### Poll
 
 What are the units of throughput?
@@ -37,13 +42,10 @@ https://tinyurl.com/mesbhpdk
 
 Finishing some definitions:
 
-- Throughput = ...
+- Throughput = Amount of data (or number of input items)
+  processed per unit time
 
-- Often calculated as:
-
-- Latency = ...
-
-- Often calculated as:
+- Latency = Amount of time to process a single data item
 
 For a cleaned up example, see lecture1/throughput_latency.py.
 
