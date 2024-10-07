@@ -10,17 +10,23 @@ Announcements:
   HW0 is used to associate your email with your name/ID, so you
   will need to submit HW0 before seeing any of your participation scores.
 
+- Questions?
+
 Plan for today:
 
 - Poll
 
-- Finish example from last time: Throughput & Latency
+- Cleaned up example from last time: Throughput & Latency
 
 - Start lecture 2
 
   + Lecture 2 will focus on the shell (your terminal)
 
-  + Then we will return to the main data processing content
+Looking forward:
+return to data processing in Pandas starting from Lecture 3
+(input validation, cleaning, data wrangling, transformations, scraping, etc.)
+parallel/distributed data processing as soon as possible but likely
+not until halfway through the quarter.
 
 ### Poll
 
