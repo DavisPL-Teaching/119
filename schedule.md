@@ -9,41 +9,41 @@ I will try to keep it up to date, but please see Piazza for the latest informati
 | Week | Date | Topic | Readings & HW | Lecture # |
 | --- | --- | --- | --- | --- |
 | 0 | Sep 25 | Introduction |  | 0 |
-|   | Sep 27 | Data Processing & Software |  | 1 |
+|   | Sep 27 | Introduction to Data Processing Software |  | 1 |
 | 1 | Sep 30 |  |  | 1 |
 |   | Oct 2  |  | HW0 Due | 2 |
 |   | Oct 4  |  |  | 2 |
-| 2 | Oct 7  | Software Development Tools |  | 3 |
+| 2 | Oct 7  | The Shell |  | 3 |
 |   | Oct 9  |  |  | 3 |
 |   | Oct 11 |  |  | 3 |
 | 3 | Oct 14 | Data Sources, Validation, and Cleaning |  | 3 |
 |   | Oct 16 |  |  | 3 |
-|   | Oct 18 | Data Transformations & Outputs | HW1 due | 3 |
-| 4 | Oct 21 | Overflow |  |  |
-|   | Oct 23 | Section 1 Review |  |  |
-|   | Oct 25 | **Midterm** |  |  |
+|   | Oct 18 |  | HW1 due | 3 |
+| 4 | Oct 21 | Data Transformations & Outputs |  |  |
+|   | Oct 23 |  |  |  |
+|   | Oct 25 |  |  |  |
+| 5 | Oct 28 | Overflow |  | 4 |
+|   | Oct 30 | Section 1 Review |  | 4 |
+|   | Nov 1  | **Midterm** |  | 4 |
 
 ## Section 2: Parallelism
 
 | Week | Date | Topic | Readings & HW | Lecture # |
 | --- | --- | --- | --- | --- |
-| 5 | Oct 28 | Introduction to Parallelism |  | 4 |
-|   | Oct 30 |  |  | 4 |
-|   | Nov 1  |  |  | 4 |
-| 6 | Nov 4  | Parallelism Tools (MapReduce, Spark, Hadoop) |  | 5 |
+| 6 | Nov 4  | Parallelism |  | 5 |
 |   | Nov 6  |  |  | 5 |
-|   | Nov 8  |  | HW2 due | 5 |
+|   | Nov 8  |  |  | 5 |
 | 7 | Nov 11 | **No Class** (Veterans Day) |  |  |
-|   | Nov 13 | Advanced Programming in Spark |  | 6 |
-|   | Nov 15 |  |  | 6 |
+|   | Nov 13 | Advanced MapReduce and Spark |  | 6 |
+|   | Nov 15 |  | HW2 due | 6 |
+| 8 | Nov 18 | Spark Streaming[^1] |  | 7 |
+|   | Nov 20 |  |  | 7 |
+|   | Nov 22 |  |  | 7 |
 
-## Section 3: Advanced Topics
+## Section 3: Distributed Computing
 
 | Week | Date | Topic | Readings & HW | Lecture # |
 | --- | --- | --- | --- | --- |
-| 8 | Nov 18 | Streaming[^1] |  | 7 |
-|   | Nov 20 |  |  | 7 |
-|   | Nov 22 |  |  | 7 |
 | 9 | Nov 25 | Distributed Consistency[^1] |  | 8 |
 |   | Nov 27 |  | HW3 (final project) due | 8 |
 |   | Nov 29 | **No Class** (Thanksgiving) |
