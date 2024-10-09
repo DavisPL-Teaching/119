@@ -64,19 +64,21 @@ Announcements:
 
 - Add deadline is tomorrow (Oct 10) (Drop deadline: Oct 22)
 
-- Midterm currently scheduled in-class for Nov 1
+- Midterm currently scheduled in-class for Nov 1 (tentative)
 
 Plan:
 
 - Start with the poll
 
-- Shell: looking around, navigating, getting help, command arguments, I/O
-
-- Dangers of the shell
+- Shell: looking around, navigating, getting help, command arguments, I/O, Dangers of the shell
 
 - Recap & Q+A
 
 - (Next time) Git & GitHub basics
+
+### Following along
+
+git status, git stash, git pull
 
 ### Poll
 
