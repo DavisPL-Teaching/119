@@ -202,17 +202,32 @@ What we have learned:
    special folders and hidden folders, and what that
    means.
 
-=== Getting started: informational commands ===
+=== Oct 9 ===
 
-The most important thing you need to know when opening a shell is
+We saw how to run basic commands in the shell and what it means.
+Today: a tour of the shell (looking around, navigating, help, I/O, etc.)
+
+=== Informational commands: looking around ===
+
+An analgoy:
+There used to be a whole genre of text-based adventure games.
+the shell is kind of like this.
+
+e.g.
+- Zork (1977):
+  https://textadventures.co.uk/games/play/5zyoqrsugeopel3ffhz_vq
+- Peasant's Quest (2004):
+  https://homestarrunner.com/disk4of12
+
+Just as in a text-based adventure,
+the most important thing you need to know when opening a shell is
 how to "look around". What do you see?
 
-(NOTE:The same applies to all commands, including external tools people have built: knowing how to "see" the current
-state relevant to your command is often the first step to get a grip on the command.)
-
-- Aside: this used to be a whole genre of text adventure games.
-  e.g. Zork (1977):
-  https://textadventures.co.uk/games/play/5zyoqrsugeopel3ffhz_vq
+The same advice applies to all commands!
+Including external tools people have built, and even commands outside of the shell, like
+functions in Python:
+knowing how to "see" the current
+state relevant to your command is often the first step to get more comfortable with the command.
 
 So how do we "look around"?
 
@@ -262,30 +277,10 @@ def less():
 # less()
 
 """
-=== Navigation ===
-
-Once we know how to "look around", we can make a plan for what to do.
-
-(NOTE: The same applies to all commands: knowing how to "modify" the current
-state relevant to your command is often the second step to get a grip on how
-the command works.)
-
-So what should we do?
-We need a way to move around and modify stuff:
-
-- cd
-- mkdir
-- touch
-"""
-
-def touch():
-    # TODO
-    raise NotImplementedError
-
-"""
 === Getting help ===
 
-This may actually be more important than the previous two!
+Another thing that is fundamentally important -- and perhaps even more important
+than the last thing -- is getting help!
 
 One of the following 3 things usually works:
 - `man cmd` or `cmd --help` or `cmd -h`
@@ -297,7 +292,64 @@ def get_help_for_command(cmd):
     subprocess.run([cmd, "-h"])
     subprocess.run(["man", cmd])
 
-# get_help_for_command("python3")
+get_help_for_command("python3")
+
+"""
+Other ways to get help?
+
+Some shell experts will tell you that you that you shouldn't be "alt-tab"ing outside of the
+shell, and should know how to do everything purely within it by getting help as above.
+But this is not really true.
+Using Google/AI can be really useful for a number of reasons.
+
+You can usually use:
+- Google
+- chatGPT
+- (new!) AI tools in the shell: e.g. https://github.com/ibigio/shell-ai
+
+to determine the right command to run for what you want to do.
+
+Important caveat: you need to know what it is you want to do first!
+"""
+
+# Example:
+# how to find all files matching a name unix?
+# https://www.google.com/search?client=firefox-b-1-d&q=how+to+find+all+files+matching+a+name+unix
+# https://stackoverflow.com/questions/3786606/find-all-files-matching-name-on-linux-system-and-search-with-them-for-text
+
+# Important caveats:
+# - we still needed to know the platform we are on (Unix)
+# - we still needed to know how to modify the command for your own purposes
+# - (for the AI tool) you still need to figure out how to install it (:
+#   + as some of you have noticed (especially on Windows), installing some software dev tools
+#     can seem like even more work than using/understanding the program itself.
+
+"""
+=== Navigation ===
+
+Once we know how to "look around", and how to "get help",
+we can make a plan for what to do.
+
+The same advice applies to all commands: knowing how to "modify" the current
+state relevant to your command is often the second step to get a grip on how
+the command works.
+
+(And, once again, this is also exactly what we would do in a text-based adventure :))
+
+So what should we do?
+We need a way to move around and modify stuff:
+
+- cd
+- mkdir
+- touch
+"""
+
+def cd(dir):
+    os.chdir(dir)
+
+def touch(file):
+    with open(file, 'w') as fh:
+        fh.write("\n")
 
 """
 === Anatomy of a shell command ===
@@ -314,6 +366,34 @@ How subprocess works:
 def run_python3_file(file):
     # TODO
     raise NotImplementedError
+
+def run_python3_file_interactive(file):
+    # TODO
+    raise NotImplementedError
+
+"""
+=== I/O ===
+
+What about I/O?
+Remember that one of the primary reasons for the shell's existence is to
+"glue" different programs together. What does that mean?
+
+Operators (most important):
+- |
+- >
+- >>
+- <
+- <<
+
+Exercises:
+
+- cat followed by ls
+- cat followed by cd
+- ls, save the results to a file
+- python3, save the results to a file
+- (Hard:) ls followed by cd into the first directory of interest
+
+"""
 
 """
 === Dangers of the shell ===
@@ -349,7 +429,7 @@ sudo: run a command in true "admin" mode
 # sudo rm -rf "/very/important/operating-system/file"
 
 """
-=== What is the Shell? (continued) ===
+=== What is the Shell? (recap) ===
 
 The shell IS:
 
