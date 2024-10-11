@@ -563,29 +563,52 @@ Most useful:
   cmd1 || cmd2 -- do cmd1, if it fails, do command 2
   cmd1 && cmd2 -- do cmd1, if it succeeds, do command 2
 
-- |
-  Chains together two commands
-
 Examples:
   python3 lecture.py || echo "Hello"
   python3 lecture.py && echo "Hello"
 
 (Skip most of these depending on time)
 
+- |
+  Chains together two commands
+
 Exercises:
 
 - cat followed by ls
 
-  slightly wrong syntax:
-  cat folder.txt | ls
+  Fixed example from class: cat folder.txt | xargs ls
 
-  We can fix this next time.
+  Better example (more common):
+  Using "grep" to search for a particular pattern
+
+  Example, find all polls in lecture 1:
+
+    cat ../lecture1/lecture.py | grep "forms.gle"
+
+  Find all packages installed with conda that contain the word "data":
+
+    conda list | grep "data"
+
+  Output:
+
+    astropy-iers-data         0.2024.6.3.0.31.14 py312hca03da5_0
+    datashader                0.16.2          py312hca03da5_0
+    importlib-metadata        7.0.1           py312hca03da5_0
+    python-tzdata             2023.3             pyhd3eb1b0_0
+    stack_data                0.2.0              pyhd3eb1b0_0
+    tzdata                    2024a                h04d1e81_0
+    unicodedata2              15.1.0          py312h80987f9_0
 
 Skipped for time:
+- ls followed by cat
+  (equivalent to just ls)
 - cat followed by cd
+  (using xargs)
 - ls, save the results to a file
+  (using >)
 - python3, save the results to a file
-- (Hard:) ls followed by cd into the first directory of interest
+  (using >)
+- (Hard) cat followed by cd into the first directory of interest
 
 === Git ===
 

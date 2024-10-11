@@ -1,1 +1,1 @@
-../lecture2
+../lecture1
