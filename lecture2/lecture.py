@@ -376,7 +376,7 @@ def less():
 cat_1()
 cat_2()
 
-less()
+# less()
 
 """
 This concludes the first part on "looking around"
@@ -413,7 +413,7 @@ Shell, continued
 
 Recall the three-part model: Looking around, getting help, doing something
 
-Zork demo:
+=== Zork demo ===
 
 https://textadventures.co.uk/games/play/5zyoqrsugeopel3ffhz_vq
 
@@ -442,6 +442,8 @@ You can usually use:
 - chatGPT
 - (new!) AI tools in the shell: e.g. https://github.com/ibigio/shell-ai
 
+# Example: q make a new git branch -> returns the right git syntax
+
 to determine the right command to run for what you want to do.
 
 Important caveat: you need to know what it is you want to do first!
@@ -451,11 +453,12 @@ Important caveat: you need to know what it is you want to do first!
 # how to find all files matching a name unix?
 # https://www.google.com/search?client=firefox-b-1-d&q=how+to+find+all+files+matching+a+name+unix
 # https://stackoverflow.com/questions/3786606/find-all-files-matching-name-on-linux-system-and-search-with-them-for-text
+# find ../lecture1 -type f -name lecture.py -exec grep -l "=== Poll ===" {} +
 
 # Important notes:
 # Using Google+AI doesn't obliviate the need to understand things ourselves.
-# - we still needed to know the platform we are on (Unix)
 # - we still needed to know how to modify the command for your own purposes
+# - we still needed to know the platform we are on (Unix)
 # - (for the AI tool) you still need to figure out how to install it (:
 #   + as some of you have noticed (especially on Windows), installing some software dev tools
 #     can seem like even more work than using/understanding the program itself.
@@ -469,43 +472,70 @@ we can make a plan for what to do.
 The same advice applies to all commands: knowing how to "modify" the current
 state relevant to your command is often the second step to get a grip on how
 the command works.
+(In the context of a Python library such as Pandas:
+ python3 -i to interactively "look around"
+ the values of variables, the online documentation to see the
+ different functions available, actually write code to do what
+ you want.)
 
 (And, once again, this is also exactly what we would do in a text-based adventure :))
 
 So what should we do?
 We need a way to move around and modify stuff:
 
-- cd
-- mkdir
-- touch
+- cd -- change directory
+- mkdir -- make a new directory
+- touch -- make a new file
+
+Example:
+- mkdir subfolder
+- cd subfolder
+- touch mod.py
+- open mod.py
 """
 
 def cd(dir):
+    # Sometimes necessary to change the directory from which your
+    # script was called
     os.chdir(dir)
 
 def touch(file):
     with open(file, 'w') as fh:
         fh.write("\n")
 
+# touch("mod-2.py")
+
 """
 === Anatomy of a shell command ===
 
 Commands are given arguments, like this:
 
+cmd -<argument name> <argument value>
 cmd --<argument name> <argument value>
+
+Example:
+  git --version to get the version of git
+  OR git -v are both equivalent
+
+This is typical: usually we use a single dash + a single letter
+as a shortcut for a double dash plus a long argument name.
 
 We have seen some of these already.
 
 How subprocess works:
 """
 
-def run_python3_file(file):
-    # TODO
-    raise NotImplementedError
+def run_git_version():
+    # Both of these are equivalent
+    subprocess.run(["git", "--version"])
+    subprocess.run(["git", "-v"])
+
+# run_git_version()
 
 def run_python3_file_interactive(file):
-    # TODO
-    raise NotImplementedError
+    subprocess.run(["python3", "-i", file])
+
+# run_python3_file_interactive("subfolder/mod.py")
 
 """
 === I/O ===
@@ -518,19 +548,45 @@ Selected list of important operators
 (also called shell combinators):
 - |, ||, &&, >, >>, <, <<
 
+Most useful:
+- Operator >
+  Ends the output into a file.
+  (This is called redirection)
+
+- Operator >>
+  Instead of replacing the file, append new content to the end of it
+
+- || and &&
+  Behave like "or" and "and" in regular programs
+  Useful for error handling
+
+  cmd1 || cmd2 -- do cmd1, if it fails, do command 2
+  cmd1 && cmd2 -- do cmd1, if it succeeds, do command 2
+
+- |
+  Chains together two commands
+
+Examples:
+  python3 lecture.py || echo "Hello"
+  python3 lecture.py && echo "Hello"
+
 (Skip most of these depending on time)
 
 Exercises:
 
 - cat followed by ls
+
+  slightly wrong syntax:
+  cat folder.txt | ls
+
+  We can fix this next time.
+
+Skipped for time:
 - cat followed by cd
 - ls, save the results to a file
 - python3, save the results to a file
 - (Hard:) ls followed by cd into the first directory of interest
 
-"""
-
-"""
 === Git ===
 
 We can think of git under the same model as other shell commands!
@@ -552,12 +608,14 @@ Finally, doing stuff:
 
 For getting others' changes:
 - git pull
+
+(Related commands -- not as worried about:)
 - git fetch
 - git checkout
 
 For sharing/publishing your own changes
 (a common sequence of three to run):
-- git add
+- git add .
 - git commit
 - git push
 

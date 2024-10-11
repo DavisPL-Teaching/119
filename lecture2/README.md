@@ -90,7 +90,9 @@ https://tinyurl.com/2668rc6c
 
 ## Oct 11 (Friday)
 
-Announcements: None
+Announcements:
+
+- HW1 is in the works (planned release on Monday)
 
 Plan:
 
