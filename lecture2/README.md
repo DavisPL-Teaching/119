@@ -89,3 +89,34 @@ https://forms.gle/asAcaEewqAvk4PvB8
 https://tinyurl.com/2668rc6c
 
 ## Oct 11 (Friday)
+
+Announcements: None
+
+Plan:
+
+- Start with the poll
+
+- Continue lecture on the shell
+
+  + "Getting help" (continued)
+
+  + "Doing things"
+
+  + Command arguments
+
+  + I/O
+
+  + Understanding git
+
+  + Dangers of the shell
+
+If you haven't yet:
+do a git status, git stash, git pull.
+
+### Poll
+
+Which of the following are "informational" commands?
+Informational commands are like "looking around"; they do not change the underlying state of the shell.
+
+https://forms.gle/vMdYx59n1vqFEbtb6
+https://tinyurl.com/58nsj63c

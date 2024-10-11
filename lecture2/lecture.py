@@ -202,6 +202,8 @@ What we have learned:
    special folders and hidden folders, and what that
    means.
 
+=============================================
+
 === Oct 9 ===
 
 We saw how to run basic commands in the shell and what it means.
@@ -402,6 +404,22 @@ We saw looking around
 Tutorial on the state of the shell (current working directory, environment variables, file contents)
 Next time we will look at getting help + navigating/doing stuff
 And we will also talk about Git, dangers of the shell, and other Q+A.
+
+=============================================
+
+=== Oct 11 ===
+
+Shell, continued
+
+Recall the three-part model: Looking around, getting help, doing something
+
+Zork demo:
+
+https://textadventures.co.uk/games/play/5zyoqrsugeopel3ffhz_vq
+
+=== Getting help, continued ===
+
+Let's run our "getting help" commands in Python:
 """
 
 def get_help_for_command(cmd):
@@ -416,8 +434,8 @@ Other ways to get help?
 
 Some shell experts will tell you that you that you shouldn't be "alt-tab"ing outside of the
 shell, and should know how to do everything purely within it by getting help as above.
-But this is not really true.
-Using Google/AI can be really useful for a number of reasons.
+I don't agree with this advice.
+Using Google/AI can be really useful for a number of reasons!
 
 You can usually use:
 - Google
@@ -434,7 +452,8 @@ Important caveat: you need to know what it is you want to do first!
 # https://www.google.com/search?client=firefox-b-1-d&q=how+to+find+all+files+matching+a+name+unix
 # https://stackoverflow.com/questions/3786606/find-all-files-matching-name-on-linux-system-and-search-with-them-for-text
 
-# Important caveats:
+# Important notes:
+# Using Google+AI doesn't obliviate the need to understand things ourselves.
 # - we still needed to know the platform we are on (Unix)
 # - we still needed to know how to modify the command for your own purposes
 # - (for the AI tool) you still need to figure out how to install it (:
@@ -495,12 +514,11 @@ What about I/O?
 Remember that one of the primary reasons for the shell's existence is to
 "glue" different programs together. What does that mean?
 
-Operators (most important):
-- |
-- >
-- >>
-- <
-- <<
+Selected list of important operators
+(also called shell combinators):
+- |, ||, &&, >, >>, <, <<
+
+(Skip most of these depending on time)
 
 Exercises:
 
@@ -511,6 +529,50 @@ Exercises:
 - (Hard:) ls followed by cd into the first directory of interest
 
 """
+
+"""
+=== Git ===
+
+We can think of git under the same model as other shell commands!
+
+Informational commands:
+- git status
+- git log
+- git log --oneline
+- git branch -v
+
+What about help commands? Try:
+- man git
+- git status --help
+- git log --help
+- git add --help
+- git commit --help
+
+Finally, doing stuff:
+
+For getting others' changes:
+- git pull
+- git fetch
+- git checkout
+
+For sharing/publishing your own changes
+(a common sequence of three to run):
+- git add
+- git commit
+- git push
+
+Others (selected most useful):
+- git rebase
+- git rebase -i
+- git merge
+- git branch
+
+Just like before, we can also run these commands in Python.
+"""
+
+def git_status():
+    # TODO
+    raise NotImplementedError
 
 """
 === Dangers of the shell ===
@@ -546,7 +608,7 @@ sudo: run a command in true "admin" mode
 # sudo rm -rf "/very/important/operating-system/file"
 
 """
-=== What is the Shell? (recap) ===
+=== What is the Shell? (revisited) ===
 
 The shell IS:
 
@@ -591,17 +653,11 @@ A: In fact, we have seen that anything that can be done in the shell
 
 === Where we are going next? ===
 
-Things we want to cover:
-
-- How Git works
-
-- Shell combinators (|| && > < >> <<) -- often useful
+Things we didn't cover:
 
 - Using the shell for cleaning, filtering, finding, and modifying files
 
   + cf.: grep, find, sed, awk
-
-We will mention but probably not cover:
 
 - Regular expressions for pattern matching in text
 
