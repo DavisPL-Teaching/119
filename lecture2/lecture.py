@@ -616,8 +616,32 @@ For getting others' changes:
 For sharing/publishing your own changes
 (a common sequence of three to run):
 - git add .
-- git commit
+
+  After a git add, I usually do a:
+  git status
+  git diff --staged
+
+  AND:
+  Run the code again just to make sure everything looks good
+
+- git commit -m "Commit message"
+
+  Modify what you just did:
+  git commit --amend
+
+  Then I would do a git status again
+
 - git push
+
+=== Recap ===
+
+We finished the "getting help" part and saw the "doing stuff" part
+We saw command arguments and input/output
+We saw the basics of git
+
+We will finish the rest of the file next time.
+
+=========================================
 
 Others (selected most useful):
 - git rebase
