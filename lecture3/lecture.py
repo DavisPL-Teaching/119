@@ -31,8 +31,17 @@ We won't go into detail about data wrangling or cleaning at this stage
 one-hot encoding, etc.)
 I've also decided to postpone topics like web scraping and API access
 for a later lecture.
-We also won't cover advanced stastical operations like time series analysis,
-machine learning, etc. though they all have analogs in Pandas.
+We also won't cover stastical analysis tasks like time series analysis,
+regression, supervised learning, unsupervised learning and data mining, etc.
+(these should have been covered in many of your other DS courses),
+but note that these all have analogs in Pandas.
+
+=== Look around, get help, do stuff model ===
+
+Just as in the shell lecture, the look around, get help, do stuff model
+is useful for understanding a new Python class...
+
+We'll keep this in mind as we go through.
 
 === Getting Started ===
 
@@ -46,7 +55,10 @@ def load_data():
     return pd.read_csv('population.csv')
 
 """
+
 === Informational commands ===
+
+So, we've loaded a dataframe, what's the first step?
 
 We have already seen how to view the data (to stdout),
 first 5 rows, last 5 rows.
@@ -78,32 +90,103 @@ Your answers:
 My answers (we will cover):
 
 - Get the column names and types
+  .columns
+  .info
+
 - Get the shape
+  .shape
+
+  This is analagous to the shape of Numpy arrays.
+
+  We can also get the shape of a single column or row,
+  or even the column headers (for example).
+
+  .columns.shape
+  ["column1"].shape
+  ["column1", "column2"].shape
+  .iloc[0].shape
+
 - Get a random sample
+
+  .sample(5)
+
 - Get the number of unique values in each column
+
+  .nunique()
+  .nunique(axis=1)
+
 - See how we are doing on missing values
 
+  .isnull()
+  .notnull()
+
+  What do we discover?
 """
 
 # TODO
 
 """
+=== Getting help ===
+
+Python actually has lots of ways to get help about a class.
+
+I will mention some that I have found particularly useful:
+
+- dir(df)
+- help(pd.DataFrame)
+- help(df)
+
+Others:
+- help("modules")
+- set(locals())
+- set(globals())
+"""
+
+def print_variables_in_scope():
+    for x in locals():
+        print(f"Local: {x}")
+    for x in globals():
+        print(f"Global: {x}")
+
+# print_variables_in_scope()
+
+"""
+=== Doing stuff ===
+
 === Relational operator equivalents ===
 
 Recall relational operators: select, project, join, group-by.
 
 Starting with Project:
+We have already seen how to select columns by name.
 - Keep only certain columns
 """
 
 """
 Select:
 - Filter rows based on a condition
+
+We can index into a DataFrame with a boolean array!
 """
 
 """
 Join:
 - Combine two DataFrames based on a common column
+
+df.join(df, lsuffix="1", rsuffix="2")
+
+df.join(other, on="Year")
+"""
+
+"""
+Group-by:
+
+    df.groupby("Year").groups[2023]
+    df.groupby("Year").get_group(2023)
+    df.groupby("Year").sum()
+    df.groupby("Year").count()
+    df.groupby("Year")["Population (historical)"].sum()
+    df.groupby("Year")["Population (historical)"].mean()
 """
 
 """

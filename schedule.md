@@ -16,13 +16,13 @@ I will try to keep it up to date, but please see Piazza for the latest informati
 | 2 | Oct 7  | The Shell |  | 2 |
 |   | Oct 9  |  |  | 2 |
 |   | Oct 11 |  |  | 2 |
-| 3 | Oct 14 | Data Sources, Validation, and Cleaning |  | 3 |
+| 3 | Oct 14 | Data Operators |  | 3 |
 |   | Oct 16 |  |  | 3 |
 |   | Oct 18 |  |  | 3 |
 | 4 | Oct 21 | Data Transformations & Outputs |  | 4 |
 |   | Oct 23 |  |  | 4 |
-|   | Oct 25 |  | HW1 due, Mid-quarter survey due? | 4 |
-| 5 | Oct 28 | Overflow |  | 4 |
+|   | Oct 25 |  | HW1 due | 4 |
+| 5 | Oct 28 | Overflow | Mid-quarter survey due | 4 |
 |   | Oct 30 | Section 1 Review |  | 4 |
 |   | Nov 1  | **Midterm** |  |  |
 
