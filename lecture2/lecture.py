@@ -666,7 +666,47 @@ We will finish the rest of the file next time.
 
 =========================================
 
-Others (selected most useful):
+=== Oct 14 ===
+
+Three things that came up last time:
+
+i) Text editors in the shell
+
+The most "accessible" of these is probably nano.
+
+Sometimes files open by default in vim and you have to
+know how to close the file.
+"""
+
+def edit_file(file):
+    subprocess.run(["nano", file])
+
+# Let's edit the lecture file and add something here.
+
+"""
+Text editors get opened when you run git commands
+like git commit without a message.
+
+ii) A very important "informational" command I missed:
+git diff
+
+iii) A general principle that we have seen several times:
+After doing a "doing stuff" command,
+we often want to go back to the informational commands
+to see what changed.
+
+Example:
+- git status
+- git add
+- git status
+- git commit
+- git status
+- git push
+- git status
+
+=== Finishing up git ===
+
+Other git commands (selected most useful):
 - git rebase
 - git rebase -i
 - git merge
@@ -680,6 +720,8 @@ def git_status():
     raise NotImplementedError
 
 """
+Finishing up the shell:
+
 === Dangers of the shell ===
 
 Be aware!
@@ -696,18 +738,21 @@ def rm_rf_slash():
 # rm_rf_slash()
 
 """
+sudo: run a command in true "admin" mode
+"""
+
+"""
 Aside: This is part of what makes the shell so useful, but it is also
 what makes the shell so dangerous!
 
 All shell commands are assumed to be executed by a "trusted" user.
 It's like the admin console for the computer.
 
-Person who gave an LLM agent access to their shell:
+Example:
+person who gave an LLM agent access to their shell:
 https://twitter.com/bshlgrs/status/1840577720465645960
 
 "At this point I was amused enough to just let it continue. Unfortunately, the computer no longer boots."
-
-sudo: run a command in true "admin" mode
 """
 
 # sudo rm -rf "/very/important/operating-system/file"
@@ -724,8 +769,6 @@ The shell IS:
 
 The shell is NOT (necessarily):
 
-- a friendly, helpful, usable interface for most beginners
-
 - a good way to write complex programs or scripts (use Python instead!)
 
 - free from errors (it is often easy to make mistakes in the shell)
@@ -736,27 +779,37 @@ The shell is NOT (necessarily):
 
 Q: How is this useful for data processing?
 
-A: Managing input and output: often through the filesystem or through other
-  programs on the system (e.g. a database implementation or a network API)
+A: Many possible answers! In decreasing order of importance:
 
-A: Many software tools provide useful interfaces that can only be accessed
-   through the shell.
+- Interacting with software dev tools (like git, Docker, and package managers)
+  -- many tools are built to be accessed through the shell.
 
-A: Data processing scripts have to interact with these
-   external tools all the time.
+- Give us a better understanding of how programs run "under the hood"
+  and how the filesystem and operating system work
+  (this is where almost all input/output happens!)
 
-A: The shell is very useful for software development in general.
+- Gives you another option to write more powerful functions in Python
+  by directly calling into the shell (subprocess)
+  (e.g. fetching data with git; connecting to a
+  database implementation or a network API)
 
-Q: How is the shell different from Python?
+- Writing quick-and-dirty data processing scripts direclty in the shell
+  (Common but we will not be doing this in this class).
 
-A: It's not really! Both of these are useful "glue" languages -- ways to
+  Example: Input as a CSV, filter out lines that are not relevant, and
+  add up the results to sort by most common keywords or labels.
+
+Q: How is the shell similar/different from Python?
+
+A: Both of these are useful "glue" languages -- ways to
    connect together different programs.
 
-A: In fact, we have seen that anything that can be done in the shell
-   can be done directly in a Python script.
-   (using subprocess)
+   Python is more high-level, and the shell is more like what happens
+   under the hood.
 
-=== Where we are going next? ===
+   Knowing the shell can improve your Python scripts and vice versa.
+
+=== Skipped topics ===
 
 Things we didn't cover:
 
@@ -766,25 +819,14 @@ Things we didn't cover:
 
 - Regular expressions for pattern matching in text
 
-=== Further resources ===
+=== Miscellaneous further resources ===
 
-ChatGPT is often very good at generating/explaining shell commands.
+Future of the shell paper:
 
-Here is a fun tool which lets you see the state modified by a shell command
-before executing it:
-https://github.com/binpash/try
-
-e.g.: try rm -rf /
-
-Several tools now exist for using AI in the shell to help you come up
-with the right syntax for shell commands:
-https://github.com/ibigio/shell-ai
-
-Future of the shell:
-- https://www.youtube.com/watch?v=dMrfLCjtHM4
 - https://dl.acm.org/doi/pdf/10.1145/3458336.3465296
 
-Regular expressions:
+Regular expressions
+(for if you are using grep or find):
 
 - Regex debugger: https://regex101.com/
 
