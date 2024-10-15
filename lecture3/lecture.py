@@ -6,8 +6,11 @@ Lecture 3: Data operators in Pandas
 Operators include any function with input data and output data.
 (These are the "processing" part of our 3-stage data pipelines.)
 
-(Contrast with: generators, which produce data from nothing,
-and consumers, which consume data without producing anything.)
+(Contrast with:
+- input, which provide raw datasets into your pipeline
+- generators, which produce data from nothing
+- output, some sort of display to the user or export to storage
+- consumers, which consume data without producing anything.)
 
 === Learning Objectives ===
 
@@ -49,6 +52,8 @@ Let's start by getting a dataset.
 We'll use another dataset from Our World in Data, this time on population.
 """
 
+print("Welcome to lecture 3.")
+
 import pandas as pd
 
 def load_data():
@@ -58,7 +63,7 @@ def load_data():
 
 === Informational commands ===
 
-So, we've loaded a dataframe, what's the first step?
+So, we've loaded a data frame, what's the first step?
 
 We have already seen how to view the data (to stdout),
 first 5 rows, last 5 rows.
@@ -67,36 +72,29 @@ Q: What other things might we want to do
 to get a "feel" for a dataset?
 
 Your answers:
-
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
+- Get the column names
+- Get the shape
+- Get the column types
+- Get the count of the data
+- Check for null values
 
 My answers (we will cover):
 
 - Get the column names and types
   .columns
-  .info
+  .info()
+  - includes non-null count, types
 
 - Get the shape
   .shape
+    (59177, 4)
+    - I have 59177 rows, 4 columns.
 
   This is analagous to the shape of Numpy arrays.
+
+  - DataFrames are like 2D Numpy arrays
+  - Series ojbects are like 1D Numpy arrays
+    You can confirm this by doing x = df["Year"], x.shape.
 
   We can also get the shape of a single column or row,
   or even the column headers (for example).
@@ -105,6 +103,15 @@ My answers (we will cover):
   ["column1"].shape
   ["column1", "column2"].shape
   .iloc[0].shape
+
+===== Recap =====
+
+We finished the Shell lecture
+We introduced what a data operator is (contrast with: generators, consumers)
+We began a tour of the DataFrame class and available data operators
+We started to talk about the first steps that you might want to do
+when you initially load in a dataset to Pandas ("looking around")
+operators.
 
 - Get a random sample
 

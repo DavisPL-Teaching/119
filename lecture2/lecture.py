@@ -672,6 +672,15 @@ Three things that came up last time:
 
 i) Text editors in the shell
 
+Running `git commit` without the `-m` option opens up a text
+editor!
+
+Vim: dreaded program for many new command line users
+
+  Get stuck -- don't know how to quit vim!
+
+  :q + enter
+
 The most "accessible" of these is probably nano.
 
 Sometimes files open by default in vim and you have to
@@ -682,13 +691,20 @@ def edit_file(file):
     subprocess.run(["nano", file])
 
 # Let's edit the lecture file and add something here.
+print("Hello, world!")
 
 """
 Text editors get opened when you run git commands
 like git commit without a message.
 
-ii) A very important "informational" command I missed:
-git diff
+ii) Here is a very important "informational" command I missed:
+
+  git diff
+  git diff --word-diff (word level diff)
+  git diff --word-diff-regex=. (character level diff)
+
+  git diff --staged -- after you do a git add, shows diff from green
+  changes
 
 iii) A general principle that we have seen several times:
 After doing a "doing stuff" command,
@@ -707,10 +723,10 @@ Example:
 === Finishing up git ===
 
 Other git commands (selected most useful):
+- git merge -- merge together different conflicting versions of the code
 - git rebase
-- git rebase -i
-- git merge
-- git branch
+- git rebase -i -- often useful for modifying commit messages
+- git branch -- create a new branch, often useful for developing new features.
 
 Just like before, we can also run these commands in Python.
 """
@@ -724,9 +740,23 @@ Finishing up the shell:
 
 === Dangers of the shell ===
 
+The shell has something called "ambient authority"
+which is a term from computer security basically meaning that
+you can do anything that you want to, if you just ask.
+
 Be aware!
 
+- rm -f part1.py -- permanently delete your code (and changes),
+  no way to recover
+  rm -- remove
+    -f: force removal (don't ask first)
+    -r: remove all subfiles and subdirectories
+
 - rm -rf "/"
+
+  removes all files on the system.
+
+  Many modern systems will actually complain if you try to do this.
 """
 
 def rm_rf_slash():
@@ -739,6 +769,9 @@ def rm_rf_slash():
 
 """
 sudo: run a command in true "admin" mode
+
+  sudo rm -rf /
+  ^^^^^^^^^^^^^ Delete the whole system, in administrator mode
 """
 
 """
