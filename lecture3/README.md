@@ -28,3 +28,43 @@ Plan:
 
 https://forms.gle/MpSRmPyWVJfbm3kv6
 https://tinyurl.com/bdh3d2zp
+
+## Oct 16
+
+Announcements:
+
+- HW1 part 2 available!
+
+  + https://github.com/DavisPL-Teaching/119-hw1
+
+  + Please come to office hours! And get started early
+
+  + Part 3 + instructions to submit will be released on Friday.
+
+  + Due Friday, Oct 25.
+
+- Midterm will likely be moved to week of Nov 4/6/8 -- the date will
+  be confirmed on Monday, Oct 21.
+
+Plan:
+
+- Start with the poll
+
+- Note on Python in vscode
+
+- Continue lecture 3
+
+### Poll
+
+Which of the following are true restrictions about Pandas data frames?
+
+- Every value in a row must have the same type
+- Every value in a column must have the same type
+- Data frames must have at least one row
+- Data frames must have at least one column
+- Data frames are 2-dimensional
+- Data frames cannot have null values
+- Rows must be indexed by integer values
+
+https://forms.gle/KBenqsqHD6A71Moq8
+https://tinyurl.com/27mtfxyn

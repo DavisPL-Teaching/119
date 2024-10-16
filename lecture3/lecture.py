@@ -60,7 +60,6 @@ def load_data():
     return pd.read_csv('population.csv')
 
 """
-
 === Informational commands ===
 
 So, we've loaded a data frame, what's the first step?
@@ -113,6 +112,24 @@ We started to talk about the first steps that you might want to do
 when you initially load in a dataset to Pandas ("looking around")
 operators.
 
+========================================
+
+=== Wed Oct 16 ==
+
+Lessons for today:
+
+- Ways to look around a dataset when first loading it in
+
+- We can use relational operators on data frames
+
+- Mutability
+
+- Going beyond relational operators
+
+=== Continuing ===
+
+Continuing: things to do when first opening a new dataset
+
 - Get a random sample
 
   .sample(5)
@@ -133,9 +150,20 @@ operators.
 # TODO
 
 """
-=== Getting help ===
+=== Documentation and getting help ===
 
-Python actually has lots of ways to get help about a class.
+After we have gotten a handle on the dataset, our next step
+is to get help and documentation on what methods are available
+to us.
+
+- The Pandas documentation is very good. I recommend:
+  https://pandas.pydata.org/docs/reference/index.html#api
+
+- As an "introductory guide" I especially recommend the comparison
+  with SQL. We will be following this gudie:
+  https://pandas.pydata.org/docs/getting_started/comparison/comparison_with_sql.html
+
+In addition, Python has built-in ways to get help about a class.
 
 I will mention some that I have found particularly useful:
 
@@ -143,7 +171,7 @@ I will mention some that I have found particularly useful:
 - help(pd.DataFrame)
 - help(df)
 
-Others:
+Other miscellaneous:
 - help("modules")
 - set(locals())
 - set(globals())
@@ -158,13 +186,15 @@ def print_variables_in_scope():
 # print_variables_in_scope()
 
 """
-=== Doing stuff ===
+So what should we do?
+
+Let's start with relational algebra operators.
 
 === Relational operator equivalents ===
 
 Recall relational operators: select, project, join, group-by.
 
-Starting with Project:
+Project:
 We have already seen how to select columns by name.
 - Keep only certain columns
 """
@@ -197,7 +227,41 @@ Group-by:
 """
 
 """
+=== Mutation vs. immutability ===
+
+One important distinction in Python is between operators
+that mutate in-place, vs. those that return a new object.
+This can be a major source of errors!
+
+In general in Pandas, you should assume that operators
+return a new DataFrame, unless it can be done in an obvious
+way in-place
+  (e.g., modifying a single cell or column name).
+
+Also, when modifying in place, we often have to explicitly call
+a method which has an in-place version.
+
+Example:
+
+  .loc[row, col] = value
+
+Let's see some examples of this.
+
+  .insert(2, "foo2", [3, 4, 5, 6, 6])
+
+"""
+
+"""
+Some operations have both in-place and non-in-place versions.
+
+  .rename(columns={"foo": "bar"}, inplace=True)
+
+"""
+
+"""
 ===== A more general view =====
+
+Structure data vs general data processing?
 
 Not all data is structured nicely like Pandas DataFrames.
 It is sometimes useful to think in more general terms
