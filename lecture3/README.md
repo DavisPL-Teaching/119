@@ -46,6 +46,8 @@ Announcements:
 - Midterm will likely be moved to week of Nov 4/6/8 -- the date will
   be confirmed on Monday, Oct 21.
 
+Questions about HW1?
+
 Plan:
 
 - Start with the poll
@@ -56,7 +58,7 @@ Plan:
 
 ### Poll
 
-Which of the following are true restrictions about Pandas data frames?
+Which of the following are true statements about Pandas data frames?
 
 - Every value in a row must have the same type
 - Every value in a column must have the same type

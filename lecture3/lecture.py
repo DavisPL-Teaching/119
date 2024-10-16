@@ -116,9 +116,10 @@ operators.
 
 === Wed Oct 16 ==
 
-Lessons for today:
+Lesson plan for today:
 
-- Ways to look around a dataset when first loading it in
+- (continued) Ways to look around a dataset when first loading it in
+  & getting help
 
 - We can use relational operators on data frames
 
@@ -147,8 +148,6 @@ Continuing: things to do when first opening a new dataset
   What do we discover?
 """
 
-# TODO
-
 """
 === Documentation and getting help ===
 
@@ -168,8 +167,8 @@ In addition, Python has built-in ways to get help about a class.
 I will mention some that I have found particularly useful:
 
 - dir(df)
-- help(pd.DataFrame)
 - help(df)
+- help(pd.DataFrame)
 
 Other miscellaneous:
 - help("modules")
@@ -197,6 +196,15 @@ Recall relational operators: select, project, join, group-by.
 Project:
 We have already seen how to select columns by name.
 - Keep only certain columns
+
+- You'll notice that this doesn't actually modify the data frame
+
+Often, you might just modify by doing:
+
+  df = df[["columns", "that", "I", "actually", "want"]].
+
+  df[[]] -- creates an empty dataframe with no columns
+
 """
 
 """
@@ -204,6 +212,31 @@ Select:
 - Filter rows based on a condition
 
 We can index into a DataFrame with a boolean array!
+
+- df[df["Year"] == 2023]
+
+- df[df["Code"].notnull()]
+
+Example to clean the data:
+
+- df_countries = df[(df["Code"].notnull()) & (df["Entity"] != "World")]
+
+=== Recap ===
+
+We saw how to get a random sample
+
+Random sampling (& looking at .info() and nonnull values) can help
+identify anomalies or biases in the data that we might need to clean
+
+We looked at how to do select and project (SELECT A FROM B WHERE C queries)
+in the SQL world using Data Frame equivalents.
+
+Next time:
+
+- We'll get into Join and other more interesting operations!
+
+========================================================
+
 """
 
 """
