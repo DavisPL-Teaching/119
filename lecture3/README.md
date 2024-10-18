@@ -70,3 +70,39 @@ Which of the following are true statements about Pandas data frames?
 
 https://forms.gle/KBenqsqHD6A71Moq8
 https://tinyurl.com/27mtfxyn
+
+## Oct 18
+
+Announcements:
+
+- HW1 fully available: https://piazza.com/class/m12ef423uj5p5/post/46
+
+- The "project proposal" part has been moved to a later HW; instead, Part 3
+  is a shorter series of exercises on the shell.
+
+- To get the latest changes: git add ., git commit -m "message", git pull, **then** resolve any merge conflicts! https://piazza.com/class/m12ef423uj5p5/post/44
+
+- OH today (starting 415 -- I will stay past 5 if there are still people around
+            asking questions)
+
+HW submission:
+
+- We are now using Gradescope for submission instead of GitHub Classroom.
+  You should have been added; please see Piazza for the link and HW1 for details.
+  You can submit either via GitHub or via a zip file.
+
+- Clarification to late policy: https://piazza.com/class/m12ef423uj5p5/post/47
+
+- Questions?
+
+Plan:
+
+- Poll
+
+- Continue Lecture 3:
+  remaining SQL operators, common "gotchas", and survey of more advanced operators.
+
+### Poll
+
+https://forms.gle/TTX5Tvp72AGESsxK8
+https://tinyurl.com/mu6e73sx

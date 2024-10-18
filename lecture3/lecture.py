@@ -205,9 +205,6 @@ Often, you might just modify by doing:
 
   df[[]] -- creates an empty dataframe with no columns
 
-"""
-
-"""
 Select:
 - Filter rows based on a condition
 
@@ -237,15 +234,68 @@ Next time:
 
 ========================================================
 
+=== Fri Oct 18 ===
+
+So far, we have seen:
+
+- Data frames are 2D arrays of data.
+  Rows are labled by integer index (by default)
+  Columns are labeled by name.
+
+- SQL equivalents:
+  SELCT FROM = access columns
+  WHERE = access rows by Boolean array
+
+Plan for today:
+
+- Continue our general overview of available data operators
+  + not just in Pandas, but in other data processing frameworks!
+    (SQL, R, Spark, etc.)
+
+- Focus in on some common gotchas: null values, duplicate values,
+  mutability, and vectorization
+
+Let's start with another simple example:
+
+Ex.:
+- Define a DataFrame for an employee database with 3 employees.
+
+- Use SELECT WHERE to get the employees with a salary over $100,000.
+"""
+
+
+"""
+We've seen select, project, now join!
+
+Review:
+- There are many types of join! What are a few?
+
+Pandas supports two main forms of join:
+
+Merge:
+This is the relational join.
+Combine two DataFrames based on a common column:
+
+  df1.merge(df2)
+  df1.merge(df2, how="outer")
+
+Ex.: Let's define a table for the employee locations
+and join with our original employee data.
 """
 
 """
 Join:
-- Combine two DataFrames based on a common column
+We can also join on index (often more efficient if it fits your use case)
 
-df.join(df, lsuffix="1", rsuffix="2")
+  df1.join(df2, lsuffix="1", rsuffix="2")
+"""
 
-df.join(other, on="Year")
+"""
+How can different joins lead to different semantics?
+
+Ex. 1: Define two employees with the same name
+Ex. 2: Define one employee with a missing location
+Ex. 3: Define one employee with a missing name
 """
 
 """
@@ -260,7 +310,24 @@ Group-by:
 """
 
 """
-=== Mutation vs. immutability ===
+=== Common gotchas! ===
+
+Some common gotchas in Pandas:
+
+- Null values (in join/merge)
+- Duplicate values (in join/merge)
+- Indexing (iloc vs. loc -- keys vs. indices)
+
+  loc: how to access rows and row, column pairs by key
+  iloc: how to access rows and row, column pairs by index
+
+Two other big ones:
+- Mutability
+- Vectorization
+"""
+
+"""
+=== Mutability ===
 
 One important distinction in Python is between operators
 that mutate in-place, vs. those that return a new object.
@@ -289,10 +356,37 @@ Some operations have both in-place and non-in-place versions.
 
   .rename(columns={"foo": "bar"}, inplace=True)
 
+Exercise:
+
+1. Define a view of a dataframe (by using a select where)
+and try to modify a value in it. What happens?
+
+2. Use .concat to create a new dataframe.
+   What happens to the original values?
+
+  pd.concat(df1, df2)
+
+  (Concat is another gotcha!)
+
 """
 
 """
-===== A more general view =====
+=== Vectorization ===
+
+What is vectorization?
+
+
+
+Exercise: Using the population data, define a new row for
+the next year (year + 1).
+
+Then define the same thing by using a for loop
+over the entries of the data frame.
+What happens?
+"""
+
+"""
+===== A more general view (beyond Pandas) =====
 
 Structure data vs general data processing?
 
