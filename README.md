@@ -133,7 +133,7 @@ There will also be a small number of points reserved for code quality (at most 1
 That is: does you program exhibit high code quality standards?
 Is it readable, shareable, well-documented, well-commented, logically separated into modules and functions, and reasonably efficient?
 Are your free response answers thoughtful?
-We will be using GitHub Classroom for homework submissions and grading.
+We will be using Gradescope for homework submissions and grading.
 
 ### Exams (40%)
 
@@ -206,7 +206,8 @@ watch the lectures.
 
 Homeworks will generally be due at 11:59pm on the due date.
 **I cannot guarantee that late homeworks will be graded.**
-However, I encourage you to update your assignments even after the deadline -- GitHub classroom will allow us to see both the state of the code at the time of the deadline as well as any recent changes.
+However, I encourage you to update your assignments even after the deadline -- Gradescope will allow you to upload late work
+up to a few days after the assignment deadline.
 At grading time, we may choose to grade the more recent version at our discretion.
 
 ## Disclaimers
