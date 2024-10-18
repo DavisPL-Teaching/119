@@ -100,7 +100,8 @@ Plan:
 - Poll
 
 - Continue Lecture 3:
-  remaining SQL operators, common "gotchas", and survey of more advanced operators.
+  remaining SQL operators, common "gotchas", and survey a more general
+  view of data processing operators
 
 ### Poll
 
