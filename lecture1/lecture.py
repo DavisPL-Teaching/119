@@ -208,7 +208,7 @@ Do the following:
 
 1. Which stage do you think is likely to be the most computationally intensive part of a data processing pipeline?
 
-2. Which ostage do you think is likely to present the biggest opportunity for failure cases, including crashes, ethical concerns or bias, or unexpected/wrong/faulty data?
+2. Which stage do you think is likely to present the biggest opportunity for failure cases, including crashes, ethical concerns or bias, or unexpected/wrong/faulty data?
 
 https://forms.gle/Kv39iq33KDjJy3ir6
 https://tinyurl.com/3tthzry7

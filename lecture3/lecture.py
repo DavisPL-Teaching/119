@@ -415,9 +415,9 @@ What we'll continue with  next time:
 Two important gotchas in terms of the design:
 - Mutability
 - Vectorization
-"""
 
-"""
+=======================================
+
 === Mutability ===
 
 One important distinction in Python is between operators
@@ -465,8 +465,6 @@ and try to modify a value in it. What happens?
 === Vectorization ===
 
 What is vectorization?
-
-
 
 Exercise: Using the population data, define a new row for
 the next year (year + 1).
