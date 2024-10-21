@@ -9,9 +9,13 @@ Announcements:
     Please remember to check for errata (if you have an old version of the assignment)
     https://piazza.com/class/m12ef423uj5p5/post/48
 
-- Midterm will be in class on Friday, Nov 8.
+- https://piazza.com/class/m12ef423uj5p5/post/54
 
-- No class on Monday, Oct 28 (one week from today).
+  + Midterm will be in class on Friday, Nov 8.
+
+  + I will hold an additional office hour Thursday 430p
+
+  + No class on Monday, Oct 28 (one week from today).
   There will be an optional video lecture in its place (topic TBD).
 
 ## Plan

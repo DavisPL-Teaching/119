@@ -27,6 +27,10 @@ for our project:
 
 The next thing we need to do is **scale** our application.
 
+=== What is scaling? ===
+
+Scalability is the ability of a computer system to handle an increasing amount of work.
+
 === Why scaling? ===
 
 Basically we should scale if we want one of two things:
@@ -57,7 +61,7 @@ Why might you want to do this?
 
 - Example: GPT-4
     + trained on roughly 13 trillion tokens
-    + 25 though A100 processors
+    + 25,000 A100 processors
     + span of 3 months
     + over $100M cost according to Sam Altman
     https://www.kdnuggets.com/2023/07/gpt4-details-leaked.html
@@ -66,9 +70,7 @@ Why might you want to do this?
 - Contrast:
     our population dataset is roughly 60,000 lines and roughly 1.6 MB on disk.
 
-=== What is scalability? ===
-
-Scalability is the ability of a computer system to handle an increasing amount of work.
+=== Thinking about scalability ===
 
 Points:
 
@@ -76,7 +78,12 @@ Points:
 
     See scaling/ folder for some examples!
 
-- Typically, we talk about "linear scaling" which means the amount of time it will
+    If your application is scaling successfully,
+    double the # of processors => double the throughput
+    (best case scenario)
+
+- Sequential (non-parallel) applications exhibit
+"linear scaling" which means the amount of time it will
 take your system to proces N input data items is O(N)
 (constant throughput!)
 When we talk about scaling, we are looking for something better than O(N).
@@ -93,6 +100,16 @@ Exercise:
     Check how much RAM your personal laptop has.
     According to McKinney's estimate, how much how large of a dataset in population.csv
     could your laptop handle?
+
+Amount of RAM: 16GB (x4), 8GB (x2), 18GB,
+
+Mode answer: 16GB
+We can process: 1.6GB-3.2GB of data
+
+    population.csv was 1.6MB
+
+roughly, we can process like a 1000X as much data
+and then we'll a bottleneck.
 
 - NVIDIA stock:
 
@@ -112,19 +129,30 @@ but all of this applies to a data processing pipeline written using
 vectorized operations as well (as we will see soon).
 
 Baseline:
+(sequential pipeline)
+
+(Rule 0 of parallel computing:
+Any time we're measuring parallelism we want to start
+with a sequential version of the code!
+Scalability! But at what COST?
+https://www.usenix.org/system/files/conference/hotos15/hotos15-paper-mcsherry.pdf
+)
 """
 
 def average_numbers(N):
     sum = 0
     count = 0
     for i in range(N):
-        # TODO
-        raise NotImplementedError
+        sum += i
+        count += 1
+    return sum / count
 
 # Uncomment to run:
 # N = 200_000_000
 # result = average_numbers(N)
 # print(f"Result: {result}")
+
+# baseline (Sequential performance) is at 6.7s
 
 # From the command line:
 # time python3 lecture.py
@@ -139,8 +167,9 @@ Imagine a conveyor belt, where our numbers are coming in on the belt...
 
 ASCII art:
 
-    ==>   | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 |   ==>
-    ...   ==========================================   ...
+    ==>   | 10 | 9 | 8 | 7 | 6 | 5 | 4 | 3 | 2 | 1 |   ==>
+    ...   ==========================================  worker1
+                                                      worker2
 
 Our worker takes the items off the belt and
 adds them up as they come by.
@@ -150,6 +179,9 @@ Worker:
     (0, 0) -> (1, 1) -> (3, 2) -> (6, 3) -> (10, 4) -> ...
 
 Parallelism is when there are **multiple workers working at the same time.**
+
+The workers could be working on the same conveyor belt
+or two different conveyor belts
 
 Example:
 """
@@ -178,18 +210,7 @@ def run_in_parallel(*tasks):
 # **************************************
 # **************************************
 
-# TODO delete
-def average_numbers(N):
-    sum = 0
-    count = 0
-    for i in range(N):
-        sum += i
-        count += 1
-    return sum / count
-
 N = 200_000_000
-result = average_numbers(N)
-print(f"Result: {result}")
 
 def worker1():
     sum = 0
@@ -198,7 +219,7 @@ def worker1():
         sum += i
         count += 1
     print(f"Worker 1 result: {sum} {count}")
-    return (sum, count)
+    # return (sum, count)
 
 def worker2():
     sum = 0
@@ -207,7 +228,7 @@ def worker2():
         sum += i
         count += 1
     print(f"Worker 2 result: {sum} {count}")
-    return (sum, count)
+    # return (sum, count)
 
 def average_numbers_parallel():
     results = run_in_parallel(worker1, worker2)
@@ -215,16 +236,11 @@ def average_numbers_parallel():
 
 # Uncomment to run
 # if __name__ == '__main__':
-#     freeze_support()
+#     freeze_support() # another boilerplate line to ignore
 #     average_numbers_parallel()
 
 # time python3 lecture.py
 # CPU usage
-
-"""
-Exercise:
-Modify our example to compute output
-"""
 
 """
 === What is concurrency? ===
@@ -233,11 +249,47 @@ Concurrency is when there are conflicting or out-of-order operations happening.
 
 In a conveyor belt, it means multiple workers are taking items off the belt.
 
+- Parallelism can exist without concurrency!
+  (How?)
+
+    Multiple belts, each worker has its own belt
+
 - Concurrency can exist without parallelism!
   (How?)
 
-- Parallelism can exist without concurrency!
-  (How?)
+    Operations can conflict even if the two workers
+    are not working at the same time!
+
+    Worker1 takes an item off the belt
+    Worker1 makes some modifications and puts it back
+    Then Worker 1 goes on break
+    Worker2 comes to the belt
+    Doesn't realize that worker 1 was doing anything here
+    Takes the item off the belt
+    Worker 2 tries to make the same modifications.
+
+    We have a conflict!
+
+    In fact, this is what happens in Python if you
+    use threads.
+    (Threads vs. processes)
+
+    Multiple workers working concurrently, only one
+    active at a given time.
+
+=== Recap and sneak peak ===
+
+Once our pipeline is working sequentially, we want to figure
+out how to **scale** to more data and more frequent updates
+
+We talked about parallelism: multiple workers working at once
+
+Difference between parallelism & concurrency & distribution:
+- Parallelism: multiple workers working at the same time
+- Concurrency: multiple workers accessing the same data or performing potentially conflicting operations
+- Distribution: spatially distributed workers and belts that operate and may fail completely independently.
+
+============================
 
 Exercise: write a version of the previous example
 that accesses values concurrently.
@@ -255,6 +307,11 @@ def average_numbers_concurrent_reads(l):
 def average_numbers_concurrent_writes(l):
     # TODO
     pass
+
+"""
+Exercise:
+Modify our example to compute output
+"""
 
 """
 Was there concurrency in our previous example?
