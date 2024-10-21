@@ -19,24 +19,24 @@ I will try to keep it up to date, but please see Piazza for the latest informati
 | 3 | Oct 14 | Data Operators |  | 3 |
 |   | Oct 16 |  |  | 3 |
 |   | Oct 18 |  |  | 3 |
-| 4 | Oct 21 | Data Transformations & Outputs |  | 4 |
+| 4 | Oct 21 | Parallelism |  | 4 |
 |   | Oct 23 |  |  | 4 |
 |   | Oct 25 |  | HW1 due | 4 |
-| 5 | Oct 28 | Overflow | Mid-quarter survey due | 4 |
-|   | Oct 30 | Section 1 Review |  | 4 |
-|   | Nov 1  | **Midterm** |  |  |
+| 5 | Oct 28 | Dataflow Programming and Spark |  | 5 |
+|   | Oct 30 |  |  | 5 |
+|   | Nov 1  |  |  | 5 |
 
 ## Section 2: Parallelism
 
 | Week | Date | Topic | Readings & HW | Lecture # |
 | --- | --- | --- | --- | --- |
-| 6 | Nov 4  | Parallelism |  | 5 |
-|   | Nov 6  |  |  | 5 |
-|   | Nov 8  |  |  | 5 |
+| 6 | Nov 4  | Overflow |  | 5 |
+|   | Nov 6  | Section 1 Review | Mid-quarter survey due | 5 |
+|   | Nov 8  | **Midterm** |  | 5 |
 | 7 | Nov 11 | **No Class** (Veterans Day) |  |  |
-|   | Nov 13 | Advanced MapReduce and Spark |  | 6 |
+|   | Nov 13 | Streaming |  | 6 |
 |   | Nov 15 |  | HW2 due | 6 |
-| 8 | Nov 18 | Spark Streaming[^1] |  | 7 |
+| 8 | Nov 18 |  |  | 7 |
 |   | Nov 20 |  |  | 7 |
 |   | Nov 22 |  |  | 7 |
 
@@ -44,17 +44,19 @@ I will try to keep it up to date, but please see Piazza for the latest informati
 
 | Week | Date | Topic | Readings & HW | Lecture # |
 | --- | --- | --- | --- | --- |
-| 9 | Nov 25 | Distributed Consistency[^1] |  | 8 |
+| 9 | Nov 25 | Selection of additional topics[^1] |  | 8 |
 |   | Nov 27 |  | HW3 (final project) due | 8 |
 |   | Nov 29 | **No Class** (Thanksgiving) |
-| 10 | Dec 2 | Cloud Computing[^1] |  | 9 |
+| 10 | Dec 2 | Selection of additional topics[^1] |  | 9 |
 |    | Dec 4 |  |  | 9 |
 |    | Dec 6 | **Last day of class** - course review |  |  |
 | 11 | Dec 11 | **Final Exam (6-8pm)** |  |  |
 
 ## Notes
 
-[^1]: Possible advanced topics (depending on time):
-streaming and real-time processing;
+[^1]: Possible additional topics (depending on time and preference):
+web scraping;
+data validation and integrity;
+data cleaning and missing data;
 distributed programming and distributed consistency requirements;
 cloud computing platforms, services, and resources.

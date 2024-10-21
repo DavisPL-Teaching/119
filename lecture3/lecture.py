@@ -418,6 +418,11 @@ Two important gotchas in terms of the design:
 
 =======================================
 
+Skipped the rest of the file for time.
+Please feel free to review on your own!
+
+=======================================
+
 === Mutability ===
 
 One important distinction in Python is between operators
