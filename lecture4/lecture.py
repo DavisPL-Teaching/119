@@ -289,7 +289,7 @@ We talked about parallelism: multiple workers working at once
 Difference between parallelism & concurrency & distribution:
 - Parallelism: multiple workers working at the same time
 - Concurrency: multiple workers accessing the same data or performing potentially conflicting operations
-- Distribution: spatially distributed workers and belts that operate and may fail completely independently.
+- Distribution: spatially distributed workers and data that operate and may fail completely independently.
 
 ============================
 
@@ -307,7 +307,8 @@ https://tinyurl.com/m3pvbdwe
 
 - Last time: parallel example
 - Today: concurrent + distributed examples
-- Parallel thinking and Amdahl's Law
+- Parallel thinking, types of parallelism, and quantifying
+  the amount of parallelism available
 - Measuring scaling & types of scaling
 
 === Concurrent examples ===
@@ -321,9 +322,12 @@ Modify our example to keep track of an output.
 """
 
 # Redefine N -- modify here as needed
-N = 200_000_000
+N = 1000
 
+# Shared memory between the processes
 # Shared list for results
+# this has to be a special Array instead of a Python
+# list -- don't worry about this (impl detail)
 from multiprocessing import Array
 
 # new argument: results array
@@ -334,8 +338,15 @@ def worker3(results):
     for i in range(N // 2):
         sum += i
         count += 1
+
+        # Super race-y version
+        # results[0] += i
+        # results[1] += 1
+
     print(f"Worker 3 result: {sum} {count}")
-    # TODO: modify for concurrent implementation
+    # Save the results in the shared results array
+    results[0] += sum
+    results[1] += count
 
 def worker4(results):
     sum = 0
@@ -343,8 +354,15 @@ def worker4(results):
     for i in range(N // 2, N):
         sum += i
         count += 1
+
+        # Super race-y version
+        # results[0] += sum
+        # results[1] += count
+
     print(f"Worker 4 result: {sum} {count}")
-    # TODO: modify for concurrent implementation
+    # Save the results in the shared results array
+    results[2] += sum
+    results[3] += count
 
 def average_numbers_concurrent():
     # Create a shared results array
@@ -367,8 +385,9 @@ def average_numbers_concurrent():
 
     # Calculate results
     print(f"Thread results: {results[:]}")
-    # TODO: fill in
-    # print(f"Result: {sum} / {count} = {sum / count}")
+    sum = results[0] + results[2]
+    count = results[1] + results[3]
+    print(f"Average: {sum} / {count} = {sum / count}")
     print(f"Computation finished")
 
 # Uncomment to run
@@ -377,11 +396,22 @@ def average_numbers_concurrent():
 #     average_numbers_concurrent()
 
 """
+Now we don't just have parallelism, we have concurrency
+
 Questions:
 
 What do you think would happen if we modified the example so that both
-processes access the same variables?
+processes access the same elements of the array?
 (Let's try it)
+
+Answer: it seems to work!
+... But it doesn't actually work in general
+... we just get lucky most of the time.
+... Very very rarely, worker3 will read the value, worker4 will read it,
+    then worker3 will write it, then worker4 will write it,
+    and destroy worker3's work.
+
+    This is called a race condition.
 
 What do you think would happen if we modified the example to use the shared
 results list directly for each worker's local variables?
@@ -389,15 +419,63 @@ results list directly for each worker's local variables?
 
 Does something go wrong?
 
+    Contention:
+
+    Multiple threads or processes trying to access the same data at the
+    same time causes a vast decline in performance.
+
+    AND
+    we have a race condition which, this time (unlike above)
+    is actually reliably triggering every time we run the code.
+
+    Observe that not only do some reads/writes not get counted,
+    they also corrupt the data and produce completely random
+    results.
+
+    A "data race" is a particular race condition where a read
+    and a write happens to the same memory location at the same
+    time.
+
+    On most architectures, a data race results in random/arbitrary/
+    nondeterministic behavior.
+
+Moral of the story:
+    Don't read and write to the same data at the same time!
+
 Which of the above is the best concurrent solution and why?
+
+A: the first solution is best: both workers keep track of their
+    results using local variables and write their answers to
+    completely different indices in the shared memory array.
+
+When parallelizing pipelines, we want to follow this principle;
+generally speaking, we want different workers to be working on
+- different portions of the data
+- different steps in the pipeline
+- producing output in different places or to different output files
+
+So that we avoid any of the above issues.
 
 === Concepts ===
 
-- Race condition
+- Race condition: when the order in which workers complete their task
+  (which one completes it first) affects the final outcome
+
 - Data race
+  A particular race condition where a read and a write happen at the same
+  time and in the same memory location
+
 - Contention
+  Reduction in performance due to competing concurrent operations
+
 - Deadlock
+  Different threads try to access the same data at the same time in a way
+  that prevents any thread from continuing.
+
 - Consistency
+  The ability of parallel and concurent code to behave as if it were
+  sequential code.
+  You want the same answers as if you just ran the code sequentially.
 
 === Additional exercises ===
 
@@ -407,6 +485,20 @@ Modify the example to add up a shared list instead of an iterator.
 Write a version that uses (i) shared reads to the list and (ii) shared writes
 to the list (for example popping off elements as they are used).
 What happens?
+
+=== Recap from today ===
+
+We saw how code can be concurrent (not just parallel)
+We saw the main problems that you can run into with concurrent code
+In this class, we want to avoid all of the above problems and parallelize
+in a way that avoids reading/writing to the same memory at the same time.
+
+Next time: a very short distributed example
+and then get into:
+- types of parallelism (in a pipeline)
+- quantifying parallelism (in a pipeline)
+
+=======================================================
 """
 
 """

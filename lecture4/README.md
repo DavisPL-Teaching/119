@@ -41,6 +41,8 @@ Announcements:
 - HW1 due Friday
 
 - Office hours poll
+  https://piazza.com/class/m12ef423uj5p5/post/62
+  Fill out by end of class!
 
 Plan:
 
@@ -48,4 +50,4 @@ Plan:
 
 - Continue: parallel, concurrent, and distributed computing; main concepts
 
-- Parallel thinking: types of parallelism, Amdahl's law
+- Parallel thinking: types of parallelism, quantifying parallelism, Amdahl's law
