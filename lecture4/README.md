@@ -33,3 +33,19 @@ Then, we're going to switch gears a bit for Lecture 4:
 Note:
 
 - If you wish, you may finish the Lecture 3 notes on your own time.
+
+## Oct 23
+
+Announcements:
+
+- HW1 due Friday
+
+- Office hours poll
+
+Plan:
+
+- Poll
+
+- Continue: parallel, concurrent, and distributed computing; main concepts
+
+- Parallel thinking: types of parallelism, Amdahl's law

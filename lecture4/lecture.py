@@ -1,6 +1,8 @@
 """
 Lecture 4: Parallelism
 
+(Oct 21)
+
 === Poll ===
 
 - Definition of a data operator
@@ -291,30 +293,120 @@ Difference between parallelism & concurrency & distribution:
 
 ============================
 
-Exercise: write a version of the previous example
-that accesses values concurrently.
+=== Oct 23 ===
 
-Write a versio of the previous example that
-updates values concurrently.
+=== Poll ===
 
-What are potential dangers here?
+Review from definitions last time;
+Which of the following scenarios are parallel, concurrent, and distributed?
+
+https://forms.gle/RY4QH5utjLtww6Ur8
+https://tinyurl.com/m3pvbdwe
+
+=== Lecture outline ===
+
+- Last time: parallel example
+- Today: concurrent + distributed examples
+- Parallel thinking and Amdahl's Law
+- Measuring scaling & types of scaling
+
+=== Concurrent examples ===
+
+Recall our example above average_numbers_in_parallel.
+
+No concurrency! (Why?)
+
+Exercises:
+Modify our example to keep track of an output.
 """
 
-def average_numbers_concurrent_reads(l):
-    # TODO
-    pass
+# Redefine N -- modify here as needed
+N = 200_000_000
 
-def average_numbers_concurrent_writes(l):
-    # TODO
-    pass
+# Shared list for results
+from multiprocessing import Array
+
+# new argument: results array
+# results: a shared array of length 4
+def worker3(results):
+    sum = 0
+    count = 0
+    for i in range(N // 2):
+        sum += i
+        count += 1
+    print(f"Worker 3 result: {sum} {count}")
+    # TODO: modify for concurrent implementation
+
+def worker4(results):
+    sum = 0
+    count = 0
+    for i in range(N // 2, N):
+        sum += i
+        count += 1
+    print(f"Worker 4 result: {sum} {count}")
+    # TODO: modify for concurrent implementation
+
+def average_numbers_concurrent():
+    # Create a shared results array
+    # i = integer, d = double (we use d here because the integers suffer from overflow)
+    results = Array('d', range(4))
+
+    # Iniitalize our shared array
+    results[0] = 0
+    results[1] = 0
+    results[2] = 0
+    results[3] = 0
+
+    # Like run_in_parallel but with added code to handle arguments
+    p1 = Process(target=worker3, args=(results,))
+    p2 = Process(target=worker4, args=(results,))
+    p1.start()
+    p2.start()
+    p1.join()
+    p2.join()
+
+    # Calculate results
+    print(f"Thread results: {results[:]}")
+    # TODO: fill in
+    # print(f"Result: {sum} / {count} = {sum / count}")
+    print(f"Computation finished")
+
+# Uncomment to run
+# if __name__ == "__main__":
+#     freeze_support()
+#     average_numbers_concurrent()
 
 """
+Questions:
+
+What do you think would happen if we modified the example so that both
+processes access the same variables?
+(Let's try it)
+
+What do you think would happen if we modified the example to use the shared
+results list directly for each worker's local variables?
+(Let's try it)
+
+Does something go wrong?
+
+Which of the above is the best concurrent solution and why?
+
+=== Concepts ===
+
+- Race condition
+- Data race
+- Contention
+- Deadlock
+- Consistency
+
+=== Additional exercises ===
+
+(Probably skip)
 Exercise:
-Modify our example to compute output
-"""
-
-"""
-Was there concurrency in our previous example?
+Modify the example to add up a shared list instead of an iterator.
+Write a version that uses (i) shared reads to the list and (ii) shared writes
+to the list (for example popping off elements as they are used).
+What happens?
 """
 
 """
@@ -327,34 +419,117 @@ can process and fail independently.
 For this one, it's more difficult to simulate in Python directly.
 We can imagine that our workers are computed by an external
 server, rather than being computed locally on our machine.
+
+To give a simple instance of this, let's use ssh to connect to a remote
+server, then use the server to compute the sum of the numbers.
+
+(You won't be able to use this code; it's connecting to my own SSH server!)
 """
 
+import os
+
+def ssh_run_command(cmd):
+    result = os.popen("ssh cdstanfo@set.cs.ucdavis.edu " + cmd).read()
+    # Just print the result for now
+    print(f"result: {result.strip()}")
+
 def worker1_distributed():
-    raise NotImplementedError
+    ssh_run_command("seq 1 1000000 | awk '{s+=$1} END {print s}'")
+    print("Worker 1 finished")
 
 def worker2_distributed():
-    raise NotImplementedError
+    ssh_run_command("seq 1000001 2000000 | awk '{s+=$1} END {print s}'")
+    print("Worker 2 finished")
 
 def average_numbers_distributed():
-    # TODO: pretend to call AWS lambda
-    raise NotImplementedError
+    worker1_distributed()
+    worker2_distributed()
+    print("Distributed computation complete")
 
+# Uncomment to run
 # average_numbers_distributed()
-# TODO:
 
 """
 Questions:
 
 Q1: can we have distribution without parallelism?
 
-Q2: can we have distribution without concurrency?
+Q2: can we have distribution with parallelism?
+
+Q3: can we have distribution without concurrency?
+
+Q4: can we have distribution with concurrency?
 
 """
 
 """
 ===== Parallel thinking =====
 
+At this point in the lecture, we will
+move from thinking about parallel, concurrent, and distributed programming in general
+to how they are most used / most useful in data science.
+
+- Higher-level viewpoint & what matters
+- Thinking about parallelism in your pipeline
+- Quantifying parallelism in your pipeline
+
+=== Higher-level viewpoint ===
+
+In the context of data pipelines and data science,
+we're often thinking in terms of data sets
+
+    - We want massively parallel computations
+
+    - We want to avoid thinking about concurrency
+        (how?)
+
+    - We are often forced to distribute computations
+        (why?)
+
+        + But even when the dataset is distributed, we want to think about
+          it using the same abstractions
+
+We care the most about parallelism!
+
+Of course, priorities are important:
+
+    - We want to prototype using a sequential implementation first.
+
+    - We may want to test on smaller datasets if needed
+
+    - For prototypting: resort to parallelism...
+
+    - For production: resort to parallelism...
+
 How do we think about parallelism?
+
+=== Parallel thinking in data science ===
+
+Types of parallelism:
+
+- Data parallelism
+
+- Task parallelism
+
+- Pipeline parallelism
+
+Which of these is our average_numbers computation?
+
+Exercise:
+Write an example of each of the others.
+"""
+
+def average_numbers_task_parallelism():
+    # TODO
+    raise NotImplementedError
+
+def average_numbers_pipeline_parallelism():
+    # TODO
+    # This is harder!
+    raise NotImplementedError
+
+"""
+=== Quantifying parallelism ===
 
 What amount of parallelism is available in a system?
 
