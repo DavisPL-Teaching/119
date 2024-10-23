@@ -303,6 +303,17 @@ Which of the following scenarios are parallel, concurrent, and distributed?
 https://forms.gle/RY4QH5utjLtww6Ur8
 https://tinyurl.com/m3pvbdwe
 
+=== Poll Answers ===
+
+The poll wording has been slightly updated.
+
+1. Parallel
+2. Parallel + Concurrent
+3. Parallel + Concurrent
+4. Concurrent + Distributed
+5. Parallel + Distributed
+6. Parallel + Concurrent + Distributed
+
 === Lecture outline ===
 
 - Last time: parallel example
