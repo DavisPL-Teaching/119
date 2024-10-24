@@ -510,14 +510,40 @@ and then get into:
 - quantifying parallelism (in a pipeline)
 
 =======================================================
-"""
 
-"""
+=== Oct 23 ===
+
+=== Poll ===
+
+1.
+Two workers, threads, or processes are accessing the same shared memory variable "x". Each worker increments the variable 100 times:
+
+    for i in range(100):
+        x += 1
+
+What are possible values of x?
+
+2.
+The scenario above exhibits... (select all that apply)
+- Concurrency
+- Parallelism
+- Distribution
+- Contention
+- Deadlock
+- Race condition
+- Data race
+
+https://forms.gle/wb8WEUF4fRgGcPVeA
+https://tinyurl.com/3k9yeuym
+
 === What is distribution? ===
 
 Distribution means that we have multiple workers and/or belts
 **in different locations**
 can process and fail independently.
+
+The workers must be on different computers or devices.
+    (Why does it matter?)
 
 For this one, it's more difficult to simulate in Python directly.
 We can imagine that our workers are computed by an external
@@ -529,6 +555,7 @@ server, then use the server to compute the sum of the numbers.
 (You won't be able to use this code; it's connecting to my own SSH server!)
 """
 
+# for os.popen to run a shell command (like we did on HW1 part 3)
 import os
 
 def ssh_run_command(cmd):
@@ -566,22 +593,26 @@ Q4: can we have distribution with concurrency?
 """
 
 """
-===== Parallel thinking =====
+===== Back to parallelism! ======
 
-At this point in the lecture, we will
-move from thinking about parallel, concurrent, and distributed programming in general
+Now that we know about concurrency and distribution,
+at this point in the lecture, let's go back
+to simple parallelism.
+Also, we will move from thinking about parallelism in general
 to how they are most used / most useful in data science.
 
-- Higher-level viewpoint & what matters
-- Thinking about parallelism in your pipeline
-- Quantifying parallelism in your pipeline
+Goals:
 
-=== Higher-level viewpoint ===
+    - We want to think about parallelism at a higher-level than
+      individual workers and processes
 
-In the context of data pipelines and data science,
-we're often thinking in terms of data sets
+      Simply: is it parallel? how much parallelism?
 
     - We want massively parallel computations
+      + we want fast results
+        (not waiting 2 hours or 2 days to get a query result)
+      + we want deployed pipelines to not
+        waste money and resources
 
     - We want to avoid thinking about concurrency
         (how?)
@@ -592,23 +623,19 @@ we're often thinking in terms of data sets
         + But even when the dataset is distributed, we want to think about
           it using the same abstractions
 
-We care the most about parallelism!
-
 Of course, priorities are important:
 
-    - We want to prototype using a sequential implementation first.
+    - We still want to prototype using a sequential implementation first.
 
-    - We may want to test on smaller datasets if needed
+    - We still want to test on smaller datasets if needed
 
     - For prototypting: resort to parallelism...
 
     - For production: resort to parallelism...
 
-How do we think about parallelism?
-
 === Parallel thinking in data science ===
 
-Types of parallelism:
+We often think about parallelism by dividing it into three types:
 
 - Data parallelism
 
@@ -632,13 +659,45 @@ def average_numbers_pipeline_parallelism():
     raise NotImplementedError
 
 """
+What do these types of parallelism look like on a real pipeline
+rather than a toy example?
+
+Data parallelism:
+
+Pipeline parallelism:
+
+Task parallelism:
+
+Which of these is most important?
+(Hint: it's not a close contest)
+A:
+"""
+
+"""
 === Quantifying parallelism ===
 
+Another way to think about parallelism:
 What amount of parallelism is available in a system?
 
 Amdahl's law:
 https://en.wikipedia.org/wiki/Amdahl%27s_law
 
+Let's start with a simple example:
+we have two tables, of employee names and employee salaries.
+We want to compute which employees make more than 1 million Euros.
+The employee salaries are listed in dollars.
+
+We are given as input the CEO name.
+We want to get the salary associated with the CEO,
+convert it from USD to Euros, and filter only the rows where the
+result is over 1 million.
+Assume all basic operations take 1 unit of time per row.
+
+What does Amdahl's law say about our simple
+average_numbers pipeline?
+"""
+
+"""
 Some TODOs:
 
 1. Rephrase in terms of running time
@@ -646,4 +705,68 @@ Some TODOs:
 2. Rephrase in terms of throughput
 
 3. Rephrase in terms of latency
+"""
+
+"""
+=== Parallelizing our code in Pandas? ===
+
+We don't want to parallelize by hand! (why? See problems with concurrency above)
+
+Dask is a simple library that works quite well for parallelizing datasets
+on a single machine as a drop-in replacement for Pandas.
+"""
+
+# conda install dask or pip3 install dask
+# import dask
+
+def dask_example():
+    # Example dataset
+    df = dask.datasets.timeseries()
+
+    # Dask is lazy -- it only generates data when you ask it to.
+    # (More on laziness later).
+    print(type(df))
+    print(df.head(5))
+
+    # Use a standard Pandas filter access
+    df2 = df[df.y > 0]
+    print(type(df2))
+    print(df2.head(5))
+
+    # Do a group by operation
+    df3 = df2.groupby("name").x.mean()
+    print(type(df3))
+    print(df3.head(5))
+
+    # Compute results -- this processes the whole dataframe
+    print(df3.compute())
+
+# Uncomment to run.
+# dask_example()
+
+"""
+=== End note: vertical vs. horizontal scaling ===
+
+- Vertical: scale "up" resources at a single machine (hardware, parallelism)
+- Horizontal: scale "out" resources over multiple machines (distribution)
+
+This lecture, we have only seen *vertical scaling*.
+But vertical scaling has a limit!
+Remember that we are still limited in the size of the dataset we can
+process on a single machine
+(recall Wes McKinney estimate of how large a table can be).
+Even without Pandas overheads,
+we still can't process data if we run out of memory!
+
+So, to really scale we may need to distribute our dataset over many
+machines -- which we do using a distributed data processing framework
+like Spark.
+This also gives us a convenient way to think about data pipelines
+in general, and visualize them.
+We will tour PySpark in the next lecture.
+
+In addition to scaling even further, distribution can offer an even
+more seamless performance compared to parallelism as it can eliminate
+many coordination overheads and contention between workers
+(see partitioning: different partitions of the database are operated entirely independently by different machines).
 """

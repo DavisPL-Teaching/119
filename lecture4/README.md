@@ -51,3 +51,21 @@ Plan:
 - Continue: parallel, concurrent, and distributed computing; main concepts
 
 - Parallel thinking: types of parallelism, quantifying parallelism, Amdahl's law
+
+## Oct 25
+
+Announcements:
+
+- HW1 due today
+
+- Reminder: No class on Monday.
+
+Plan:
+
+- Poll
+
+- Short distributed example
+
+- More about Parallelism:
+  Types of parallelism (in your pipeline)
+  Quantifying parallelism (in your pipeline)
