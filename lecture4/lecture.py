@@ -511,7 +511,7 @@ and then get into:
 
 =======================================================
 
-=== Oct 23 ===
+=== Oct 25 ===
 
 === Poll ===
 
@@ -538,7 +538,7 @@ https://tinyurl.com/3k9yeuym
 
 === What is distribution? ===
 
-Distribution means that we have multiple workers and/or belts
+Distribution means that we have multiple workers and belts
 **in different locations**
 can process and fail independently.
 
@@ -577,6 +577,7 @@ def average_numbers_distributed():
     print("Distributed computation complete")
 
 # Uncomment to run
+# This won't work on your machine!
 # average_numbers_distributed()
 
 """
@@ -615,9 +616,10 @@ Goals:
         waste money and resources
 
     - We want to avoid thinking about concurrency
-        (how?)
+        (why?)
+        + we can do this by...
 
-    - We are often forced to distribute computations
+    - We want to distribute data and computations
         (why?)
 
         + But even when the dataset is distributed, we want to think about
@@ -681,6 +683,22 @@ What amount of parallelism is available in a system?
 
 Amdahl's law:
 https://en.wikipedia.org/wiki/Amdahl%27s_law
+
+=== Standard form of the law ===
+
+
+
+=== Example with a simple task ===
+
+
+
+This applies to distributed computations as well!
+
+=== Alternate form ===
+
+
+
+=== Example with two tables ===
 
 Let's start with a simple example:
 we have two tables, of employee names and employee salaries.
