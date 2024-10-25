@@ -539,11 +539,17 @@ https://tinyurl.com/3k9yeuym
 === What is distribution? ===
 
 Distribution means that we have multiple workers and belts
-**in different locations**
+**in different physical locations**
 can process and fail independently.
 
-The workers must be on different computers or devices.
+The workers must be on different physical computers or physical devices.
     (Why does it matter?)
+
+    Running on the same physical device, both workers have
+    access to the same resources;
+    Running on two different devices, they access different resources, and one worker could crash even if the other
+    one doesn't.
+    So, it introduces new challenges.
 
 For this one, it's more difficult to simulate in Python directly.
 We can imagine that our workers are computed by an external
@@ -578,19 +584,38 @@ def average_numbers_distributed():
 
 # Uncomment to run
 # This won't work on your machine!
-# average_numbers_distributed()
+average_numbers_distributed()
+
+# This waits until the first connection finishes before
+# starting the next connection; but we could easily modify
+# the code to make them both run in parallel.
 
 """
 Questions:
 
 Q1: can we have distribution without parallelism?
 
+    A: Yes, we just did
+
 Q2: can we have distribution with parallelism?
+
+    A: Yes, we could allow the server to run and compute
+    an answer while we continue to compute other stuff,
+    or while we run a separate connection to a second
+    server.
 
 Q3: can we have distribution without concurrency?
 
+    A: Yes, for example we send a single task to the
+    server and let it complete that task
+
+    A: Even simpler: we have two databases or database
+    partitions running separately (and they don't interact)
+
 Q4: can we have distribution with concurrency?
 
+    Yes, we often do, for example when distributed workers
+    communicate via passing messages to each other
 """
 
 """
@@ -616,14 +641,23 @@ Goals:
         waste money and resources
 
     - We want to avoid thinking about concurrency
-        (why?)
-        + we can do this by...
+        (why?: concurrency comes with lots of pains,
+         including data races, contention, etc.)
+        + we can do this by relying on libraries that
+          others have built to solve concurrent programming
+          problems and to parallelize safely.
+          + how those libraries work: they avoid
+            reading and writing to the same data at the
+            same time.
 
     - We want to distribute data and computations
         (why?)
+        parallelization happens on a single machine,
+        distributed code enables us to scale even further.
 
-        + But even when the dataset is distributed, we want to think about
-          it using the same abstractions
+        + But even when the dataset is distributed, we
+          don't want to worry about concurrency and implementation
+          details.
 
 Of course, priorities are important:
 
@@ -631,19 +665,96 @@ Of course, priorities are important:
 
     - We still want to test on smaller datasets if needed
 
-    - For prototypting: resort to parallelism...
+    - For prototypting: resort to parallelism
+        if you need it for fast query results
 
-    - For production: resort to parallelism...
+    - For production: resort to parallelism
+        if it's faster, cheaper, and more efficient
 
 === Parallel thinking in data science ===
+
+We've written our pipeline:
+Q1: Is it parallel?
+Q2: How much parallelism?
+
+About Q1:
 
 We often think about parallelism by dividing it into three types:
 
 - Data parallelism
 
+    This is the most important one
+
+    Different parts of your dataset can be processed in parallel.
+
+    Example 1: imagine an SQL query where you need to match
+    the employee name with their salary
+
+    Different rows in the input: I can match one employee
+    name totally independently from another employee name --
+    these tasks can be done in parallel!
+    That's data parallelism.
+
+    Example 2: In our running example, we were adding up
+    the numbers between 1 and 20,000,000.
+    We notice that we can add up the numbers between
+    1 and 10,000,000 and the numbers betweeen
+    10,000,001 and 20,000,000 separately!
+    That's data parallelism.
+
+    ----> i.e. same task, different data points
+
 - Task parallelism
 
+    Different tasks can be done in parallel.
+
+    ----> i.e. different task, same data points
+
+    Example 1: You have an SQL query where you want
+    to compute the employee with the highest salary
+    and the employee with the lowest salary.
+
+    You might realize that you can compute highest
+    with one query, and lowest with a separate query,
+    and these two queries can be done in parallel.
+
+    Example 2: Going back to our running example,
+    avg. of the first 200,000,000 integers
+    we could compute the sum with one worker,
+    and the count with the other worker.
+    That's task parallelism.
+
 - Pipeline parallelism
+
+    (The last type of parallelism is the most strange)
+    It's that if two tasks are done in sequence,
+    we can still benefit (surprisingly) from parallelism!
+
+    (dataset) --> task 1 --> (output 1) --> task 2 --> (output 2)
+
+    Example: Take our dataset of employees, for each employee
+    name, strip the spaces from the name, then extract the first
+    name, then extract the last letter of the first name,
+    and save that to an output data frame.
+
+    This is a pipeline of tasks:
+    -> I have to strip the spaces before I extract the first name
+    -> I have to extract the first name before I can get the last letter
+    -> I have to get the last letter before I can save it to the output data frame
+
+    (dataset) --> task 1 --> task 2 --> task 3 --> task 4
+
+    It doesn't seem like there's any parallelism here!
+    But there is.
+
+              task 1     task 2     task 3     task 4
+    input 1:    1          2          3          4
+    input 2:    2          3          4          5
+    input 3:    3          4          5          6
+
+    That's pipeline parallelism!
+
+====
 
 Which of these is our average_numbers computation?
 
@@ -735,7 +846,7 @@ on a single machine as a drop-in replacement for Pandas.
 """
 
 # conda install dask or pip3 install dask
-# import dask
+import dask
 
 def dask_example():
     # Example dataset
