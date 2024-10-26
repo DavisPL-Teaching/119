@@ -754,7 +754,9 @@ We often think about parallelism by dividing it into three types:
 
     That's pipeline parallelism!
 
-====
+***** Ended here for Oct 25 *****
+
+============================================
 
 Which of these is our average_numbers computation?
 
