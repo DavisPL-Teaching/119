@@ -21,23 +21,23 @@ I will try to keep it up to date, but please see Piazza for the latest informati
 |   | Oct 18 |  |  | 3 |
 | 4 | Oct 21 | Parallelism |  | 4 |
 |   | Oct 23 |  |  | 4 |
-|   | Oct 25 |  | HW1 due | 4 |
-| 5 | Oct 28 | Dataflow Programming and Spark |  | 5 |
-|   | Oct 30 |  |  | 5 |
-|   | Nov 1  |  |  | 5 |
+|   | Oct 25 |  |  | 4 |
+| 5 | Oct 28 |  | HW1 due (deadline extended) |  |
+|   | Oct 30 |  |  | 4 |
+|   | Nov 1  | Distribution, Dataflow Programming, and Spark |  | 5 |
 
 ## Section 2: Parallelism
 
 | Week | Date | Topic | Readings & HW | Lecture # |
 | --- | --- | --- | --- | --- |
-| 6 | Nov 4  | Overflow |  | 5 |
-|   | Nov 6  | Section 1 Review | Mid-quarter survey due | 5 |
-|   | Nov 8  | **Midterm** |  | 5 |
+| 6 | Nov 4  |  |  | 5 |
+|   | Nov 6  | Review or Overflow |  | 5 |
+|   | Nov 8  | **Midterm** |  |  |
 | 7 | Nov 11 | **No Class** (Veterans Day) |  |  |
 |   | Nov 13 | Streaming |  | 6 |
 |   | Nov 15 |  | HW2 due | 6 |
-| 8 | Nov 18 |  |  | 7 |
-|   | Nov 20 |  |  | 7 |
+| 8 | Nov 18 |  |  | 6 |
+|   | Nov 20 | TBD |  | 7 |
 |   | Nov 22 |  |  | 7 |
 
 ## Section 3: Distributed Computing
@@ -57,6 +57,8 @@ I will try to keep it up to date, but please see Piazza for the latest informati
 [^1]: Possible additional topics (depending on time and preference):
 web scraping;
 data validation and integrity;
-data cleaning and missing data;
-distributed programming and distributed consistency requirements;
-cloud computing platforms, services, and resources.
+data cleaning;
+missing data;
+distributed programming: failures and consistency requirements;
+containerization and orchestration;
+cloud computing: platforms, services, and resources.
