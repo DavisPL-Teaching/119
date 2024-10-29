@@ -69,3 +69,17 @@ Plan:
 - More about Parallelism:
   Types of parallelism (in your pipeline)
   Quantifying parallelism (in your pipeline)
+
+## Oct 30
+
+Plan:
+
+- Recap: identifying parallelism in your pipeline
+
+- Poll
+
+- Continue with examples
+
+- Quantifying parallelism in your pipeline
+
+We will finish up Lecture 4 today or Friday.
