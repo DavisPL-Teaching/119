@@ -708,7 +708,9 @@ We often think about parallelism by dividing it into three types:
 
     Different tasks can be done in parallel.
 
-    ----> i.e. different task, same data points
+    ----> i.e. different task, potentially same data points
+
+    ----> the two tasks aren't dependent on each other.
 
     Example 1: You have an SQL query where you want
     to compute the employee with the highest salary
@@ -764,7 +766,7 @@ Recap:
 We saw some examples (without writing code)
 of data parallelism, task parallelism, and pipeline parallelism.
 
-We saw that our original average_numbers computation exploited...
+We saw that our original average_numbers computation exploited data parallelism.
 
 Let's do a poll to review.
 
@@ -780,26 +782,57 @@ A Python script needs to:
 https://forms.gle/bfbjmwhJHgWqRRux8
 https://tinyurl.com/5kvanhwv
 
+Answer: data + pipeline parallelism, no task parallelism in the pipeline as described.
+
+Visual aid (we'll come back to this very soon in lecture 5! Helpful way to think about it:)
+
+    Draw out the tasks your pipeline needs to compute as nodes, and dependencies between them
+    as arrows between the nodes
+
+    (load dataset) -> (calculate a new column) -> (send an email to each student)
+
+    (This is something called a dataflow graph)
+
+    Data parallelism exists if a single node in the pipeline can be done in parallel over
+    its inputs
+
+    Task parallelism exists if there two nodes that can be run in parallel without an arrow between them
+
+    Pipeline parallelism exists if there are two nodes that can be run in parallel with an arrow between them.
+
 === Exercises ===
 
 Exercise: Let's write some actual code.
 
 1. Write a version of our average_numbers pipeline that exploits task parallelism.
 
-2. Write a version of our average_numbers pipeline that exploits pipeline parallelism.
-    (This one will be a bit more contrived)
-
 We will start with a skeleton of our code from the concurrent example.
 """
 
+# Redefine N again
+N = 100_000_000
+
 def worker5(results):
-    # TODO: fill in worker 5
-    raise NotImplementedError
+    sum = 0
+    for i in range(N):
+        sum += i
+
+    results[0] = sum
 
 def worker6(results):
-    # TODO: fill in worker 6
-    raise NotImplementedError
+    count = 0
+    for i in range(N):
+        count += 1
 
+    results[1] = count
+
+"""
+**pictoral model** (dataflow graph)
+
+    (input) --> (sum)
+                         --> (compute average)
+    (input) --> (count)
+"""
 def average_numbers_task_parallelism():
     # Create a shared results array
     # i = integer, d = double (we use d here because the integers suffer from overflow)
@@ -818,35 +851,75 @@ def average_numbers_task_parallelism():
     p2.join()
 
     # Calculate results
-    # TODO
-    raise NotImplementedError
-    # print(f"Thread results: {results[:]}")
-    # sum = results[0] + results[2]
-    # count = results[1] + results[3]
-    # print(f"Average: {sum} / {count} = {sum / count}")
-    # print(f"Computation finished")
+    sum = results[0]
+    count = results[1]
+    print(f"Average: {sum} / {count} = {sum / count}")
+    print(f"Computation finished")
 
 # Uncomment to run
 # if __name__ == "__main__":
 #     freeze_support()
 #     average_numbers_task_parallelism()
 
+"""
+2. Write a version of our average_numbers pipeline that exploits pipeline parallelism.
+    (This one will be a bit more contrived)
+
+If we want to exploit pipeline parallelism...
+
+    we should have one worker produce as input the integers,
+    and one worker process those integers!
+"""
+
+# Redefine N again
+N = 1_000_000
+
 def worker7(results):
-    # TODO: fill in worker 7
-    raise NotImplementedError
+    # Worker 7 is responsible for loading the input
+    # (In our toy example, "loading" just means going through
+    # a Python range)
+    # and putting into a shared array
+    for i in range(N):
+        results[i] = i
+
+    print("Worker 7 complete")
 
 def worker8(results):
-    # TODO: fill in worker 8
-    raise NotImplementedError
+    # We need to read the output from worker 7!
+
+    i = 0
+    sum = 0
+    count = 0
+    while i < N:
+        # Wait for the input at index i
+        # There are more efficient ways to do this,
+        # but let's do what's called a "busy wait" -- means
+        # we just keep running through the loop until the input
+        # arrives.
+        if results[i] == -1:
+            # print(f"Worker loop: if case {i}")
+            # Worker 7 hasn't gotten us our input yet!
+            # pass
+            continue
+        else:
+            # print(f"Worker loop: else case {i}")
+            # Worker 7 has given us our input -- we can continue
+            sum += results[i]
+            count += 1
+            # Make progress -- move on to the next item
+            i += 1
+
+    print(f"Average: {sum} / {count} = {sum / count}")
+    print(f"Worker 8 finished")
 
 def average_numbers_pipeline_parallelism():
     # Create a shared results array
     # i = integer, d = double (we use d here because the integers suffer from overflow)
-    results = Array('d', range(20))
+    results = Array('d', range(N))
 
     # Iniitalize our shared array
-    for i in range(20):
-        results[i] = 0
+    for i in range(N):
+        results[i] = -1
 
     # Like run_in_parallel but with added code to handle arguments
     p1 = Process(target=worker7, args=(results,))
@@ -857,20 +930,31 @@ def average_numbers_pipeline_parallelism():
     p2.join()
 
     # Calculate results
-    # TODO
-    raise NotImplementedError
-    # print(f"Thread results: {results[:]}")
-    # sum = results[0] + results[2]
-    # count = results[1] + results[3]
-    # print(f"Average: {sum} / {count} = {sum / count}")
-    # print(f"Computation finished")
+    # -- we don't need to do anything here -- we did this logic in Worker 8.
+    print("Computation finished.")
 
 # Uncomment to run
-# if __name__ == "__main__":
-#     freeze_support()
-#     average_numbers_pipeline_parallelism()
+if __name__ == "__main__":
+    freeze_support()
+    average_numbers_pipeline_parallelism()
 
 """
+It works!
+And it illustrates the basic idea of pipeline parallelism.
+
+BUT: there is 1 potential problem here, does anyone see it?
+
+Remember that read + a write to the same memory at the same time
+is dangerous. (That's called a data race)
+
+It's not clear whether this actually causes a bug in our pipeline,
+(it depends on the architecture and the implementation of Array),
+but this could potentially cause arbitrary behavior or random data
+to be saved into the array, we saw this in a previous example.
+"""
+
+"""
+(Skip)
 What do these types of parallelism look like on a real pipeline
 rather than a toy example?
 
@@ -883,7 +967,15 @@ Task parallelism:
 Which of these is most important in the real world?
 (Hint: it's not a close contest)
 
-A:
+A: Data parallelism.
+
+Example: You may be doing 10-15 different tasks as part of your pipeline,
+but if your pipeline is 10 million items large, 10-15 is very small
+compared to the size of your pipeline.
+
+For this reason, data parallelism is the main focus of most
+parallel and distributed data processing frameworks.
+(Again, looking forward to lecture 5).
 """
 
 """
@@ -895,12 +987,23 @@ What about *how much*?
     i.e.: What amount of parallelism is available in a system?
 
 Definition:
-**Speedup** is...
+**Speedup** is defined by:
+    (running time of sequential code) / (running time of parallel code)
 
+example:
+    4.6s for parallel impl
+    9.2s for sequential impl
+
+Speedup would be 2x.
+
+Fundamental law of parallelism:
 Amdahl's law:
 https://en.wikipedia.org/wiki/Amdahl%27s_law
 
 Amdahl's law gives an upper bound on the amount of speedup that is possible for any task.
+
+***** End here for Oct 30. *****
+===============================================
 
 === Standard form of the law ===
 

@@ -72,6 +72,10 @@ Plan:
 
 ## Oct 30
 
+Reminders:
+
+- Midterm 1 week from Friday (Nov 8)
+
 Plan:
 
 - Recap: identifying parallelism in your pipeline
@@ -83,3 +87,5 @@ Plan:
 - Quantifying parallelism in your pipeline
 
 We will finish up Lecture 4 today or Friday.
+
+Questions?
