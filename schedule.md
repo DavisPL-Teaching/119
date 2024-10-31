@@ -24,21 +24,21 @@ I will try to keep it up to date, but please see Piazza for the latest informati
 |   | Oct 25 |  |  | 4 |
 | 5 | Oct 28 |  | HW1 due (deadline extended) |  |
 |   | Oct 30 |  |  | 4 |
-|   | Nov 1  | Distribution, Dataflow Programming, and Spark |  | 5 |
+|   | Nov 1  |  |  | 4 |
 
 ## Section 2: Parallelism
 
 | Week | Date | Topic | Readings & HW | Lecture # |
 | --- | --- | --- | --- | --- |
-| 6 | Nov 4  |  |  | 5 |
+| 6 | Nov 4  | Distributed Pipelines |  | 5 |
 |   | Nov 6  | Review or Overflow |  | 5 |
 |   | Nov 8  | **Midterm** |  |  |
 | 7 | Nov 11 | **No Class** (Veterans Day) |  |  |
-|   | Nov 13 | Streaming |  | 6 |
-|   | Nov 15 |  | HW2 due | 6 |
-| 8 | Nov 18 |  |  | 6 |
-|   | Nov 20 | TBD |  | 7 |
-|   | Nov 22 |  |  | 7 |
+|   | Nov 13 |  |  | 5 |
+|   | Nov 15 |  |  | 5 |
+| 8 | Nov 18 | Streaming |  | 6 |
+|   | Nov 20 |  |  | 6 |
+|   | Nov 22 |  | HW2 due | 6 |
 
 ## Section 3: Distributed Computing
 

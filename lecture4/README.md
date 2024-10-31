@@ -89,3 +89,14 @@ Plan:
 We will finish up Lecture 4 today or Friday.
 
 Questions?
+
+## Nov 1
+
+Plan:
+
+- Finish Lecture 4: quantifying parallelism in your pipeline
+
+- Poll
+
+- Revisit data race example from Oct 25 in-class poll (if time)
+  race-example.py

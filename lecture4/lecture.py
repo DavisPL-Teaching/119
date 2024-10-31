@@ -1047,6 +1047,10 @@ Amdahl's law gives an upper bound on the amount of speedup that is possible for 
 ***** End here for Oct 30. *****
 ===============================================
 
+=== Nov 1 ===
+
+Continuing: quantifying parallelism in your pipeline
+
 === Standard form of the law ===
 
 Suppose we have a computation that exhibits one or more types of parallelism.
@@ -1079,6 +1083,19 @@ Then the maximum speedup of the task is at most
     (T / S).
 
 Note: this applies to distributed computations as well!
+
+=== Poll ===
+
+Use Amdahl's law to estimate the maximum speedup in the following scenario.
+
+As in Wednesday's poll, a Python script needs to:
+- load a dataset into Pandas: students.csv, with 100 rows
+- calculate a new column which is the total course load for each student
+- send an email to each student with their total course load
+
+Assume that it takes 1 unit of time (1 operation) per row to read in each input row, 1 unit of time (per row) to calculate the new column, and 1 unit of time (per row) to send an email.
+
+https://forms.gle/JrnevTyVbxFzuFzq9
 
 === More examples ===
 
