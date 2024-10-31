@@ -212,8 +212,6 @@ def run_in_parallel(*tasks):
 # **************************************
 # **************************************
 
-N = 200_000_000
-
 def worker1():
     sum = 0
     count = 0
@@ -237,6 +235,7 @@ def average_numbers_parallel():
     print(f"Computation finished")
 
 # Uncomment to run
+# N = 200_000_000
 # if __name__ == '__main__':
 #     freeze_support() # another boilerplate line to ignore
 #     average_numbers_parallel()
@@ -332,9 +331,6 @@ Exercises:
 Modify our example to keep track of an output.
 """
 
-# Redefine N -- modify here as needed
-N = 1000
-
 # Shared memory between the processes
 # Shared list for results
 # this has to be a special Array instead of a Python
@@ -350,10 +346,6 @@ def worker3(results):
         sum += i
         count += 1
 
-        # Super race-y version
-        # results[0] += i
-        # results[1] += 1
-
     print(f"Worker 3 result: {sum} {count}")
     # Save the results in the shared results array
     results[0] += sum
@@ -365,10 +357,6 @@ def worker4(results):
     for i in range(N // 2, N):
         sum += i
         count += 1
-
-        # Super race-y version
-        # results[0] += sum
-        # results[1] += count
 
     print(f"Worker 4 result: {sum} {count}")
     # Save the results in the shared results array
@@ -395,13 +383,15 @@ def average_numbers_concurrent():
     p2.join()
 
     # Calculate results
-    print(f"Thread results: {results[:]}")
+    # print(f"Worker results: {results[:]}")
     sum = results[0] + results[2]
     count = results[1] + results[3]
     print(f"Average: {sum} / {count} = {sum / count}")
     print(f"Computation finished")
 
 # Uncomment to run
+# Define N -- modify here as needed
+# N = 1_000_000
 # if __name__ == "__main__":
 #     freeze_support()
 #     average_numbers_concurrent()
@@ -427,7 +417,61 @@ Answer: it seems to work!
 What do you think would happen if we modified the example to use the shared
 results list directly for each worker's local variables?
 (Let's try it)
+"""
 
+# Super race-y version of worker 3 -- don't do this!
+def worker3_racey(results):
+    for i in range(N // 2):
+        # print(f"Worker 3 loop: {i}")
+        results[0] += i
+        results[1] += 1
+
+    print(f"Worker 3 complete")
+
+# Super race-y version of worker 4
+def worker4_racey(results):
+    for i in range(N // 2, N):
+        # print(f"Worker 4 loop: {i}")
+        results[0] += i
+        results[1] += 1
+
+    print(f"Worker 4 complete")
+
+# Super race-y version of main process
+def average_numbers_racey():
+    print(f"N = {N}")
+
+    # Create a shared results array
+    # i = integer, d = double (we use d here because the integers suffer from overflow)
+    results = Array('d', range(2))
+
+    # Iniitalize our shared array
+    results[0] = 0
+    results[1] = 0
+
+    # Like run_in_parallel but with added code to handle arguments
+    p1 = Process(target=worker3_racey, args=(results,))
+    p2 = Process(target=worker4_racey, args=(results,))
+    p1.start()
+    p2.start()
+    p1.join()
+    p2.join()
+
+    # Calculate results
+    # print(f"Worker results: {results[:]}")
+    sum = results[0]
+    count = results[1]
+    print(f"Average: {sum} / {count} = {sum / count}")
+    print(f"Computation finished")
+
+# Uncomment to run
+# Define N -- modify here as needed
+# N = 1_000_000
+# if __name__ == "__main__":
+#     freeze_support()
+#     average_numbers_racey()
+
+"""
 Does something go wrong?
 
     Contention:
@@ -809,9 +853,6 @@ Exercise: Let's write some actual code.
 We will start with a skeleton of our code from the concurrent example.
 """
 
-# Redefine N again
-N = 100_000_000
-
 def worker5(results):
     sum = 0
     for i in range(N):
@@ -833,6 +874,7 @@ def worker6(results):
                          --> (compute average)
     (input) --> (count)
 """
+
 def average_numbers_task_parallelism():
     # Create a shared results array
     # i = integer, d = double (we use d here because the integers suffer from overflow)
@@ -857,6 +899,8 @@ def average_numbers_task_parallelism():
     print(f"Computation finished")
 
 # Uncomment to run
+# Redefine N again
+# N = 100_000_000
 # if __name__ == "__main__":
 #     freeze_support()
 #     average_numbers_task_parallelism()
@@ -870,9 +914,6 @@ If we want to exploit pipeline parallelism...
     we should have one worker produce as input the integers,
     and one worker process those integers!
 """
-
-# Redefine N again
-N = 1_000_000
 
 def worker7(results):
     # Worker 7 is responsible for loading the input
@@ -934,9 +975,10 @@ def average_numbers_pipeline_parallelism():
     print("Computation finished.")
 
 # Uncomment to run
-if __name__ == "__main__":
-    freeze_support()
-    average_numbers_pipeline_parallelism()
+# N = 1_000_000
+# if __name__ == "__main__":
+#     freeze_support()
+#     average_numbers_pipeline_parallelism()
 
 """
 It works!
