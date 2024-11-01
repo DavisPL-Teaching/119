@@ -100,3 +100,5 @@ Plan:
 
 - Revisit data race example from Oct 25 in-class poll (if time)
   race-example.py
+
+Questions?
