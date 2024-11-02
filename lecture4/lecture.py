@@ -1232,12 +1232,23 @@ average_numbers pipeline?
 """
 
 """
-(Skip)
 Let's also connect Amdahl's law back to throughput & latency.
 
-1. Rephrase in terms of throughput
+Given T and S...
 
-2. Rephrase in terms of latency
+1. Rephrase in terms of throughput:
+
+    If there are N input items, then the _maximum_ throughput is
+
+    throughput <= (N / S)
+
+2. Rephrase in terms of latency:
+
+    Assuming we care about latency for the whole task
+    (not just a single item), the _minimum_ latency is
+
+    latency >= S.
+
 """
 
 """
