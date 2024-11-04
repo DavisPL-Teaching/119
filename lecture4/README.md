@@ -70,6 +70,8 @@ Plan:
   Types of parallelism (in your pipeline)
   Quantifying parallelism (in your pipeline)
 
+## Oct 28 (No lecture)
+
 ## Oct 30
 
 Reminders:
