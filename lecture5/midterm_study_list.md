@@ -18,6 +18,8 @@ Study list of topics for the midterm.
 
 - "Looking around, getting help, doing stuff" model
 
+  + Underlying state of the shell
+
 - Basic command purposes (I won't test you on syntax!)
   ls, cd, cat, git, python3, >, |, echo, man, mkdir, touch, open, rm
   $PATH, $PWD
@@ -36,7 +38,8 @@ Study list of topics for the midterm.
 
 - SQL operators on DataFrames (I won't test you on syntax!)
 
-- Mutability: for example, know: modifying rows/columns in-place;
+- Mutability: not specifics
+  for example, know: modifying rows/columns in-place;
   shallow vs deep copy
 
 - Vectorization: what it means; why hardware acceleration matters;

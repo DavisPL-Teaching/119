@@ -15,7 +15,7 @@ Possible topics/optional:
 
 - Partitioning strategies
 
-- Distributed consistency: crashes, failures, duplicated/dropped messges
+- Distributed consistency: crashes, failures, duplicated/dropped messages
 
 - Pitfalls
 """
@@ -55,6 +55,12 @@ Motivation: last lecture (over the last couple of weeks) we saw that:
 
 - Parallelism alone (without distribution) can only scale your compute, and only by a limited amount (limited by your CPU bandwidth, # cores, and amount of RAM on your laptop!)
 
+    + e.g.: I have 800 GB available, but if I want to work with a dataset
+      bigger than that, I'm out of luck
+
+    + e.g.: I have 16 CPU cores available, but if I want more than 16X
+      speedup, I'm out of luck
+
 We want to be able to scale pipelines automatically to larger datasets.
 How?
 
@@ -67,6 +73,9 @@ Idea:
 Analogy: kind of like a compiler or interpreter!
     (A long time ago, people use to write all code in assembly language/
     machine code)
+
+We say "what" we want, the distriuted data processing software framework will
+handle the "how"
 
 So what is that higher level abstraction?
 
@@ -95,16 +104,56 @@ https://forms.gle/Vxfw7x5GQgnaetbz9
 
 What is a scalable collection type?
 
-A:
+What is a collection type? A set, a list, a dictionary, a table,
+a DataFrame, a database (for example), any collection of objects, rows,
+or data items.
+
+When we talk about collection types, we usually assume the whole
+thing is stored in memory. (Refer to 800GB limit comment above.)
+
+A: "Scalable" part means the collection is automatically distributed
+and parallelized over many different workers and/or computers or devices.
+
+The magic of this is that we can think of it just like a standard
+collection type!
+
+If I have a scalable set, I can just think of that as a set
+
+If I have a scalable DataFrame, I can just think of that as a DataFrame
 
 Basic scalable collection types in Spark:
 
 - RDD
+    Resilient Distributed Dataset
 
-- PySpark DataFrame
+- PySpark DataFrame APi
+    Will bear resemblance to DataFrames in Pandas (and Dask)
 """
 
 basic_rdd = sc.parallelize(range(0, 1_000))
+
+# --- run some commands on the RDD ---
+# mapped_rdd = basic_rdd.map(lambda x: x + 2)
+# filtered_rdd = mapped_rdd.filter(lambda x: x > 500)
+# filtered_rdd.collect()
+
+"""
+We can visualize our pipeline!
+
+Open up your browser to:
+http://localhost:4040/
+
+Let's wrap up there:
+
+- We saw scalable collection types
+  (with an initial RDD example)
+
+  And we will do more examples next time.
+
+********** Ended here for Nov 4 **********
+
+==========================================
+"""
 
 """
 What does the above do?
