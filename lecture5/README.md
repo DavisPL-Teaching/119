@@ -52,7 +52,7 @@ Plan:
 
 Announcements:
 
-- Midterm on Friday!
+- Midterm on Friday
 
     + My office hours are moved to tomorrow, Thursday 430-530pm.
 
@@ -60,8 +60,10 @@ Announcements:
 
     + I will reserve 5-10 minutes at the start of class to help with any study/review questions.
 
-- Mid-quarter survey will be open through EOD tomorrow.
-  Please fill it out!
+- Thank you to those of you who have filled out the mid-quarter survey so far!
+    Your answers have been super helpful.
+    If you haven't yet, please fill it out!
+    Survey open through EOD tomorrow.
 
 Plan:
 
@@ -71,4 +73,8 @@ Plan:
 
     + comparison between Python collections and scalable collections
 
-- Forgetting about SQL: the MapReduce processing model
+- RDD fundamentals: laziness, wide/narrow operators, partitioning
+
+- A second scalable collectoin type: DataFrames
+
+- MapReduce and how Spark works under the hood.
