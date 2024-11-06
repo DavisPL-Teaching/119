@@ -236,9 +236,16 @@ that our pipeline is actually getting run in parallel.
 
 Can we check that?
 
-- Measure on the terminal
+    Test: parallel_test.py
 
-- Check localhost:4040
+Tools:
+
+    time (doesn't work)
+
+    Activity monitor
+
+    localhost:4040
+    (see Executors tab)
 
 Q: what is localhost?
 
@@ -246,13 +253,10 @@ A:
 """
 
 """
-local
-"""
-
-"""
 Q: What is going on behind the scenes?
 
 A:
+
 
 Q: Why do we need sc. context?
 
@@ -263,24 +267,91 @@ A:
 Q: What is an RDD?
 
 RDD means...
+
+Important properties of RDDs:
+
+- Scalability (we have already discussed this)
+- Fault tolerance
+- Immutability
+- Laziness
+
+Let's illustrate one or two of these.
+
+Exercise: try this:
+- Create an RDD
+- Collect
+- Modify the result
+What happens?
 """
 
 """
-What else can we do with our RDD?
+=== Laziness ===
 
-A few other interesting operators:
+In Spark, and in particular on RDDs,
+operations are divided into *transformations* and *actions.*
 
 https://spark.apache.org/docs/latest/api/python/reference/api/pyspark.RDD.html
 
-- .sample
-- .count()
-- .sum()
-- .flatMap()
-- .fold()
-- .collect
+Some examples of transformations are:
+
+- .map
+- .filter
+- .sample(withReplacement, fraction)
 - .distinct()
 
-Implementation and optimizations:
+Some examples of actions are:
+
+- .collect
+- .count()
+- .sum()
+- .reduce()
+- .fold()
+- .flatMap()
+
+Let's see a couple of these.
+"""
+
+"""
+=== Partitioning ===
+
+In addition to being divided into actions and transformations,
+RDD operations are divided into "narrow" operations and "wide" operations.
+
+Image:
+
+    narrow_wide.png
+    (Credit: LinkedIn)
+
+Definitions:
+
+    Narrow = ...
+
+    Wide = ...
+
+Let's use the definitions above to classify all the operations above into narrow and wide.
+
+Narrow:
+-
+
+Wide:
+-
+"""
+
+"""
+=== Closing the loop... (back to DataFlow graphs) ===
+
+Let's view the above examples as dataflow graphs.
+
+- .explain()
+(need to convert to a DataFrame first)
+rdd.map(lambda x: (x,)).explain()
+"""
+
+"""
+=== Other interesting operations ===
+(time permitting)
+
+Implementation and optimization details:
 
 - .coalesce()
 - .barrier()
@@ -290,12 +361,9 @@ Implementation and optimizations:
 
 Others:
 - .id()
+- spark.conf.set("spark.sql.shuffle.partitions", "5")
 """
 
-"""
-Connecting back to DataFlow graphs...
-Let's view the above examples as dataflow graphs.
-"""
 
 """
 === DataFrame ===
