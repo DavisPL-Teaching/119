@@ -153,12 +153,106 @@ Let's wrap up there:
 ********** Ended here for Nov 4 **********
 
 ==========================================
+
+=== Nov 6 ===
+
+=== Poll ===
+
+Speedup through parallelism alone (vertical scaling) is significantly limited by...
+(Select all that apply)
+
+1. The number of lines in the Python source code
+2. The version of the operating system (e.g., MacOS Sonoma)
+3. The number of CPU cores on the machine
+4. The number of wire connections on the computer's motherboard
+5. The amount of RAM (memory) and disk space (storage) available
+
+https://forms.gle/fqLbb9dw7w96wVkR9
+
+=== Recap ===
+
+Scalable collection types are just like normal collection types,
+but they behave (behind the scenes) like they work in parallel!
+
+Behind the scenes, both vertical scaling and horizontal scaling
+can be performed automatically by the underlying data processing
+engine (in our case, Spark).
+This depends on the engine to do its job well -- for the most part,
+we will assume in this class that the engine does a better job than
+we do, but we will get to some limitations later on.
+
+Many other data processing engines exist...
+(to name a few, Hadoop, Google Cloud Dataflow, Materialize, Storm, Flink)
+(we will discuss more later on and the technology behind these.)
+
+I said:
+    "scalable collection types are just like normal collection types"
+
+Let's show this!
+
+Exercise:
+1.
+Write a function
+a) in Python
+b) in PySpark using RDDs
+that takes an input list of integers,
+and finds only the integers x such that x * x is exactly 3 digits...
+
+- .map
+- .filter
+- .collect
+
+2.
+Write a function
+a) in Python
+b) in PySpark using RDDs
+that takes as input a list of integers,
+and adds up all the even integers and all the odd integers
+
+- .groupBy
+- .reduceBy
+- .partitionBy
+"""
+
+def ex1_python(list):
+    # TODO
+    raise NotImplementedError
+
+def ex1_rdd(list):
+    # TODO
+    raise NotImplementedError
+
+def ex2_python(list):
+    # TODO
+    raise NotImplementedError
+
+def ex2_rdd(list):
+    # TODO
+    raise NotImplementedError
+
+"""
+Good! But there's one thing left -- we haven't really measured
+that our pipeline is actually getting run in parallel.
+
+Can we check that?
+
+- Measure on the terminal
+
+- Check localhost:4040
+
+Q: what is localhost?
+
+A:
 """
 
 """
-What does the above do?
+local
+"""
 
-Think of it as...
+"""
+Q: What is going on behind the scenes?
+
+A:
 
 Q: Why do we need sc. context?
 
@@ -166,15 +260,63 @@ A:
 """
 
 """
+Q: What is an RDD?
+
 RDD means...
 """
 
 """
-What can we do with our RDD?
+What else can we do with our RDD?
+
+A few other interesting operators:
+
+https://spark.apache.org/docs/latest/api/python/reference/api/pyspark.RDD.html
+
+- .sample
+- .count()
+- .sum()
+- .flatMap()
+- .fold()
+- .collect
+- .distinct()
+
+Implementation and optimizations:
+
+- .coalesce()
+- .barrier()
+- .cache()
+- .persist()
+- .checkpoint()
+
+Others:
+- .id()
 """
 
 """
-A second example: using DataFrame:
+Connecting back to DataFlow graphs...
+Let's view the above examples as dataflow graphs.
+"""
+
+"""
+=== DataFrame ===
+
+Our second example of a collection type is DataFrame.
+
+DataFrame is kind of like a Pandas DataFrame.
+
+https://spark.apache.org/docs/latest/api/python/reference/pyspark.sql/api/pyspark.sql.DataFrame.html
+"""
+
+def ex1_dataframe():
+    # TODO
+    raise NotImplementedError
+
+def ex2_dataframe():
+    # TODO
+    raise NotImplementedError
+
+"""
+Another DataFrame example:
 """
 
 # people = spark.createDataFrame([
@@ -202,7 +344,29 @@ A second example: using DataFrame:
 # print(result)
 
 """
-Auto parallelization / auto distribution?
+What is the "magic" behind how Spark works?
 
-Analogy: Apache Spark is kind of like a compiler.
+=== MapReduce ===
+
+MapReduce: Simplified Data Processing on Large Clusters
+https://dl.acm.org/doi/pdf/10.1145/1327452.1327492
+
+(BTW: probably one of the most cited papers ever with
+23,309 citations (last I checked))
+
+MapReduce is a simplified way to implement and think about
+distributed pipelines.
+
+In fact, a MapReduce pipeline is the simplest possible pipeline
+you can create, with just two stages:
+
+- TODO
+"""
+
+"""
+Auto parallelization / auto distribution?
+"""
+
+"""
+Latency/throughput tradeoff
 """

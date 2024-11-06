@@ -47,3 +47,28 @@ Plan:
 - Scalable collection types
 
 - Programming over collection types with distributed data pipelines.
+
+## Nov 5
+
+Announcements:
+
+- Midterm on Friday!
+
+    + My office hours are moved to tomorrow, Thursday 430-530pm.
+
+    + Poll question answers: poll_answers.md
+
+    + I will reserve 5-10 minutes at the start of class to help with any study/review questions.
+
+- Mid-quarter survey will be open through EOD tomorrow.
+  Please fill it out!
+
+Plan:
+
+- Start with the poll
+
+- Recap on scalable collection types
+
+    + comparison between Python collections and scalable collections
+
+- Forgetting about SQL: the MapReduce processing model
