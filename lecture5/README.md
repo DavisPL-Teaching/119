@@ -48,7 +48,7 @@ Plan:
 
 - Programming over collection types with distributed data pipelines.
 
-## Nov 5
+## Nov 6
 
 Announcements:
 
@@ -56,14 +56,14 @@ Announcements:
 
     + My office hours are moved to tomorrow, Thursday 430-530pm.
 
-    + Poll question answers: poll_answers.md
-
     + I will reserve 5-10 minutes at the start of class to help with any study/review questions.
+
+    + Poll question answers: poll_answers.md
 
 - Thank you to those of you who have filled out the mid-quarter survey so far!
     Your answers have been super helpful.
     If you haven't yet, please fill it out!
-    Survey open through EOD tomorrow.
+    Survey (+EC) open through EOD tomorrow.
 
 Plan:
 

@@ -201,7 +201,34 @@ and finds only the integers x such that x * x is exactly 3 digits...
 - .map
 - .filter
 - .collect
+"""
 
+def ex1_python(l1):
+    l2 = map(lambda x: x * x, l1)
+    l3 = filter(lambda x: 100 <= x <= 999, l2)
+    print(list(l3))
+
+INPUT_EXAMPLE = list(range(100))
+
+ex1_python(INPUT_EXAMPLE)
+
+# Output:
+# [100, 121, 144, 169, 196, 225, 256, 289, 324, 361, 400, 441, 484, 529, 576, 625, 676, 729, 784, 841, 900, 961]
+# All the 3 digit square numbers!
+
+def ex1_rdd(list):
+    l1 = sc.parallelize(list)
+    l2 = l1.map(lambda x: x * x)
+    # BTW: equivalent to:
+    # def square(x):
+    #     return x * x
+    # l2 = l1.map(square)
+    l3 = l2.filter(lambda x: 100 <= x <= 999)
+    print(l3.collect())
+
+ex1_rdd(INPUT_EXAMPLE)
+
+"""
 2.
 Write a function
 a) in Python
@@ -211,24 +238,26 @@ and adds up all the even integers and all the odd integers
 
 - .groupBy
 - .reduceBy
+- .reduceByKey
 - .partitionBy
 """
 
-def ex1_python(list):
+def ex2_python(l1):
+    # (Skip: leave as exercise)
     # TODO
     raise NotImplementedError
 
-def ex1_rdd(list):
-    # TODO
-    raise NotImplementedError
+def ex2_rdd(l1):
+    l2 = sc.parallelize(l1)
+    l3 = l2.groupBy(lambda x: x % 2)
+    res4 = l3.reduceByKey(lambda x: x + x)
+    # Fix syntax later
+    # import pdb; pdb.set_trace()
+    # breakpoint()
+    # for key, val in res4.collect():
+    #     print(f"{key}: {val.collect()}")
 
-def ex2_python(list):
-    # TODO
-    raise NotImplementedError
-
-def ex2_rdd(list):
-    # TODO
-    raise NotImplementedError
+ex2_rdd(INPUT_EXAMPLE)
 
 """
 Good! But there's one thing left -- we haven't really measured
@@ -247,20 +276,19 @@ Tools:
     localhost:4040
     (see Executors tab)
 
-Q: what is localhost?
+Q: what is localhost? What is going on behind the scenes?
 
-A:
+A: Spark is running a local cluster on our machine to schedule and run
+   tasks (batch jobs).
+
 """
 
 """
-Q: What is going on behind the scenes?
-
-A:
-
-
 Q: Why do we need sc. context?
 
 A:
+Not locally using Python compute, so any operation we do
+needs to get submitted and run as a job through the cluster.
 """
 
 """
@@ -271,21 +299,56 @@ RDD means...
 Important properties of RDDs:
 
 - Scalability (we have already discussed this)
-- Fault tolerance
-- Immutability
-- Laziness
 
-Let's illustrate one or two of these.
+- Fault tolerance
+    RDD data will actually automatically recover if a node (worker or machine) crashes
+
+- Immutability
+
+Let's illustrate this:
 
 Exercise: try this:
 - Create an RDD
 - Collect
 - Modify the result
 What happens?
+
+(It doesn't work)
+
+RDDs are optimized for computing static, immutable results.
 """
 
 """
+- Laziness
+
 === Laziness ===
+
+What is laziness?
+
+--> Spark will delay computing answers until you ask for them, as much
+    as possible.
+    (Dask does the same thing -- we saw a very brief example)
+
+You might wonder: why not just compute all the answers up front?
+
+Conjectures?
+- If you're pipelining the output, you could save memory!
+  (operator1) --> (operator2)
+  Doing operator1, then operator2 is ineficient (lots of stuff stored in memory)
+  (and we didn't anything in parallel)
+  Doing them both at once allows Spark to optimize the pair of them together.
+
+- More generally: we want to optimize the pipeline before running it.
+
+Recap:
+
+- We saw RDDs, properties of RDDs: parallelism, laziness, partitioning.
+- We'll go into these more next time (next Wed) and talk about the DataFrame
+  API as well.
+
+***** Stopped here for Nov 6 *****
+
+====================================
 
 In Spark, and in particular on RDDs,
 operations are divided into *transformations* and *actions.*
