@@ -250,12 +250,16 @@ def ex2_python(l1):
 def ex2_rdd(l1):
     l2 = sc.parallelize(l1)
     l3 = l2.groupBy(lambda x: x % 2)
-    res4 = l3.reduceByKey(lambda x: x + x)
-    # Fix syntax later
-    # import pdb; pdb.set_trace()
+    l4 = l3.flatMapValues(lambda x: x)
+    # ^^ needed for technical reasons
+    # actually, would be easier just to run a map to (x % 2, x)
+    # then call reduceByKey, but I wanted to conceptually separate
+    # out the groupBy step from the sum step.
+    l5 = l4.reduceByKey(lambda x, y: x + y)
+    for key, val in l5.collect():
+        print(f"{key}: {val}")
+    # Uncomment to inspect l1, l2, l3, l4, and l5
     # breakpoint()
-    # for key, val in res4.collect():
-    #     print(f"{key}: {val.collect()}")
 
 ex2_rdd(INPUT_EXAMPLE)
 
