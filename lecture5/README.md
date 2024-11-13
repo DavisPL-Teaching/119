@@ -78,3 +78,39 @@ Plan:
 - A second scalable collectoin type: DataFrames
 
 - MapReduce and how Spark works under the hood.
+
+## Nov 15
+
+Welcome back!
+
+Announcements:
+
+- Midterm is graded, and grades will be released after class today
+
+  I am happy with how everyone did overall!
+  There were a couple of questions I noticed we could have spent more time in class going over
+  the techniques, which I will spend more time on going forward.
+
+- Piazza thread for Wednesday's makeup reading: https://piazza.com/class/m12ef423uj5p5/post/119
+
+- Thank you for the feedback from the mid-quarter survey:
+
+  + Some of you noted that HW1 was long and would prefer shorter assignments released at larger time intervals
+
+  + Stay tuned for an announcement about this on Monday.
+
+Lecture plan:
+
+- Start with the poll
+
+- Recap on distributed pipelines and dataflow graphs
+
+- Fundamental properties of RDDs:
+  + laziness (transformation/action distinction),
+  + partitioning (wide/narrow distinction)
+
+- MapReduce
+
+- DataFrames
+
+We will finish up Lecture 5 today and Friday.

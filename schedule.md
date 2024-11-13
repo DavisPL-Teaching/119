@@ -38,14 +38,14 @@ I will try to keep it up to date, but please see Piazza for the latest informati
 |   | Nov 15 |  |  | 5 |
 | 8 | Nov 18 | Streaming |  | 6 |
 |   | Nov 20 |  |  | 6 |
-|   | Nov 22 |  | HW2 due | 6 |
+|   | Nov 22 |  |  | 6 |
 
 ## Section 3: Distributed Computing
 
 | Week | Date | Topic | Readings & HW | Lecture # |
 | --- | --- | --- | --- | --- |
 | 9 | Nov 25 | Selection of additional topics[^1] |  | 8 |
-|   | Nov 27 |  | HW3 (final project) due | 8 |
+|   | Nov 27 |  |  | 8 |
 |   | Nov 29 | **No Class** (Thanksgiving) |
 | 10 | Dec 2 | Selection of additional topics[^1] |  | 9 |
 |    | Dec 4 |  |  | 9 |

@@ -285,20 +285,17 @@ Q: what is localhost? What is going on behind the scenes?
 A: Spark is running a local cluster on our machine to schedule and run
    tasks (batch jobs).
 
-"""
 
-"""
 Q: Why do we need sc. context?
 
 A:
 Not locally using Python compute, so any operation we do
 needs to get submitted and run as a job through the cluster.
-"""
 
-"""
 Q: What is an RDD?
 
-RDD means...
+RDD means Resilient Distributed Dataset.
+https://www.usenix.org/system/files/conference/nsdi12/nsdi12-final138.pdf
 
 Important properties of RDDs:
 
@@ -306,6 +303,7 @@ Important properties of RDDs:
 
 - Fault tolerance
     RDD data will actually automatically recover if a node (worker or machine) crashes
+    It does this while still mostly maintaining data in-memory, which is impressive.
 
 - Immutability
 
@@ -354,11 +352,75 @@ Recap:
 
 ====================================
 
+Friday, Nov 15
+
+=== Poll ===
+
+Review question about RDDs:
+
+https://forms.gle/fPL8cyBMhTkR4MQUA
+
+=== Recap ===
+
+Properties of scalable colleciton types:
+
+    RDDs are: scalable, parallel, immutable, lazy, and partitioned.
+
+    Operators on RDDs create dataflow graphs! (more on this soon)
+
+    We have covered the first 3 properties so far and briefly mentioned the 4th one.
+
+Not just about RDDs!
+
+---> Most of this generalizes to all distributed programming contexts.
+
+=== Laziness ===
+
 In Spark, and in particular on RDDs,
 operations are divided into *transformations* and *actions.*
 
 https://spark.apache.org/docs/latest/api/python/reference/api/pyspark.RDD.html
 
+Let's consider an example.
+"""
+
+# Chem names by atomic number
+CHEM_NAMES = [None, "H", "He", "Li", "Be", "B", "C", "N", "O", "F", "Ne"]
+CHEM_DATA = {
+    # H20
+    "water": [0, 2, 0, 0, 0, 0, 0, 0, 1, 0, 0],
+    # N2
+    "nitrogen": [0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0],
+    # CO2
+    "carbon dioxide": [0, 0, 0, 0, 0, 0, 1, 0, 2, 0, 0],
+    # C4H
+    "methane": [0, 4, 0, 0, 0, 0, 1, 0, 0, 0, 0],
+    # C8 H F15 O2
+    "PFOA": [0, 1, 0, 0, 0, 0, 8, 0, 2, 15, 0],
+}
+
+def fluorine_carbon_ratio(data):
+    # Note: a nice thing in Spark is that we can parallelize any iterable collection!
+    # (We should really use a DataFrame for this, I just want to show RDDs as we have been using
+    # RDD syntax so far. DataFrames are based on RDDs under the hood.)
+    data1 = sc.parallelize(data)
+
+    # We can't compute the ratio if there are no carbons
+    data2 = data1.filter(lambda x: x[1][6] > 0)
+
+    # Compute ratio
+    data3 = data2.map(lambda x: x[1][9] / x[1][6])
+
+    # Compute avg
+    stats = data3.stats()
+    ans = stats.mean()
+
+    # Print
+    print(f"Average Fluorine-Carbon Ratio: {ans}")
+
+fluorine_carbon_ratio(CHEM_DATA)
+
+"""
 Some examples of transformations are:
 
 - .map
