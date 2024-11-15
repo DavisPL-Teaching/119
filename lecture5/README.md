@@ -103,14 +103,14 @@ Lecture plan:
 
 - Start with the poll
 
-- Recap on distributed pipelines and dataflow graphs
-
 - Fundamental properties of RDDs:
   + laziness (transformation/action distinction),
   + partitioning (wide/narrow distinction)
+
+- Recap on distributed pipelines and dataflow graphs
 
 - MapReduce
 
 - DataFrames
 
-We will finish up Lecture 5 today and Friday.
+We will finish up Lecture 5 today and Monday.

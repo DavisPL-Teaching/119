@@ -210,7 +210,7 @@ def ex1_python(l1):
 
 INPUT_EXAMPLE = list(range(100))
 
-ex1_python(INPUT_EXAMPLE)
+# ex1_python(INPUT_EXAMPLE)
 
 # Output:
 # [100, 121, 144, 169, 196, 225, 256, 289, 324, 361, 400, 441, 484, 529, 576, 625, 676, 729, 784, 841, 900, 961]
@@ -226,7 +226,7 @@ def ex1_rdd(list):
     l3 = l2.filter(lambda x: 100 <= x <= 999)
     print(l3.collect())
 
-ex1_rdd(INPUT_EXAMPLE)
+# ex1_rdd(INPUT_EXAMPLE)
 
 """
 2.
@@ -261,7 +261,7 @@ def ex2_rdd(l1):
     # Uncomment to inspect l1, l2, l3, l4, and l5
     # breakpoint()
 
-ex2_rdd(INPUT_EXAMPLE)
+# ex2_rdd(INPUT_EXAMPLE)
 
 """
 Good! But there's one thing left -- we haven't really measured
@@ -377,11 +377,23 @@ Not just about RDDs!
 === Laziness ===
 
 In Spark, and in particular on RDDs,
-operations are divided into *transformations* and *actions.*
+operators are divided into *transformations* and *actions.*
 
 https://spark.apache.org/docs/latest/api/python/reference/api/pyspark.RDD.html
 
-Let's consider an example.
+Transformation: transform the data without computing the answer (yet)
+Action: compute an answer
+
+This is called "laziness" because we don't always compute the answer right away.
+
+Terminology (this comes from programming language design):
+Transformations are also called "lazy" operators
+and actions are called "eager" operators.
+(Why?)
+
+Let's consider an example
+
+A chemical dataset:
 """
 
 # Chem names by atomic number
@@ -399,29 +411,81 @@ CHEM_DATA = {
     "PFOA": [0, 1, 0, 0, 0, 0, 8, 0, 2, 15, 0],
 }
 
+# Example: we want to find molecules that are heavy in Fluorine (F)
+# Note:
+# More about PFOA:
+# https://en.wikipedia.org/wiki/Perfluorooctanoic_acid#Health_effects
+# Dark Waters (2019 film)
+# https://en.wikipedia.org/wiki/Dark_Waters_(2019_film)
+
 def fluorine_carbon_ratio(data):
     # Note: a nice thing in Spark is that we can parallelize any iterable collection!
     # (We should really use a DataFrame for this, I just want to show RDDs as we have been using
     # RDD syntax so far. DataFrames are based on RDDs under the hood.)
-    data1 = sc.parallelize(data)
+    rdd1 = sc.parallelize(data.values())
 
     # We can't compute the ratio if there are no carbons
-    data2 = data1.filter(lambda x: x[1][6] > 0)
+    rdd2 = rdd1.filter(lambda x: x[6] > 0)
 
     # Compute ratio
-    data3 = data2.map(lambda x: x[1][9] / x[1][6])
+    rdd3 = rdd2.map(lambda x: x[9] / x[6])
 
     # Compute avg
-    stats = data3.stats()
+    stats = rdd3.stats()
     ans = stats.mean()
 
     # Print
+    print(f"Stats: {stats}")
     print(f"Average Fluorine-Carbon Ratio: {ans}")
 
-fluorine_carbon_ratio(CHEM_DATA)
+# Comment out to run
+# fluorine_carbon_ratio(CHEM_DATA)
 
 """
-Some examples of transformations are:
+How can we determine which of the above are lazy (transformations) and which are eager (actions)?
+
+Ideas?
+
+Answers:
+
+Lazy (transformations):
+
+-
+
+Eager (actions):
+
+-
+"""
+
+"""
+=== Interlude: RDDs as dataflow graphs ===
+
+Before we continue: viewing the above as a dataflow graph!
+
+All distributed pipelines can be viewed as dataflow graphs. How?
+
+Q: let's draw the above as a dataflow graph using ASCII art.
+
+(What are our tasks/nodes and arrows?)
+
+"""
+
+"""
+Can we view this more programmatically?
+
+Unfortunately the visualization capabilities of RDDs are a bit limited.
+Two ways for now:
+
+- Go to localhost:4040/
+- .toDebugString()
+
+We will see a better way when we get to DataFrames.
+"""
+
+"""
+=== More examples of laziness ===
+
+More examples of transformations are:
 
 - .map
 - .filter
@@ -436,12 +500,80 @@ Some examples of actions are:
 - .reduce()
 - .fold()
 - .flatMap()
-
-Let's see a couple of these.
 """
+
+# Try this (in the above function):
+# rdd3.distinct().collect()
 
 """
 === Partitioning ===
+
+Partitioning is what makes RDDs scalable.
+How does partitioning work?
+
+----> Under the hood, all datasets and intermediate outputs are partitioned
+into groups which can be processed independently.
+
+Useful operations to see what's going on:
+
+    .getNumPartitions
+    .glom().collect()
+
+Let's see an example.
+"""
+
+def show_partitions(data):
+
+    # Parallelize as before
+    rdd = sc.parallelize(data.values())
+
+    # Show the partitioning details
+    print(f"Number of partitions: {rdd.getNumPartitions()}")
+    print(f"Inspect partitions: {rdd.glom().collect()}")
+
+"""
+We can also control the number of partitions and the way data is partitioned
+(if we so choose).
+"""
+
+def set_partitions(data):
+
+    # Parallelize as before
+    rdd = sc.parallelize(data.values())
+
+    # Show the partitioning details
+    print(f"Number of partitions: {rdd.getNumPartitions()}")
+    print(f"Inspect partitions: {rdd.glom().collect()}")
+
+"""
+=== Why partitioning matters ===
+
+We said that scalable collections should behave just like ordinary collections!
+So why do we need to worry about partitioning?
+
+----> Sometimes you want to control partitiononing, or partitioning differently helps improve
+      the performance of your pipeline.
+
+----> Also occasionally (usually if you set up your pipeline wrong), partitioning might affect the
+      outputs that you get.
+
+Q: How does partitioning affect pipeline scheduling and performance?
+
+Like laziness, partitioning also introduces an interesting dichotomy of operators into two groups.
+
+The basic question is what happens when we chain together two operators?
+
+EXAMPLE:
+Dataflow graph:
+
+    (input data) ---> (filter) ---> (map) ---> (stats)
+
+What happens when we parallelize this?
+
+A:
+
+
+Two types of operators!
 
 In addition to being divided into actions and transformations,
 RDD operations are divided into "narrow" operations and "wide" operations.
@@ -457,7 +589,8 @@ Definitions:
 
     Wide = ...
 
-Let's use the definitions above to classify all the operations above into narrow and wide.
+Let's use the definitions above to classify all the operations in our example pipelines above
+into narrow and wide.
 
 Narrow:
 -
@@ -467,32 +600,20 @@ Wide:
 """
 
 """
-=== Closing the loop... (back to DataFlow graphs) ===
-
-Let's view the above examples as dataflow graphs.
-
-- .explain()
-(need to convert to a DataFrame first)
-rdd.map(lambda x: (x,)).explain()
-"""
-
-"""
 === Other interesting operations ===
-(time permitting)
+(Likely skip for time)
 
 Implementation and optimization details:
 
+(See PySpark documentation)
+
+- .id()
 - .coalesce()
 - .barrier()
 - .cache()
 - .persist()
 - .checkpoint()
-
-Others:
-- .id()
-- spark.conf.set("spark.sql.shuffle.partitions", "5")
 """
-
 
 """
 === DataFrame ===
@@ -502,18 +623,25 @@ Our second example of a collection type is DataFrame.
 DataFrame is kind of like a Pandas DataFrame.
 
 https://spark.apache.org/docs/latest/api/python/reference/pyspark.sql/api/pyspark.sql.DataFrame.html
+
+An example of a dataframe computation is shown in
+
+    examples.py
+
+The main difference is we need to create the dataframe using a tuple or dictionary.
+
+We can also create one from an RDD by doing
+
+    .map(lambda x: (x,)).toDF()
 """
 
-def ex1_dataframe():
-    # TODO
-    raise NotImplementedError
-
-def ex2_dataframe():
-    # TODO
+def ex_dataframe(data):
+    # TODO:
+    # Load the CHEM_DATA and turn it into a DataFrame, then collect it
     raise NotImplementedError
 
 """
-Another DataFrame example:
+Another misc. DataFrame example:
 """
 
 # people = spark.createDataFrame([
@@ -545,25 +673,125 @@ What is the "magic" behind how Spark works?
 
 === MapReduce ===
 
-MapReduce: Simplified Data Processing on Large Clusters
-https://dl.acm.org/doi/pdf/10.1145/1327452.1327492
-
-(BTW: probably one of the most cited papers ever with
-23,309 citations (last I checked))
-
 MapReduce is a simplified way to implement and think about
 distributed pipelines.
 
 In fact, a MapReduce pipeline is the simplest possible pipeline
-you can create, with just two stages:
+you can create, with just two stages!
 
-- TODO
-"""
-
-"""
-Auto parallelization / auto distribution?
+Exercise: Let's create our own MapReduce pipeline functions.
 """
 
+def map(rdd, f):
+    # TODO
+    raise NotImplementedError
+
+def reduce(rdd, init, f):
+    # TODO
+    raise NotImplementedError
+
+# If done correctly, the following should work
+
+def get_total_fluorines(data):
+    rdd = sc.parallelize(data.values())
+
+    res1 = map(rdd, lambda x: x[9])
+    res2 = reduce(res1, 0, lambda x, y: x + y)
+
+    print(f"Result: {res2}")
+
+# Uncomment to run
+# get_total_fluorines(CHEM_DATA)
+
 """
-Latency/throughput tradeoff
+=== Some history ===
+
+MapReduce was originally created by
+Jeffrey Dean and Sanjay Ghemawat at Google to simplify the large-scale data processing jobs that
+engineers were running on Google clusters.
+
+Blog article: "The Friendship That Made Google Huge"
+"Coding together at the same computer, Jeff Dean and Sanjay Ghemawat changed the course of the company—and the Internet."
+https://www.newyorker.com/magazine/2018/12/10/the-friendship-that-made-google-huge
+
+One of the paper readings from Wednesday asked you to read the original paper:
+    MapReduce: Simplified Data Processing on Large Clusters
+    https://dl.acm.org/doi/pdf/10.1145/1327452.1327492
+
+(BTW, this paper is very famous. Probably one of the most cited papers ever with
+23,309 citations (last I checked))
+
+Spark is heavily based on MapReduce under the hood.
+
+=== End note: Latency/throughput tradeoff ===
+
+So, we know how to build distributed pipelines.
+
+The **only** change from a sequential pipline is that
+arrows are scalable collection types, instead of regular data types.
+Tasks are then interpreted as (either wide or narrow) operators over the scalable collections.
+In other words, data parallelism comes by default and for free!
+
+But there is just one problem with what we have so far :)
+Spark is optimized for throughput.
+It's what we call a *batch processing engine.* That means?
+
+This is related to the last question on Q10 of the midterm.
+It wasn't entirely clear to everyone what I meant by latency on a "single input"
+vs. the "entire input dataset", so let me clarify.
+
+First of all, what is latency?
+Imagine this. I have 10M inputs, my pipeline processes 1M inputs/sec (pretty well parallelized.
+
+    (input)   --- (process)
+      10M        1M / sec
+
+What's the latency if I just put 1 item into the pipeline?
+
+If I make some change to the input, how long will it take to see the results on the
+output side?
+
+We can't say from the above information. We don't know for example, whether the
+1M inputs/sec means all 1M are processed in parallel, or the 1M inputs/sec means that
+it's really 100K inputs every tenth of a second at a time.
+
+**Latency is about response time.**
+To understand latency you have to imagine the data is coming in to the pipeline in real time,
+hot off the press.
+
+It only makes sense to talk about latency when we're thinking about an input change that the user
+makes (some input data), and the result they want to observe on the output side.
+Latency is always measured in seconds; it's not a time "per item" or dividing the total time by number
+of items (that doesn't tell us how long it took to see a response for each individual item!)
+
+But in a batch processing framework like Spark,
+it waits until we ask, and then collects *all* results at once!
+So we always get the worst possible throughput, in fact we get 10 seconds latency
+on each individual item. We don't get some results sooner and some results later.
+
+Grouping together items (via lazy transformations) helps optimize the pipeline, but it
+*doesn't* help get results as soon as possible when they're needed. That's why there is a tradeoff
+between throughput and latency.
+If we always wanted the best latency, we would only ever do actions, never transformations,
+and we would always ask for the results right away.
+
+From "The 8 Requirements of Real-Time Stream Processing":
+
+    "To achieve low latency, a system must be able to perform
+    message processing without having a costly storage operation in
+    the critical processing path. A storage operation adds a great deal
+    of unnecessary latency to the process (e.g., committing a database
+    record requires a disk write of a log record). For many stream
+    processing applications, it is neither acceptable nor necessary to
+    require such a time-intensive operation before message processing
+    can occur. Instead, messages should be processed “in-stream” as
+    they fly by."
+
+    Mike Stonebraker, Ugur Çetintemel, and Stan Zdonik
+    https://cs.brown.edu/~ugur/8rulesSigRec.pdf
+
+So that's where we're going next,
+talking about applications where you might want your pipeline to respond in real time to data that
+is coming in.
+We'll use a different API in Spark called Spark Streaming.
 """
