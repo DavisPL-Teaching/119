@@ -101,6 +101,8 @@ Announcements:
 
 Lecture plan:
 
+Continue with RDDs, MapReduce:
+
 - Start with the poll
 
 - Fundamental properties of RDDs:
@@ -114,3 +116,5 @@ Lecture plan:
 - DataFrames
 
 We will finish up Lecture 5 today and Monday.
+
+Questions?

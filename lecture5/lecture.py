@@ -354,12 +354,6 @@ Recap:
 
 Friday, Nov 15
 
-=== Poll ===
-
-Review question about RDDs:
-
-https://forms.gle/fPL8cyBMhTkR4MQUA
-
 === Recap ===
 
 Properties of scalable colleciton types:
@@ -374,6 +368,17 @@ Not just about RDDs!
 
 ---> Most of this generalizes to all distributed programming contexts.
 
+=== Poll ===
+
+Review question about RDDs:
+
+https://forms.gle/fPL8cyBMhTkR4MQUA
+
+Answers: Vertical + Horizontal scaling, data parallelism, distribution, and should behave
+   as if it were a normal collection type
+
+Takeaway message: Scalable collection types == data parallelism!
+
 === Laziness ===
 
 In Spark, and in particular on RDDs,
@@ -387,6 +392,7 @@ Action: compute an answer
 This is called "laziness" because we don't always compute the answer right away.
 
 Terminology (this comes from programming language design):
+    (e.g. Haskell is lazy)
 Transformations are also called "lazy" operators
 and actions are called "eager" operators.
 (Why?)
@@ -413,16 +419,19 @@ CHEM_DATA = {
 
 # Example: we want to find molecules that are heavy in Fluorine (F)
 # Note:
-# More about PFOA:
-# https://en.wikipedia.org/wiki/Perfluorooctanoic_acid#Health_effects
 # Dark Waters (2019 film)
 # https://en.wikipedia.org/wiki/Dark_Waters_(2019_film)
+# More about PFOA:
+# https://en.wikipedia.org/wiki/Perfluorooctanoic_acid#Health_effects
 
 def fluorine_carbon_ratio(data):
     # Note: a nice thing in Spark is that we can parallelize any iterable collection!
     # (We should really use a DataFrame for this, I just want to show RDDs as we have been using
     # RDD syntax so far. DataFrames are based on RDDs under the hood.)
     rdd1 = sc.parallelize(data.values())
+    # .keys() gives water, nitrogen, etc.
+    # .values() gives the lists [0, 1, ...]
+    # .items() to get the (name, list) pair
 
     # We can't compute the ratio if there are no carbons
     rdd2 = rdd1.filter(lambda x: x[6] > 0)
@@ -438,23 +447,35 @@ def fluorine_carbon_ratio(data):
     print(f"Stats: {stats}")
     print(f"Average Fluorine-Carbon Ratio: {ans}")
 
+    breakpoint()
+
 # Comment out to run
-# fluorine_carbon_ratio(CHEM_DATA)
+fluorine_carbon_ratio(CHEM_DATA)
 
 """
-How can we determine which of the above are lazy (transformations) and which are eager (actions)?
+How can we determine which of the above are transformations and which are actions?
 
 Ideas?
 
+- Print it out!
+
+  Transformation = prints out as an RDD (it's just a blob that doesn't have any data output)
+
+    After a transformation: PythonRDD[3] at RDD at PythonRDD.scala:53
+
+  Action = prints out as Python data.
+
+    After an action: (count: 3, mean: 0.625, stdev: 0.8838834764831844, max: 1.875, min: 0.0)
+
 Answers:
 
-Lazy (transformations):
+Transformations (lazy):
 
--
+- .map(), .filter()
 
-Eager (actions):
+Actions (not lazy):
 
--
+- .stats()
 """
 
 """
@@ -464,10 +485,37 @@ Before we continue: viewing the above as a dataflow graph!
 
 All distributed pipelines can be viewed as dataflow graphs. How?
 
+What is the connection between code and dataflow graphs?
+
 Q: let's draw the above as a dataflow graph using ASCII art.
 
 (What are our tasks/nodes and arrows?)
 
+    Tasks: Operators that were done on the RDD
+    Arrows: dependencies from one operator to another
+
+    Our dataflow graph:
+
+    (input chem data) --> (filter) --> (map) --> (stats)
+
+    Each task computes a new RDD based on the old RDD.
+
+    Calling an operator/method .do_something on an RDD creates a new node (do_something)
+
+    This:
+    rdd = sc.parallelize(...)
+    rdd1 = rdd.operator1()
+    rdd2 = rdd.operator2()
+    rdd3 = rdd2.operator3()
+
+    Is the same as
+
+    This:
+                --> (operator1)
+    (load input)
+                --> (operator2) --> (operator3)
+
+(In fact, underneath the hood, PySpark is actually creating the dataflow graph.)
 """
 
 """
@@ -500,6 +548,25 @@ Some examples of actions are:
 - .reduce()
 - .fold()
 - .flatMap()
+
+The most important of these is .collect -- how to take any RDD and get the results.
+You can that at any intermediate stage.
+
+=== Wrapping up ===
+
+We saw
+    scalable collection type == data parallelism.
+
+We saw Laziness of RDDs: all RDD operators are divided into transformations
+(which return another RDD object/handle and don't compute anything)
+and actions (which return result data in plain Python)
+
+We saw that all computations over RDDs are really dataflow graphs.
+    code == dataflow graph
+
+**************** Where we left off for today ****************
+
+=============================================================
 """
 
 # Try this (in the above function):
