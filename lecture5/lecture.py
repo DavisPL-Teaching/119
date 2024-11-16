@@ -586,9 +586,36 @@ We saw that all computations over RDDs are really dataflow graphs.
 
 === Nov 18 ===
 
+=== Poll ===
+
+https://forms.gle/bfhtG8WqiYcco72e7
+
+An exercise on laziness:
+
+Suppose we want to do 3 tasks:
+
+1. Generate 100,000 random data points (vectors v)
+2. Map each data point v to a normalized vector v / ||v||
+3. Print the first 5 answers
+
+As a dataflow graph:
+(1) ---> (2) ---> (3)
+
+We want to know which of 1, 2, 3 should be lazy, and which should be evaluated right away.
+
+Which tasks should be evaluated lazily if we want to get the answer in the most efficient way?
+
+(Note: we will revisit this example again soon.)
+
+=== Finishing up RDDs ===
+
+One last property (an important one!): Partitioning
+
 === Partitioning ===
 
 Partitioning is what makes RDDs scalable.
+It's data parallelism.
+
 How does partitioning work?
 
 ----> Under the hood, all datasets and intermediate outputs are partitioned
@@ -599,7 +626,7 @@ Useful operations to see what's going on:
     .getNumPartitions
     .glom().collect()
 
-Let's see an example.
+Let's revisit our example:
 """
 
 def show_partitions(data):
@@ -609,35 +636,64 @@ def show_partitions(data):
 
     # Show the partitioning details
     print(f"Number of partitions: {rdd.getNumPartitions()}")
-    print(f"Inspect partitions: {rdd.glom().collect()}")
+    print("Inspect partitions:")
+    for part in rdd.glom().collect():
+        print(f"Partition: {part}")
+
+# Uncomment to run
+# show_partitions(CHEM_DATA)
 
 """
 We can also control the number of partitions and the way data is partitioned
 (if we so choose).
+Syntax:
+
+     sc.parallelize(data, number of partitions)
 """
 
-def set_partitions(data):
-
-    # Parallelize as before
-    rdd = sc.parallelize(data.values())
-
-    # Show the partitioning details
-    print(f"Number of partitions: {rdd.getNumPartitions()}")
-    print(f"Inspect partitions: {rdd.glom().collect()}")
+# Exercise: update the above to also control the number of partitions as an optional
+# parameter, then print
+# show_partitions(CHEM_DATA, 10)
+# show_partitions(CHEM_DATA, 5)
+# show_partitions(CHEM_DATA, 1)
 
 """
-=== Why partitioning matters ===
+=== Why partitioning matters! ===
 
 We said that scalable collections should behave just like ordinary collections!
 So why do we need to worry about partitioning?
 
-----> Sometimes you want to control partitiononing, or partitioning differently helps improve
-      the performance of your pipeline.
+----> No abstraction is perfect! Sometimes we need further control over the pipeline
+      to improve performance.
 
-----> Also occasionally (usually if you set up your pipeline wrong), partitioning might affect the
-      outputs that you get.
+Anecdote:
+A friend of mine who worked as a data/ML engineer told me the following story:
+(from my notes):
 
-Q: How does partitioning affect pipeline scheduling and performance?
+    2 hours to look at the first 10 rows of a table in dataproc!
+
+    turned out there was a formula to calculate the size of the partitions --
+    5 rows in each partition, 1 billion partitions.
+
+    spent a day optimizing this and then it took 1 minute to do the same thing!
+
+(Dataproc is Google Cloud's framework for running Spark and other distributed
+data processing tasks: https://cloud.google.com/dataproc)
+
+In an ideal world, we wouldn't worry about partitioning, but sometimes
+partitioning differently can drastically help improve the performance of our pipeline.
+
+----> Side note: Even worse, partitioning might affect the
+      outputs that you get. This shouldn't happen unless you wrote your pipeline
+      incorrectly (but happy to talk more about this if there is time in a lecture
+      at some point!).
+
+Review Q:
+Why does partitioning affect pipeline scheduling and performance?
+
+A:
+
+=== Two types of operators (again) ===
 
 Like laziness, partitioning also introduces an interesting dichotomy of operators into two groups.
 
@@ -648,12 +704,40 @@ Dataflow graph:
 
     (input data) ---> (filter) ---> (map) ---> (stats)
 
-What happens when we parallelize this?
+Q:
+Suppose there are two partitions for each stage.
+If we draw one node per partition, instead of one node per task,
+what dataflow graph would we get?
 
-A:
+A (class input):
 
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
 
-Two types of operators!
+The two types of operators are revealed!
 
 In addition to being divided into actions and transformations,
 RDD operations are divided into "narrow" operations and "wide" operations.
@@ -680,11 +764,10 @@ Wide:
 """
 
 """
-=== Other interesting operations ===
+=== Other miscellaneous interesting operations ===
 (Likely skip for time)
 
 Implementation and optimization details:
-
 (See PySpark documentation)
 
 - .id()
@@ -710,6 +793,8 @@ A little picture:
 Let's start with DataFrames
 
 === DataFrame ===
+
+(Will probably skip most of this for time)
 
 Our second example of a collection type is DataFrame.
 
@@ -773,6 +858,10 @@ In fact, a MapReduce pipeline is the simplest possible pipeline
 you can create, with just two stages!
 
 Exercise: Let's create our own MapReduce pipeline functions.
+
+PySpark functions:
+- .map
+- .fold
 """
 
 def map(rdd, f):
@@ -816,6 +905,10 @@ One of the paper readings from Wednesday asked you to read the original paper:
 
 Spark is heavily based on MapReduce under the hood.
 
+(end of MapReduce section)
+"""
+
+"""
 === End note: Latency/throughput tradeoff ===
 
 So, we know how to build distributed pipelines.
@@ -823,11 +916,56 @@ So, we know how to build distributed pipelines.
 The **only** change from a sequential pipline is that
 arrows are scalable collection types, instead of regular data types.
 Tasks are then interpreted as (either wide or narrow) operators over the scalable collections.
-In other words, data parallelism comes by default and for free!
+In other words, data parallelism comes for free!
 
 But there is just one problem with what we have so far :)
 Spark is optimized for throughput.
 It's what we call a *batch processing engine.* That means?
+
+A:
+
+But doesn't optimizing for throughput always optimize for latency? Not necessarily!
+
+A simple example of this is given below in the "Understanding latency" section.
+
+Latency is about optimizing response time *per each individual input row.*
+
+But in a batch processing framework like Spark,
+it waits until we ask, and then collects *all* results at once!
+So we always get the worst possible throughput, in fact we get the maximum latency
+on each individual item. We don't get some results sooner and some results later.
+
+Grouping together items (via lazy transformations) helps optimize the pipeline, but it
+*doesn't* necessarily help get results as soon as possible when they're needed.
+(Remember: laziness poll/example)
+That's why there is a tradeoff
+between throughput and latency.
+If we always wanted the best latency, we would always ask for the results right away.
+
+From "The 8 Requirements of Real-Time Stream Processing":
+
+    "To achieve low latency, a system must be able to perform
+    message processing without having a costly storage operation in
+    the critical processing path...messages should be processed “in-stream” as
+    they fly by."
+
+    Mike Stonebraker, Ugur Çetintemel, and Stan Zdonik
+    https://cs.brown.edu/~ugur/8rulesSigRec.pdf
+
+Another term for the applications that require low latency requirements (typically, sub-second, sometimes
+milliseconds) is "real-time" applications or "streaming" applications.
+
+So that's where we're going next,
+talking about applications where you might want your pipeline to respond in real time to data that
+is coming in.
+We'll use a different API in Spark called Spark Streaming.
+"""
+
+"""
+=== Understanding latency ===
+(time permitting)
+
+Why isn't optimizing latency the same as optimizing for throughput?
 
 This is related to the last question on Q10 of the midterm.
 It wasn't entirely clear to everyone what I meant by latency on a "single input"
@@ -839,52 +977,25 @@ Imagine this. I have 10M inputs, my pipeline processes 1M inputs/sec (pretty wel
     (input)   --- (process)
       10M        1M / sec
 
-What's the latency if I just put 1 item into the pipeline?
+Latency is always about response time.
+To have a latency you have to know what change or input you're making to the system,
+and what result you want to observe -- the latency is the difference (in time)
+between the two.
 
-If I make some change to the input, how long will it take to see the results on the
-output side?
-
-We can't say from the above information. We don't know for example, whether the
-1M inputs/sec means all 1M are processed in parallel, or the 1M inputs/sec means that
-it's really 100K inputs every tenth of a second at a time.
-
-**Latency is about response time.**
-To understand latency you have to imagine the data is coming in to the pipeline in real time,
-hot off the press.
-
-It only makes sense to talk about latency when we're thinking about an input change that the user
-makes (some input data), and the result they want to observe on the output side.
 Latency is always measured in seconds; it's not a time "per item" or dividing the total time by number
 of items (that doesn't tell us how long it took to see a response for each individual item!)
 
-But in a batch processing framework like Spark,
-it waits until we ask, and then collects *all* results at once!
-So we always get the worst possible throughput, in fact we get 10 seconds latency
-on each individual item. We don't get some results sooner and some results later.
+So, what's the latency if I just put 1 item into the pipeline?
+(That is, I run on an input of just 1 item, and wait for a response to come back)?
 
-Grouping together items (via lazy transformations) helps optimize the pipeline, but it
-*doesn't* help get results as soon as possible when they're needed. That's why there is a tradeoff
-between throughput and latency.
-If we always wanted the best latency, we would only ever do actions, never transformations,
-and we would always ask for the results right away.
+We can't say! We don't know for example, whether the
+1M inputs/sec means all 1M are processed in parallel, and they all take 1 second,
+or the 1M inputs/sec means that
+it's really 100K inputs every tenth of a second at a time.
 
-From "The 8 Requirements of Real-Time Stream Processing":
-
-    "To achieve low latency, a system must be able to perform
-    message processing without having a costly storage operation in
-    the critical processing path. A storage operation adds a great deal
-    of unnecessary latency to the process (e.g., committing a database
-    record requires a disk write of a log record). For many stream
-    processing applications, it is neither acceptable nor necessary to
-    require such a time-intensive operation before message processing
-    can occur. Instead, messages should be processed “in-stream” as
-    they fly by."
-
-    Mike Stonebraker, Ugur Çetintemel, and Stan Zdonik
-    https://cs.brown.edu/~ugur/8rulesSigRec.pdf
-
-So that's where we're going next,
-talking about applications where you might want your pipeline to respond in real time to data that
-is coming in.
-We'll use a different API in Spark called Spark Streaming.
+This is why:
+    Latency DOES NOT = 1 / throughput
+in general and it's also why optimizing for throughput doesn't always benefit latency
+(or vice versa).
+We will get to this more in the next lecture.
 """

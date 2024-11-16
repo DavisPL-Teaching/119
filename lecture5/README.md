@@ -112,14 +112,18 @@ Announcements:
 
 - Midterm grades released on Friday
 
-- HW1 grades still in progress, will be released as soon as possible!
+- HW plan and poll (vote requested by EOD tomorrow): https://piazza.com/class/m12ef423uj5p5/post/124
+
+- HW1 grades in progress, will be released as soon as possible!
 
 Plan:
 
-- Start with the poll
+- Start with the poll (a small exercise on lazy operators)
 
 - Last property of RDDs: Partitioning
 
 - MapReduce and DataFrames -- A lower-level abstraction and a higher-level abstraction.
 
-- Endnote on Spark
+- Endnote on Spark (benefits and drawbacks)
+
+Questions?
