@@ -399,7 +399,7 @@ and actions are called "eager" operators.
 
 Let's consider an example
 
-A chemical dataset:
+A toy chemical dataset:
 """
 
 # Chem names by atomic number
@@ -417,12 +417,21 @@ CHEM_DATA = {
     "PFOA": [0, 1, 0, 0, 0, 0, 8, 0, 2, 15, 0],
 }
 
-# Example: we want to find molecules that are heavy in Fluorine (F)
-# Note:
-# Dark Waters (2019 film)
-# https://en.wikipedia.org/wiki/Dark_Waters_(2019_film)
-# More about PFOA:
-# https://en.wikipedia.org/wiki/Perfluorooctanoic_acid#Health_effects
+"""
+Motivation for this example:
+Suppose we want to find chemicals that are heavy in Fluorine (F),
+because we are worried these might have negative health effects.
+
+Further reading:
+Dark Waters (2019 film)
+https://en.wikipedia.org/wiki/Dark_Waters_(2019_film)
+PFOA:
+https://en.wikipedia.org/wiki/Perfluorooctanoic_acid#Health_effects
+
+For a simple computation, let's try to compute the number of Fluorines,
+compared to the number of Carbons for all of our data points,
+and then compute an average.
+"""
 
 def fluorine_carbon_ratio(data):
     # Note: a nice thing in Spark is that we can parallelize any iterable collection!
@@ -447,10 +456,11 @@ def fluorine_carbon_ratio(data):
     print(f"Stats: {stats}")
     print(f"Average Fluorine-Carbon Ratio: {ans}")
 
-    breakpoint()
+    # Uncomment to debug
+    # breakpoint()
 
-# Comment out to run
-fluorine_carbon_ratio(CHEM_DATA)
+# Uncomment to run
+# fluorine_carbon_ratio(CHEM_DATA)
 
 """
 How can we determine which of the above are transformations and which are actions?
@@ -523,6 +533,7 @@ Can we view this more programmatically?
 
 Unfortunately the visualization capabilities of RDDs are a bit limited.
 Two ways for now:
+Both of these are not super helpful and don't give precise information.
 
 - Go to localhost:4040/
 - .toDebugString()
@@ -551,7 +562,12 @@ Some examples of actions are:
 
 The most important of these is .collect -- how to take any RDD and get the results.
 You can that at any intermediate stage.
+"""
 
+# Try this (in the above function):
+# rdd3.distinct().collect()
+
+"""
 === Wrapping up ===
 
 We saw
@@ -567,12 +583,9 @@ We saw that all computations over RDDs are really dataflow graphs.
 **************** Where we left off for today ****************
 
 =============================================================
-"""
 
-# Try this (in the above function):
-# rdd3.distinct().collect()
+=== Nov 18 ===
 
-"""
 === Partitioning ===
 
 Partitioning is what makes RDDs scalable.
@@ -683,6 +696,19 @@ Implementation and optimization details:
 """
 
 """
+=== MapReduce and DataFrames ===
+
+DataFrames are based on RDDs and RDDs are based on MapReduce!
+A little picture:
+
+  DataFrames
+  |
+  RDDs
+  |
+  MapReduce
+
+Let's start with DataFrames
+
 === DataFrame ===
 
 Our second example of a collection type is DataFrame.

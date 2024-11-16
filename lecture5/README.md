@@ -21,20 +21,7 @@ Announcements:
 - Midterm on Friday.
 
   **Details on the midterm:**
-  10 questions: 8 multiple choice/short answer, 2 free response
-
-  In our testing: takes about 35 minutes (so you should have enough time!)
-
-  Study topic list: start of class today.
-  Study questions: go over the in-class polls!
-
-  Midterm is o closed-book, on paper!
-
-  You are allowed a one-sided cheat sheet.
-  Handwritten or typed is OK.
-
-  No questions that ask you to hand-write code
-  (concepts, not syntax)
+  See exams/midterm.md
 
 Questions?
 
@@ -118,3 +105,21 @@ Continue with RDDs, MapReduce:
 We will finish up Lecture 5 today and Monday.
 
 Questions?
+
+## Nov 18
+
+Announcements:
+
+- Midterm grades released on Friday
+
+- HW1 grades still in progress, will be released as soon as possible!
+
+Plan:
+
+- Start with the poll
+
+- Last property of RDDs: Partitioning
+
+- MapReduce and DataFrames -- A lower-level abstraction and a higher-level abstraction.
+
+- Endnote on Spark

@@ -35,3 +35,8 @@ Nov 1: (1) 300 / 3 = 100x (2) 400 / 3 = 133.33...x
 Nov 4: Task: first+second or Map+second. Pipeline: first+Map, Map+Semijoin, second+Semijoin, Semijoin+Map, or Map+Distinct. Data: all nodes are valid answers. In practice, Distinct (presumably meaning to return all distinct input items) is the least parallelizable of these, the rest exhibit very clear data parallelism.
 
 Nov 6: 3 (CPU cores) and 5 (memory/storage)
+
+Nov 13: N/A
+
+Nov 15: Vertical + Horizontal scaling, data parallelism, distribution, and should behave
+   as if it were a normal collection type
