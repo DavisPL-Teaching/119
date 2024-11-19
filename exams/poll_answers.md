@@ -40,3 +40,6 @@ Nov 13: N/A
 
 Nov 15: Vertical + Horizontal scaling, data parallelism, distribution, and should behave
    as if it were a normal collection type
+
+Nov 18: 1, 2 lazy, 3 not lazy
+Bonus: 5 + 5 + 5 = 15 ms.

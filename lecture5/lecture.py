@@ -613,13 +613,17 @@ One last property (an important one!): Partitioning
 
 === Partitioning ===
 
-Partitioning is what makes RDDs scalable.
+Whenever we consruct an RDD, under the hood it is going to be partitioned
+into several chunks or subsets of the data; these could be all stored on the same machine,
+or they could be stored on separate distributed machines.
+
+Partitioning is what makes RDDs a scalable collection type.
 It's data parallelism.
 
 How does partitioning work?
 
 ----> Under the hood, all datasets and intermediate outputs are partitioned
-into groups which can be processed independently.
+      into groups which can be processed independently.
 
 Useful operations to see what's going on:
 
@@ -629,19 +633,40 @@ Useful operations to see what's going on:
 Let's revisit our example:
 """
 
-def show_partitions(data):
+def show_partitions(data, num_partitions=None):
 
     # Parallelize as before
-    rdd = sc.parallelize(data.values())
+    if num_partitions is None:
+        rdd = sc.parallelize(data.values())
+    else:
+        rdd = sc.parallelize(data.values(), num_partitions)
 
     # Show the partitioning details
     print(f"Number of partitions: {rdd.getNumPartitions()}")
     print("Inspect partitions:")
     for part in rdd.glom().collect():
+        # What glom does: it takes each partition for example partition 1, 2, 3, 4, 5
+        # And it effectively adds a coordinate to each input data item that indicates the partition #.
+        # After we do a glom we can do a collect and then explicitly iterate through the partitions.
+
+        # In short: It allows to view the partitions.
+
+        # Print the partition
         print(f"Partition: {part}")
 
 # Uncomment to run
 # show_partitions(CHEM_DATA)
+
+"""
+What numbers did we get?
+- I got 12 -- my machine has 12 cores
+
+Other people got?
+- 8
+
+In this case, all partitions are on the same machine (my laptop),
+but in general they could be split accross several machines.
+"""
 
 """
 We can also control the number of partitions and the way data is partitioned
@@ -653,11 +678,13 @@ Syntax:
 
 # Exercise: update the above to also control the number of partitions as an optional
 # parameter, then print
-# show_partitions(CHEM_DATA, 10)
-# show_partitions(CHEM_DATA, 5)
 # show_partitions(CHEM_DATA, 1)
+# show_partitions(CHEM_DATA, 5)
+# show_partitions(CHEM_DATA, 10)
 
 """
+So far: we know (1) how to inspect the partitions (2) how to change the number of partitions.
+
 === Why partitioning matters! ===
 
 We said that scalable collections should behave just like ordinary collections!
@@ -680,8 +707,11 @@ A friend of mine who worked as a data/ML engineer told me the following story:
 (Dataproc is Google Cloud's framework for running Spark and other distributed
 data processing tasks: https://cloud.google.com/dataproc)
 
-In an ideal world, we wouldn't worry about partitioning, but sometimes
-partitioning differently can drastically help improve the performance of our pipeline.
+Moral of the story:
+In an ideal world, we wouldn't worry about partitioning,
+if the number of partitions created is wildly off from the
+size of the data set (too small or too large), it could have severe impacts
+on performance.
 
 ----> Side note: Even worse, partitioning might affect the
       outputs that you get. This shouldn't happen unless you wrote your pipeline
@@ -692,6 +722,9 @@ Review Q:
 Why does partitioning affect pipeline scheduling and performance?
 
 A:
+It controls the amount of data parallelism in the pipeline
+Too little data parallelism, and we don't benefit from parallelism
+Too much, and we might have severe/large overheads from creating and managing all the partitions.
 
 === Two types of operators (again) ===
 
@@ -702,56 +735,48 @@ The basic question is what happens when we chain together two operators?
 EXAMPLE:
 Dataflow graph:
 
-    (input data) ---> (filter) ---> (map) ---> (stats)
+    (load input data) ---> (filter) ---> (map) ---> (stats)
 
 Q:
-Suppose there are two partitions for each stage.
+Suppose there are two partitions for each task.
 If we draw one node per partition, instead of one node per task,
 what dataflow graph would we get?
 
 A (class input):
 
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
+    (load input data, 1st half) ---> (filter, 1st half) ---> (map, 1st half)
+                                                                             ----->
+                                                                                    (stats)
+                                                                             ----->
+    (load input data, 2nd half) ---> (filter, 2nd half) ---> (map, 2nd half)
+
+(Data parallelism, previously implicit, has now been explicitly represented as task parallelism.)
+
+(This process is what Spark does underneath the hood:
+    automatically parallelizing, or "autoparallelizing" the input graph.)
 
 The two types of operators are revealed!
 
 In addition to being divided into actions and transformations,
 RDD operations are divided into "narrow" operations and "wide" operations.
 
+Definitions:
+
+    Narrow = works on individual partitions only
+
+    Wide = works across partitions.
+
 Image:
 
     narrow_wide.png
     (Credit: LinkedIn)
 
-Definitions:
+We saw partitioning and that it gives rise to narrow/wide operators,
+and what it does to the input data flow graph.
 
-    Narrow = ...
+We'll pick this up on Wednesday.
 
-    Wide = ...
+========================================================
 
 Let's use the definitions above to classify all the operations in our example pipelines above
 into narrow and wide.
@@ -884,6 +909,12 @@ def get_total_fluorines(data):
 
 # Uncomment to run
 # get_total_fluorines(CHEM_DATA)
+
+# Note:
+# We could also .collect() and then .parallelize the results after the
+# map stage if we wanted to simulate completing the results of the Map stage
+# and reshuffling prior to getting to the Reduce stage. Many MapReduce implementations
+# work this way.
 
 """
 === Some history ===
