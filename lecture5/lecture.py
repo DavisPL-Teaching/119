@@ -778,6 +778,16 @@ We'll pick this up on Wednesday.
 
 ========================================================
 
+=== Wed Nov 20 ===
+
+=== Poll ===
+
+Consider the following scenario where a temperature dataset is partitioned in Spark across several locations. Which of the following tasks on the input dataset could be done with a narrow operator, and which would require a wide operator?
+
+https://forms.gle/bex7HBzRSd6824TM9
+
+=== Finishing up narrow and wide ===
+
 Let's use the definitions above to classify all the operations in our example pipelines above
 into narrow and wide.
 
@@ -815,15 +825,13 @@ A little picture:
   |
   MapReduce
 
-Let's start with DataFrames
-
 === DataFrame ===
 
-(Will probably skip most of this for time)
+(Will probably skip some of this for time)
 
 Our second example of a collection type is DataFrame.
 
-DataFrame is kind of like a Pandas DataFrame.
+DataFrame is like a Pandas DataFrame.
 
 https://spark.apache.org/docs/latest/api/python/reference/pyspark.sql/api/pyspark.sql.DataFrame.html
 
@@ -839,12 +847,90 @@ We can also create one from an RDD by doing
 """
 
 def ex_dataframe(data):
-    # TODO:
-    # Load the CHEM_DATA and turn it into a DataFrame, then collect it
-    raise NotImplementedError
+    # Load the data (CHEM_DATA) and turn it into a DataFrame
+
+    # A few ways to do this
+
+    """
+    Method 1: directly from the RDD
+    """
+    rdd = sc.parallelize(data.values())
+    df1 = rdd.map(lambda x: (x,)).toDF()
+
+    # Breakpoint for inspection
+    # breakpoint()
+
+    # Try: df.show()
+
+    # What happened?
+
+    # Not very useful! Let's try a different way.
+    # Our lambda x: (x,) map looks a bit sus. Does anyone see why?
+
+    """
+    Method 2: unpack the data into a row more appropriately by constructing the row
+    """
+    # don't need to do the same thing again -- RDDs are persistent and immutable!
+    # rdd = sc.parallelize(data.values())
+    df2 = rdd.map(lambda x: (*x,)).toDF()
+
+    # Breakpoint for inspection
+    # breakpoint()
+
+    # What happened?
+
+    # Better!
+
+    """
+    Method 3: create the DataFrame directly with column headers
+    (the correct way)
+    """
+
+    # What we need (similar to Pandas): list of columns, iterable of rows.
+
+    # For the columns, use our CHEM_NAMES list
+    columns = ["chemical"] + CHEM_NAMES[1:]
+
+    # For the rows: can use [] or a generator expression ()
+    rows = ((name, *(counts[1:])) for name, counts in CHEM_DATA.items())
+
+    df3 = spark.createDataFrame(rows, columns)
+
+    # Breakpoint for inspection
+    # breakpoint()
+
+    # What happened?
+
+    # Now we don't have to worry about RDDs at all. We can use all our favorite DataFrame
+    # abstractions and manipulate directly using SQL operations.
+
+    # Adding a new column:
+    from pyspark.sql.functions import col
+    df3 = df3.withColumn("H + C", col("H") + col("C"))
+
+    df3 = df3.withColumn("H + F", col("H") + col("F"))
+
+    breakpoint()
+
+    # We could continue this example further (showing other Pandas operation equivalents).
+
+# Uncomment to run
+ex_dataframe(CHEM_DATA)
+
+"""
+One more thing about DataFrames: revisiting the web interface
+and .explain():
+
+localhost:4040/
+
+.explain()
+
+.explain("extended")
+"""
 
 """
 Another misc. DataFrame example:
+(skip for time, feel free to uncomment and play with it offline)
 """
 
 # people = spark.createDataFrame([
@@ -872,6 +958,9 @@ Another misc. DataFrame example:
 # print(result)
 
 """
+So we know how to work with DataFrames, once we do that, we don't have to worry about RDDs
+at all. We get nice SQL abstractions.
+
 What is the "magic" behind how Spark works?
 
 === MapReduce ===
@@ -886,7 +975,9 @@ Exercise: Let's create our own MapReduce pipeline functions.
 
 PySpark functions:
 - .map
+https://spark.apache.org/docs/latest/api/python/reference/api/pyspark.RDD.map.html
 - .fold
+https://spark.apache.org/docs/latest/api/python/reference/api/pyspark.RDD.fold.html
 """
 
 def map(rdd, f):
@@ -957,7 +1048,29 @@ A:
 
 But doesn't optimizing for throughput always optimize for latency? Not necessarily!
 
-A simple example of this is given below in the "Understanding latency" section.
+Let's talk a little bit about latency...
+
+=== Understanding latency (intuitive) ===
+
+This is related to the last question on Q10 of the midterm.
+
+A more intuitive real-world example:
+imagine a restaurant that has to process lots of orders.
+
+- Throughput is how many orders we were able to process per hour.
+
+- Latency is how long *one* person waits for their order.
+
+These are not the same! Why not? Two extreme cases:
+
+1.
+
+2.
+
+A more abstract example of this is given below in the "Understanding latency (abstract)" section
+below.
+
+=== Summary: disadvantages of Spark ===
 
 Latency is about optimizing response time *per each individual input row.*
 
@@ -973,13 +1086,12 @@ That's why there is a tradeoff
 between throughput and latency.
 If we always wanted the best latency, we would always ask for the results right away.
 
-From "The 8 Requirements of Real-Time Stream Processing":
-
     "To achieve low latency, a system must be able to perform
     message processing without having a costly storage operation in
     the critical processing path...messages should be processed “in-stream” as
     they fly by."
 
+    From "The 8 Requirements of Real-Time Stream Processing":
     Mike Stonebraker, Ugur Çetintemel, and Stan Zdonik
     https://cs.brown.edu/~ugur/8rulesSigRec.pdf
 
@@ -993,14 +1105,10 @@ We'll use a different API in Spark called Spark Streaming.
 """
 
 """
-=== Understanding latency ===
-(time permitting)
+=== Understanding latency (abstract) ===
+(review if you are interested in a more abstract view)
 
 Why isn't optimizing latency the same as optimizing for throughput?
-
-This is related to the last question on Q10 of the midterm.
-It wasn't entirely clear to everyone what I meant by latency on a "single input"
-vs. the "entire input dataset", so let me clarify.
 
 First of all, what is latency?
 Imagine this. I have 10M inputs, my pipeline processes 1M inputs/sec (pretty well parallelized.

@@ -127,3 +127,35 @@ Plan:
 - Endnote on Spark (benefits and drawbacks)
 
 Questions?
+
+## Nov 20
+
+Announcements:
+
+- HW1 grades released and makeup option
+
+  + HW1 makeup option: 80% of the points back (for points below 90).
+
+- HW2/3 poll results: 26 votes for, 1 against
+
+  + We will have only 1 more HW (HW2), and no final project.
+
+  + HW will be only 40% of the grade (participation up to 20%)
+
+  + HW2 will be incrementally released starting on Friday.
+
+  + Additionally, there will be a makeup option for HW1. See above.
+
+- Regrade requests (midterm and HW1): deadline in one week, EOD on Wed, Nov 27.
+
+Plan:
+
+- In-class poll, wrap up wide/narrow
+
+- DataFrames -- a useful higher-level abstraction
+
+- MapReduce -- a useful lower-level abstraction
+
+- Endnote on Spark (benefits and drawbacks)
+
+Questions?
