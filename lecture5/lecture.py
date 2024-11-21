@@ -792,10 +792,17 @@ Let's use the definitions above to classify all the operations in our example pi
 into narrow and wide.
 
 Narrow:
--
+- map
+- filter
 
 Wide:
--
+- total avg
+- total count
+- stddev
+- etc.
+- globally unique / distinct elements
+- anything where you need to communicate across partitions.
+
 """
 
 """
@@ -811,6 +818,9 @@ Implementation and optimization details:
 - .cache()
 - .persist()
 - .checkpoint()
+
+These can be more important if you are worried about performance,
+or crashes/failures and other distributed concerns.
 """
 
 """
@@ -855,12 +865,16 @@ def ex_dataframe(data):
     Method 1: directly from the RDD
     """
     rdd = sc.parallelize(data.values())
+
+    # RDD is just a collection of items where the items can have any Python type
+    # a DataFrame requires the items to be rows.
+
     df1 = rdd.map(lambda x: (x,)).toDF()
 
     # Breakpoint for inspection
     # breakpoint()
 
-    # Try: df.show()
+    # Try: df1.show()
 
     # What happened?
 
@@ -872,6 +886,8 @@ def ex_dataframe(data):
     """
     # don't need to do the same thing again -- RDDs are persistent and immutable!
     # rdd = sc.parallelize(data.values())
+
+    # In Python you can unwrap an entire list as a tuple by using *x.
     df2 = rdd.map(lambda x: (*x,)).toDF()
 
     # Breakpoint for inspection
@@ -891,8 +907,15 @@ def ex_dataframe(data):
     # For the columns, use our CHEM_NAMES list
     columns = ["chemical"] + CHEM_NAMES[1:]
 
+    # For the rows: any iterable -- i.e. any sequence -- of rows
     # For the rows: can use [] or a generator expression ()
     rows = ((name, *(counts[1:])) for name, counts in CHEM_DATA.items())
+
+    # Equiv:
+    # rows = [(name, *(counts[1:])) for name, counts in CHEM_DATA.items()]
+    # Also equiv:
+    # for name, counts in CHEM_DATA.items():
+    #     ...
 
     df3 = spark.createDataFrame(rows, columns)
 
@@ -906,9 +929,10 @@ def ex_dataframe(data):
 
     # Adding a new column:
     from pyspark.sql.functions import col
-    df3 = df3.withColumn("H + C", col("H") + col("C"))
+    df4 = df3.withColumn("H + C", col("H") + col("C"))
+    df4 = df3.withColumn("H + F", col("H") + col("F"))
 
-    df3 = df3.withColumn("H + F", col("H") + col("F"))
+    # This is the equiv of Pandas: df3["H + C"] = df3["H"] + df3["C"]
 
     breakpoint()
 
@@ -923,6 +947,8 @@ and .explain():
 
 localhost:4040/
 
+getting the internal dataflow graph used:
+
 .explain()
 
 .explain("extended")
@@ -932,6 +958,8 @@ localhost:4040/
 Another misc. DataFrame example:
 (skip for time, feel free to uncomment and play with it offline)
 """
+
+# Just to show how to create a data frame from a Python dict.
 
 # people = spark.createDataFrame([
 #     {"deptId": 1, "age": 40, "name": "Hyukjin Kwon", "gender": "M", "salary": 50},
@@ -968,8 +996,81 @@ What is the "magic" behind how Spark works?
 MapReduce is a simplified way to implement and think about
 distributed pipelines.
 
+MapReduce tries to take all distributed data pipelines you might want to
+compute, and reduce them down to the bear essence of the very minimal
+number of possible operations.
+
 In fact, a MapReduce pipeline is the simplest possible pipeline
 you can create, with just two stages!
+It's a dataflow graph with just three nodes:
+
+    (input) ---> (map) ---> (reduce).
+
+The kind of amazing thing is that essentially all operators on distributed
+pipelines can be reduced down to this simple form,
+called a MapReduce job.
+(Sometimes you might you need more than one MapReduce job to get some computations
+done.)
+
+(Simplified)
+
+Map stage:
+    - Take our input a scalable collection of items of type T, and apply
+      the same function f: T -> T to all inputs.
+
+      (T could be, integers, floats, chemicals, rows, anything)
+
+Reduce stage:
+(This differs a little by implementation)
+    - a way of combining two different intermediate outputs:
+      a function f: T x T -> T.
+
+Example:
+
+    My input dataset consists of populations by city.
+    I want the total population over all cities.
+
+    If I wanted to do this as MapReduce:
+
+    Map: do nothing, on each input row x, return x
+        lambda x: x
+
+        If input x was a row insetad of a integer, you could do
+        lambda x: x["population"]
+
+    Reduce: if I have two outputs x and y, return x + y
+        lambda x, y: x + y.
+
+    The MapReduce computation will repeatedly apply the reduce function
+    until there is no more reducing to do.
+
+This is only very slightly simplified. Two things to make it general:
+(We don't need to cover this for the purposes of this class)
+
+1) it's not all the same type T (input, intermediate, and output stages)
+
+2) both stages are partitioned by key.
+    + for map, this doesn't matter!
+    + for reduce, we actually get one output per key.
+
+Punchline:
+In fact we have been writing MapReduce pipelines all along!
+See our original CHEM_DATA example:
+- map stage: we apply a local computation to each input row: in our case,
+  we wanted to get the number of fluorines / num carbons for all rows which
+  have at least one carbon.
+- reduce stage: we aggregate all outputs across input rows: in our case,
+  we wanted to compute the avg across all inputs.
+
+All operators fit into this dichotomy:
+- Mapper-style operators are local, can be narrow, and can be lazy
+- Reducer-style operators are global, usually wide, and not lazy.
+
+We'll pick this up and finish up the lecture on Friday.
+
+********** Ended here for Nov 20 **********
+
+==================================================
 
 Exercise: Let's create our own MapReduce pipeline functions.
 

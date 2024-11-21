@@ -148,6 +148,8 @@ Announcements:
 
 - Regrade requests (midterm and HW1): deadline in one week, EOD on Wed, Nov 27.
 
+Questions?
+
 Plan:
 
 - In-class poll, wrap up wide/narrow
@@ -157,5 +159,3 @@ Plan:
 - MapReduce -- a useful lower-level abstraction
 
 - Endnote on Spark (benefits and drawbacks)
-
-Questions?

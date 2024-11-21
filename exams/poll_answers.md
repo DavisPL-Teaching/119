@@ -43,3 +43,12 @@ Nov 15: Vertical + Horizontal scaling, data parallelism, distribution, and shoul
 
 Nov 18: 1, 2 lazy, 3 not lazy
 Bonus: 5 + 5 + 5 = 15 ms.
+
+Nov 20:
+1. Narrow
+2. Wide
+3. Wide
+4. Narrow
+5. Narrow
+6. Wide
+7. Narrow
