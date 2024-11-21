@@ -411,7 +411,7 @@ CHEM_DATA = {
     "nitrogen": [0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0],
     # CO2
     "carbon dioxide": [0, 0, 0, 0, 0, 0, 1, 0, 2, 0, 0],
-    # C4H
+    # CH4
     "methane": [0, 4, 0, 0, 0, 0, 1, 0, 0, 0, 0],
     # C8 H F15 O2
     "PFOA": [0, 1, 0, 0, 0, 0, 8, 0, 2, 15, 0],
@@ -939,7 +939,7 @@ def ex_dataframe(data):
     # We could continue this example further (showing other Pandas operation equivalents).
 
 # Uncomment to run
-ex_dataframe(CHEM_DATA)
+# ex_dataframe(CHEM_DATA)
 
 """
 One more thing about DataFrames: revisiting the web interface
@@ -1053,6 +1053,9 @@ This is only very slightly simplified. Two things to make it general:
     + for map, this doesn't matter!
     + for reduce, we actually get one output per key.
 
+(Edit: added 3, we will cover this today:)
+3) Map can compute zero or more outputs, not just one.
+
 Punchline:
 In fact we have been writing MapReduce pipelines all along!
 See our original CHEM_DATA example:
@@ -1072,43 +1075,71 @@ We'll pick this up and finish up the lecture on Friday.
 
 ==================================================
 
-Exercise: Let's create our own MapReduce pipeline functions.
+=== Nov 22 ===
 
-PySpark functions:
+=== MapReduce Recap ===
+
+In MapReduce there are only two operators,
+Map and Reduce.
+
+PySpark equivalents:
 - .map
 https://spark.apache.org/docs/latest/api/python/reference/api/pyspark.RDD.map.html
+- .reduce
+https://spark.apache.org/docs/latest/api/python/reference/api/pyspark.RDD.reduce.html#pyspark.RDD.reduce
+
+Also equivalent to reduce (but needs an initial value)
 - .fold
 https://spark.apache.org/docs/latest/api/python/reference/api/pyspark.RDD.fold.html
+
+As we mentioned last time, this is slightly simplified.
+We will do the fully general case today!
 """
 
 def map(rdd, f):
+    return rdd.map(f)
     # TODO
     raise NotImplementedError
 
-def reduce(rdd, init, f):
+def reduce(rdd, f):
+    return rdd.reduce(f)
     # TODO
     raise NotImplementedError
 
 # If done correctly, the following should work
 
-def get_total_fluorines(data):
+def get_total_hydrogens(data):
     rdd = sc.parallelize(data.values())
 
-    res1 = map(rdd, lambda x: x[9])
-    res2 = reduce(res1, 0, lambda x, y: x + y)
+    res1 = map(rdd, lambda x: x[1])
+    res2 = reduce(res1, lambda x, y: x + y)
 
     print(f"Result: {res2}")
 
 # Uncomment to run
-# get_total_fluorines(CHEM_DATA)
+get_total_hydrogens(CHEM_DATA)
+# H20: 2
+# CH4: 4
+# C8 H F15 O2: 1
 
 # Note:
-# We could also .collect() and then .parallelize the results after the
+# We could also .collect() and then .parallelize() the results after the
 # map stage if we wanted to simulate completing the results of the Map stage
-# and reshuffling prior to getting to the Reduce stage. Many MapReduce implementations
-# work this way.
+# and reshuffling prior to getting to the Reduce stage.
+# Many MapReduce implementations work this way.
 
 """
+=== Poll ===
+
+Describe how you might do the following task as a MapReduce computation.
+
+Same input dataset as in Nov 20 poll:
+US state, city name, population, avg temperature
+
+"Find the city with the largest temperature per unit population"
+
+https://forms.gle/Wm1ieauEdgJhiYhD7
+
 === Some history ===
 
 MapReduce was originally created by
@@ -1116,30 +1147,63 @@ Jeffrey Dean and Sanjay Ghemawat at Google to simplify the large-scale data proc
 engineers were running on Google clusters.
 
 Blog article: "The Friendship That Made Google Huge"
-"Coding together at the same computer, Jeff Dean and Sanjay Ghemawat changed the course of the company—and the Internet."
-https://www.newyorker.com/magazine/2018/12/10/the-friendship-that-made-google-huge
+
+    "Coding together at the same computer, Jeff Dean and Sanjay Ghemawat changed the course of the company—and the Internet."
+    https://www.newyorker.com/magazine/2018/12/10/the-friendship-that-made-google-huge
 
 One of the paper readings from Wednesday asked you to read the original paper:
+
     MapReduce: Simplified Data Processing on Large Clusters
     https://dl.acm.org/doi/pdf/10.1145/1327452.1327492
 
 (BTW, this paper is very famous. Probably one of the most cited papers ever with
 23,309 citations (last I checked))
 
-Spark is heavily based on MapReduce under the hood.
+=== Fully general case ===
 
-(end of MapReduce section)
+We stated last time that MapReduce is slightly more general than the above.
+
+In the paper, Dean and Ghemawat propose the more general version of MapReduce,
+which we will cover now (Sec 2.2):
+
+    map (k1, v1) -> list(k2, v2)
+    reduce (k2, list(v2)) -> list(v2)
+
+This is written very abstractly, what does it mean?
+Let's do an example!
 """
 
+# TODO
+
 """
+=== Showing the general case in Spark ===
+
+https://spark.apache.org/docs/latest/api/python/reference/api/pyspark.RDD.flatMap.html
+
+https://spark.apache.org/docs/latest/api/python/reference/api/pyspark.RDD.reduceByKey.html
+"""
+
+# TODO
+
+"""
+=== Exercises ===
+(Time pending)
+
+Time pending, we will do some MapReduce exercises in exercises.py.
+
 === End note: Latency/throughput tradeoff ===
 
 So, we know how to build distributed pipelines.
 
 The **only** change from a sequential pipline is that
 arrows are scalable collection types, instead of regular data types.
-Tasks are then interpreted as (either wide or narrow) operators over the scalable collections.
+Tasks are then interpreted as operators over the scalable collections.
 In other words, data parallelism comes for free!
+
+Scalable collections are a good way to think about parallel AND/OR distributed
+pipelines. Operators/tasks can be:
+- lazy or not lazy (how they are evaluated)
+- wide or narrow (how data is partitioned)
 
 But there is just one problem with what we have so far :)
 Spark is optimized for throughput.
@@ -1168,14 +1232,12 @@ These are not the same! Why not? Two extreme cases:
 
 2.
 
-A more abstract example of this is given below in the "Understanding latency (abstract)" section
-below.
+(A more abstract example of this is given below in the "Understanding latency (abstract)"
+section below.)
 
-=== Summary: disadvantages of Spark ===
+So, optimizing latency can look very different from optimizing throughput.
 
-Latency is about optimizing response time *per each individual input row.*
-
-But in a batch processing framework like Spark,
+In a batch processing framework like Spark,
 it waits until we ask, and then collects *all* results at once!
 So we always get the worst possible throughput, in fact we get the maximum latency
 on each individual item. We don't get some results sooner and some results later.
@@ -1183,9 +1245,7 @@ on each individual item. We don't get some results sooner and some results later
 Grouping together items (via lazy transformations) helps optimize the pipeline, but it
 *doesn't* necessarily help get results as soon as possible when they're needed.
 (Remember: laziness poll/example)
-That's why there is a tradeoff
-between throughput and latency.
-If we always wanted the best latency, we would always ask for the results right away.
+That's why there is a tradeoff between throughput and latency.
 
     "To achieve low latency, a system must be able to perform
     message processing without having a costly storage operation in
@@ -1199,14 +1259,20 @@ If we always wanted the best latency, we would always ask for the results right 
 Another term for the applications that require low latency requirements (typically, sub-second, sometimes
 milliseconds) is "real-time" applications or "streaming" applications.
 
+=== Summary: disadvantages of Spark ===
+
 So that's where we're going next,
 talking about applications where you might want your pipeline to respond in real time to data that
 is coming in.
 We'll use a different API in Spark called Spark Streaming.
 """
 
+# **** End ****
+
 """
-=== Understanding latency (abstract) ===
+=== Cut material ===
+
+===== Understanding latency (abstract) =====
 (review if you are interested in a more abstract view)
 
 Why isn't optimizing latency the same as optimizing for throughput?
@@ -1238,4 +1304,18 @@ This is why:
 in general and it's also why optimizing for throughput doesn't always benefit latency
 (or vice versa).
 We will get to this more in the next lecture.
+
+===== Optional exercise: re-implementing our original task =====
+
+Exercise:
+Let's use our map and reduce functions to re-implement our original task,
+computing the average Fluorine-to-Carbon ratio in our chemical
+dataset, among molecules with at least one Carbon.
 """
+
+def fluorine_carbon_ratio_map_reduce(data):
+    # TODO
+    raise NotImplementedError
+
+# Uncomment to run
+# ex_map_reduce(CHEM_DATA)

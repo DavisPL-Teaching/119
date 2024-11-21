@@ -159,3 +159,23 @@ Plan:
 - MapReduce -- a useful lower-level abstraction
 
 - Endnote on Spark (benefits and drawbacks)
+
+## Nov 22
+
+Announcements:
+
+- Reminder that regrade requests are due Wed, Nov 27.
+
+- I will release HW2, part 1 as soon as possible.
+
+Plan:
+
+- MapReduce recap
+
+- Poll
+
+- MapReduce (fully general case)
+
+- MapReduce exercises (with any extra time)
+
+- Endnote on Spark (benefits and drawbacks).
