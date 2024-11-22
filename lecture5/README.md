@@ -164,9 +164,11 @@ Plan:
 
 Announcements:
 
-- Reminder that regrade requests are due Wed, Nov 27.
+- Reminder: regrade requests are due Wed, Nov 27.
 
-- I will release HW2, part 1 as soon as possible.
+  For how to submit, see: https://piazza.com/class/m12ef423uj5p5/post/129
+
++ I am working on HW2, will release Part 1 soon.
 
 Plan:
 
@@ -174,8 +176,8 @@ Plan:
 
 - Poll
 
-- MapReduce (fully general case)
+- MapReduce, fully general case
 
-- MapReduce exercises (with any extra time)
+- Some MapReduce exercises
 
 - Endnote on Spark (benefits and drawbacks).

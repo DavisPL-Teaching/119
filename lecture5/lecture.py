@@ -1048,13 +1048,11 @@ This is only very slightly simplified. Two things to make it general:
 (We don't need to cover this for the purposes of this class)
 
 1) it's not all the same type T (input, intermediate, and output stages)
+(in fact, intermediate stage can be a list of zero or more outputs, not just one)
 
 2) both stages are partitioned by key.
     + for map, this doesn't matter!
     + for reduce, we actually get one output per key.
-
-(Edit: added 3, we will cover this today:)
-3) Map can compute zero or more outputs, not just one.
 
 Punchline:
 In fact we have been writing MapReduce pipelines all along!
@@ -1096,13 +1094,36 @@ As we mentioned last time, this is slightly simplified.
 We will do the fully general case today!
 """
 
+# Re-defining from earlier in the file
+# (and adding a couple more molecules)
+CHEM_DATA_2 = {
+    # H20
+    "water": [0, 2, 0, 0, 0, 0, 0, 0, 1, 0, 0],
+    # N2
+    "nitrogen": [0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0],
+    # O2
+    "oxygen": [0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0],
+    # F2
+    "fluorine": [0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0],
+    # CO2
+    "carbon dioxide": [0, 0, 0, 0, 0, 0, 1, 0, 2, 0, 0],
+    # CH4
+    "methane": [0, 4, 0, 0, 0, 0, 1, 0, 0, 0, 0],
+    # C2 H6
+    "ethane": [0, 6, 0, 0, 0, 0, 2, 0, 0, 0, 0],
+    # C8 H F15 O2
+    "PFOA": [0, 1, 0, 0, 0, 0, 8, 0, 2, 15, 0],
+    # C H3 F
+    "Fluoromethane": [0, 3, 0, 0, 0, 0, 1, 0, 0, 1, 0],
+    # C6 F6
+    "Hexafluorobenzene": [0, 0, 0, 0, 0, 0, 6, 0, 0, 6, 0],
+}
+
 def map(rdd, f):
-    return rdd.map(f)
     # TODO
     raise NotImplementedError
 
 def reduce(rdd, f):
-    return rdd.reduce(f)
     # TODO
     raise NotImplementedError
 
@@ -1117,10 +1138,8 @@ def get_total_hydrogens(data):
     print(f"Result: {res2}")
 
 # Uncomment to run
-get_total_hydrogens(CHEM_DATA)
-# H20: 2
-# CH4: 4
-# C8 H F15 O2: 1
+# get_total_hydrogens(CHEM_DATA_2)
+# (Count by hand to check)
 
 # Note:
 # We could also .collect() and then .parallelize() the results after the
@@ -1146,11 +1165,6 @@ MapReduce was originally created by
 Jeffrey Dean and Sanjay Ghemawat at Google to simplify the large-scale data processing jobs that
 engineers were running on Google clusters.
 
-Blog article: "The Friendship That Made Google Huge"
-
-    "Coding together at the same computer, Jeff Dean and Sanjay Ghemawat changed the course of the company—and the Internet."
-    https://www.newyorker.com/magazine/2018/12/10/the-friendship-that-made-google-huge
-
 One of the paper readings from Wednesday asked you to read the original paper:
 
     MapReduce: Simplified Data Processing on Large Clusters
@@ -1159,37 +1173,117 @@ One of the paper readings from Wednesday asked you to read the original paper:
 (BTW, this paper is very famous. Probably one of the most cited papers ever with
 23,309 citations (last I checked))
 
+Blog article: "The Friendship That Made Google Huge"
+
+    "Coding together at the same computer, Jeff Dean and Sanjay Ghemawat changed the course of the company—and the Internet."
+    https://www.newyorker.com/magazine/2018/12/10/the-friendship-that-made-google-huge
+
 === Fully general case ===
 
 We stated last time that MapReduce is slightly more general than the above.
 
-In the paper, Dean and Ghemawat propose the more general version of MapReduce,
-which we will cover now (Sec 2.2):
+In the paper, Dean and Ghemawat propose the more general version of map and reduce,
+which we will cover now (see Sec 2.2):
 
-    map (k1, v1) -> list(k2, v2)
-    reduce (k2, list(v2)) -> list(v2)
+    map: (k1, v1) -> list((k2, v2))
+    reduce: (k2, list(v2)) -> list(v2)
 
 This is written very abstractly, what does it mean?
-Let's do an example!
-"""
 
-# TODO
+Let's walk through each part:
 
-"""
-=== Showing the general case in Spark ===
+Keys:
 
+The first thing I want to point out is that all the data is given as
+    (key, value)
+
+pairs. (k1 and k2)
+
+Generally speaking, we use the first coordinate (key) for partitioning,
+and the second one to compute values.
+
+Ignore the keys for now, we'll come back to that.
+
+Map:
+    map: (k1, v1) -> list((k2, v2))
+
+- we might want to transform the data into a different type
+    v1 and v2
+- we might want to output zero or more than one output -- why?
+    list(k2, v2)
+
+Examples:
+(write pseudocode for the corresponding lambda function)
+
+- Compute a list of all Carbon-Fluorine bonds
+
+- Compute the total number of Carbon-Fluorine bonds
+
+- Compute the average of the ratio F / C for every molecule that has at least one Carbon
+  (our original example)
+
+In Spark:
 https://spark.apache.org/docs/latest/api/python/reference/api/pyspark.RDD.flatMap.html
+"""
+
+def map_general_ex(rdd, f):
+    # TODO
+    raise NotImplementedError
+
+# Uncomment to run
+# map_general_ex()
+
+"""
+What about Reduce?
+
+    reduce: (k2, list(v2)) -> list(v2)
+
+We will work with a common special case:
+
+    reduce_by_key: (v2, v2) -> v2
+
+Reduce:
+- data has keys attached. Keys are used for partitioning
+- we aggregate the values *by key* instead of over the entire dataset.
+
+Examples:
+(write the corresponding Python lambda function)
+
+- To compute a total for each key?
+
+- To compute a count for each key?
+
+- To compute an average for each key?
+
+- To compute an average over the entire dataset?
+
+Important note:
+k1 and k2 are different! Why?
+
+In Spark:
 
 https://spark.apache.org/docs/latest/api/python/reference/api/pyspark.RDD.reduceByKey.html
 """
 
-# TODO
+def reduce_general(rdd, f):
+    # TODO
+    raise NotImplementedError
 
 """
-=== Exercises ===
-(Time pending)
+Finally, let's use our generalized map and reduce functions to re-implement our original task,
+computing the average Fluorine-to-Carbon ratio in our chemical
+dataset, among molecules with at least one Carbon.
+"""
 
-Time pending, we will do some MapReduce exercises in exercises.py.
+def fluorine_carbon_ratio_map_reduce(data):
+    # TODO
+    raise NotImplementedError
+
+"""
+=== Additional exercises ===
+(Depending on extra time)
+
+Some additional MapReduce exercises in exercises.py.
 
 === End note: Latency/throughput tradeoff ===
 
@@ -1304,18 +1398,4 @@ This is why:
 in general and it's also why optimizing for throughput doesn't always benefit latency
 (or vice versa).
 We will get to this more in the next lecture.
-
-===== Optional exercise: re-implementing our original task =====
-
-Exercise:
-Let's use our map and reduce functions to re-implement our original task,
-computing the average Fluorine-to-Carbon ratio in our chemical
-dataset, among molecules with at least one Carbon.
 """
-
-def fluorine_carbon_ratio_map_reduce(data):
-    # TODO
-    raise NotImplementedError
-
-# Uncomment to run
-# ex_map_reduce(CHEM_DATA)
