@@ -1086,12 +1086,12 @@ https://spark.apache.org/docs/latest/api/python/reference/api/pyspark.RDD.map.ht
 - .reduce
 https://spark.apache.org/docs/latest/api/python/reference/api/pyspark.RDD.reduce.html#pyspark.RDD.reduce
 
+As we mentioned last time, this is slightly simplified.
+We will do the fully general case today!
+
 Also equivalent to reduce (but needs an initial value)
 - .fold
 https://spark.apache.org/docs/latest/api/python/reference/api/pyspark.RDD.fold.html
-
-As we mentioned last time, this is slightly simplified.
-We will do the fully general case today!
 """
 
 # Re-defining from earlier in the file
@@ -1120,19 +1120,46 @@ CHEM_DATA_2 = {
 }
 
 def map(rdd, f):
-    # TODO
-    raise NotImplementedError
+    """
+    rdd: RDD where the items have type v1
+    f: a function v1 -> v2
+    output: RDD where the items have type v2
+
+    Apply the f to each input item
+    """
+    rdd2 = rdd.map(f)
+
+    # Uncomment to show intermediate stage
+    print(f"Intermediate: {rdd2.collect()}")
+
+    return rdd2
 
 def reduce(rdd, f):
-    # TODO
-    raise NotImplementedError
+    """
+    rdd: RDD where the items have type v2
+    f: v2 x v2 -> v2
+       (v2, v2) -> v2
+    output: a single value v2
+
+    Apply the f to pairs of values until there's only one left.
+    """
+
+    return rdd.reduce(f)
 
 # If done correctly, the following should work
 
 def get_total_hydrogens(data):
     rdd = sc.parallelize(data.values())
 
+    # list x, x[1] gives us the Hydrogen coordinate
+    # v1 = list[integers]
+    # v2 = integer
+    # f: list[integers] -> integer
     res1 = map(rdd, lambda x: x[1])
+
+    # reduce should just add together integers
+    # v2 = integer
+    # f: (integer, integer) -> integer
     res2 = reduce(res1, lambda x, y: x + y)
 
     print(f"Result: {res2}")
@@ -1140,6 +1167,7 @@ def get_total_hydrogens(data):
 # Uncomment to run
 # get_total_hydrogens(CHEM_DATA_2)
 # (Count by hand to check)
+# 16 :checkmark:
 
 # Note:
 # We could also .collect() and then .parallelize() the results after the
@@ -1158,6 +1186,53 @@ US state, city name, population, avg temperature
 "Find the city with the largest temperature per unit population"
 
 https://forms.gle/Wm1ieauEdgJhiYhD7
+
+Map stage:
+(For each row, output ...)
+
+- divide the temperature by the population
+- add a new column, save the new value in a new column
+
+What are the types?
+Map: for each item of type v1, output an item of type v2
+v1 = (state, city name, population, avg temperature)
+
+- v2 = (temperature / population)
+- v2 = (state, city name, population, avg temp, temperature / population)
+
+Minimal info we need:
+- v2 = (city name, temp / population)
+
+Pseudocode:
+f((state, city name, population, avg temperature)):
+    return (city name, temp / population)
+
+Reduce stage:
+(For each pair of results r1 and r2, combine them to get ...)
+
+- (v2, v2) -> v2
+- (city name 1, ratio 1), (city name 2, ratio 2) -> combine
+
+Ideas:
+- For each pair, select the max
+    + max of the two ratios
+    + what do we do with the city names?
+      A: keep the one with the larger ratio
+- explicit pseudocode:
+  f((city name 1, ratio 1), (city name 2, ratio 2))
+  if ratio1 > ratio2:
+      return (city name 1, ratio 1)
+  else:
+      return (city name 2, ratio 2)
+
+What seemed like a simple/easy idea
+(calculate avg for each row, calculate max of the avgs)
+gets slightly more tricky when we have to figure out exactly
+what to use for the types v1 and v2,
+and in particular our v2 needs not just the avg, but the city name.
+
+Moral: figure out the data that you need, and write down
+explicitly the types v1 and v2.
 
 === Some history ===
 
@@ -1182,13 +1257,47 @@ Blog article: "The Friendship That Made Google Huge"
 
 We stated last time that MapReduce is slightly more general than the above.
 
+Two limitations with what we did above:
+
+L1. In the map stage, for each input row, we had to produce
+    **exactly one** output row.
+
+    This turns out to be a problem.
+    Think about filter.
+    If I have to produce exactly one value per input row,
+    how would I do a filter?
+    - Output could be 0 or 1, 0 if predicate is not true, 1 if it is true
+    - Use null values, None if the predicate is not true.
+
+    But this isn't very efficient.
+
+    General version of MapReduce: intermediate output can
+    be **list** of values.
+    ---> If we want a filter, we would output empty list []
+    ---> we could also output more than one item if we want.
+
+L2. In the reduce stage, we always end up with just a single answer!
+In our example, we were left with just one value (city name, global max)
+What if we want to produce more than one value as output?
+Maybe I want one maximum city per state, for example.
+
+    General version of MapReduce: both stages are partitioned
+    by key, Reduce stage computes one answer per key.
+
 In the paper, Dean and Ghemawat propose the more general version of map and reduce,
 which we will cover now (see Sec 2.2):
 
     map: (k1, v1) -> list((k2, v2))
     reduce: (k2, list(v2)) -> list(v2)
 
-This is written very abstractly, what does it mean?
+    ---> map computes 0 or more answer
+    ---> reduce computes one answer per key (value of type k2)
+
+===== Cut, skip to the bottom =====
+This material was cut from the lecture,
+instead, some of it will appear as exercises on HW2.
+
+The above is written very abstractly, what does it mean?
 
 Let's walk through each part:
 
@@ -1238,7 +1347,7 @@ What about Reduce?
 
     reduce: (k2, list(v2)) -> list(v2)
 
-We will work with a common special case:
+The following is a common special case:
 
     reduce_by_key: (v2, v2) -> v2
 
@@ -1248,6 +1357,7 @@ Reduce:
 
 Examples:
 (write the corresponding Python lambda function)
+(you can use the simpler reduce_by_key version)
 
 - To compute a total for each key?
 
@@ -1290,7 +1400,7 @@ Some additional MapReduce exercises in exercises.py.
 So, we know how to build distributed pipelines.
 
 The **only** change from a sequential pipline is that
-arrows are scalable collection types, instead of regular data types.
+tasks work over scalable collection types, instead of regular data types.
 Tasks are then interpreted as operators over the scalable collections.
 In other words, data parallelism comes for free!
 
@@ -1300,10 +1410,10 @@ pipelines. Operators/tasks can be:
 - wide or narrow (how data is partitioned)
 
 But there is just one problem with what we have so far :)
-Spark is optimized for throughput.
+Spark and MapReduce are optimized for throughput.
 It's what we call a *batch processing engine.* That means?
 
-A:
+A: It processes all the data, then comes back with an answer
 
 But doesn't optimizing for throughput always optimize for latency? Not necessarily!
 
@@ -1320,14 +1430,29 @@ imagine a restaurant that has to process lots of orders.
 
 - Latency is how long *one* person waits for their order.
 
+Some of you wrote on the midterm: throughput != 1 / latency
+
 These are not the same! Why not? Two extreme cases:
+
+***** Finish this up on Monday. *****
+
+Suppose the restuarant processes 10 orders / hour
+
+Throughput =
+
+Latency is not the same as 1 / throughput! Two extreme cases:
 
 1.
 
+    Latency =
+
 2.
 
-(A more abstract example of this is given below in the "Understanding latency (abstract)"
-section below.)
+    Latency =
+
+    (A more abstract example of this is given below in the "Understanding latency (abstract)" section below.)
+
+How can we visualize this?
 
 So, optimizing latency can look very different from optimizing throughput.
 

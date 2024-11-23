@@ -1,5 +1,9 @@
 """
 Some MapReduce exercises
+
+(Skipped - will appear on the homework.)
+
+https://github.com/DavisPL-Teaching/119-hw2
 """
 
 # Spark boilerplate (remember to always add this at the top of any Spark file)

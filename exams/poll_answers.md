@@ -52,3 +52,9 @@ Nov 20:
 5. Narrow
 6. Wide
 7. Narrow
+
+Nov 22:
+Map: For each city, compute (city name, temp / population)
+Reduce: Combine (name1, ratio1) + (name2, ratio2) by computing the maximum ratio between
+   the two, and the city name which equals that maximum.
+   (max_city, maximum(ratio1, ratio2).

@@ -168,6 +168,8 @@ Announcements:
 
   For how to submit, see: https://piazza.com/class/m12ef423uj5p5/post/129
 
++ My office hours: after class today, & after class Wed
+
 + I am working on HW2, will release Part 1 soon.
 
 Plan:
@@ -180,4 +182,6 @@ Plan:
 
 - Some MapReduce exercises
 
-- Endnote on Spark (benefits and drawbacks).
+- Endnote on understanding latency & benefits and drawbacks of Spark.
+
+Questions?
