@@ -2,7 +2,8 @@
 
 This is the last lecture!
 
-It will be a relatively short one.
+Hopefully, it will be a relatively short one.
+I will try to focus on a few key concepts.
 
 Following this lecture, I will take topic suggestions
 for Wed and Fri of next week.
@@ -13,8 +14,16 @@ Announcements:
 
 Plan:
 
-- Finish end note on lecture 5
+- Finish end note from lecture 5
 
 - Poll
 
-- Start lecture 6
+- Start lecture 6:
+
+  + Latency, revisited
+
+  + Batch processing vs stream processing
+
+  + Defining time: real-time vs system time vs. event time
+
+  + Exercises
