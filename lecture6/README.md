@@ -1,9 +1,11 @@
 # Lecture 6: Streaming Pipelines
 
-This is the last lecture!
+This is the last "full" lecture!
 
 Hopefully, it will be a relatively short one.
 I will try to focus on a few key concepts.
+
+Schedule: schedule.md
 
 Time permitting, following this lecture,
 I will do a poll to take topic suggestions
@@ -35,3 +37,5 @@ Plan:
   + Defining time: real-time vs system time vs. event time
 
   + Exercises
+
+Questions?

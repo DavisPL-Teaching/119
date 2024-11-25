@@ -212,20 +212,20 @@ def process_orders_stream(order_stream):
     return parsed_df
 
 # (Uncomment to run)
-# Set up the input stream using a local network socket
-order_stream = spark.readStream.format("socket") \
-    .option("host", "localhost") \
-    .option("port", 9999) \
-    .load()
+# # Set up the input stream using a local network socket
+# order_stream = spark.readStream.format("socket") \
+#     .option("host", "localhost") \
+#     .option("port", 9999) \
+#     .load()
 
-# Call the function
-out_stream = process_orders_stream(order_stream)
+# # Call the function
+# out_stream = process_orders_stream(order_stream)
 
-# Print the output stream
-out = out_stream.writeStream.outputMode("append").format("console").start()
+# # Print the output stream
+# out = out_stream.writeStream.outputMode("append").format("console").start()
 
-# Start the computation
-out.awaitTermination()
+# # Start the computation
+# out.awaitTermination()
 
 """
 There are actually two streaming APIs in Spark,
