@@ -9,9 +9,9 @@ https://forms.gle/83czz2QBH1mu5cse8
 
 === Outline ===
 
-Today's lecture I want to make the following points:
+Today's lecture I want to make the following take-away points:
 
-1. Why and when latency matters
+1. Latency matters (for some applications)
 
 2. Time is complicated
 
@@ -175,48 +175,64 @@ We're looking for a toy example, so let's use a plain socket.
 This will require us to open up another terminal and run the following command:
 
         nc -lk 9999
+
 """
 
-# Spark Context -> streaming context
-from pyspark.streaming import StreamingContext
-ssc = StreamingContext(sc, 0.5)
+# New imports
+from pyspark.sql.functions import from_json, col, explode, expr
+from pyspark.sql.types import StructType, StructField, StringType, IntegerType
 
-# JSON for parsing
-import json
+# Define the schema of the incoming JSON data
+schema = StructType([
+    StructField("order_number", IntegerType()),
+    StructField("item", StringType()),
+    StructField("timestamp", StringType()),
+    StructField("qty", IntegerType())
+])
 
-def process_orders_stream(orders_stream):
+def process_orders_stream(order_stream):
     """
-    orders_stream: now a stream handle, instead of a list of plain data!
+    important:
+    order_stream: now a stream handle, instead of a list of plain data!
     """
 
-    orders_parsed = orders_stream.map(lambda x: json.loads(x))
+    # Parse the JSON data
+    parsed_df = order_stream.select(from_json(col("value").cast("string"), schema).alias("parsed_value"))
 
-    # We copy the same processing code from before
+    # Do some "processing"
+    # We could put the equivalent of the flatMap from before
+    # (Commenting this out for now)
+    # expanded_orders = order_stream.withColumn(
+    #     "expanded_items",
+    #     expr("array_repeat(struct(order_number, item), qty)")
+    # ).withColumn("item", explode("expanded_items.item")) \
+    # .select("order_number", "item")
 
-    def expand_order(order):
-        return [(order["order_number"], order["item"])] * order["qty"]
+    # Let's just print the orders for now
+    return parsed_df
 
-    def process_order(order):
-        time.sleep(1)
-        return order
+# (Uncomment to run)
+# Set up the input stream using a local network socket
+order_stream = spark.readStream.format("socket") \
+    .option("host", "localhost") \
+    .option("port", 9999) \
+    .load()
 
-    expanded_orders = orders_parsed.flatMap(expand_order)
-    output = expanded_orders.map(process_order)
+# Call the function
+out_stream = process_orders_stream(order_stream)
 
-    # Return the result
-    output.pprint()
-    print("Done processing orders")
-    return output
-
-# Set up the input stream
-orders_stream = ssc.socketTextStream("localhost", 9999)
-result = process_orders_stream(orders_stream)
+# Print the output stream
+out = out_stream.writeStream.outputMode("append").format("console").start()
 
 # Start the computation
-ssc.start()
-ssc.awaitTerminationOrTimeout(5)
+out.awaitTermination()
 
 """
+There are actually two streaming APIs in Spark,
+the old DStream API and the newer Structured Streaming API.
+
+Above uses the Structured Streaming API (which is more flexible and solves some problems with DStreams, I also personally found it better to work with on my machine.)
+
 === Time is Complicated ===
 
 Final thing: in talking about latency, we constantly referred to time.
