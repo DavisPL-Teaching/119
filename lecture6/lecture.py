@@ -134,7 +134,7 @@ The fully general formula is:
         latency_X = (end_time_X - start_time_X)
 
     avg latency =
-            (total over all items X) latency_x
+             (sum over all items X) latency_X
             ----------------------------------
                  number of items
 
@@ -155,7 +155,7 @@ complete_time = time.time()
 
 Ideas?
     start time? We could use the timestamp on the event.
-    (That's one way that is used in practice)
+    (Yes, that's one way that is used in practice!)
     Implement some sort of logger for when items come in and go out?
 
 Conclusion:
@@ -180,12 +180,14 @@ Orders are grouped into "batches" and processed all as one group.
 # print(f"Latency: {latency} seconds")
 
 """
-What happened?
+How can we do better?
 
 (Think about it in terms of the real-world scenario)
 
     Basically it was like the scenario 1 in the endnote
     to lecture 5.
+
+    We want to do more like scenario 2, instead.
 
 Main idea to fix it:
 Try uncommenting the "output.foreach" line above that we ignored.
@@ -199,36 +201,21 @@ API will make this easier.
 ***** where we stopped for Nov 25 *****
 
 =================================================
-"""
 
-"""
-Upshots of this example:
+=== Nov 25 ===
 
 Recap on latency:
 - Latency = Response Time
 - Latency can only be measured by focusing on a single item or row.
 - Latency is not the same as 1 / Throughput
-    + If it were, we wouldn't need two different words :)
+    + If it were, we wouldn't need two different words!
+- Latency is not the same as processing time
+    + It's processing time for a specific event
+- If throughput is about quantity (how many orders processed), latency is about quality (how fast individual orders processed).
 
-A possibly helpful view:
-- Throughput is about quantity: *how many* total orders were procesed (per hour, per day, etc.)
-- Latency is about quality: *how fast* each individual order was processed.
+In contrast to "batch processing", "stream processing" processes each item as soon as it arrives.
+It is a good model for optimizing latency of a pipeline.
 
-Most important:
-- To get good latency, we need to return each result as it is processed, instead of
-  at the very end of job.
-
-  We call this "stream processing" or "real-time processing", which is in contrast to
-  "batch processing".
-
-=== Q: Is stream processing always a good idea? ===
-
-A:
-
-
-"""
-
-"""
 === Spark Streaming ===
 
 Let's see a streaming example.
@@ -300,6 +287,10 @@ There are actually two streaming APIs in Spark,
 the old DStream API and the newer Structured Streaming API.
 
 Above uses the Structured Streaming API (which is more flexible and solves some problems with DStreams, I also personally found it better to work with on my machine.)
+
+=== Q: Is stream processing always a good idea? ===
+
+A:
 
 === Time is Complicated ===
 
