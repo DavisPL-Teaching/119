@@ -1436,29 +1436,50 @@ These are not the same! Why not? Two extreme cases:
 
 ***** Finish this up on Monday. *****
 
-Suppose the restuarant processes 10 orders / hour
+Suppose the restuarant processes 10 orders over the course of being open for 1 hour
 
 Throughput =
+    10 orders / hour
 
 Latency is not the same as 1 / throughput! Two extreme cases:
 
 1.
+    Every customer waits for the entire hour!
+    Every customer submitted their order at the start of the hour,
+    and got it back at the end.
 
-    Latency =
+    Latency = 1 hour
+        (customers are not very happy)
 
 2.
+    One order submitted every 6 minutes,
+    and completed 6 minutes later.
 
-    Latency =
+    Latency = 6 minutes
+        (customers are happy)
 
     (A more abstract example of this is given below in the "Understanding latency (abstract)" section below.)
 
+Throughput is the same in both cases!
+10 events / 1 hour
+
+(The first scenario is similar to a parallel execution,
+the second scenario more similar to a sequential execution.)
+
+The other formula which is not true:
+
+    Latency != total time / number of orders
+    True in the second scenario but not in the first scenario.
+
 How can we visualize this?
+
+    (Draw a timeline from 0 to 1 hour and draw a line for each order)
 
 So, optimizing latency can look very different from optimizing throughput.
 
 In a batch processing framework like Spark,
 it waits until we ask, and then collects *all* results at once!
-So we always get the worst possible throughput, in fact we get the maximum latency
+So we always get the worst possible latency, in fact we get the maximum latency
 on each individual item. We don't get some results sooner and some results later.
 
 Grouping together items (via lazy transformations) helps optimize the pipeline, but it
@@ -1483,7 +1504,7 @@ milliseconds) is "real-time" applications or "streaming" applications.
 So that's where we're going next,
 talking about applications where you might want your pipeline to respond in real time to data that
 is coming in.
-We'll use a different API in Spark called Spark Streaming.
+We'll use a different API in Spark called Spark Structured Streaming.
 """
 
 # **** End ****
