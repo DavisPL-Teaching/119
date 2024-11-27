@@ -400,9 +400,20 @@ I'd like you to know the following definitions of time:
 - Event time
 - System time
 
-We often further divide system time into:
-- Ingestion time
+Q: In the context of a streaming application, which of the above is useful?
+
+A:
+
+System time variants:
+- OS time
+- Spark time
+- Arrival time
 - Processing time
+- Exit time
+
+The following are also useful concepts (but not required to know for this class):
+- Logical time
+- Monotonic time
 """
 
 """
@@ -410,26 +421,53 @@ We often further divide system time into:
 
 Let's edit our streaming pipeline to log each notion of time.
 
-use:
+Syntax we need to know:
+    df.withColumn(...)
 
-compare also:
-    df.withColumn(current_timestamp())
+    current_timestamp()
+
+    time.time()
+
+New concepts:
+    UDF = User Defined Function
+
 """
 
-from pyspark.sql.functions import current_timestamp, udf
-from pyspark.sql.types import DoubleType
+from pyspark.sql.functions import current_timestamp, udf, date_format
+
+### Time logging UDF
+
+from datetime import datetime
 
 def current_system_time():
-    return time.time()
+    # Return the current system time
+    # Raw timestamp:
+    # return time.time()
+    # Pretty print the output:
+    readable_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    return readable_time
 
-time_udf = udf(current_system_time, DoubleType())
+time_udf = udf(current_system_time, StringType())
 
 def log_time(stream):
     return (
         stream
         .withColumn("system_time", time_udf())
-        .withColumn("spark_timestamp", current_timestamp())
+        .withColumn("spark_timestamp", date_format(current_timestamp(), "yyyy-MM-dd HH:mm:ss"))
     )
+
+### Delay UDF to make the computation take longer
+### (Ignore this for now)
+
+# def process_delay():
+#     # Simualte a difficult processing step by inserting a delay
+#     time.sleep(1)
+#     return "delay applied"
+
+# process_delay_udf = udf(process_delay, StringType())
+
+# def log_delay(stream):
+#     return stream.withColumn("delay", process_delay_udf())
 
 def process_orders_stream(order_stream):
     # Code from before
@@ -441,12 +479,20 @@ def process_orders_stream(order_stream):
         col("parsed_value.qty").alias("qty")
     )
 
-    # TODO: add here
+    # Uncomment to include
+    # df1 = log_time(df1)
 
     df2 = df1.withColumn("order_numbers", array_repeat(col("order_number"), col("qty")))
     df3 = df2.select(explode(col("order_numbers")).alias("order_number"), col("item"), col("timestamp"))
 
-    # TODO: add here
+    # Uncomment to include
+    # df3 = df2.select(explode(col("order_numbers")).alias("order_number"), col("item"), col("timestamp"), col("system_time").alias("system_time_orig"), col("spark_timestamp").alias("spark_timestamp_orig"))
+
+    # Uncomment to include
+    # df3 = log_delay(df3)
+
+    # Uncomment to include
+    # df3 = log_time(df3)
 
     # Return
     return df3
@@ -461,6 +507,25 @@ def process_orders_stream(order_stream):
 # out.awaitTermination()
 
 """
+Tasks:
+
+1. Uncomment the lines to include the time logging functions.
+
+2. Uncomment the lines to include the delay function.
+
+3. Rename the time-related columns to make it clear which time they are:
+system time, event time, arrival, processing, exit
+
+=== Measuring latency ===
+
+Which type of time should we use to measure latency?
+
+Recall formula for latency:
+-
+
+Options?
+-
+
 === Failure Cases ===
 
 Streaming pipelines have additional failure cases from their batch counterparts.

@@ -57,6 +57,6 @@ Plan:
 
 - Structured Streaming in Apache Spark
 
-- Different notions of time
+- Dealing with time
 
 Questions?
