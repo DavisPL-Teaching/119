@@ -47,9 +47,14 @@ Announcements:
 - HW2 fully released:
   https://github.com/DavisPL-Teaching/119-hw2
 
+  + Autograder available for partial feedback
+
 - Regrades for HW1 & midterm due today
 
 - I have office hours after class (in person & on Zoom OK)
+
+- Topic selection for lecture 7:
+  https://piazza.com/class/m12ef423uj5p5/post/140
 
 Plan:
 
