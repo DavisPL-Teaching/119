@@ -202,23 +202,30 @@ API will make this easier.
 
 =================================================
 
-=== Nov 25 ===
+=== Nov 27 ===
 
 Recap on latency:
 - Latency = Response Time
-- Latency can only be measured by focusing on a single item or row.
+- Latency can only be measured by focusing on a single item or row. (response time on that row)
+- Latency-critical, real-time, or streaming applications are those for which we are looking for low latency (typically, sub-second or even millisecond response times).
 - Latency is not the same as 1 / Throughput
     + If it were, we wouldn't need two different words!
 - Latency is not the same as processing time
     + It's processing time for a specific event
 - If throughput is about quantity (how many orders processed), latency is about quality (how fast individual orders processed).
 
-In contrast to "batch processing", "stream processing" processes each item as soon as it arrives.
+In contrast to "batch processing", "streaming" applications process each item as soon as it arrives.
 It is a good model for optimizing latency of a pipeline.
+
+=== Poll ===
+
+Which of the following are most likely application scenarios for which latency matters?
+
+https://forms.gle/Yaqe69zwBwYD91Fz8
 
 === Spark Streaming ===
 
-Let's see a streaming example.
+Let's see an actually streaming example.
 
 We need to decide where to get our input! Spark supports getting input from:
 - Kafka (good production option)
@@ -234,7 +241,7 @@ This will require us to open up another terminal and run the following command:
 """
 
 # New imports
-from pyspark.sql.functions import from_json, col, explode, expr
+from pyspark.sql.functions import array_repeat, from_json, col, explode
 from pyspark.sql.types import StructType, StructField, StringType, IntegerType
 
 # Define the schema of the incoming JSON data
@@ -252,21 +259,39 @@ def process_orders_stream(order_stream):
     """
 
     # Parse the JSON data
-    parsed_df = order_stream.select(from_json(col("value").cast("string"), schema).alias("parsed_value"))
+    df0 = order_stream.select(from_json(col("value").cast("string"), schema).alias("parsed_value"))
 
-    # Do some "processing"
-    # We could put the equivalent of the flatMap from before
-    # (Commenting this out for now)
-    # expanded_orders = order_stream.withColumn(
-    #     "expanded_items",
-    #     expr("array_repeat(struct(order_number, item), qty)")
-    # ).withColumn("item", explode("expanded_items.item")) \
-    # .select("order_number", "item")
+    # First cut: just return the parsed orders
+    return df0
 
-    # Let's just print the orders for now
-    return parsed_df
+    ### Full computation
 
-# (Uncomment to run)
+    # df0 is all bunched up in a single column, can we expand it?
+
+    # Yes: select the data we want
+    df1 = df0.select(
+        col("parsed_value.order_number").alias("order_number"),
+        col("parsed_value.item").alias("item"),
+        col("parsed_value.timestamp").alias("timestamp"),
+        col("parsed_value.qty").alias("qty")
+    )
+
+    # (Notice this looks very similar to SQL!
+    # Structured Streams uses an almost identical API to Spark DataFrames.)
+
+    # return df1
+
+    # Create a new field which is a list [item, item, ...] for each qty
+    df2 = df1.withColumn("order_numbers", array_repeat(col("order_number"), col("qty")))
+
+    # return df2
+
+    # Explode the list into separate rows
+    df3 = df2.select(explode(col("order_numbers")).alias("order_number"), col("item"), col("timestamp"))
+
+    return df3
+
+# # (Uncomment to run)
 # # Set up the input stream using a local network socket
 # order_stream = spark.readStream.format("socket") \
 #     .option("host", "localhost") \
@@ -276,21 +301,89 @@ def process_orders_stream(order_stream):
 # # Call the function
 # out_stream = process_orders_stream(order_stream)
 
-# # Print the output stream
+# # Print the output stream and run the computation
 # out = out_stream.writeStream.outputMode("append").format("console").start()
-
-# # Start the computation
 # out.awaitTermination()
 
 """
 There are actually two streaming APIs in Spark,
 the old DStream API and the newer Structured Streaming API.
 
-Above uses the Structured Streaming API (which is more flexible and solves some problems with DStreams, I also personally found it better to work with on my machine.)
+Above uses the Structured Streaming API (which is more modern and flexible
+and solves some problems with DStreams, I also personally found it better
+to work with on my machine.)
 
-=== Q: Is stream processing always a good idea? ===
+=== Q + A ===
+
+Q: How is the syntax are different from a batch pipeline?
 
 A:
+
+Q: How is the behavior different from a batch pipeline?
+
+A:
+
+Q: How does Spark determine when to "run" the pipeline?
+
+A:
+
+Q: How do we know when the pipeline is finished?
+
+A:
+
+=== Microbatching ===
+
+One thing we noted above and can see in the output is how Spark groups
+items into mini DataFrame updates, called "microbatches".
+
+(Side note: this isn't how all streaming frameworks work, but this is
+the main idea behind how Spark Streaming works.)
+
+That leads to an interesting question: how do we determine the microbatches?
+
+Possible ways?
+
+-
+-
+
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+
+It comes down to a question of "time" and how to measure progress.
+
+This turns out to be very important, so it is the next thing we will
+cover in the context of streaming pipelines.
+
+It is also important to how we measure latency and can be important
+to the actual behavior of our pipeline.
 
 === Time is Complicated ===
 
@@ -304,20 +397,90 @@ https://gist.github.com/timvisee/fcda9bbdff88d45cc9061606b4b923ca
 I'd like you to know the following definitions of time:
 
 - Real time
-- System time
 - Event time
+- System time
 
-System time can further be divided into:
-- Ingress time
+We often further divide system time into:
+- Ingestion time
 - Processing time
-- Egress time
 """
 
 """
 === Exercises ===
 
-1. Edit our streaming pipeline to measure each of the above measures of time.
-What happens?
+Let's edit our streaming pipeline to log each notion of time.
 
-2. Edit our batch pipeline to measure each of the above measures of time.
+use:
+
+compare also:
+    df.withColumn(current_timestamp())
+"""
+
+from pyspark.sql.functions import current_timestamp, udf
+from pyspark.sql.types import DoubleType
+
+def current_system_time():
+    return time.time()
+
+time_udf = udf(current_system_time, DoubleType())
+
+def log_time(stream):
+    return (
+        stream
+        .withColumn("system_time", time_udf())
+        .withColumn("spark_timestamp", current_timestamp())
+    )
+
+def process_orders_stream(order_stream):
+    # Code from before
+    df0 = order_stream.select(from_json(col("value").cast("string"), schema).alias("parsed_value"))
+    df1 = df0.select(
+        col("parsed_value.order_number").alias("order_number"),
+        col("parsed_value.item").alias("item"),
+        col("parsed_value.timestamp").alias("timestamp"),
+        col("parsed_value.qty").alias("qty")
+    )
+
+    # TODO: add here
+
+    df2 = df1.withColumn("order_numbers", array_repeat(col("order_number"), col("qty")))
+    df3 = df2.select(explode(col("order_numbers")).alias("order_number"), col("item"), col("timestamp"))
+
+    # TODO: add here
+
+    # Return
+    return df3
+
+# (Uncomment to run)
+# order_stream = spark.readStream.format("socket") \
+#     .option("host", "localhost") \
+#     .option("port", 9999) \
+#     .load()
+# out_stream = process_orders_stream(order_stream)
+# out = out_stream.writeStream.outputMode("append").format("console").start()
+# out.awaitTermination()
+
+"""
+=== Failure Cases ===
+
+Streaming pipelines have additional failure cases from their batch counterparts.
+Let's cover a few of these:
+
+- Out-of-order data (late arrivals)
+
+- Clock drift and non-monotonic clocks
+
+- Too much data
+
+.
+.
+.
+
+Q: How do we deal with out-of-order data?
+
+Q: How do we deal with clocks being wrong?
+
+Q: How do we deal with too much data?
+
+Q: What happens when our pipeline is overloaded with too much data, and the above techniques fail?
 """

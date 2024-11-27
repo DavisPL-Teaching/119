@@ -39,3 +39,24 @@ Plan:
   + Exercises
 
 Questions?
+
+## Nov 27
+
+Announcements:
+
+- HW2 fully released:
+  https://github.com/DavisPL-Teaching/119-hw2
+
+- Regrades for HW1 & midterm due today
+
+- I have office hours after class (in person & on Zoom OK)
+
+Plan:
+
+- Recap on latency + poll
+
+- Structured Streaming in Apache Spark
+
+- Different notions of time
+
+Questions?
