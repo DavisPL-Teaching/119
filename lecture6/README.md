@@ -51,6 +51,8 @@ Announcements:
 
 - Regrades for HW1 & midterm due today
 
+- HW2 + Makeup option for HW1 due a week from Monday
+
 - I have office hours after class (in person & on Zoom OK)
 
 - Topic selection for lecture 7:

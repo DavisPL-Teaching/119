@@ -60,3 +60,5 @@ Reduce: Combine (name1, ratio1) + (name2, ratio2) by computing the maximum ratio
    (max_city, maximum(ratio1, ratio2).
 
 Nov 25: 3 (not optimized for latency) and 8 (nondeterminism)
+
+Nov 27: 2, 4, 5, 6.
