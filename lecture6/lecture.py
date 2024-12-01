@@ -397,22 +397,63 @@ different notions of time in this context next time.
 
 ====================================================
 
-=== Time is Complicated ===
+=== Dec 2 ===
 
-Final thing: in talking about latency, we constantly referred to time.
-What is time, anyway?
+=== Quick recap ===
+
+- **Streaming pipelines** process each item as it arrives, without waiting for further items.
+
+- **Latency** is the response time from when an input enters to when it exits the pipeline.
+
+=== Poll ===
+
+A dataflow graph contains two nodes, a "map" node and a "filter" node:
+
+(input dataset) -> (map) -> (filter)
+
+The pipeline is evaluated in a streaming manner
+
+If the input dataset has 500 items, the map stage takes 1 ms per input item, and the filter stage takes 1 ms per input item, and map and filter are done in parallel, what is the latency of the pipeline in milliseconds?
+
+Would your answer change if the pipeline was based on microbatch sizes of 5 ms?
+
+(Multiple Choice)
+
+https://forms.gle/ByGSL2rdhm9iemzJ8
+
+.
+.
+.
+
+=== Measuring time ===
+
+In talking about latency, we constantly referred to time.
+When discussing progress in Spark Streaming, we saw how to use
+time to declare
+
+Measuring time -- and thus, measuring progress in the system -- is
+really central to both of these discussions.
 
 Time is complicated!
 Some optional but highly recommended reading:
 https://gist.github.com/timvisee/fcda9bbdff88d45cc9061606b4b923ca
 
-I'd like you to know the following definitions of time:
+I'd like you to know the following definitions of time in general:
 
-- Real time
-- Event time
-- System time
+- Real time:
+- Event time:
+- System time:
+- Logical time:
 
-Q: In the context of a streaming application, which of the above is useful?
+Monotonic means, if we measure the time once and then measure it again,
+say we get two values
+    x, y
+then it should be the case that
+    x <= y.
+
+Q: Which of these are guaranteed to be monotonic?
+
+Q: In the context of a streaming application, which of the above do you think is useful?
 
 A:
 
@@ -422,10 +463,6 @@ System time variants:
 - Arrival time
 - Processing time
 - Exit time
-
-The following are also useful concepts (but not required to know for this class):
-- Logical time
-- Monotonic time
 """
 
 """

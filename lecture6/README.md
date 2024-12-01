@@ -67,3 +67,30 @@ Plan:
 - Dealing with time
 
 Questions?
+
+## Dec 2
+
+Welcome back.
+
+Announcements:
+
+- Just 3 days of lecture left!
+
+- HW2 due in 1 week
+
+- Office hours this week:
+
+- Topic selection results:
+  https://piazza.com/class/m12ef423uj5p5/post/140
+
+  I will do an additional lecture on cloud computing platforms.
+  This will be either Wed or Fri.
+
+Plan:
+
+- Quick recap
+
+- Poll
+
+- Measuring time in a streaming system
+  (with hints on measuring time in any other distributed system).
