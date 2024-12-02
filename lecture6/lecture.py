@@ -405,6 +405,15 @@ different notions of time in this context next time.
 
 - **Latency** is the response time from when an input enters to when it exits the pipeline.
 
+Similarlities and ifference froms batch pipelines?
+1. Similar concepts to Spark apply for streaming pipelines:
+  wide/narrow operators and partitioning.
+  lazy/not lazy (we will not cover this aspect)
+
+2. The main difference will be that because each item is processed as it arrives:
+    Latency will be the time it takes a single item to go through the pipeline instead of
+    the entire batch.
+
 === Poll ===
 
 A dataflow graph contains two nodes, a "map" node and a "filter" node:
@@ -424,40 +433,45 @@ https://forms.gle/ByGSL2rdhm9iemzJ8
 .
 .
 .
+.
+.
+.
+.
+.
+.
+.
 
 === Measuring time ===
 
 In talking about latency, we constantly referred to time.
+
 When discussing progress in Spark Streaming, we saw how to use
-time to declare
+time to grab and process "microbatches" of data.
 
 Measuring time -- and thus, measuring progress in the system -- is
-really central to both of these discussions.
+central to both of these discussions.
 
 Time is complicated!
 Some optional but highly recommended reading:
 https://gist.github.com/timvisee/fcda9bbdff88d45cc9061606b4b923ca
 
+(scroll through a few of these)
+
 I'd like you to know the following definitions of time in general:
 
-- Real time:
-- Event time:
-- System time:
-- Logical time:
+1. Real time:
+2. Event time:
+3. System time:
+4. Logical time:
+5. Monotonic time:
 
-Monotonic means, if we measure the time once and then measure it again,
-say we get two values
-    x, y
-then it should be the case that
-    x <= y.
-
-Q: Which of these are guaranteed to be monotonic?
+Q: Which of 1-4 are guaranteed to be monotonic?
 
 Q: In the context of a streaming application, which of the above do you think is useful?
 
 A:
 
-System time variants:
+System time variants for streaming systems in particular:
 - OS time
 - Spark time
 - Arrival time
@@ -575,7 +589,7 @@ Recall formula for latency:
 Options?
 -
 
-=== Failure Cases ===
+=== Discussion and Failure Cases ===
 
 Streaming pipelines have additional failure cases from their batch counterparts.
 Let's cover a few of these:
