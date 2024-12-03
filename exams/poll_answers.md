@@ -62,3 +62,9 @@ Reduce: Combine (name1, ratio1) + (name2, ratio2) by computing the maximum ratio
 Nov 25: 3 (not optimized for latency) and 8 (nondeterminism)
 
 Nov 27: 2, 4, 5, 6.
+
+Dec 2: 2ms; Yes, the latency would be higher
+
+Dec 4:
+
+Dec 6:
