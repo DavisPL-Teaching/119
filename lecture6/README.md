@@ -114,7 +114,7 @@ Announcements:
 
 Plan:
 
-- Go over the final study guide
+- Go over the final + final study guide
 
 - Poll
 
