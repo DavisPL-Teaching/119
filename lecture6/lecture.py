@@ -602,8 +602,7 @@ and to measure time within the system.
 =================================================
 
 System time variants for streaming systems in particular:
-- OS time
-- Spark time
+- Spark timestamp
 - Arrival time
 - Processing time
 - Exit time

@@ -103,3 +103,15 @@ Plan:
   (Spoiler: or any distributed system).
 
 Questions?
+
+## Dec 4
+
+Announcements:
+
+- HW2 + HW1 makeup + in-class polls due Monday
+
+- OH Today, Thu, Fri
+
+Plan:
+
+- Continuing about different notions of time
