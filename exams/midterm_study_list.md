@@ -103,5 +103,3 @@ Study list of topics for the midterm.
 
 Some things you do **not** need to know:
 Python syntax / multiprocess; difference between workers, threads, processes; architectural and language details (like whether a data race causes data corruption on a particular machine or particular hardware).
-
-Any questions?
