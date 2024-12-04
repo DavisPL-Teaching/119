@@ -299,19 +299,20 @@ This will require us to open up another terminal and run the following command:
         nc -lk 9999
 
 """
+
 # (Uncomment to run)
 # Set up the input stream using a local network socket
-order_stream = spark.readStream.format("socket") \
-    .option("host", "localhost") \
-    .option("port", 9999) \
-    .load()
+# order_stream = spark.readStream.format("socket") \
+#     .option("host", "localhost") \
+#     .option("port", 9999) \
+#     .load()
 
-# Call the function
-out_stream = process_orders_stream(order_stream)
+# # Call the function
+# out_stream = process_orders_stream(order_stream)
 
-# Print the output stream and run the computation
-out = out_stream.writeStream.outputMode("append").format("console").start()
-out.awaitTermination()
+# # Print the output stream and run the computation
+# out = out_stream.writeStream.outputMode("append").format("console").start()
+# out.awaitTermination()
 
 """
 There are actually two streaming APIs in Spark,
@@ -600,16 +601,10 @@ and to measure time within the system.
 ***** Where we stopped for Dec 2 *****
 
 =================================================
-
-System time variants for streaming systems in particular:
-- Spark timestamp
-- Arrival time
-- Processing time
-- Exit time
 """
 
 """
-=== Exercises ===
+=== Code example ===
 
 Let's edit our streaming pipeline to log each notion of time.
 
@@ -623,6 +618,8 @@ Syntax we need to know:
 New concepts:
     UDF = User Defined Function
 
+In the interest of time I will probably
+just show the final code and what it does.
 """
 
 from pyspark.sql.functions import current_timestamp, udf, date_format
@@ -641,27 +638,26 @@ def current_system_time():
 
 time_udf = udf(current_system_time, StringType())
 
-def log_time(stream):
+def log_time(stream, suffix):
     return (
         stream
-        .withColumn("system_time", time_udf())
-        .withColumn("spark_timestamp", date_format(current_timestamp(), "yyyy-MM-dd HH:mm:ss"))
+        .withColumn(f"system_time_{suffix}", time_udf())
+        .withColumn(f"spark_time_{suffix}", date_format(current_timestamp(), "yyyy-MM-dd HH:mm:ss"))
     )
 
 ### Delay UDF to make the computation take longer
-### (Ignore this for now)
 
-# def process_delay():
-#     # Simualte a difficult processing step by inserting a delay
-#     time.sleep(1)
-#     return "delay applied"
+def process_delay():
+    # Simualte a difficult processing step by inserting a delay
+    time.sleep(1)
+    return "delay applied"
 
-# process_delay_udf = udf(process_delay, StringType())
+process_delay_udf = udf(process_delay, StringType())
 
-# def log_delay(stream):
-#     return stream.withColumn("delay", process_delay_udf())
+def log_delay(stream):
+    return stream.withColumn("delay", process_delay_udf())
 
-def process_orders_stream(order_stream):
+def process_orders_stream_with_timing(order_stream):
     # Code from before
     df0 = order_stream.select(from_json(col("value").cast("string"), schema).alias("parsed_value"))
     df1 = df0.select(
@@ -672,19 +668,18 @@ def process_orders_stream(order_stream):
     )
 
     # Uncomment to include
-    # df1 = log_time(df1)
+    df1 = log_time(df1, "start")
 
     df2 = df1.withColumn("order_numbers", array_repeat(col("order_number"), col("qty")))
-    df3 = df2.select(explode(col("order_numbers")).alias("order_number"), col("item"), col("timestamp"))
 
     # Uncomment to include
-    # df3 = df2.select(explode(col("order_numbers")).alias("order_number"), col("item"), col("timestamp"), col("system_time").alias("system_time_orig"), col("spark_timestamp").alias("spark_timestamp_orig"))
+    df3 = df2.select(explode(col("order_numbers")).alias("order_no"), col("item"), col("timestamp"), col("system_time_start"), col("spark_time_start"))
 
     # Uncomment to include
     # df3 = log_delay(df3)
 
     # Uncomment to include
-    # df3 = log_time(df3)
+    df3 = log_time(df3, "end")
 
     # Return
     return df3
@@ -694,19 +689,31 @@ def process_orders_stream(order_stream):
 #     .option("host", "localhost") \
 #     .option("port", 9999) \
 #     .load()
-# out_stream = process_orders_stream(order_stream)
+# out_stream = process_orders_stream_with_timing(order_stream)
 # out = out_stream.writeStream.outputMode("append").format("console").start()
 # out.awaitTermination()
 
 """
-Tasks:
+Things to play with:
 
-1. Uncomment the lines to include the time logging functions.
+1. Comment/uncomment the lines for the time logging functions.
 
-2. Uncomment the lines to include the delay function.
+2. Comment/uncomment the lines to include the delay function.
 
-3. Rename the time-related columns to make it clear which time they are:
-system time, event time, arrival, processing, exit
+3. Rename the time-related columns to make it clear which time they are
+
+4. Are some of the columns redundant? Remove them.
+
+=== System time variants in a streaming system ===
+
+In Spark Streaming, we use system time internally to
+measure and track progress within the pipeline.
+
+We have seen these variants in the above code example:
+- Spark timestamp
+- Arrival time
+- Processing time
+- Exit time
 
 === Measuring latency ===
 

@@ -114,4 +114,10 @@ Announcements:
 
 Plan:
 
-- Continuing about different notions of time
+- Go over the final study guide
+
+- Poll
+
+- Continuing about different notions of time with a code example
+
+- How time is used in a streaming system and failure cases (time permitting)

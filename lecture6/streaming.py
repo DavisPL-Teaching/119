@@ -1,6 +1,8 @@
 """
 A minimal example of a streaming pipeline in PySpark
 using Structured Streaming.
+
+(Remember to use nc -lk 9999 to run)
 """
 
 from pyspark.sql import SparkSession

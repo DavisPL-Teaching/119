@@ -127,12 +127,21 @@ Implementation details of streaming pipelines:
 
 ## Lecture 7
 
-- There will be a single multiple choice question on Lecture 7.
-    I will announce what is covered on this question on Friday.
+- There will be a single multiple choice question on Lecture 7
+  about different AWS cloud services (S3, EC2, Lambda).
+  The only thing you have to know is the following:
+
+  Cloud providers provide different services for different cases:
+
+  S3: useful for data storage
+
+  EC2: useful for purchasing compute (basically, cloud computers that you can log into and run via the terminal)
+
+  Lambda: useful for triggering events and running asynchronous code.
 
 ## Notes
 
 Some things you do **not** need to know:
 Python and PySpark syntax.
 Implementation details of PySpark and Spark Streaming (except where mentioned above).
-Lecture 7 other than the one MC question.
+Lecture 7 other than the one MC question mentioned above.
