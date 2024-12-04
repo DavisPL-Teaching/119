@@ -601,6 +601,15 @@ and to measure time within the system.
 ***** Where we stopped for Dec 2 *****
 
 =================================================
+
+Recap on time (review above)
+
+Poll:
+
+What type of time corresponds to each of the following scenarios?
+
+https://forms.gle/NB5aR62x6XYyqpkG7
+
 """
 
 """

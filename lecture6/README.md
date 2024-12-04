@@ -116,6 +116,8 @@ Plan:
 
 - Go over the final + final study guide
 
+- Quick recap from last time
+
 - Poll
 
 - Continuing about different notions of time with a code example
