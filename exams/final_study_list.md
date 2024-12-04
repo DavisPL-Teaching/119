@@ -2,7 +2,8 @@
 
 Study list of topics for the final.
 
-**The midterm will cover Lectures 1-6.**
+**The final will cover Lectures 1-6.**
+There will be one specific multiple choice question about Lecture 7 (see below for the facts that you need to know.)
 
 ## Lectures 1-4
 
@@ -26,7 +27,7 @@ Suggested review topics based on the midterm:
   + Put the concepts in context:
     If asked about what you would do on a dataset or a specific
     real-world example, we're really looking for things specific to that
-    dataset or real-world example!
+    dataset or real-world example.
 
     (See midterm free response q9)
 
@@ -106,7 +107,7 @@ Suggested review topics based on the midterm:
 
     + Batch/stream analogy
 
-Implementation details of streaming pipelines:
+- Implementation details of streaming pipelines:
 
     + Microbatching and possible microbatching strategies
 
