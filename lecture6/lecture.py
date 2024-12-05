@@ -657,8 +657,8 @@ def log_time(stream, suffix):
 ### Delay UDF to make the computation take longer
 
 def process_delay():
-    # Simualte a difficult processing step by inserting a delay
-    time.sleep(1)
+    # Simulate a difficult processing step by inserting a delay
+    time.sleep(2)
     return "delay applied"
 
 process_delay_udf = udf(process_delay, StringType())
@@ -685,7 +685,7 @@ def process_orders_stream_with_timing(order_stream):
     df3 = df2.select(explode(col("order_numbers")).alias("order_no"), col("item"), col("timestamp"), col("system_time_start"), col("spark_time_start"))
 
     # Uncomment to include
-    # df3 = log_delay(df3)
+    df3 = log_delay(df3)
 
     # Uncomment to include
     df3 = log_time(df3, "end")
@@ -715,24 +715,25 @@ Things to play with:
 
 === System time variants in a streaming system ===
 
-In Spark Streaming, we use system time internally to
+In Spark Streaming, Spark uses system time internally to
 measure and track progress within the pipeline.
 
+Spark actually assigns a timestamp to each microbatch
+and uses the timestamp throughout the pipeline.
+
 We have seen these variants in the above code example:
-- Spark timestamp
-- Arrival time
-- Processing time
-- Exit time
+- Input data timestamp - event time
+- Spark timestamp - system time (at the start of the batch)
+- Arrival time - system time (at the data item arrival)
+- Exit time - system time (at the data item exit)
 
 === Measuring latency ===
 
 Which type of time should we use to measure latency?
 
 Recall formula for latency:
--
 
-Options?
--
+    (exit time item X) - (start time item X)
 
 === Discussion and Failure Cases ===
 

@@ -110,16 +110,21 @@ Announcements:
 
 - HW2 + HW1 makeup + in-class polls due Monday
 
+  + I'll sync Canvas scores again ahead of Friday's class
+
 - OH Today, Thu, Fri
+
+  + I'll also do an office hour on Monday
 
 Plan:
 
-- Go over the final + final study guide
+- Go over the final + final study list
 
-- Quick recap from last time
-
-- Poll
+- Quick recap and poll
 
 - Continuing about different notions of time with a code example
 
 - How time is used in a streaming system and failure cases (time permitting)
+
+Friday's lecture will be a (very brief) intro to cloud services,
+Amazon/AWS S3, EC2, Lambda

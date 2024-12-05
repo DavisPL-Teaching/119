@@ -55,7 +55,7 @@ Suggested review topics based on the midterm:
         - What operators should be wide vs narrow
     + How partitioning works, what it means, how it affects performance
     + Limitations of partitioning
-    + key-based partitioning (see MapReduce, HW2)
+    + Key-based partitioning (see MapReduce, HW2)
 
 - MapReduce
 
@@ -69,7 +69,7 @@ Suggested review topics based on the midterm:
     + Number of partitions and how it affects performance
         * too low, too high
     + Running on a local cluster, running on a distributed computing cluster
-    + Resilience: you may assume that Spark tolerates node failures (RDDs can recover from a crash)
+    + Resilience: you may assume that Spark tolerates node failures (RDDs can recover from a computer or worker crash)
 
 - Drawing a PySpark or MapReduce computation as a dataflow graph
 
@@ -83,9 +83,7 @@ Suggested review topics based on the midterm:
       processed, what can you say about the latency of each order
 
     + Refined def of latency:
-        latency of item X = (end time X) - (start time X)
-        or
-        latency of item X = (exit time X) - (arrival time X)
+        latency of item X = (end or exit time X) - (start or arrival time X)
 
 - List of summary points from the `lecture.py` notes:
     + Latency = Response Time
@@ -111,7 +109,7 @@ Suggested review topics based on the midterm:
 
     + Microbatching and possible microbatching strategies
 
-    + Spark timestamp (assigned to all members of a microbatch)
+    + Spark timestamp (assigned to all members of a microbatch - talk about today)
 
 - Time
 
