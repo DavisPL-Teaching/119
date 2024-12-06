@@ -1,0 +1,17 @@
+{
+    "Id": "Policy1733525110646",
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "Stmt1733525108327",
+            "Action": "s3:*",
+            "Effect": "Allow",
+            "Resource": "arn:aws:s3:::119-test-bucket-2",
+            "Principal": {
+                "AWS": [
+                    "arn:aws:iam::472501947158:user/caleb"
+                ]
+            }
+        }
+    ]
+}
