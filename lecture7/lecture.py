@@ -1,13 +1,39 @@
 """
 Lecture 7: Cloud computing
 
+Everything we've been doing for the last few weeks (in fact, since we started
+Lecture 5 on Spark) has been leading up to running larger-scale distributed
+applications over many computers.
+But, we haven't actually run any distributed computations!
+
+We've only been running Spark examples locally on our 1 laptop.
+
+All of the same Spark pipelines would work over multiple machines,
+but how do we actually get access to and configure multiple machines?
+
+Possibilities:
+1. Go out and buy 10 computers yourself and set them up to connect to each other
+   (tends to be a lot of work / difficult to get right, and expensive)
+
+2. Buy compute resources through the cloud.
+
+If you've used the GitHub Codespaces for the class homeworks,
+that would be an example of a cloud computing resource or virtual machine.
+
+Cloud computing = computing resources that we can buy through the internet and use.
+
+=== Cloud computing ===
+
 To do computation in the cloud, we need:
 
 0. An account / security credentials
+(IAM)
 
 1. A place to store data
+(S3)
 
 2. A way to do computations.
+(EC2)
 
 === Getting started ===
 
@@ -54,12 +80,18 @@ Managing stuff in the cloud has a steep learning curve, for two main reasons:
   Services are targeted to expert industrial users who have a lot of experience
   and support in getting what they want. They often care more about features
   and configurability.
-  "It's possible to get it to work and be eficient and reliable" matters more,
+  "It's possible to get it to work and be efficient and reliable" matters more,
   not "It works out of the box without any problems".
 
   Imagine you are working at a company, if you need to spend 1 day to get your
   app to work that's not a big deal, what you care is that you can configure it
   programmatically and that it is performant and reliable.
+
+  Comments:
+  Industrial support for end customers
+  Other services and start-ups have come around more recently to make things
+  easier in some cases, but AWS is still the biggest/oldest cloud provider
+  out there.
 
 - Security:
   Everything has to balance usability with security. There are all sorts of
@@ -73,6 +105,8 @@ Once you have an AWS account, you access your resources in two primary ways:
 
 - Through the web interface
 
+    https://portal.aws.amazon.com/
+
 - Through the CLI (shell).
   This is also typically how you would access AWS instances through Python.
 
@@ -85,7 +119,7 @@ First let's try running this.
 This is supposed to list all S3 buckets associated with your account. What happens?
 
 The problem:
--
+- It will prompt you to log in
 
 Assuming you have an AWS account, you would then go here:
 
@@ -93,6 +127,8 @@ Assuming you have an AWS account, you would then go here:
 
 And select IAM to create a new user.
 (Show how this works)
+
+    IAM = Identity and Access Management
 
 Once you have a user, you can go to "Security credentials"
 for that user.
@@ -128,18 +164,23 @@ API reference:
 
 Major commands:
 
+    viewing your buckets
     ls
     aws s3 ls
     aws s3 ls s3://119-test-bucket-2
 
+    making a bucket
     mb
     aws s3 mb s3://test-bucket-3
     aws s3 ls
 
+    copying data in and out of a bucket
     cp
-    aws s3 cp file.txt s3://119-test-bucket-2/file.txt
+    aws s3 cp file.txt s3://119-test-bucket-3
+    aws s3 cp file.txt s3://119-test-bucket-3/file.txt
     aws s3 ls s3://119-test-bucket-2
 
+    removing a bucket
     rb
 
 We have to prefix files with s3:// for this to work.
@@ -162,12 +203,12 @@ import subprocess
 
 def list_s3_buckets():
     # Capture stdout
-    # result = subprocess.run(["aws", "s3", "ls"], check=True, stdout=subprocess.PIPE)
-    # TODO
-    raise NotImplementedError
+    result = subprocess.run(["aws", "s3", "ls"], check=True, stdout=subprocess.PIPE)
+    print(f"Result: {result.stdout}")
+    return result.stdout
 
 # Uncomment to run
-# list_s3_buckets()
+list_s3_buckets()
 
 """
 === Full S3 API ===
@@ -177,8 +218,10 @@ We can use it like so:
 
     aws s3api help
 
+    List all buckets in my account:
     aws s3api list-buckets
 
+    Get data inside a bucket:
     aws s3api get-object --bucket 119-test-bucket-2 --key file.txt /dev/stdout
 
 What happens when we do the following?

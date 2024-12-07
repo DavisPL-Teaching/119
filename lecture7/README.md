@@ -13,6 +13,8 @@ https://piazza.com/class/m12ef423uj5p5/post/165
 
 ## Outline for today
 
+Start with the poll
+
 Cloud computing in AWS:
 
 - Getting started; what to know up front
@@ -21,7 +23,9 @@ Cloud computing in AWS:
 
 - Running computations (EC2 and Lambda)
 
-If we have an extra 10-20 minutes at the end of class, I will reserve it for an open Q+A.
+If we have an extra 10-15 minutes at the end of class, I will reserve it for an open Q+A.
+
+Questions about HW2 or the final or anything else?
 
 ## Poll
 

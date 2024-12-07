@@ -78,3 +78,5 @@ Dec 4:
 10. Event time + Logical time
 
 Dec 6:
+Minimum: 0
+Maximum: 1 minute
