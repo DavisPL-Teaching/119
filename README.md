@@ -1,4 +1,4 @@
-# ECS 119: Data Processing Pipelines - Fall Quarter 2024
+# ECS 119: Data Processing Pipelines - Fall Quarter 2025
 
 ## Contents
 
@@ -8,26 +8,26 @@
 4. [Schedule](#schedule)
 5. [Grade Breakdown](#grade-breakdown)
 6. [Policies](#policies)
-7. [Disclaimers](#disclaimers)
-8. [Contact and Office Hours](#contact-and-office-hours)
+7. [Contact and Office Hours](#contact-and-office-hours)
 
 ## Welcome and Course Information
 
-Welcome to ECS 119! I am super excited to have you all here.
+Welcome to ECS 119! I look forward to teaching you this quarter!
 
 - **Instructor:** Caleb Stanford
 - **TA:** Muhammad Hassnain
-- **CRN:** 49704
+- **CRN:** 29022
 - **Units:** 4
-- **Lectures:** Monday, Wednesday, Friday 3:10-4pm in Teaching and Learning Complex 3215
-- **Discussion section:** Mondays at 9am in Olson Hall 206.
+- **Lectures:** Monday, Wednesday, Friday 3:10-4pm in Walker Hall 1330
+- **Discussion section:** Wednesdays at 11:00am in Young Hall 194
 - **Office hours:** See Piazza
-- **Final exam:** Wednesday, December 11, 6-8pm.
-- **[Piazza](https://piazza.com/class/m12ef423uj5p5)**
+- **Final exam:** Thursday, December 11, 8:00am
+- **[Piazza](https://piazza.com/class/mfvn4ov0kuc731)**
 
 ## Lectures
 
-Most lectures will be live coding, and I will post the code for each lecture in this repository.
+To give you a hands-on experience working with programming tools, I typically lecture via live coding.
+I will post the code for each lecture in this repository.
 To follow along with the lectures, clone the repository:
 ```shell
 git clone git@github.com:DavisPL-Teaching/119.git
@@ -52,7 +52,7 @@ Zoom recordings will be made available on Canvas.
 ## Course Description
 
 Introduction to software systems for working with large datasets and managing data processing jobs.
-Hands-on experience with scripting, data sources, data parallelism, data streams, software development and deployment infrastructure, and distributed computing.
+Hands-on experience with scripting, data sources, data parallelism, data streams, software development and deployment infrastructure, and distributed and cloud computing.
 
 ### Prerequisites
 
@@ -66,7 +66,7 @@ It is also open to computer science majors.
 ### Textbook
 
 There is no required textbook.
-The following textbooks are optional:
+If you would like to pick up a textbook, I recommend the following:
 
 - [**Python for Data Analysis.**](https://wesmckinney.com/pages/book.html) Wes McKinney. O'Reilly Media (2012).
 
@@ -78,13 +78,11 @@ The following textbooks are optional:
 
 By the end of the course, students will be able to:
 
-- Use Python and other scripting tools to manage and manipulate data on a single machine.
-
-- Understand the components, techinques, tools, and performance metrics of setting up data processing jobs in Python.
-
-- Understand the concepts of parallelism, types of parallelism, and parallelization mechanisms, via tools like MapReduce, Hadoop and Spark.
+- Use Python and other scripting tools to manage data processing jobs on a single machine, and understand their components, techniques, tools, and performance metrics.
 
 - Understand how software engineering tools and configuration are integrated into a data project, via tools like Git and the shell and other orchestration.
+
+- Understand the concepts of parallelism, types of parallelism, and parallelization mechanisms, via tools like MapReduce, Hadoop and Spark.
 
 - Understand the concepts of distributed computing and distributed data processing, including distributed consistency requirements, and how it manifests in real-world applications.
 
@@ -96,12 +94,14 @@ See `schedule.md`.
 
 ## Grade Breakdown
 
-Your grade is evaluated based on:
+**Please note: this section is subject to change but will be finalized on the first day of class.**
+
+Your grade is evaluated based on the following.
 
 - **Participation (10%):** via in-class polls
-- **Homeworks (50%):** 3 assignments, each assignment including a project component, plus homework 0
-- **Midterm (10%):** covering the first half and main concepts of the course
-- **Final Exam (30%):** covering all topics covered in the course.
+- **Homeworks (30%):** I plan to assign about 3 homeworks, plus homework 0
+- **Midterm (20%):** covering the first half and main concepts of the course
+- **Final Exam (40%):** covering all topics covered in the course.
 
 ### Attendance and Participation (10%)
 
@@ -110,38 +110,34 @@ However, if you miss class, you may make up the polls
 by watching the lectures and filling out your responses offline.
 Polls may be made up at any time prior to the last day of class.
 
-The discussion section (on Mondays) is recommended, but not mandatory.
+The discussion section is recommended, but not mandatory.
 It will be led by the TA and will also be recorded for those who cannot attend.
 
-### Homeworks (50%)
+### Homeworks (30%)
 
 Homeworks will consist of programming assignments in Python designed to bring together concepts we learned in class
 and to give you practice using all of the tools we cover.
-There are 3 homeworks, plus homework 0, which is designed to help you install the relevant software for the course.
+I plan to assign about 3 homeworks, plus homework 0, which is designed to help you install the relevant software for the course.
 
 **Important: your code must run to get credit!**
 Frequently running and testing your code during development is an essential part of computer programming that can never be skipped.
 You must run Python on your code before each submission to ensure that it works.
-The graders do not have time to debug submissions, and code that does not run will generally receive either a 0 or at most 10% of partial credit.
-
-Each homework will have a project component. That means that as part of homeworks 1, 2, and 3, you will put
-together progress towards data collection, data analysis, and a working pipeline for a project of your choice.
-I will provide detailed instructions in class and together with each homework when it is released.
+The graders will not be able to debug submissions, and code that does not run may receive a 0 or at most 50% of partial credit.
 
 Homeworks will be graded primarily for correctness and completion.
-There will also be a small number of points reserved for code quality (at most 10% of each assignment).
-That is: does you program exhibit high code quality standards?
+There will also be a small number of points reserved for code quality - this will be allocated as either at most 10% of each assignment, OR at most 30% of one assignment, and 0% for the others.
+These points will consider: does you program exhibit high code quality standards?
 Is it readable, shareable, well-documented, well-commented, logically separated into modules and functions, and reasonably efficient?
 Are your free response answers thoughtful?
 We will be using Gradescope for homework submissions and grading.
 
-### Exams (40%)
+### Exams (60%)
 
 There will be a midterm and a final exam.
-Exams are closed-book, but you may bring a cheat sheet (single sided) to each exam.
+Exams are closed-book, but you may bring a single-sided cheat sheet to each exam.
 Exams will be graded on Gradescope.
 
-Exams will be curved.
+I may choose to curve exams to a lower maximum score.
 That means, for example, if 100 points are possible, it may be entered as out of a smaller number of points like 95 or 85 for the purposes of calculating your grade, if the average score of the class was low or if there were unexpectedly difficult questions.
 
 ### Final Grade
@@ -169,7 +165,7 @@ This will be used to correct for the case that the assignments, midterm, and/or 
 
 AI collaboration is allowed and encouraged for homework assignments.
 However, the midterm and final exam will be in-class and closed-book.
-I caution that becoming too dependent on AI can prevent you from learning on your own including developing your own critical thinking skills.
+I encourage you to use AI responsibly and in a way that helps you learn, rather than replacing your own critical thinking skills!
 Please see also [Prof. Jason Lowe-Power's advice here](https://jlpteaching.github.io/comparch/syllabus/#using-generative-ai-tools).
 
 ### Collaboration Policy and Academic Integrity
@@ -206,15 +202,16 @@ watch the lectures.
 
 Homeworks will generally be due at 11:59pm on the due date.
 **I cannot guarantee that late homeworks will be graded.**
-However, I encourage you to update your assignments even after the deadline -- Gradescope will allow you to upload late work
-up to a few days after the assignment deadline.
+However, I encourage you to update your assignments even after the deadline -- Gradescope will allow you to upload late work up to a few days after the assignment deadline.
 At grading time, we may choose to grade the more recent version at our discretion.
 
-## Disclaimers
+### Job Scams
 
 Communication from the instructor will only be sent through official UC Davis email addresses and channels. Please be vigilant of job scams impersonating faculty members. For more information, visit [UC Davis Job Scams Prevention](https://careercenter.ucdavis.edu/job-and-internship-search/job-scams).
 
-**Please be kind to each other!**
+### Be Nice!
+
+Finally: **please be kind to each other!**
 UC Davis has [policies against harassment and discrimination](https://hr.ucdavis.edu/departments/elr/preventing-discrimination-harassment).
 Be inclusive of your classmates in group discussions and in your questions and answers in class.
 If you need to, you may reach me by email to report an issue with a classmate.
@@ -224,8 +221,9 @@ If you need to, you may reach me by email to report an issue with a classmate.
 Please use the Piazza for questions related to course material.
 If you send me an email, I will most likely respond to post your question on Piazza :)
 
-Please ask all questions publicly, with one exception, if your post contains a large snippet of code.
+Please ask all questions publicly, with only one exception: if your post contains a large snippet of code then make it private.
 I encourage you to ask anonymously if you feel more comfortable.
 
 The instructor and TAs will be available during office hours for additional support on course material and assignments. The schedule of office hours can be found in a pinned post on Piazza.
+
 If you have a question that is more sensitive or unrelated to the course, please email me (at `cdstanford` `ucdavis` `edu`).
