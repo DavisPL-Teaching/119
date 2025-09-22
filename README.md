@@ -14,6 +14,8 @@
 
 Welcome to ECS 119! I look forward to teaching you this quarter!
 
+**Lectures (in `lecture` folders) and other materials are from a previous iteration of the course, and have not yet been updated. These will be updated and posted as we go along this quarter.**
+
 - **Instructor:** Caleb Stanford
 - **TA:** Muhammad Hassnain
 - **CRN:** 29022
