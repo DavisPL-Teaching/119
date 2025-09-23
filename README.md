@@ -165,9 +165,10 @@ This will be used to correct for the case that the assignments, midterm, and/or 
 
 ### AI Policy
 
+AI is a powerful tool! Please use it to help you (and not the other way around)
+
 AI collaboration is allowed and encouraged for homework assignments.
 However, the midterm and final exam will be in-class and closed-book.
-I encourage you to use AI responsibly and in a way that helps you learn, rather than replacing your own critical thinking skills!
 Please see also [Prof. Jason Lowe-Power's advice here](https://jlpteaching.github.io/comparch/syllabus/#using-generative-ai-tools).
 
 ### Collaboration Policy and Academic Integrity
@@ -210,6 +211,8 @@ At grading time, we may choose to grade the more recent version at our discretio
 ### Job Scams
 
 Communication from the instructor will only be sent through official UC Davis email addresses and channels. Please be vigilant of job scams impersonating faculty members. For more information, visit [UC Davis Job Scams Prevention](https://careercenter.ucdavis.edu/job-and-internship-search/job-scams).
+
+[Phishbowl](https://phishbowl.ucdavis.edu/) is another nice resource where you can report job scam emails.
 
 ### Be Nice!
 
