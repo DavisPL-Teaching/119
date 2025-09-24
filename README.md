@@ -96,16 +96,14 @@ See `schedule.md`.
 
 ## Grade Breakdown
 
-**Please note: this section is subject to change but will be finalized on the first day of class.**
-
 Your grade is evaluated based on the following.
 
 - **Participation (10%):** via in-class polls
-- **Homeworks (30%):** I plan to assign about 3 homeworks, plus homework 0
+- **Homeworks (35%):** I plan to assign about 3 homeworks, plus homework 0
 - **Midterm (20%):** covering the first half and main concepts of the course
-- **Final Exam (40%):** covering all topics covered in the course.
+- **Final Exam (35%):** covering all topics covered in the course.
 
-### Attendance and Participation (10%)
+### Attendance and Participation
 
 To encourage class attendance, there are in-class polls that are worth a small amount of credit.
 However, if you miss class, you may make up the polls
@@ -115,7 +113,7 @@ Polls may be made up at any time prior to the last day of class.
 The discussion section is recommended, but not mandatory.
 It will be led by the TA and will also be recorded for those who cannot attend.
 
-### Homeworks (30%)
+### Homeworks
 
 Homeworks will consist of programming assignments in Python designed to bring together concepts we learned in class
 and to give you practice using all of the tools we cover.
@@ -133,7 +131,7 @@ Is it readable, shareable, well-documented, well-commented, logically separated 
 Are your free response answers thoughtful?
 We will be using Gradescope for homework submissions and grading.
 
-### Exams (60%)
+### Exams
 
 There will be a midterm and a final exam.
 Exams are closed-book, but you may bring a single-sided cheat sheet to each exam.
