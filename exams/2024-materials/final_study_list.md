@@ -1,5 +1,7 @@
 # Final Study List
 
+**This is an old version of the materials from the Fall 2024 iteration of the course. It has not yet been updated for Fall 2025.**
+
 Study list of topics for the final.
 
 **The final will cover Lectures 1-6.**

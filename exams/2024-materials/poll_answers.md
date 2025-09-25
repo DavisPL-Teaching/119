@@ -1,5 +1,7 @@
 # In-class poll answers
 
+**This is an old version of the materials from the Fall 2024 iteration of the course. It has not yet been updated for Fall 2025.**
+
 Sep 25: N/A
 
 Sep 27: N/A

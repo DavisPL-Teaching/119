@@ -1,5 +1,7 @@
 # Final details
 
+**This is an old version of the materials from the Fall 2024 iteration of the course. It has not yet been updated for Fall 2025.**
+
 Wednesday, Dec 11, 6-8pm, same room as lecture
 
 Similar structure to the midterm:

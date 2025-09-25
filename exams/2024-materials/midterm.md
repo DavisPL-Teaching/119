@@ -1,5 +1,7 @@
 # Midterm details
 
+**This is an old version of the materials from the Fall 2024 iteration of the course. It has not yet been updated for Fall 2025.**
+
 10 questions: 8 multiple choice/short answer, 2 free response
 
 Study topic list: start of class today.

@@ -197,7 +197,7 @@ This course strictly follows the [UC Davis Code of Academic Integrity](https://o
 
 ### Late Policy
 
-In-class participation points (polls) as well as HW0 can be made up at any point during the quarter (prior to the last day of class), by submitting the Google form link. The forms will remain open and can be found by viewing the lecture recording or lecture notes for that day.
+In-class participation points (polls) can be made up at any point during the quarter (prior to the last day of class), by submitting the Google form link. The forms will remain open and can be found by viewing the lecture recording or lecture notes for that day.
 I will not be able to provide a consolidate list of the form links, as their purpose is to encourage you to attend and
 watch the lectures.
 
