@@ -1,5 +1,7 @@
 # Lecture 1: Introduction to data processing pipelines
 
+**This is an old version of the lecture from the Fall 2024 iteration of the course. It has not yet been updated for Fall 2025.**
+
 ## Friday, September 27
 
 Plan for today:

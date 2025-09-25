@@ -1,5 +1,7 @@
 # Lecture 5: Distributed Pipelines
 
+**This is an old version of the lecture from the Fall 2024 iteration of the course. It has not yet been updated for Fall 2025.**
+
 ## Nov 4
 
 Announcements:

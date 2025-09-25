@@ -1,5 +1,7 @@
 # Lecture 4: Parallelism
 
+**This is an old version of the lecture from the Fall 2024 iteration of the course. It has not yet been updated for Fall 2025.**
+
 ## Oct 21
 
 Announcements:

@@ -1,5 +1,7 @@
 # Lecture 7: Brief lecture on Cloud Computing
 
+**This is an old version of the lecture from the Fall 2024 iteration of the course. It has not yet been updated for Fall 2025.**
+
 ## Dec 6
 
 Announcements:
