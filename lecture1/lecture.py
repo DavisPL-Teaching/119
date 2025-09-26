@@ -1,15 +1,32 @@
 """
 Lecture 1: Introduction to data processing pipelines
 
+This lecture will cover the required background for the rest of the course.
+
+Please bear with us if you have already seen some of this material before!
+I will use the polls to get a sense of your prior backgorund.
+
+=== Note on prior lectures ===
+
+The GitHub contains the lecture notes from a prior iteration of the course (Fall 2024).
+You are welcome to look ahead of the notes, but please note that most content will change as I revise each lecture.
+I will generally post the revised lecture before and after each class period.
+
+**Changes from last year:**
+I plan to skip or condense Lecture 3 (Pandas) based on feedback and your prior background.
+I will cover some pandas in Lecture 1.
+I will confirm this after the responses to HW0.
+
 === Poll ===
 
-Today's poll is to help me understand your background in Python and command line/Git.
+Today's poll is to help me understand your background in command line/Git.
 (I will also ask about your background in HW0.)
 
-https://forms.gle/h53wSrkeaM4R28Gu9
-https://tinyurl.com/ypevcu9u
+https://forms.gle/2eYFVpxT1Q8JJRaMA
 
-=== Following along ===
+^^ find the link in the lecture notes on GitHub (see below)
+
+=== Following along with the lectures ===
 
 Try this!
 
@@ -19,6 +36,8 @@ Try this!
 
     Feel free to work on this as I am talking and to get help from your neighbors.
     I can help with any issues after class.
+
+    (Note on Mac: you can probably also just `brew install git`)
 
 2. You will also need to create an account on GitHub and log in.
 
@@ -37,65 +56,99 @@ Try this!
     You should see a new folder called "119" in your home folder. This contains the lecture notes and source files for the class.
 
 7. Type `cd `119/lecture1`, then type `ls`.
-   Lastly type `python3 lecture.py`. You should see the message below.
+
+8. Lastly type `python3 lecture.py`. You should see the message below.
 """
 
-# CUT -- moved to bottom
-# print("Hello, ECS 119!")
+print("Hello, ECS 119!")
 
 """
+Let's see if that worked!
+
 If some step above didn't work, you may be missing some of the software we
 need installed. Please complete HW0 first and then let us know if you
 are still having issues.
 
 === The basics ===
 
-I will introduce the class through a basic overview, or "toy model"
-of what a data procesisng pipeline is. Throughout, we will also see
-some of the constraints that data processing pipelines have to satisfy,
-how they interact with one another, and so on.
-This will lead to an overview of topics covered in the class.
+I will introduce the class through a basic model of what a data processing
+pipeline is, that we will use throughout the class.
 
-Recall "discussion scenarios" from the previous lecture.
+We will also see:
+- Constraints that data processing pipelines have to satisfy
+- How they interact with one another
+- Sneak peak of some future topics covered in the class.
 
-EXAMPLE 1:
-I have a spreadsheet containing 1000 movies I have seen or want to see,
-dates watched, and movie ratings.
-I built a Python application which loads the spreadsheet,
-filters out movies based on a recently viewed or highest-rated sorting,
-and allows me to mark a movie as seen or to edit any movie ratings.
-It also collects statistics about all the movies.
-All of this data is then saved back to the spreadsheet.
+Recall discussion question from last lecture:
 
-EXAMPLE 2:
-I have written a website scraper that reads data from Wikipedia.
-I re-run the scraper every week to get the latest data.
-It opens up all Wikipedia sites that correspond to cities in the world,
-extracts the population of each city, the area, and the country it is located
-in. Once all of this data is collected, it stores it in a structured
-format and saves it to a database, then queries the database for the
-top 100 most population-dense cities and outputs these to a file
-biggest_cities.txt.
+EXAMPLE:
+You have compiled a spreadsheet of website traffic data for various popular websites (Google, Instagram, chatGPT, Reddit, Wikipedia, etc.). You have a dataset of user sessions, each together with time spent, login sessions, and click-through rates. You want to put together an app which identifies trends in website popularity, duration of user visits, and popular website categories over time.
 
-What do these scenarios have in common?
-Suggestions:
-- Write the data to CSV
-- ...
+What are the main components of this scenario?
 
-3 stages -- related to something called the "Extract, Transform, Load" model (ETL)
+- A dataset
+- Processing steps
+- Some kind of user-facing output
 
-What are the components of a data processing pipeline?
+"Extract, Transform, Load" model (ETL)
 
-0. Description of the task that you want to complete.
-1. Input source -- get your input from somewhere
-2. Processing stage -- do some transformations on your data,
-    add additional data fields, modify fields, calculate summary
-    statistics, etc.
-3. Output -- save the results to a file or a database; display
-    them to the user; etc.
+- **Extract:**
+- **Transform:**
+- **Load:**
 """
 
+data = {
+    "User": ["Alice", "Alice", "Charlie"],
+    "Website": ["Google", "Reddit", "Wikipedia"],
+    "Time spent (seconds)": [120, 300, 240],
+}
+# As dataframe:
+# import pandas
+# df = pd.DataFrame(data)
+# print(df)
+
+print(data)
+
+def extract():
+    pass
+
+def transform():
+    pass
+
+def load():
+    pass
+
 """
+An important distinction:
+    Exploration time vs. development time vs. production time
+
+ETL steps are not done just once!
+
+- At exploration time?
+
+- At development time?
+
+- At production time?
+
+In general, for this class we will think most about production time,
+because we are ultimately interested in being able to fully automate pipelines
+(not just one-off scripts).
+
+Some of you may have used tools like Jupyter notebooks; while excellent tools,
+I will generally be working directly in Python,
+as I want to get used to thinking of processing directly "as code",
+abstract the code into functions and classes, and follow good practices like
+unit tests, etc. to integrate the code into a larger project.
+"""
+
+# Unit test example
+# @pytest.mark.skip
+# def test_extract():
+#     raise NotImplementedError
+
+"""
+Another example
+
 Step 1: Getting a data source
 
 Useful sites:
@@ -141,11 +194,13 @@ Stage 3. Save the output
 # # (Side note on gitignore)
 
 """
-Graphical view
+=== Dataflow graphs ===
 
-We can view all of the above steps as something called
-a directed acyclic graph (DAG).
-What do I mean and how?
+We can view all of the above steps as something called a dataflow graph.
+
+
+
+
 
 It's a flow chart of input sources,
 processing stages (often called "operators"),
@@ -240,7 +295,7 @@ https://pandas.pydata.org/docs/user_guide/10min.html
 https://pandas.pydata.org/docs/user_guide/indexing.html
 """
 
-import pandas as pd
+# import pandas as pd
 
 # Step 1: Getting a data source
 # creating a DataFrame
@@ -858,8 +913,6 @@ if __name__ == "__main__":
     # program is executed.
 
     # print("Hello from inside of main function")
-
-    print("Hello, ECS 119!")
 
     # What we can do: add additional code here
     # to test various functions.
