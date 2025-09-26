@@ -26,4 +26,4 @@ Plan for today:
 
 3. Following along with lectures
 
-3. Begin Lecture 1: Introduction to data processing pipelines.
+4. Begin Lecture 1: Introduction to data processing pipelines.

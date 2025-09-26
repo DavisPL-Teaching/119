@@ -82,22 +82,33 @@ We will also see:
 - How they interact with one another
 - Sneak peak of some future topics covered in the class.
 
+To answer these questions, we need a basic model of "data processing pipeline" - Dataflow Graphs.
+
 Recall discussion question from last lecture:
 
 EXAMPLE:
 You have compiled a spreadsheet of website traffic data for various popular websites (Google, Instagram, chatGPT, Reddit, Wikipedia, etc.). You have a dataset of user sessions, each together with time spent, login sessions, and click-through rates. You want to put together an app which identifies trends in website popularity, duration of user visits, and popular website categories over time.
 
-What are the main components of this scenario?
+What are the main "abstract" components of the pipeline in this scenario?
 
 - A dataset
 - Processing steps
 - Some kind of user-facing output
 
+closely related:
 "Extract, Transform, Load" model (ETL)
 
-- **Extract:**
-- **Transform:**
-- **Load:**
+What is an ETL job?
+
+- **Extract:** Load in some data from an input source
+    (e.g., CSV file, spreadsheet, a database)
+
+- **Transform:** Do some processing on the data
+
+- **Load:** (perhaps a confusing name)
+  we save the output to an output source.
+    (e.g. CSV file, spreadsheet, a database)
+
 """
 
 data = {
@@ -107,11 +118,26 @@ data = {
 }
 
 # As dataframe:
-# import pandas as pd
-# df = pd.DataFrame(data)
+import pandas as pd
+df = pd.DataFrame(data)
 
-# print(data)
-# print(df)
+print(data)
+print(df)
+
+"""
+Recap:
+
+- We spent some time getting everyone up to speed:
+    After completing HW0, you should be able to follow along with the lectures
+    locally on your laptop device
+
+- We started to introduce the abstract model that we will use throughout the class
+  for data processing pipelines - this will be called the Dataflow Graph model
+
+- We began by introducing a simpler concept called Extract, Transform, Load (ETL).
+
+***** Where we ended for Friday *****
+"""
 
 def extract():
     pass
