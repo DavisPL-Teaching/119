@@ -4,27 +4,30 @@ Lecture 1: Introduction to data processing pipelines
 This lecture will cover the required background for the rest of the course.
 
 Please bear with us if you have already seen some of this material before!
-I will use the polls to get a sense of your prior backgorund.
+I will use the polls to get a sense of your prior background and adjust the pacing accordingly.
 
-=== Note on prior lectures ===
+=== Note on materials from prior iteration of the course ===
 
-The GitHub contains the lecture notes from a prior iteration of the course (Fall 2024).
+The GitHub repository contains the lecture notes from a prior iteration of the course (Fall 2024).
 You are welcome to look ahead of the notes, but please note that most content will change as I revise each lecture.
 I will generally post the revised lecture before and after each class period.
 
 **Changes from last year:**
 I plan to skip or condense Lecture 3 (Pandas) based on feedback and your prior background.
-I will cover some pandas in Lecture 1.
-I will confirm this after the responses to HW0.
+I will also cover some Pandas in Lecture 1.
+(I will confirm this after the responses to HW0.)
 
 === Poll ===
 
-Today's poll is to help me understand your background in command line/Git.
-(I will also ask about your background in HW0.)
+Today's poll is to help me understand the overall class background in command line/Git.
+(I will also ask about your background in more detail on HW0.)
 
 https://forms.gle/2eYFVpxT1Q8JJRaMA
 
-^^ find the link in the lecture notes on GitHub (see below)
+^^ find the link in the lecture notes on GitHub
+
+Piazza -> GitHub -> lecture1 -> lecture.py
+https://piazza.com/
 
 === Following along with the lectures ===
 
@@ -102,12 +105,13 @@ data = {
     "Website": ["Google", "Reddit", "Wikipedia"],
     "Time spent (seconds)": [120, 300, 240],
 }
-# As dataframe:
-# import pandas
-# df = pd.DataFrame(data)
-# print(df)
 
-print(data)
+# As dataframe:
+# import pandas as pd
+# df = pd.DataFrame(data)
+
+# print(data)
+# print(df)
 
 def extract():
     pass
@@ -119,10 +123,9 @@ def load():
     pass
 
 """
-An important distinction:
-    Exploration time vs. development time vs. production time
-
 ETL steps are not done just once!
+
+They may be done multiple times throughout the development lifecycle:
 
 - At exploration time?
 
@@ -135,13 +138,16 @@ because we are ultimately interested in being able to fully automate pipelines
 (not just one-off scripts).
 
 Some of you may have used tools like Jupyter notebooks; while excellent tools,
-I will generally be working directly in Python,
-as I want to get used to thinking of processing directly "as code",
-abstract the code into functions and classes, and follow good practices like
-unit tests, etc. to integrate the code into a larger project.
+I will generally be working directly in Python in this course.
+
+Reasons: I want to get used to thinking of processing directly "as code",
+    abstract the code into functions and classes, and follow good practices like
+    unit tests, etc. to integrate the code into a larger project.
 """
 
-# Unit test example
+# import pytest
+
+# # Unit test example
 # @pytest.mark.skip
 # def test_extract():
 #     raise NotImplementedError
@@ -153,8 +159,8 @@ Step 1: Getting a data source
 
 Useful sites:
 - https://ourworldindata.org/data
-- sklearn
 - https://datasetsearch.research.google.com/
+- sklearn: https://scikit-learn.org/stable/api/sklearn.datasets.html
 """
 
 # # Load the data from life-expectancy.csv into a pandas DataFrame
@@ -198,77 +204,57 @@ Stage 3. Save the output
 
 We can view all of the above steps as something called a dataflow graph.
 
+ETL jobs can be thought of visually like this:
 
+    (Extract) -> (Transform) -> (Load)
 
+This is a Directed Acyclic Graph (DAG)
 
+Q: What are the nodes? What are the edges?
 
-It's a flow chart of input sources,
-processing stages (often called "operators"),
-and outputs.
+    - Nodes:
 
-                       -> min ->
-(life-expectancy.csv)  -> max ->  output.csv
-                       -> avg ->
+    - Edges:
+
+In our previous example?
+
+It's a flow chart (directed graph) of input sources,
+processing stages (called "operators"), and outputs.
+
+                       -> (min) ->
+(life-expectancy.csv)  -> (max) ->  output.csv
+                       -> (avg) ->
+
+An edge is drawn from A to B if...
+
+Questions:
+
+- Why is there an edge from (life-expectancy.csv) to (min)?
+- Why is there NOT an edge from (life-expectancy.csv) to (max)?
+
+The graph is **acyclic,** meanin it does not have loops.
+
+- (Why can we assume this?)
+
+- (Generalizing)
+
+Vertex types?
+
+Edge types?
 
 Why is this useful?
 
+- We'll use this to think about development, testing, and validation
 - We'll use this to think about parallelism
 - We'll use this to think about performance.
 
-=== Recap of what we covered today ===
+=== Recap ===
 
-- Any data processing pipeline can be thought of as having 3 stages:
-    input source, processing, and output
-- Data processing pipelines can be drawn as directed acyclic graphs (DAGs).
+- ETL model: any data processing pipeline can be thought of as having 3 stages
+- Data processing pipelines can be drawn as dataflow graphs.
+"""
 
-=======================================================================
-
-=== Monday, September 30 ===
-
-(See README.md for announcements and plan.)
-
-=== Following along ===
-
-Reminder to follow along:
-https://github.com/DavisPL-Teaching/119
-
-(I will go through the steps again in class)
-
-Navigate to the directory you want:
-- ls to show directories
-- cd <directory> to move into the directory
-
-If you already cloned the repo, then this time, you need to get any code updates.
-Do the following:
-
-- git status
-- git stash
-- git pull
-
-=== A tangent on pacing ===
-
-- The pacing might be a bit slow right now for some of you -- especially if you have prior experience
-  with Python, pandas, Git, etc.
-  (HW0 results so far: 100% have used Python, 80% Pandas, 75% Git)
-
-- We do have varying levels of background including some who have not used some of these tools
-  before. So please be patient with us for the first few lectures.
-
-- 80% of you have only limited experience with command line in particular, so we will spend some additional
-  time in Lecture 2 on software development tools.
-
-- There will be a mid-quarter survey (around 4 weeks in) to see if we are going too slow or too fast
-  and I will adjust things accordingly!
-
-=== Poll ===
-
-1. Which stage do you think is likely to be the most computationally intensive part of a data processing pipeline?
-
-2. Which stage do you think is likely to present the biggest opportunity for failure cases, including crashes, ethical concerns or bias, or unexpected/wrong/faulty data?
-
-https://forms.gle/Kv39iq33KDjJy3ir6
-https://tinyurl.com/3tthzry7
-
+"""
 === Data processing pipelines as software ===
 
 Some of you may know about tools like Jupyter notebooks, Google Colab, or Excel.
@@ -398,7 +384,7 @@ Let's revisit our criteria from before. How does this help?
 # We can use pytest for testing
 # conda list pytest
 # conda install pytest
-import pytest
+# import pytest
 
 # How pytest works:
 # Any function with the prefix test_ is considered
@@ -407,10 +393,10 @@ import pytest
 # We can use @pytest.mark.skip decorator to skip
 # tests -- nskip to run test
 # @pytest.mark.skip
-def test_get_life_expectancy_data():
-    data = get_life_expectancy_data("life-expectancy.csv")
-    countries = data["Entity"].unique()
-    assert len(countries) == 261
+# def test_get_life_expectancy_data():
+#     data = get_life_expectancy_data("life-expectancy.csv")
+#     countries = data["Entity"].unique()
+#     assert len(countries) == 261
 
 # 261 countries!
 # (This is a property of our dataset -- which countries
@@ -421,6 +407,60 @@ def test_get_life_expectancy_data():
 # Exercise 3:
 # Reuse the class to get input in a different way: from the user
 # TODO try this exercise.
+
+"""
+=======================================================================
+=======================================================================
+=======================================================================
+
+Prior materiral from Fall 2024 follows.
+
+=======================================================================
+=======================================================================
+
+=== Monday, September 30 ===
+
+(See README.md for announcements and plan.)
+
+=== Following along ===
+
+Reminder to follow along:
+https://github.com/DavisPL-Teaching/119
+
+(I will go through the steps again in class)
+
+Navigate to the directory you want:
+- ls to show directories
+- cd <directory> to move into the directory
+
+If you already cloned the repo, then this time, you need to get any code updates.
+Do the following:
+
+- git status
+- git stash
+- git pull
+
+=== A tangent on pacing ===
+
+- The pacing might be a bit slow right now for some of you -- especially if you have prior experience
+  with Python, pandas, Git, etc.
+  (HW0 results so far: 100% have used Python, 80% Pandas, 75% Git)
+
+- We do have varying levels of background including some who have not used some of these tools
+  before. So please be patient with us for the first few lectures.
+
+- 80% of you have only limited experience with command line in particular, so we will spend some additional
+  time in Lecture 2 on software development tools.
+
+- There will be a mid-quarter survey (around 4 weeks in) to see if we are going too slow or too fast
+  and I will adjust things accordingly!
+
+=== Poll ===
+
+1. Which stage do you think is likely to be the most computationally intensive part of a data processing pipeline?
+
+2. Which stage do you think is likely to present the biggest opportunity for failure cases, including crashes, ethical concerns or bias, or unexpected/wrong/faulty data?
+"""
 
 """
 Recap of what we covered today:
@@ -444,9 +484,6 @@ Once again, to follow along: git stash, git pull
 Which of the following is a good reason to structure data processing software using well-abstracted modules, functions, and classes? (select all that apply)
 
 - (options cut)
-
-https://forms.gle/q33kY95XQjUNGk8A6
-https://tinyurl.com/4x7pvkr6
 """
 
 # (Finishing up)
@@ -577,11 +614,7 @@ Following along: git stash, git pull
 
 - (poll options cut)
 
-(Just for fun:)
 2. How many countries are there in the world?
-
-https://forms.gle/QRbiL3cJm6iKkxsW6
-https://tinyurl.com/5n95yyku
 
 Common answers:
 
@@ -872,33 +905,25 @@ https://github.com/DavisPL-Teaching/119/blob/main/schedule.md
 
 === Closing quotes ===
 
-From Patrice Koehl:
-https://www.cs.ucdavis.edu/~koehl/:
+Fundamental theorem of computer science:
 
-    "Where is the wisdom we have lost in knowledge?
-    Where is the knowledge we have lost in information?
-    Where is the information we have lost in data?"
+    "Every problem in computer science can be solved by another layer of abstraction."
 
-    With apologies to T.S. Eliot.
-
-Data processing is all about extracting wisdom from data.
-But each of these steps can go wrong!
+    - Based on a statement attributed to Butler Lampson
+    https://en.wikipedia.org/wiki/Fundamental_theorem_of_software_engineering
 
 From Edsgar Dijkstra:
 
-    "Simplicity is a great virtue but it requires hard work to achieve it and education to appreciate it. And to make matters worse: complexity sells better."
+    "Elegance is not a dispensable luxury but a factor that decides between success and failure."
 
-I'd like to encourage us to think about how to build pipelines that are as *simple* as possible
--- organized into careful components, with helpful abstractions -- rather than having
-expanding components and needless complexity.
+The fundamental abstraction we will use in this course is...
+the dataflow graph!
 
-Why? Simpler pipelines are more reliable, easier to develop, easier to understand, and easier to maintain.
+A dataflow graph is an abstraction (why?), but it is a very useful one.
+It will help put all problems about data processing into context and help us understand how
+to develop, understand, profile, and maintain data processing jobs.
 
-Tools are adopted not just because of what they can do, but because of how much they can do in the most
-intuitive and direct way possible.
-
-The tools we see in this class will help us achieve the right abstractions to achieve this simplicity.
-
+It will provide a common framework for the rest of the course.
 """
 
 # What a main function is: the default thing that you run when
@@ -919,7 +944,9 @@ if __name__ == "__main__":
     # Simple & convenient way to test out your code.
 
     # Call our pipeline
-    pipeline("life-expectancy.csv", "output.csv")
+    # pipeline("life-expectancy.csv", "output.csv")
+
+    pass
 
 # Test file: main_test.py
 
