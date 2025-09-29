@@ -27,3 +27,24 @@ Plan for today:
 3. Following along with lectures
 
 4. Begin Lecture 1: Introduction to data processing pipelines.
+
+## Monday, September 29
+
+Reminders:
+
+- **No class on Wednesday** - HW0 due on Wednesday 11:59pm
+
+- Come to OH, discussion section to get installation help!
+
+  + Windows issues: use WSL, downgrade to Java 11
+    https://piazza.com/class/mfvn4ov0kuc731/post/22
+
+Plan for today:
+
+- Clone repo to follow along!
+
+- Discussion question / in-class poll
+
+- Continue Lecture 1.
+
+Questions about HW0 or plan for today?

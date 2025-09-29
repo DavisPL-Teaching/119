@@ -121,8 +121,8 @@ data = {
 import pandas as pd
 df = pd.DataFrame(data)
 
-print(data)
-print(df)
+# print(data)
+# print(df)
 
 """
 Recap:
@@ -137,46 +137,154 @@ Recap:
 - We began by introducing a simpler concept called Extract, Transform, Load (ETL).
 
 ***** Where we ended for Friday *****
+
+===============================================
+
+Monday, September 29
+
+=== REMINDER: FOLLOWING ALONG ===
+
+https://github.com/DavisPL-Teaching/119
+
+- Open terminal (Cmd+Space Terminal on Mac)
+
+- `git clone <paste repository link>`
+
+    + if you have already cloned, do a `git stash` or `git reset .`
+
+- `git pull`
+
+- **Why use the command line?**
+
+  Short answer: it's an important skill!
+
+  Long answer:
+  I do require learning how to use the command line for this course.
+  More in Lecture 2.
+  GUI tools only work if someone else already wrote them (they used the command line to write the tool)
+  You'll find that it is SUPER helpful to know the basics of the command line for stuff like installing software, managing dependencies, and debugging why installation didn't work.
+  The command prompt is how all internal commands work on your computer - and it's an important skill for data engineering in practice.
+
+=== Continuing our example ===
+
+Recall from last time:
+
+- Want: a general model of data processing pipelines
+
+- First-cut model: ETL
+
+Example on finding popular websites:
+"""
+
+# (Re-copying from above)
+data = {
+    "User": ["Alice", "Alice", "Charlie"],
+    "Website": ["Google", "Reddit", "Wikipedia"],
+    "Time spent (seconds)": [120, 300, 240],
+}
+df = pd.DataFrame(data)
+
+# Some logic to compute the maximum length of time website sessions
+u = df["User"]
+w = df["Website"]
+t = df["Time spent (seconds)"]
+# Max of t
+max = t.max()
+# Filter
+max_websites = df[df["Time spent (seconds)"] == max]
+
+# Let's print our data and save it to a file
+with open("save.txt", "w") as f:
+    print(max_websites, file=f)
+
+"""
+Running the code
+
+It can be useful to have open a Python shell while developing Python code.
+
+There are two ways to run Python code from the command line:
+- python3 lecture.py
+- python3 -i lecture.py
+
+Let's try both.
+"""
+
+"""
+First step: can we abstract this as an ETL job?
 """
 
 def extract():
     pass
 
-def transform():
+def transform(df):
     pass
 
-def load():
+def load(df):
     pass
+
+# Uncomment to run
+# df = extract()
+# df = transform(df)
+# print(df)
+# load(df)
 
 """
+=== Tangent: advantages of abstraction ===
+
+Q: why abstract the steps into Python functions?
+
+(instead of...)
+
 ETL steps are not done just once!
 
-They may be done multiple times throughout the development lifecycle:
+A possible development lifecycle:
 
-- At exploration time?
+- Exploration time:
 
-- At development time?
+- Development time:
 
-- At production time?
+- Production time:
 
 In general, for this class we will think most about production time,
-because we are ultimately interested in being able to fully automate pipelines
-(not just one-off scripts).
+because we are ultimately interested in being able to fully automate and
+maintain pipelines (not just one-off scripts).
 
 Some of you may have used tools like Jupyter notebooks; while excellent tools,
 I will generally be working directly in Python in this course.
 
 Reasons: I want to get used to thinking of processing directly "as code",
-    abstract the code into functions and classes, and follow good practices like
-    unit tests, etc. to integrate the code into a larger project.
+good abstractions via functions and classes, and follow good practices like
+unit tests, etc. to integrate the code into a larger project.
+
+Abstractions mean we can test the code:
 """
 
 # import pytest
 
-# # Unit test example
+# Unit test example
 # @pytest.mark.skip
 # def test_extract():
-#     raise NotImplementedError
+#     df = extract()
+#     assert df.count().values[0] == 1
+
+# @pytest.mark.skip
+# def test_transform():
+#     df = extract()
+#     df = transform(df)
+#     assert df.count().values[0] == 1
+
+# Run:
+# - pytest lecture.py
+
+"""
+Discussion Question / Poll:
+
+1. Can you think of any scenario where test_extract() will fail?
+
+2. Will test_transform() always pass, matter the input data set?
+
+https://forms.gle/j99n5ZN7jsJ6gHB2A
+"""
 
 """
 Another example
@@ -277,7 +385,7 @@ Why is this useful?
 === Recap ===
 
 - ETL model: any data processing pipeline can be thought of as having 3 stages
-- Data processing pipelines can be drawn as dataflow graphs.
+- Dataflow Graph model: Data processing pipelines can be drawn as graphs of nodes and edges.
 """
 
 """
@@ -325,18 +433,6 @@ def get_life_expectancy_data(filename):
     """
     df = pd.read_csv(filename)
     return df
-
-"""
-Running the code
-
-It can be useful to have open a Python shell while developing Python code.
-
-There are two ways to run Python code from the command line:
-- python3 lecture.py
-- python3 -i lecture.py
-
-Let's try both
-"""
 
 # Step 2: Do some processing
 # min_year = df["Year"].min()
@@ -447,24 +543,6 @@ Prior materiral from Fall 2024 follows.
 === Monday, September 30 ===
 
 (See README.md for announcements and plan.)
-
-=== Following along ===
-
-Reminder to follow along:
-https://github.com/DavisPL-Teaching/119
-
-(I will go through the steps again in class)
-
-Navigate to the directory you want:
-- ls to show directories
-- cd <directory> to move into the directory
-
-If you already cloned the repo, then this time, you need to get any code updates.
-Do the following:
-
-- git status
-- git stash
-- git pull
 
 === A tangent on pacing ===
 
