@@ -53,7 +53,10 @@ Questions about HW0 or plan for today?
 
 Thanks to the TA for running installation help office hours - hopefully you have been able to get your installation issues resolved!
 
-- A few of you only have everything working up to PySpark. You will need PySpark working for the latter part of the course.
+- As of yesterday, most of you have everything working up to PySpark (with one or two still working on PySpark). You will need PySpark working for the latter part of the course.
+  We found that:
+  - for Windows, Java 11, Python 3.12.3, Pyspark 3.5.3 work
+  - for Mac/WSL: Java 21 or 22 works.
 
 Plan for today:
 
