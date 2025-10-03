@@ -48,3 +48,19 @@ Plan for today:
 - Continue Lecture 1 on ETL and dataflow graphs.
 
 Questions about HW0 or plan for today?
+
+## Friday, October 3
+
+Thanks to the TA for running installation help office hours - hopefully you have been able to get your installation issues resolved!
+
+- A few of you only have everything working up to PySpark. You will need PySpark working for the latter part of the course.
+
+Plan for today:
+
+- Start with poll
+
+- From ETL to Dataflow graphs
+
+- A more realistic example to go through
+
+- (If time) Failures and risks

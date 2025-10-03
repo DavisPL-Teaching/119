@@ -336,54 +336,15 @@ https://forms.gle/j99n5ZN7jsJ6gHB2A
 
 Friday, October 3
 
+From ETL to Dataflow Graphs.
 
-Another example
+=== Poll ===
 
-Step 1: Getting a data source
+Which of the following are most likely advantages of writing or rewriting
+a data processing pipeline as well-structured software (separated into modules, classes, and functions)?
 
-Useful sites:
-- https://ourworldindata.org/data
-- https://datasetsearch.research.google.com/
-- sklearn: https://scikit-learn.org/stable/api/sklearn.datasets.html
-"""
+https://forms.gle/akNYHe8SY1CSU5KT9
 
-# # Load the data from life-expectancy.csv into a pandas DataFrame
-# # Pandas documentation:
-# # https://pandas.pydata.org/docs/reference/api/pandas.read_csv.html
-# import pandas as pd
-# df = pd.read_csv("life-expectancy.csv")
-
-# # Print the first 5 rows of the DataFrame
-# print("Hello")
-# print(df.head())
-
-"""
-Step 2: Do some processing
-"""
-
-# # Print keys
-# print(df.keys())
-
-# min_year = df["Year"].min()
-# max_year = df["Year"].max()
-
-# print("Minimum year: ", min_year)
-# print("Maximum year: ", max_year)
-
-# avg = df["Period life expectancy at birth - Sex: all - Age: 0"].mean()
-
-# print("Average life expectancy: ", avg)
-
-"""
-Stage 3. Save the output
-"""
-
-# out = pd.DataFrame({"Min year": [min_year], "Max year": [max_year], "Average life expectancy": [avg]})
-# out.to_csv("output.csv", index=False)
-
-# # (Side note on gitignore)
-
-"""
 === Dataflow graphs ===
 
 We can view all of the above steps as something called a dataflow graph.
@@ -402,19 +363,18 @@ Q: What are the nodes? What are the edges?
 
 In our previous example?
 
+
+
 It's a flow chart (directed graph) of input sources,
 processing stages (called "operators"), and outputs.
-
-                       -> (min) ->
-(life-expectancy.csv)  -> (max) ->  output.csv
-                       -> (avg) ->
 
 An edge is drawn from A to B if...
 
 Questions:
 
-- Why is there an edge from (life-expectancy.csv) to (min)?
-- Why is there NOT an edge from (life-expectancy.csv) to (max)?
+- Why is there an edge from (1) to (2)?
+- Why is there NOT an edge from (2) to (1)?
+- Why is there NOT an edge from (1) to (3)?
 
 The graph is **acyclic,** meanin it does not have loops.
 
@@ -431,41 +391,29 @@ Why is this useful?
 - We'll use this to think about development, testing, and validation
 - We'll use this to think about parallelism
 - We'll use this to think about performance.
-
-=== Recap ===
-
-- ETL model: any data processing pipeline can be thought of as having 3 stages
-- Dataflow Graph model: Data processing pipelines can be drawn as graphs of nodes and edges.
 """
 
 """
-=== Data processing pipelines as software ===
+A slightly more realistic example
 
-Some of you may know about tools like Jupyter notebooks, Google Colab, or Excel.
-(What is the most widely used data processing tool? Answer: Excel)
-
-So why aren't we using those tools? :)
-
-In this course, I want to encourage us to think about data processing pipelines as real software.
-That means:
-- Software *design* matters: structuring code into modules, classes, functions
-- Software can be *tested*: validating functions, validating inputs, unit & integration tests
-- Software can be *reused* and maintained (not just a one-off script)
-- Software can be developed collaboratively (Git, GitHub)
-- Software can be optimized for performance (parallelism, distributed computing, etc.)
-
-It is a little more work to structure our code this way!
-But it helps ensure that our work is reusable and integrates well with other teams, projects, etc.
-
-Let's consider how to write the minimal data processing pipeline we saw last time
+Let's consider how to write a minimal data processing pipeline
 as a more structured software pipeline.
+
+Step 1: Getting a data source
+
+Step 2: Do some processing
+
+Stage 3. Save the output
+
+Useful sites:
+- https://ourworldindata.org/data
+- https://datasetsearch.research.google.com/
+- sklearn: https://scikit-learn.org/stable/api/sklearn.datasets.html
 
 Useful tutorial on Pandas:
 https://pandas.pydata.org/docs/user_guide/10min.html
 https://pandas.pydata.org/docs/user_guide/indexing.html
 """
-
-# import pandas as pd
 
 # Step 1: Getting a data source
 # creating a DataFrame
@@ -473,16 +421,6 @@ https://pandas.pydata.org/docs/user_guide/indexing.html
 # each column has a type (all items in the column must share the same
 # type, e.g., string, number, etc.)
 # df = pd.read_csv("life-expectancy.csv")
-
-def get_life_expectancy_data(filename):
-    """
-    This is called a docstring
-
-    Take in CSV data from life-expectancy.csv
-    Return a DataFrame of the data.
-    """
-    df = pd.read_csv(filename)
-    return df
 
 # Step 2: Do some processing
 # min_year = df["Year"].min()
@@ -492,44 +430,7 @@ def get_life_expectancy_data(filename):
 # avg = df["Period life expectancy at birth - Sex: all - Age: 0"].mean()
 # print("Average life expectancy: ", avg)
 
-class LifeExpectancyData:
-    """
-    Our data will include:
-    - maximum year
-    - minimum year
-    - average of all the life expectancies
-    """
-
-    def __init__(self):
-        """
-        Initialize fields
-
-        self keyword: refers to the object itself
-        """
-        self.min = None
-        self.max = None
-        self.avg = None
-
-    def load_statistics(self, df):
-        """
-        Read in data from the DataFrame
-        and store it in our clas
-        """
-        self.min = df["Year"].min()
-        self.max = df["Year"].max()
-        self.avg = df["Period life expectancy at birth - Sex: all - Age: 0"].mean()
-
-    def save_to_file(self, filename):
-        out = pd.DataFrame({
-            "Min year": [self.min],
-            "Max year": [self.max],
-            "Average life expectancy": [self.avg],
-        })
-        out.to_csv(filename, index=False)
-
-    def get_from_user(self):
-        # Instead of loading from a file, get the data via user input.
-        raise NotImplementedError
+# How can we write this as different dataflow nodes?
 
 # Tangent:
 # We can do all of the above with df.describe()
@@ -540,139 +441,29 @@ class LifeExpectancyData:
 # Do this above
 
 """
-Let's revisit our criteria from before. How does this help?
+Let's revisit our criteria from today's in-class poll. How does this help?
 """
 
-# - Software design
+# - Better code re-use
 
-# Exercise 1: Revise the class above so that the input is taken from an argument, instead of
-# provided as a hardcoded filename
+# - Will speed up the development of a one-off script
 
-# - Software testing
+# - Better ability to write unit tests
 
-# Exercise 2: Validate the the input has the correct number of countries.
-# (Q: What is the correct number? A: More on this in a bit)
+# - Separation of concerns between different features, developers, or development efforts
 
-# We can use pytest for testing
-# conda list pytest
-# conda install pytest
-# import pytest
+# - Makes the software easier to maintain (or modify later)
 
-# How pytest works:
-# Any function with the prefix test_ is considered
-# a test.
-# We can run all tests with pytest lecture.py
-# We can use @pytest.mark.skip decorator to skip
-# tests -- nskip to run test
-# @pytest.mark.skip
-# def test_get_life_expectancy_data():
-#     data = get_life_expectancy_data("life-expectancy.csv")
-#     countries = data["Entity"].unique()
-#     assert len(countries) == 261
-
-# 261 countries!
-# (This is a property of our dataset -- which countries
-# get included or not is a geopolitical and ethical question)
-
-# - Software reuse
-
-# Exercise 3:
-# Reuse the class to get input in a different way: from the user
-# TODO try this exercise.
-
-"""
-=======================================================================
-=======================================================================
-=======================================================================
-
-Prior materiral from Fall 2024 follows.
-
-=======================================================================
-=======================================================================
-
-=== Monday, September 30 ===
-
-(See README.md for announcements and plan.)
-
-=== A tangent on pacing ===
-
-- The pacing might be a bit slow right now for some of you -- especially if you have prior experience
-  with Python, pandas, Git, etc.
-  (HW0 results so far: 100% have used Python, 80% Pandas, 75% Git)
-
-- We do have varying levels of background including some who have not used some of these tools
-  before. So please be patient with us for the first few lectures.
-
-- 80% of you have only limited experience with command line in particular, so we will spend some additional
-  time in Lecture 2 on software development tools.
-
-- There will be a mid-quarter survey (around 4 weeks in) to see if we are going too slow or too fast
-  and I will adjust things accordingly!
-
-=== Poll ===
-
-1. Which stage do you think is likely to be the most computationally intensive part of a data processing pipeline?
-
-2. Which stage do you think is likely to present the biggest opportunity for failure cases, including crashes, ethical concerns or bias, or unexpected/wrong/faulty data?
-"""
-
-"""
-Recap of what we covered today:
-
-- Data processing pipelines as software
-
-- Software design best practices, modularity, and reuse
-
-- A little bit about data validation -- i.e. determining whether
-  whatever assumptions we have about the data may actually be
-  correct.
-
-===============================================================
-
-=== Wednesday, Oct 2 ===
-
-Once again, to follow along: git stash, git pull
-
-=== Poll ===
-
-Which of the following is a good reason to structure data processing software using well-abstracted modules, functions, and classes? (select all that apply)
-
-- (options cut)
-"""
-
-# (Finishing up)
-# Reasons to think of data processing pipelines as software:
-
-# - Collaborative development
-#   Why is the above code design better for collaborative development?
-
-# - Performance optimization
-#   (More on this shortly)
-
-# - In general: anticipating things that could go wrong
-#   (this point is a good transition to the next section)
-
-"""
-=== Main function ===
-
-Last time, we used python3 -i lecture.py to run
-the code interactively.
-
-Let's look at another common way to test out our Python code
-by putting a basic pipeline into a main function at the
-bottom of the file.
-"""
+#  - Makes the software easier to debug
 
 """
 === Failures and risks ===
 
-Recall that we talked on the first lecture about software components + design constraints.
-
-More specifically, we are most worried about failures and risks
+Failures and risks are problems
 which might invalidate our pipeline (wrong results)
 or cause it to misbehave (crash or worse).
 
-What could go wrong in our toy pipeline above?
+What could go wrong in our pipeline above?
 Let's go through each stage at a time:
 
 1. Input stage
@@ -855,7 +646,58 @@ example: review dataframe display function
     - shrink the window size ==> fields get replaced by "..."
 
 There are some exercises at the bottom of the file.
+"""
 
+"""
+=======================================================================
+=======================================================================
+=======================================================================
+
+Prior materiral from Fall 2024 follows.
+
+=======================================================================
+=======================================================================
+
+=== Monday, September 30 ===
+
+(See README.md for announcements and plan.)
+
+=== Poll ===
+
+1. Which stage do you think is likely to be the most computationally intensive part of a data processing pipeline?
+
+2. Which stage do you think is likely to present the biggest opportunity for failure cases, including crashes, ethical concerns or bias, or unexpected/wrong/faulty data?
+"""
+
+"""
+===============================================================
+
+"""
+
+# (Finishing up)
+# Reasons to think of data processing pipelines as software:
+
+# - Collaborative development
+#   Why is the above code design better for collaborative development?
+
+# - Performance optimization
+#   (More on this shortly)
+
+# - In general: anticipating things that could go wrong
+#   (this point is a good transition to the next section)
+
+"""
+=== Main function ===
+
+Last time, we used python3 -i lecture.py to run
+the code interactively.
+
+Let's look at another common way to test out our Python code
+by putting a basic pipeline into a main function at the
+bottom of the file.
+"""
+
+"""
 === Rewriting our pipeline one more time ===
 
 Before we continue, let's rewrite our pipeline one last time as a function
@@ -1050,6 +892,24 @@ Problem: readability and usability concerns --
 # Exercise 21: Provide unhelpful information as output
 
 # Solutions?
+
+
+
+"""
+=== Advantages of software view ===
+
+Advantages of thinking of data processing pipelines as software:
+
+- Software *design* matters: structuring code into modules, classes, functions
+- Software can be *tested*: validating functions, validating inputs, unit & integration tests
+- Software can be *reused* and maintained (not just a one-off script)
+- Software can be developed collaboratively (Git, GitHub)
+- Software can be optimized for performance (parallelism, distributed computing, etc.)
+
+It is a little more work to structure our code this way!
+But it helps ensure that our work is reusable and integrates well with other teams, projects, etc.
+
+"""
 
 """
 === Overview of the rest of the course ===
