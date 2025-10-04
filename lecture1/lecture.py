@@ -591,12 +591,52 @@ Revisiting the steps above:
 We have done 1 and (sort of) 3, we will do 2 at the start of class next time.
 
 ********* Where we ended for today **********
+
+October 5
+
+=== Practice with dataflow graphs ===
+
+Above, we have a data processing pipeline.
+Let's separate it into stages as follows:
+
+(read) = load the CSV input
+(max) = compute the max
+(min) = compute the min
+(avg) = compute the avg
+(print) = Print the max, min, and avg
+(save) = Save the max, min, and avg to a file
+
+=== Discussion Question and Poll ===
+
+Suppose we draw a dataflow graph with the above nodes.
+
+1. What edges will the graph have?
+  (draw/write all edges)
+
+2. Give an example of two s A and B, where the output for B depends on A, but there is no edges from A to B.
+
+https://forms.gle/6FB5hhwKpokTHhit9
+
+=== A few more things ===
+
+A couple of more definitions:
+
+- A *source* is...
+
+- A *sink* is ...
+
+In Python:
+We could write each node as a stage, as we have been doing before.
+
+Let's just write one example, in the interest of time
 """
 
-# How can we write this as different dataflow nodes?
+def max_stage(df):
+    raise NotImplementedError
 
 """
-Let's revisit our criteria from today's in-class poll. How does this help?
+Revisiting some of our criteria from last time's in-class poll.
+How does this help?
 """
 
 # - Better code re-use
@@ -612,267 +652,6 @@ Let's revisit our criteria from today's in-class poll. How does this help?
 #  - Makes the software easier to debug
 
 """
-=== Failures and risks ===
-
-Failures and risks are problems
-which might invalidate our pipeline (wrong results)
-or cause it to misbehave (crash or worse).
-
-What could go wrong in our pipeline above?
-Let's go through each stage at a time:
-
-1. Input stage
-
-What could go wrong here?
-
-- Malformed data and type mismatches
-- Wrong data
-- Missing data
-- Private data
-"""
-
-"""
-Problem: input data could be malformed
-"""
-
-# Exercise 4: Insert a syntax error by adding an extra comma into the CSV file. What happens?
-
-# A: that row gets shifted over by one
-# All data in each column is now misaligned;
-# some columns contain a mix of year and life expectancy data.
-
-# Exercise 5: Insert a row with a value that is not a number. What happens?
-
-# A: changing the year on just one entry to a string,
-# the "Year" field turned into a string field.
-
-# Reminder about dataframes: every column has a uniform
-# type. (Integer, string, real/float value, etc.)
-
-# Take home point: even a single mislabeled or
-# malformed row can mess up the entire DataFrame
-
-# Solutions?
-
-# - be careful about input data (get your data from
-# a good source and ensure that it's well formed)
-
-# - validation: write and run unit tests to check
-#   check that the input data has the properties we
-#   want.
-
-# e.g.: write a test_year function that goes through
-# the year column and checks that we have integers.
-
-"""
-Problem: input data could be wrong
-"""
-
-# Example:
-# Code with correct input data:
-# avg. 61.61799192059744
-# Code with incorrect input data:
-# avg.: 48242.7791579047
-
-# Exercise 6: Delete a country or add a new country. What happens?
-
-# Deleting a country:
-# 61.67449487559832 instead of 61.61799192059744
-# (very slightly different)
-
-# Solutions?
-
-# Put extra effort into validating your data!
-
-"""
-Discussion questions:
-- If we download multiple versions of this data
-  from different sources (for example, from Wikipedia, from GitHub,
-  etc.) are they likely to have the same countries? Why or why not?
-
-- What can be done to help validate our data has the right set
-  of countries?
-
-- How might choosing a different set of countries affect the
-  app we are using?
-
-Recap from today:
-
-- Python main functions (ways to run code: python3 lecture.py (main function), python3 -i lecture.py (main function + interactive), pytest lecture.py to run unit tests)
-- what can go wrong in a pipeline?
-- input data issues & validation.
-
-===============================================================
-
-=== Friday, Oct 4 ===
-
-Following along: git stash, git pull
-
-=== Poll ===
-
-1. Which of the following are common problems with input data that you might encounter in the real world and in industry?
-
-- (poll options cut)
-
-2. How many countries are there in the world?
-
-Common answers:
-
-- 193: UN Members
-- 195: UN Members + Observers
-- 197: UN Members + Observers + Widely recognized
-- 200-300something: if including all partially recognized countries or territories.
-
-As we saw before, our dataset happens to have 261.
-- e.g.: our dataset did not include all countries with some form of
-  limited recognition, e.g. Somaliland
-  but it would include the 193, 195, or 197 above.
-
-Further resources:
-
-- https://en.wikipedia.org/wiki/List_of_states_with_limited_recognition
-
-- CGP Grey: How many countries are there? https://www.youtube.com/watch?v=4AivEQmfPpk
-
-In any dataset in the real world, it is common for there to be some
-subjective inclusion criteria or measurement choices.
-
-"""
-
-"""
-2. Processing stage
-
-What could go wrong here?
-
-- Software bugs -- pipeline is not correct (gives the wrong answer)
-- Performance bugs -- pipeline is correct but is slow
-- Nondeterminism -- pipelines to produce different answers on different runs
-
-    This is actually very common in the data processing world!
-    - e.g.: your pipeline may be a stream of data and every time you run
-    it you are running on a different snapshot, or "window" of the data
-    - e.g.: your pipeline measures something in real time, such as timing
-    - a calculation that requires a random subset of the data (e.g.,
-      statistical random sample)
-    - Neural network?
-    - Running a neural network or large language model with different versions
-      (e.g., different version of GPT every time you call the GPT API)
-    - ML model with stochastic components
-    - Due to parallel and distributed computing
-        If you decide to parallelize your pipeline, and you do it incorrectly,
-        depending on the order in which different operations complete you
-        might get a different answer.
-
-"""
-
-"""
-3. Output stage
-
-What could go wrong here?
-
-- System errors and exceptions
-- Output formatting
-- Readability
-- Usability
-
-Often output might be: saving to a file or saving to a database, or even
-saving data to a cloud framework or cloud provider;
-and all of three of these cases could fail.
-e.g. error: you don't have permissions to the file; file already exists;
-not enough memory on the machine/cloud instance; etc.
-
-Summary: whenever saving output, there is the possibility that the save operation
-might fail
-
-Output formatting: make sure to use a good library!
-Things like Pandas will help here -- formatting requirements already solved
-
-When displaying output directly to the user:
-- Are you displaying the most relevant information?
-- Are you displaying too much information?
-- Are you displaying too little information?
-- Are you displaying confusing/incomprehensible information?
-
-e.g.: displaying 10 items we might have a different strategy than if
-we want to display 10,000
-
-example: review dataframe display function
-    - dataframe: display header row, first 5 rows, last 5 rows
-    - shrink the window size ==> fields get replaced by "..."
-
-There are some exercises at the bottom of the file.
-"""
-
-"""
-=======================================================================
-=======================================================================
-=======================================================================
-
-Prior materiral from Fall 2024 follows.
-
-=======================================================================
-=======================================================================
-
-=== Monday, September 30 ===
-
-(See README.md for announcements and plan.)
-
-=== Poll ===
-
-1. Which stage do you think is likely to be the most computationally intensive part of a data processing pipeline?
-
-2. Which stage do you think is likely to present the biggest opportunity for failure cases, including crashes, ethical concerns or bias, or unexpected/wrong/faulty data?
-"""
-
-"""
-===============================================================
-
-"""
-
-# (Finishing up)
-# Reasons to think of data processing pipelines as software:
-
-# - Collaborative development
-#   Why is the above code design better for collaborative development?
-
-# - Performance optimization
-#   (More on this shortly)
-
-# - In general: anticipating things that could go wrong
-#   (this point is a good transition to the next section)
-
-"""
-=== Main function ===
-
-Last time, we used python3 -i lecture.py to run
-the code interactively.
-
-Let's look at another common way to test out our Python code
-by putting a basic pipeline into a main function at the
-bottom of the file.
-"""
-
-"""
-=== Rewriting our pipeline one more time ===
-
-Before we continue, let's rewrite our pipeline one last time as a function
-(I will explain why in a moment -- this is so we can easily measure its performance).
-
-"""
-
-# Rewriting our pipeline one last time, as a single function
-def pipeline(input_file, output_file):
-    # 1. Input stage
-    df = get_life_expectancy_data(input_file)
-
-    # 2. Processing stage
-    stats_summary = LifeExpectancyData()
-    stats_summary.load_statistics(df)
-
-    # 3. Output stage
-    stats_summary.save_to_file(output_file)
-
-"""
 === Performance ===
 
 In the second stage, we said that one thing that could
@@ -884,11 +663,13 @@ Three key performance metrics:
 - Throughput
 
     What is throughput?
-    How fast the pipeline runs, measured per input row or input item.
 
-    Running time almost always varies depending on the size of the input
-    dataset!
-    Often linear: the more input items, the longer it will take to run
+    Most pipelines run slower the more input items you have!
+
+    - Often linear: the more input items, the longer it will take to run
+
+    So we might want to know how fast the pipeline runs, *per input row or input item.*
+
     So it's useful to think about the time per input item.
 
     Throughput is the inverse of this:
@@ -896,7 +677,22 @@ Three key performance metrics:
         (Number of input items) / (Total running time).
 
 Let's take our pipeline and measure the total running time & the throughput.
+
+see throughput_latency.py
 """
+
+# Wrap up our pipeline - as a single function!
+# You will also do this on the HW to measure performance.
+def pipeline(input_file, output_file):
+    # 1. Input stage
+    df = get_life_expectancy_data(input_file)
+
+    # 2. Processing stage
+    stats_summary = LifeExpectancyData()
+    stats_summary.load_statistics(df)
+
+    # 3. Output stage
+    stats_summary.save_to_file(output_file)
 
 # Use the timeit library -- library that allows us to measure the running
 # time of a Python function
@@ -940,6 +736,28 @@ def measure_throughput():
 """
 - Latency
 
+    What is latency?
+
+    Sometimes, we care about not just the time it takes to run the pipeline...
+    but the time on each specific input item.
+
+    Why?
+    - Imagine crawling the web at Google.
+      The overall time to crawl the entire web is...
+      It might take a long time to update ALL websites.
+      But I might wonder,
+      what is the time it takes from when I update my website
+          ucdavis-ecs119.com
+      to when this gets factored into Google's search results.
+
+      This "individual level" measure of time is called latency.
+
+    *Tricky point*
+
+    For the pipelines we have been writing, the latency is the same as the running time of the entire pipeline!
+
+    Why?
+
 - Memory usage
 
 Let's measure the performance of our toy pipeline.
@@ -961,109 +779,16 @@ def measure_memory_usage(pipeline):
     raise NotImplementedError
 
 """
-=== Additional exercises (skip depending on time) ===
-"""
+Some formulas
 
-"""
-Problem: input data could be missing
-"""
+    N = number of input items
+    T = running time of the pipeline
 
-# Exercise 7: Insert a row with a missing value. What happens?
+    Throughput
+        =
 
-# Solutions?
-
-"""
-Problem: input data could be private
-"""
-
-# Exercise 8: Insert private data into the CSV file. What happens?
-
-# Solutions?
-
-"""
-Problem: software bugs
-"""
-
-# Exercise 9: Introduce a software bug
-
-# Solutions?
-
-"""
-Problem: performance bugs
-"""
-
-# Exercise 10: Introduce a performance bug
-
-# Solutions?
-
-"""
-Problem: order-dependent and non-deterministic behavior
-"""
-
-# Exercise 11: Introduce order-dependent behavior into the pipeline
-
-# Exercise 12: Introduce non-deterministic behavior into the pipeline
-
-# Solutions?
-
-"""
-Problem: output errors and exceptions
-"""
-
-# Exercise 13: Save the output to a file that already exists. What happens?
-
-# Exercise 14: Call the program from a different working directory (CWD)
-# (Note: CWD)
-
-# Exercise 15: Save the output to a file that is read-only. What happens?
-
-# Exercise 16: Save the output to a file outside the current directory. What happens?
-
-# (other issues: symlinks, read permissions, busy/conflicting writes, etc.)
-
-# Solutions?
-
-"""
-Problem: output formatting
-
-Applications must agree on a common format for data exchange.
-"""
-
-# Exercise 17: save data to a CSV file with a wrong delimiter
-
-# Exercise 18: save data to a CSV file without escaping commas
-
-# Solutions?
-
-"""
-Problem: readability and usability concerns --
-    too much information, too little information, unhelpful information
-"""
-
-# Exercise 19: Provide too much information as output
-
-# Exercise 20: Provide too little information as output
-
-# Exercise 21: Provide unhelpful information as output
-
-# Solutions?
-
-
-
-"""
-=== Advantages of software view ===
-
-Advantages of thinking of data processing pipelines as software:
-
-- Software *design* matters: structuring code into modules, classes, functions
-- Software can be *tested*: validating functions, validating inputs, unit & integration tests
-- Software can be *reused* and maintained (not just a one-off script)
-- Software can be developed collaboratively (Git, GitHub)
-- Software can be optimized for performance (parallelism, distributed computing, etc.)
-
-It is a little more work to structure our code this way!
-But it helps ensure that our work is reusable and integrates well with other teams, projects, etc.
-
+    Latency (for the pipelines we have considered so far)
+        =
 """
 
 """
@@ -1081,13 +806,6 @@ Fundamental theorem of computer science:
     - Based on a statement attributed to Butler Lampson
     https://en.wikipedia.org/wiki/Fundamental_theorem_of_software_engineering
 
-From Edsgar Dijkstra:
-
-    "Elegance is not a dispensable luxury but a factor that decides between success and failure."
-
-The fundamental abstraction we will use in this course is...
-the dataflow graph!
-
 A dataflow graph is an abstraction (why?), but it is a very useful one.
 It will help put all problems about data processing into context and help us understand how
 to develop, understand, profile, and maintain data processing jobs.
@@ -1095,10 +813,7 @@ to develop, understand, profile, and maintain data processing jobs.
 It will provide a common framework for the rest of the course.
 """
 
-# What a main function is: the default thing that you run when
-# running a program.
-# Sometimes called an "entrypoint"
-# __name__: a variable that stores the name of the module being run
+# Main function: the default thing that you run when running a program.
 
 # print("Hello from outside of main function")
 
@@ -1117,9 +832,8 @@ if __name__ == "__main__":
 
     pass
 
-# Test file: main_test.py
-
-# What have we found? If importing lecture.py as
+# NB: If importing lecture.py as
 # a library, the main function (above) doesn't get run.
 # If running it directly from the terminal,
 # the main function does get run.
+# See test file: main_test.py

@@ -67,3 +67,17 @@ Plan for today:
 - A more realistic example to go through
 
 - (If time) Failures and risks
+
+## Monday, October 5
+
+Announcements:
+
+- HW1 is released! Due: Friday, October 17
+
+Plan:
+
+- Practice with Dataflow Graphs
+
+- Failures and risks
+
+- Measuring performance
