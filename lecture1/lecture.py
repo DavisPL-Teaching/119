@@ -592,11 +592,18 @@ We have done 1 and (sort of) 3, we will do 2 at the start of class next time.
 
 ********* Where we ended for today **********
 
-October 5
+===============================================================
+
+Monday, October 6
+
+On Friday, I introduced the concept of dataflow graphs.
+Recall:
+-
 
 === Practice with dataflow graphs ===
 
-Above, we have a data processing pipeline.
+At the end of last class period, we introduced a dataset for life expectancy.
+We saw a simple data pipeline for this dataset.
 Let's separate it into stages as follows:
 
 (read) = load the CSV input
@@ -606,6 +613,7 @@ Let's separate it into stages as follows:
 (print) = Print the max, min, and avg
 (save) = Save the max, min, and avg to a file
 
+
 === Discussion Question and Poll ===
 
 Suppose we draw a dataflow graph with the above nodes.
@@ -613,17 +621,29 @@ Suppose we draw a dataflow graph with the above nodes.
 1. What edges will the graph have?
   (draw/write all edges)
 
-2. Give an example of two s A and B, where the output for B depends on A, but there is no edges from A to B.
+2. Give an example of two stages A and B, where the output for B depends on A, but there is no edges from A to B.
 
 https://forms.gle/6FB5hhwKpokTHhit9
+
+Key points:
+
 
 === A few more things ===
 
 A couple of more definitions:
 
+- A stage B *depends on* a stage A if...
+
+point: The dataflow graph reveals exactly which computations depend on which others!
+
 - A *source* is...
 
 - A *sink* is ...
+
+point: The dataflow graph reveals exactly where the I/O operations are for your pipeline.
+
+So there are three types of nodes:
+
 
 In Python:
 We could write each node as a stage, as we have been doing before.
@@ -635,30 +655,41 @@ def max_stage(df):
     raise NotImplementedError
 
 """
-Revisiting some of our criteria from last time's in-class poll.
-How does this help?
+Reminders for why this helps:
+
+- Better code re-use
+- Better ability to write unit tests
+- Separation of concerns between different features, developers, or development efforts
+- Makes the software easier to maintain (or modify later)
+- Makes the software easier to debug
+
+Zooming in on one of these...
+(pick one)
+
+Q: How is this better than the ETL model?
 """
 
-# - Better code re-use
-
-# - Will speed up the development of a one-off script
-
-# - Better ability to write unit tests
-
-# - Separation of concerns between different features, developers, or development efforts
-
-# - Makes the software easier to maintain (or modify later)
-
-#  - Makes the software easier to debug
-
 """
+=== Data validation ===
+
+We will talk more about data validation at some point, most likely as part of Lecture 3.
+(See failures.py for a further discussion)
+
+Where in a pipeline is data validation most important?
+
+Validation in a dataflow graph:
+we may view each edge as having some "constraints" that are validated by the previous stage,
+and assumed by the next.
+
 === Performance ===
 
-In the second stage, we said that one thing that could
-go wrong was performance bugs.
-How do we measure performance?
+Let's touch on one other advantage of looking at dataflow graphs:
+we can use them to think about performance.
 
-Three key performance metrics:
+For traditional programs, there are two notions of performance that matter:
+
+For data processing programs?
+
 
 - Throughput
 
@@ -681,18 +712,17 @@ Let's take our pipeline and measure the total running time & the throughput.
 see throughput_latency.py
 """
 
+def get_life_expectancy_data(filename):
+    pass
+
 # Wrap up our pipeline - as a single function!
 # You will also do this on the HW to measure performance.
 def pipeline(input_file, output_file):
-    # 1. Input stage
-    df = get_life_expectancy_data(input_file)
-
-    # 2. Processing stage
-    stats_summary = LifeExpectancyData()
-    stats_summary.load_statistics(df)
-
-    # 3. Output stage
-    stats_summary.save_to_file(output_file)
+    # TODO: update
+    # df = get_life_expectancy_data(input_file)
+    # stats_summary = load_statistics(df)
+    # stats_summary.save_to_file(output_file)
+    pass
 
 # Use the timeit library -- library that allows us to measure the running
 # time of a Python function

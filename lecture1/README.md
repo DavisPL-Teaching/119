@@ -74,9 +74,15 @@ Announcements:
 
 - HW1 is released! Due: Friday, October 17
 
+  https://github.com/DavisPL-Teaching/119-hw1
+
+  Please get started early!
+
+- I will need to end OH early today at 5pm
+
 Plan:
 
-- Practice with Dataflow Graphs
+- Practice with Dataflow Graphs :)
 
 - Failures and risks
 
