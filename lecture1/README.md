@@ -68,7 +68,7 @@ Plan for today:
 
 - (If time) Failures and risks
 
-## Monday, October 5
+## Monday, October 6
 
 Announcements:
 
@@ -84,6 +84,6 @@ Plan:
 
 - Practice with Dataflow Graphs :)
 
-- Failures and risks
+- A little bit about data validation
 
 - Measuring performance
