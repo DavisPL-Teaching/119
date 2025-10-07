@@ -13,23 +13,23 @@ I will try to keep it up to date, but please see Piazza for the latest informati
 | 1 | Sep 29 |  |  | 1 |
 |   | Oct 1  | **No class** | HW0 Due | 1 |
 |   | Oct 3  |  |  | 1 |
-| 2 | Oct 6  | The Shell |  | 2 |
-|   | Oct 8  |  |  | 2 |
-|   | Oct 10 |  |  | 2 |
-| 3 | Oct 13 | Data Operators |  | 3 |
-|   | Oct 15 |  |  | 3 |
-|   | Oct 17 |  |  | 3 |
-| 4 | Oct 20 | Parallelism |  | 4 |
-|   | Oct 22 |  |  | 4 |
-|   | Oct 24 |  |  | 4 |
-| 5 | Oct 27 |  | HW1 due |  |
-|   | Oct 29 |  |  | 4 |
-|   | Oct 31 |  |  | 4 |
+| 2 | Oct 6  |  |  | 1 |
+|   | Oct 8  |  |  | 1 |
+|   | Oct 10 |  |  | 1 |
+| 3 | Oct 13 | The Shell |  | 2 |
+|   | Oct 15 |  |  | 2 |
+|   | Oct 17 |  | HW1 Due | 2 |
+| 4 | Oct 20 | Data validation and cleaning |  | 3 |
+|   | Oct 22 |  |  | 3 |
+|   | Oct 24 |  |  | 3 |
 
 ## Section 2: Parallelism
 
 | Week | Date | Topic | Readings & HW | Lecture # |
 | --- | --- | --- | --- | --- |
+| 5 | Oct 27 | Parallelism | HW1 due | 4 |
+|   | Oct 29 |  |  | 4 |
+|   | Oct 31 |  |  | 4 |
 | 6 | Nov 3  | Distributed Pipelines |  | 5 |
 |   | Nov 5  | Review or Overflow |  | 5 |
 |   | Nov 7  | **Midterm** |  |  |

@@ -87,3 +87,19 @@ Plan:
 - A little bit about data validation
 
 - Measuring performance
+
+## Wednesday, October 8
+
+Announcements and reminders:
+
+- HW1 due Fri Oct 17
+
+- Midterm date: tenatively set for **Friday, November 7**
+
+Plan:
+
+- Talk about performance
+
+- (If time) Talk about failures and risks in pipelines
+
+- We will finish up Lecture 1 today and Friday

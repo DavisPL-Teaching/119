@@ -770,9 +770,38 @@ We argued that analagous to regular computer programs for the traditional comput
 
 ********** where we ended for today **********
 
+================================================
+
+October 8
+
+Let's talk about performance!
+
+But first, the poll.
+
+=== Poll / discussion question ===
+
+True or false:
+
+1. Two different ways of writing the same overall computation can have two different dataflow graphs.
+
+2. Operators always take longer to run than sources and sinks.
+
+3. Typically, every node in a dataflow graph takes the same amount of time to run.
+
+https://forms.gle/wAAyXqbJaCkEzyZP9
+
+-----
+
+Last time, we saw:
+
+First corresponding to running time...
+
+
+
 - Throughput
 
     What is throughput?
+
 
     Most pipelines run slower the more input items you have!
 
@@ -786,7 +815,9 @@ We argued that analagous to regular computer programs for the traditional comput
     Definition / formula:
         (Number of input items) / (Total running time).
 
-Let's take our pipeline and measure the total running time & the throughput.
+Let's see an example
+
+We need a pipeline so that we can measure the total running time & the throughput.
 
 see throughput_latency.py
 """
@@ -867,8 +898,6 @@ def measure_throughput():
 
     Why?
 
-- Memory usage
-
 Let's measure the performance of our toy pipeline.
 
 Timeit:
@@ -898,6 +927,28 @@ Some formulas
 
     Latency (for the pipelines we have considered so far)
         =
+"""
+
+"""
+=== Memory usage ===
+
+What about the equivalent of memory usage?
+
+I will not discuss this in detail at this point, but will offer a few important ideas:
+
+- Input size:
+
+- Output size:
+
+- Window size:
+
+- Distributed notions: Number of machines, number of addresses on each machine ...
+
+Which of the above is most useful?
+
+How does memory relate to running time?
+For traditional programs?
+For data processing programs?
 """
 
 """
