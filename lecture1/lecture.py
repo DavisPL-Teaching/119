@@ -792,11 +792,13 @@ https://forms.gle/wAAyXqbJaCkEzyZP9
 
 -----
 
-Last time, we saw:
+Last time, we reviewed the notions of performance for traditional programs.
 
-First corresponding to running time...
+For data processing programs?
 
+===== Running time for data processing programs =====
 
+Running time has two analogs. We will see how these are importantly different!
 
 - Throughput
 

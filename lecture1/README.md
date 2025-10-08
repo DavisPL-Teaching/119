@@ -90,16 +90,20 @@ Plan:
 
 ## Wednesday, October 8
 
-Announcements and reminders:
+Reminders:
 
 - HW1 due Fri Oct 17
+
+Announcements:
 
 - Midterm date: tenatively set for **Friday, November 7**
 
 Plan:
 
+- Start with discussion question
+
 - Talk about performance
 
 - (If time) Talk about failures and risks in pipelines
 
-- We will finish up Lecture 1 today and Friday
+- We will finish up Lecture 1 today and Friday and then move to Lecture 2 on the Shell.
