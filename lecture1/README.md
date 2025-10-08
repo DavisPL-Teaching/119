@@ -98,6 +98,10 @@ Announcements:
 
 - Midterm date: tenatively set for **Friday, November 7**
 
+- Discussion section Zoom link/recording will be available in Canvas going forward!
+
+- Waitlist update
+
 Plan:
 
 - Start with discussion question
