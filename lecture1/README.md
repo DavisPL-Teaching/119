@@ -111,3 +111,18 @@ Plan:
 - (If time) Talk about failures and risks in pipelines
 
 - We will finish up Lecture 1 today and Friday and then move to Lecture 2 on the Shell.
+
+## Friday, October 10
+
+Announcements:
+
+- Waitlist update:
+  They were able to admit a few students off the waitlist. I was told that they emailed out PTAs.
+
+- Reminder: HW1 due Fri Oct 17
+
+Plan:
+
+- Poll
+
+- Finish performance discussion.

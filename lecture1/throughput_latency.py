@@ -7,6 +7,15 @@ Latency: Time taken to process a single item
 
 from lecture import pipeline, get_life_expectancy_data
 
+"""
+Timeit:
+https://docs.python.org/3/library/timeit.html
+
+Library that allows us to measure the running time of a Python function
+
+Example syntax:
+timeit.timeit('"-".join(str(n) for n in range(100))', number=10000)
+"""
 import timeit
 
 IN_FILE_THROUGHPUT = "life-expectancy.csv"
@@ -38,7 +47,10 @@ def throughput(num_runs):
 
 def latency(num_runs):
     """
-    Measure the latency of our example pipeline, in seconds.
+    Measure the average latency of our example pipeline, in seconds.
+
+    *Key point:*
+    We use a one-row version of the pipeline to measure latency
     """
 
     print(f"Measuring latency over {num_runs} runs...")

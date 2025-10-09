@@ -977,70 +977,68 @@ We introduced throughput + latency
 - Both measures of performance in terms of running time at an "individual row" level, but throughput is an aggregate measure and latency is viewed at the level of an individual row.
 
 ********** Where we ended for today **********
+
+October 10
+
+Recap from last time:
+
+Throughput:
+
+Latency:
+
+Discussion question:
+
+A health company's servers process 12,000 medical records per day.
+The medical records come in at a uniform rate between 9am and 9pm every day (1,000 records per hour).
+The company's servers submit the records to a back-end service that collects them throughout the hour, and then
+processes them at the end of each hour to update a central database.
+
+What is the throughput of the pipeline?
+
+What number would best describe the *average latency* of the pipeline?
+Describe the justification for your answer.
+
+https://forms.gle/AFL2SrBr5MhwVV3h7
 """
 
-
 """
+...
+
 Let's see an example
 
 We need a pipeline so that we can measure the total running time & the throughput.
+
+I've taken the pipeline from earlier for country data and rewritten it below.
 
 see throughput_latency.py
 """
 
 def get_life_expectancy_data(filename):
-    pass
+    return pd.read_csv(filename)
 
 # Wrap up our pipeline - as a single function!
-# You will also do this on the HW to measure performance.
+# You will do a similar thing on the HW to measure performance.
 def pipeline(input_file, output_file):
-    # TODO: update
-    # df = get_life_expectancy_data(input_file)
-    # stats_summary = load_statistics(df)
-    # stats_summary.save_to_file(output_file)
-    pass
+    df = get_life_expectancy_data(input_file)
+    min_year = df["Year"].min()
+    max_year = df["Year"].max()
+    print("Minimum year: ", min_year)
+    print("Maximum year: ", max_year)
+    avg = df["Period life expectancy at birth - Sex: all - Age: 0"].mean()
+    print("Average life expectancy: ", avg)
+    # Save the output
+    out = pd.DataFrame({"Min year": [min_year], "Max year": [max_year], "Average life expectancy": [avg]})
+    out.to_csv(output_file, index=False)
 
-# Use the timeit library -- library that allows us to measure the running
-# time of a Python function
+# SEE throughput_latency.py.
+
 import timeit
 
 def f():
     pipeline("life-expectancy.csv", "output.csv")
 
-# timeit.timeit(f, number=100)
-# We see a linear behavior!
-# 100 times: 0.35s
-# 1000 times: 3.28s
-# 10000 times: 33.4s
-# Running time is roughly linear in the size of the input!
-
-def measure_throughput():
-
-    # Get the number of input items
-    # Hardcoded
-    num_input_items = 20755
-
-    # Get the number of runs
-    # Hardcoded
-    num_runs = 1000
-
-    execution_time = timeit.timeit(f, number=num_runs)
-
-    print(f"Execution time for {num_runs}: {execution_time}")
-
-    print(f"Execution time per input run: {execution_time / num_runs}")
-
-    ans = execution_time / (num_runs * num_input_items)
-    print(f"Execution time per input run, per input data item (1/throughput): {ans}")
-
-    # The actual number we want: throughput
-    print(f"Throughput: {1 / ans} items/second")
-
-    # Answer: about 6,000,000 items (or rows) per second!
-    # Pandas is very fast.
-
 """
-- Latency
+=== Latency (additional notes - SKIP) ===
 
     What is latency?
 
@@ -1065,34 +1063,25 @@ def measure_throughput():
     Why?
 
 Let's measure the performance of our toy pipeline.
-
-Timeit:
-https://docs.python.org/3/library/timeit.html
-
-Example syntax:
-timeit.timeit('"-".join(str(n) for n in range(100))', number=10000)
 """
 
-def measure_latency(pipeline):
-    raise NotImplementedError
-
-def measure_memory_usage(pipeline):
-    # There are ways to do this in Python through external libraries.
-    # We will cover this later.
-
-    raise NotImplementedError
-
 """
-Some formulas
+=== Formulas for reference ===
 
     N = number of input items
-    T = running time of the pipeline
+    T = running time of the pipeline for N items
 
     Throughput
         =
 
-    Latency (for the pipelines we have considered so far)
+    Latency
+        (for a one-item pipeline)
+        (we will consider generalizations of this later in the course)
         =
+
+When running a pipeline multiple times (to get an average)
+
+
 """
 
 """
