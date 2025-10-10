@@ -121,8 +121,14 @@ Announcements:
 
 - Reminder: HW1 due Fri Oct 17
 
+- Questions on Piazza -- also, join the student-run Discord!
+
+- HW1 prelminary autograder available!
+
 Plan:
 
-- Poll
+- Poll (and a quick check-in on pacing)
 
 - Finish performance discussion.
+
+Questions?

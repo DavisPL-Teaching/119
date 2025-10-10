@@ -559,20 +559,20 @@ df = pd.read_csv("life-expectancy.csv")
 
 # What should we compute about this data?
 
-# A simple example:
-min_year = df["Year"].min()
-max_year = df["Year"].max()
-print("Minimum year: ", min_year)
-print("Maximum year: ", max_year)
-avg = df["Period life expectancy at birth - Sex: all - Age: 0"].mean()
-print("Average life expectancy: ", avg)
+# # A simple example:
+# min_year = df["Year"].min()
+# max_year = df["Year"].max()
+# print("Minimum year: ", min_year)
+# print("Maximum year: ", max_year)
+# avg = df["Period life expectancy at birth - Sex: all - Age: 0"].mean()
+# print("Average life expectancy: ", avg)
 
-# Tangent:
-# We can do all of the above with df.describe()
+# # Tangent:
+# # We can do all of the above with df.describe()
 
-# Save the output
-out = pd.DataFrame({"Min year": [min_year], "Max year": [max_year], "Average life expectancy": [avg]})
-out.to_csv("output.csv", index=False)
+# # Save the output
+# out = pd.DataFrame({"Min year": [min_year], "Max year": [max_year], "Average life expectancy": [avg]})
+# out.to_csv("output.csv", index=False)
 
 """
 Q for next time: rewrite this as a Dataflow graph using the steps above
@@ -983,8 +983,21 @@ October 10
 Recap from last time:
 
 Throughput:
+    Measured in number items processed / second
+
+    N = number of input items (size of input dataset(s))
+    T = running time of your full pipeline
+    Formula =
+        N / T
 
 Latency:
+    Measured for a specific input item and specific output
+
+    Formula =
+        (time output is produced) - (time input is received)
+
+    Often (but not always) measured for a pipeline with just
+    one input item.
 
 Discussion question:
 
@@ -1033,10 +1046,13 @@ def pipeline(input_file, output_file):
 
 # SEE throughput_latency.py.
 
-import timeit
+# import timeit
 
 def f():
     pipeline("life-expectancy.csv", "output.csv")
+
+# Run the pipeline
+# f()
 
 """
 === Latency (additional notes - SKIP) ===
@@ -1067,26 +1083,7 @@ Let's measure the performance of our toy pipeline.
 """
 
 """
-=== Formulas for reference ===
-
-    N = number of input items
-    T = running time of the pipeline for N items
-
-    Throughput
-        =
-
-    Latency
-        (for a one-item pipeline)
-        (we will consider generalizations of this later in the course)
-        =
-
-When running a pipeline multiple times (to get an average)
-
-
-"""
-
-"""
-=== Memory usage ===
+=== Memory usage (also skip :) ) ===
 
 What about the equivalent of memory usage?
 
@@ -1126,7 +1123,8 @@ A dataflow graph is an abstraction (why?), but it is a very useful one.
 It will help put all problems about data processing into context and help us understand how
 to develop, understand, profile, and maintain data processing jobs.
 
-It will provide a common framework for the rest of the course.
+It's a good human-level way to understand pipelines, and
+it will provide a common framework for the rest of the course.
 """
 
 # Main function: the default thing that you run when running a program.
