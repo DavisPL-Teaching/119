@@ -799,9 +799,9 @@ And I want to do df["x"].max()
 and df["x"].min()
 """
 
-df = load_input_dataset()
-min = df["x"].min()
-max = df["x"].max()
+# df = load_input_dataset()
+# min = df["x"].min()
+# max = df["x"].max()
 
 """
 Dataflow graph with nodes
@@ -1022,10 +1022,11 @@ def pipeline(input_file, output_file):
     df = get_life_expectancy_data(input_file)
     min_year = df["Year"].min()
     max_year = df["Year"].max()
-    print("Minimum year: ", min_year)
-    print("Maximum year: ", max_year)
+    # (Commented out the print statements)
+    # print("Minimum year: ", min_year)
+    # print("Maximum year: ", max_year)
     avg = df["Period life expectancy at birth - Sex: all - Age: 0"].mean()
-    print("Average life expectancy: ", avg)
+    # print("Average life expectancy: ", avg)
     # Save the output
     out = pd.DataFrame({"Min year": [min_year], "Max year": [max_year], "Average life expectancy": [avg]})
     out.to_csv(output_file, index=False)
