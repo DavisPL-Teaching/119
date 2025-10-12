@@ -88,10 +88,6 @@ Examples where programmers and data scientists regularly use the shell:
 Or even, simply:
 
 - You have written some code, you want to send it to me so I can try it out.
-
-Or even more simply:
-
-- You have a program, and you want to run it.
 """
 
 # python3 lecture.py
