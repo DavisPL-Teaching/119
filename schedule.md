@@ -30,9 +30,9 @@ I will try to keep it up to date, but please see Piazza for the latest informati
 | 5 | Oct 27 | Parallelism | HW1 due | 4 |
 |   | Oct 29 |  |  | 4 |
 |   | Oct 31 |  |  | 4 |
-| 6 | Nov 3  | Distributed Pipelines |  | 5 |
-|   | Nov 5  | Review or Overflow |  | 5 |
-|   | Nov 7  | **Midterm** |  |  |
+| 6 | Nov 3  | Review or Overflow |  | 4 |
+|   | Nov 5  | **Midterm** |  |  |
+|   | Nov 7  | Distributed Pipelines |  | 5 |
 | 7 | Nov 10 |  |  |  |
 |   | Nov 12 |  |  | 5 |
 |   | Nov 14 |  |  | 5 |

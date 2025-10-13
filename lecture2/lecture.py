@@ -19,6 +19,29 @@ I will assume no background on the shell other than the
 one or two basic commands we have been typing in class.
 (Like `python3 lecture.py`)
 
+=== Poll ===
+
+Review from last time
+
+1. Which of the following are valid units of latency?
+Hours
+Items / second
+Milliseconds
+Nanoseconds
+Rows / item
+Rows / minute
+Seconds
+Seconds / item
+
+2. True or false?
+
+Throughput always (increases, decreases, is constant) with the size of the dataset
+Running time generally increases with the size of the dataset
+Latency is often measured using a dataset with only one item
+Latency always decreases if more than one item is processed at the same time
+
+https://forms.gle/JE4R1bMU13JAvAE36
+
 ===== Introduction =====
 
 === Scripting and the "Glue code" problem ===
@@ -40,6 +63,23 @@ Examples:
   code to call into C code.
 
 What tools do people use to "glue" programs together?
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 1. Module systems within a programming language (`import` in Python)
 
@@ -85,13 +125,15 @@ Examples where programmers and data scientists regularly use the shell:
 - You want to set up a Docker container with your application so that anyone
   can run and interact with it. You need to write a Dockerfile to do this.
 
+- You want to compile and run an experimental tool that was published on GitHub
+
 Or even, simply:
 
 - You have written some code, you want to send it to me so I can try it out.
 """
 
 # python3 lecture.py
-print("Welcome to ECS Lecture 2.")
+print("Welcome to ECS 119 Lecture 2.")
 
 # python3 -i lecture.py
 # Quitting: Ctrl-C, Ctrl-D
@@ -104,19 +146,34 @@ and connect those commands together.
 
 Examples we have seen:
 
-- ls: list files in our current directory
+- ls:
 
-- cd: change directories
+- cd:
 
-- python3 <code>.py: run a Python script
+- python3 <code>.py:
 
-- pytest <code>.py: run unit tests
+- pytest <code>.py:
 
-- conda install <module>: install new software with Conda
+- conda install <module>:
 
-- pip3 install <module>: install new Python libraries with Pip
+- pip3 install <module>:
 
 What do these programs have in common?
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 - Different programs may have been developed by different people, in different
   teams, in different languages, etc.
@@ -154,7 +211,7 @@ def ls_1():
     # Also includes hidden files/folders.
     print(os.listdir("."))
 
-ls_1()
+# ls_1()
 
 # What's the . folder?
 # That stands for the current, or working directory
@@ -169,7 +226,7 @@ import subprocess
 def ls_2():
     subprocess.run(["ls", "-alh"])
 
-ls_2()
+# ls_2()
 # ^^^^ same output as if I ran the command line directly
 
 # In addition to ., there is another special folder: ..
@@ -182,31 +239,15 @@ commands, and knowing shell syntax is important as it
 gives a very powerful way for Python programs to interact
 with the outside world.
 
-=== Recap ===
-
-What we have learned:
-1. The shell is a very powerful "glue code" system that is
-   how all programs interact on your operating system
-2. Knowing the shell is useful for example for configuration,
-   input, output, running commands in other languages,
-   running and configuring other tools, etc.
-   (Basically: if you can't find a library for it, may
-    have to resort to using the shell)
-3. It's also the main way that we interact with programs
-  and run/test/debug our code.
-4. We saw how to run basic commands like ls and ls -alh,
-   special folders and hidden folders, and what that
-   means.
-
-=============================================
-
-=== Oct 9 ===
+===== A model for interacting with the shell: 3 types of command =====
 
 We saw how to run basic commands in the shell and what it means.
-Today: a tour of the shell (looking around, navigating, help, I/O, etc.)
 
-Main 3 sections or categories of command:
-- 1. looking around, 2. getting help, 3. doing something
+Three types of commands:
+
+1.
+2.
+3.
 
 === Informational commands: looking around ===
 
@@ -310,7 +351,7 @@ But there is a way to make things persist and these are the shell config files i
 def pwd_1():
     print(os.getcwd())
 
-pwd_1()
+# pwd_1()
 
 # with subprocess (run an arbitrary command)
 # This one is a bit harder
@@ -318,13 +359,13 @@ def pwd_2():
     # os.environ is the Python equivalent of the shell $ indicator.
     subprocess.run(["echo", os.environ["PWD"]])
 
-pwd_2()
+# pwd_2()
 
 # In fact, we could just use this directly as well, and this offers a third way
 def pwd_3():
     print(os.environ["PWD"])
 
-pwd_3()
+# pwd_3()
 
 # Q: What happens when we run this from a different folder?
 
@@ -369,8 +410,8 @@ def cat_2():
 def less():
     subprocess.run(["less", "lecture.py"])
 
-cat_1()
-cat_2()
+# cat_1()
+# cat_2()
 
 # less()
 
@@ -402,10 +443,6 @@ Next time we will look at getting help + navigating/doing stuff
 And we will also talk about Git, dangers of the shell, and other Q+A.
 
 =============================================
-
-=== Oct 11 ===
-
-Shell, continued
 
 Recall the three-part model: Looking around, getting help, doing something
 
@@ -662,8 +699,6 @@ We will finish the rest of the file next time.
 
 =========================================
 
-=== Oct 14 ===
-
 Three things that came up last time:
 
 i) Text editors in the shell
@@ -687,7 +722,7 @@ def edit_file(file):
     subprocess.run(["nano", file])
 
 # Let's edit the lecture file and add something here.
-print("Hello, world!")
+# print("Hello, world!")
 
 """
 Text editors get opened when you run git commands

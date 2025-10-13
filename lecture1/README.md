@@ -96,7 +96,7 @@ Reminders:
 
 Announcements:
 
-- Midterm date: tenatively set for **Friday, November 7**
+- ~~Midterm date: tenatively set for **Friday, November 7**~~
 
 - Discussion section Zoom link/recording will be available in Canvas going forward!
 

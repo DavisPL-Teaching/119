@@ -7,6 +7,7 @@ A couple of scheduling announcements:
 - **This Wednesday:**
     I need to switch lecture & discussion section, and
     lecture will be on Zoom.
+
     So: Lecture at 11am on Zoom
         Discussion section at 3:10pm in the usual classroom (walker hall)
 
@@ -21,4 +22,6 @@ Plan:
 
 - Start with the poll.
 
-- Lecture on the shell!
+- Introduction to the shell!
+
+- 3-part model for interacting with the shell.
