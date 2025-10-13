@@ -28,3 +28,7 @@ Oct 10:
 1) Throughput = 1,000 records/hour assuming the full pipeline is measured from 9am to 9pm.
 2) 30 minutes on average
 3) From the perspective of the patient (individual row level): uniformly distributed between 0min and 60min delay.
+
+Oct 13:
+1) hrs, ms, s, ns
+2) F F F T T F

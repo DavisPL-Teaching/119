@@ -12,14 +12,14 @@ including:
 
 - git basics: status, add, push, commit, pull, rebase, branch
 
-- searching / pattern matching: find, grep, awk, sed
+- (if time) searching / pattern matching: find, grep, awk, sed
 
 Background:
 I will assume no background on the shell other than the
 one or two basic commands we have been typing in class.
 (Like `python3 lecture.py`)
 
-=== Poll ===
+=== Discussion Question & Poll ===
 
 Review from last time
 
@@ -42,6 +42,26 @@ Latency always decreases if more than one item is processed at the same time
 
 https://forms.gle/JE4R1bMU13JAvAE36
 
+Running time generally increases - True
+
+  Throughput = N / T
+
+  N = number of input items
+  T = total running time
+
+  Sometimes throughput goes up, sometimes it goes down
+
+  N / T - often roughly linear, but not exactly linear!
+
+  - if N = 1, often the system can't benefit from "scale",
+    so throughput will be quite low
+
+  - is N increases (10, 100, 1000, ...) the system will start to
+    benefit from scale, so throughput will increase
+
+  - if N -> infinity (more data than the laptop/machine can handle at all), throughput will again tank because the system will
+  just completely crash or lag / be unable to do things.
+
 ===== Introduction =====
 
 === Scripting and the "Glue code" problem ===
@@ -55,7 +75,7 @@ Examples:
 - Our data processing pipeline talks to the operating system when it
   asks for the input file life-expectancy.csv.
 
-- If another script wants to use our code, it must import it
+- Python module example: If another script wants to use our code, it must import it
   which requires the Python runtime to find the code on the system
   (see `module_test.py` for example)
 
@@ -64,47 +84,26 @@ Examples:
 
 What tools do people use to "glue" programs together?
 
+1. Using system libraries (like os and sys in Python)
 
+2. Module systems within a programming language (`import` in Python)
 
+3. Shell: To talk to a a C program from Python, one way would be to run commands through the shell
 
+Other solutions:
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-1. Module systems within a programming language (`import` in Python)
-
-2. Scripting languages: Python, others (e.g. Ruby, Perl)
-
-3. Shell implementations: Terminal on Mac; Anaconda Prompt; the shell inside VSCode; Windows Terminal; Powershell (not recommended)
+4. Scripting languages: Python, others (e.g. Ruby, Perl)
 
 For the most part, we can assume in this class that much of this interaction
-happens in Python (options 1 and 2).
+happens in Python
 (In fact, we will see how to do most things in today's lecture both
 in the shell, AND in Python!)
 But it is still useful to know how this program
 interaction happens "under the hood":
 
-1. We still need the command line to call our code in the first place.
+When Python interacts with the operating system and with programming languages other than Python, *internally* a common way to do this is through the shell.
 
-2. Under the hood, everything is really interacting through the shell
-   (or more directly through calls to operating system built-ins)
-   -- so it is sometimes easier and more powerful to interact through
-   these interface directly.
-
-   (Like opening up your car hood to look inside the engine)
-
-3. Much of code development, building, configuration, management, input,
-   and output happens through the shell in the real world.
+----
 
 Let's open up the shell now.
 """
@@ -113,7 +112,17 @@ Let's open up the shell now.
 # VSCode: Ctrl+` (backtick)
 # GitHub Codespaces: Bottom part of the screen
 
+# Once we have a shell open, we have a "command prompt" where
+# we can run arbitrary commands/programs on the computer (so it's
+# like an admin window into your machine.)
+
 """
+Questions:
+
++ If I can run commands from Python (we'll see that you can), then why should I use the shell?
+
++ If I can use a well-designed GUI app (such as my Git installation), why should I use the shell?
+
 Examples where programmers and data scientists regularly use the shell:
 
 - You have bought a new server machine from Dell, and you want to connect to
@@ -125,11 +134,32 @@ Examples where programmers and data scientists regularly use the shell:
 - You want to set up a Docker container with your application so that anyone
   can run and interact with it. You need to write a Dockerfile to do this.
 
+- Debugging software installations - missing dependencies, missing libraries
+
+  (I have Python3 installed, but my program isn't recognizing it)
+  Where is the software? Where is it expected to be?
+  ---> move it to the correct location
+
 - You want to compile and run an experimental tool that was published on GitHub
 
 Or even, simply:
 
 - You have written some code, you want to send it to me so I can try it out.
+
+Shell on different operating systems?
+
+- Mac, Linux: Terminal app
+- Windows is a bit different, commands by default are very different
+  option 1:
+  recommend the most: WSL (Windows Subsystem for Linux)
+  dropdown next to your shell window -> choose which type of
+  shell you want
+  With WSL, should be able to select a Ubuntu shell.
+
+  option 2:
+  Use the shell built into VSCode
+
+(don't recommend powershell)
 """
 
 # python3 lecture.py
@@ -146,11 +176,30 @@ and connect those commands together.
 
 Examples we have seen:
 
-- ls:
+- ls: "link show"
+  Show all files/folders in the current folder
 
-- cd:
+- cd: change directory
 
-- python3 <code>.py:
+(ls/cd often work together)
+
+- python3 <code>.py: Run the python code found in <code>.py
+
+NOTE: tab-autocomplete: very useful
+  (saves keystrokes)
+  (will cycle through theh options if there's more than one.)
+
+Very quick recap:
+We introduced the shell/terminal/command prompt as a way to solve the "glue code" problem
+
+We went through some motivation for when data scientists might need to use the shell (esp. to interact with things like remote servers), and saw some basic commands.
+
+We'll pick this up on Wednesday, and remember that we will be at
+11am on Zoom, with discussion section in the usual classroom/class time.
+
+***** Where we ended for today. *****
+
+=============================================
 
 - pytest <code>.py:
 
