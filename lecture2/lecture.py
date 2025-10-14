@@ -176,7 +176,7 @@ and connect those commands together.
 
 Examples we have seen:
 
-- ls: "link show"
+- ls (stands for "list")
   Show all files/folders in the current folder
 
 - cd: change directory
@@ -201,13 +201,30 @@ We'll pick this up on Wednesday, and remember that we will be at
 
 =============================================
 
+Wednesday, Oct 15
+
+Continuing the shell.
+
+Poll:
+Which of the following are reasons you might want to use the shell? (Select all that apply)
+
+<Options cut>
+
+https://forms.gle/YrsjyyXe5Ve1aqEM7
+
+-----
+
+Last time we saw: ls, cd, python3
+
+Remaining commands:
+
 - pytest <code>.py:
 
 - conda install <module>:
 
 - pip3 install <module>:
 
-What do these programs have in common?
+What do all of these programs have in common?
 
 
 
@@ -230,7 +247,7 @@ What do these programs have in common?
 - We can't assume someone wrote a nice GUI for us to connect these programs
   or pieces together! (Sadly, often they didn't.)
 
-Let's try running a couple of these to remind ourselves how these work.
+Some examples of running these:
 """
 
 # Try:
@@ -244,13 +261,18 @@ Let's try running a couple of these to remind ourselves how these work.
 # ^^^^^^^ TL;DR use this to show all the stuff in a folder
 
 """
-Can we do this in Python?
+Important point:
 
-Sure!
+- You can run shell commands in Python
+
+- You can run Python programs from the shell
+
+Let's see an example
 """
 
-# os is the operating system library
-# i.e.: how Python interacts with the operating system
+# 1. Using the built-in os library
+
+# os is how Python interacts with the operating system
 import os
 
 def ls_1():
@@ -266,8 +288,7 @@ def ls_1():
 # That stands for the current, or working directory
 # for the program
 
-# In python it's often useful to call into another
-# command -- you can think of this as basically calling into the shell from Python.
+# 2. Running general/arbitrary commands
 
 # Library for running other commands
 import subprocess
@@ -281,12 +302,18 @@ def ls_2():
 # In addition to ., there is another special folder: ..
 
 """
-Common theme:
-Everything we can do in the shell, we can also do in Python directly.
-But, sometimes in Python we just directly call into
-commands, and knowing shell syntax is important as it
+Summary points:
+
+Sometimes in Python we just directly call into
+commands, and knowing shell syntax is useful as it
 gives a very powerful way for Python programs to interact
 with the outside world.
+
+Everything that can be done in the shell can be done in a Python script
+(Why?)
+
+Everything that can be done in Python can be done in the shell
+(Why?)
 
 ===== A model for interacting with the shell: 3 types of command =====
 
@@ -294,9 +321,9 @@ We saw how to run basic commands in the shell and what it means.
 
 Three types of commands:
 
-1.
-2.
-3.
+1. Information
+2. Getting help
+3. Doing something
 
 === Informational commands: looking around ===
 
@@ -310,9 +337,32 @@ e.g.
 - Peasant's Quest (2004):
   https://homestarrunner.com/disk4of12
 
+Back in the day you would then open up the game (and be provided no information to help. :-) )
+What would you do first?
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 Just as in a text-based adventure,
 the most important thing you need to know when opening a shell is
-how to "look around". What do you see?
+how to "look" around. What do you see?
 
 The same advice applies to all commands!
 Including external tools people have built, and even commands outside of the shell, like
@@ -537,7 +587,7 @@ Important caveat: you need to know what it is you want to do first!
 # https://stackoverflow.com/questions/3786606/find-all-files-matching-name-on-linux-system-and-search-with-them-for-text
 # find ../lecture1 -type f -name lecture.py -exec grep -l "=== Poll ===" {} +
 
-# Important notes:
+# Some observations:
 # Using Google+AI doesn't obliviate the need to understand things ourselves.
 # - we still needed to know how to modify the command for your own purposes
 # - we still needed to know the platform we are on (Unix)

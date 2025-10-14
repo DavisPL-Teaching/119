@@ -30,3 +30,15 @@ Plan:
 - Introduction to the shell!
 
 - 3-part model for interacting with the shell.
+
+## Wednesday Oct 15
+
+Reminders:
+
+- Discussion section at 3:10pm in lecture classroom
+
+- HW1 due Friday
+
+Plan:
+
+- 3-part model for interacting with the shell.
