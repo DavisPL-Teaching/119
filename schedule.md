@@ -47,11 +47,10 @@ I will try to keep it up to date, but please see Piazza for the latest informati
 | 9 | Nov 24 | Streaming Pipelines |  | 6 |
 |   | Nov 26 |  |  | 6 |
 |   | Nov 28 | **No Class** (Thanksgiving) |
-| 10 | Dec 2 |  |  | 6 |
-|    | Dec 4 | Cloud computing or selection of additional topics[^1] |  | 7 |
-|    | Dec 6 | Cloud computing or selection of additional topics[^1] |  | 7 |
-| 11 | Dec 9 |  | HW2 due |  |
-|    | Dec 12 | **Final Exam (8am)** |  |  |
+| 10 | Dec 1 |  |  | 6 |
+|    | Dec 3 | Cloud computing or selection of additional topics[^1] |  | 7 |
+|    | Dec 5 | Cloud computing or selection of additional topics[^1] |  | 7 |
+| 11 | Dec 11 | **Final Exam (8am)** |  |  |
 
 ## Notes
 
