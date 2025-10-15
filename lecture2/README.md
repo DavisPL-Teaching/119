@@ -42,3 +42,5 @@ Reminders:
 Plan:
 
 - 3-part model for interacting with the shell.
+
+Questions?
