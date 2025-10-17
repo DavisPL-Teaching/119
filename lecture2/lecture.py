@@ -212,8 +212,6 @@ Which of the following are reasons you might want to use the shell? (Select all 
 
 https://forms.gle/YrsjyyXe5Ve1aqEM7
 
-Correct answers: 1, 2, 3, 4, 5, and 7.
-
 -----
 
 Last time we saw: ls, cd, python3
@@ -415,6 +413,28 @@ Recap:
 
 =======================================================
 
+Friday, October 17
+
+Poll:
+
+1. Which of the following are a good use cases for things to list in .gitignore? (Select all that apply)
+<options cut>
+
+2. Platform-specific things to be aware of could include... (Select all that apply)
+<options cut>
+
+https://forms.gle/HmmT8BjXtiBvferRA
+
+
+
+Continuing the shell:
+
+Last time:
+
+
+
+=== Informational commands ===
+
 Just as in a text-based adventure,
 the most important thing you need to know when opening a shell is
 how to "look" around. What do you see?
@@ -465,6 +485,16 @@ So how do we "look around"?
 
   Are there advantages to one shell over another?
 
+
+
+
+
+
+
+
+
+
+
   Usability: Some modern shells have fancy things like syntax highlighting,
   GUIs that you can click around in, etc.
 
@@ -492,6 +522,17 @@ When we run `echo $PWD` what's actually happening:
 You can also define and set your own environment variables.
 
 Are environment variables local? Will they persist after the shell session terminates?
+
+
+
+
+
+
+
+
+
+
+
 
 No, they won't
 But there is a way to make things persist and these are the shell config files ilke
@@ -628,6 +669,7 @@ You can usually use:
 - Google
 - chatGPT
 - (new!) AI tools in the shell: e.g. https://github.com/ibigio/shell-ai
+  (use at your own risk)
 
 # Example: q make a new git branch -> returns the right git syntax
 
@@ -651,7 +693,7 @@ Important caveat: you need to know what it is you want to do first!
 #     can seem like even more work than using/understanding the program itself.
 
 """
-=== Navigation ===
+=== Doing stuff ===
 
 Once we know how to "look around", and how to "get help",
 we can make a plan for what to do.

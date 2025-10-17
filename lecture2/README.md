@@ -44,3 +44,20 @@ Plan:
 - 3-part model for interacting with the shell.
 
 Questions?
+
+## Friday Oct 17
+
+Reminders:
+
+- HW1 due today
+
+    Good luck!
+    Keep the questions coming on Piazza!
+
+Plan:
+
+- 3-part model for interacting with the shell.
+
+- We will aim to finish Lecture 2 today and Monday.
+
+Questions?

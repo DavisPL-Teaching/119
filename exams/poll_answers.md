@@ -32,3 +32,10 @@ Oct 10:
 Oct 13:
 1) hrs, ms, s, ns
 2) F F F T T F
+
+Oct 15:
+Correct answers: 1, 2, 3, 4, 5, and 7 (all except 6: "To load & use pandas to calculate the max and average of a DataFrame")
+
+Oct 17:
+1) B, C, and D
+2) B, C, D, E, and F (all except "A: A python3 'Hello, world!' program works only on certain operating systems")
