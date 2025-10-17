@@ -52,7 +52,12 @@ Reminders:
 - HW1 due today
 
     Good luck!
-    Keep the questions coming on Piazza!
+    Please keep the questions coming on Piazza! We will try to monitor leading
+    up to the deadline
+
+    Autograder score:
+    60 pts available now, remainder will be graded with
+    the full version of the autograder after the deadline.
 
 Plan:
 
