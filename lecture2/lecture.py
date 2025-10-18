@@ -636,7 +636,22 @@ Recap:
 Next time we will talk about:
 - help commands, doing stuff commands
 
------
+==============================================
+
+Monday, October 20
+
+Showing two more commands before the discussion question:
+
+- cat:
+- less:
+
+Discussion Question & Poll:
+Which of the following are "informational" commands?
+<Options cut>
+
+https://forms.gle/XkbkUL2QxsLz6dLq7
+
+=====
 
 Informational commands
 
@@ -1165,4 +1180,11 @@ Regular expressions
 
   Example to try for a URL: [a-zA-Z]+\\.[a-z]+( |\\.|\n)
 
+=== Finishing up ===
+
+
+
+
+
+End.
 """

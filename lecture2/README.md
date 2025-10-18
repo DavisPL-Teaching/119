@@ -66,3 +66,15 @@ Plan:
 - We will aim to finish Lecture 2 today and Monday.
 
 Questions?
+
+## Monday Oct 20
+
+Announcements:
+
+- I have to cancel my office hours today; please
+  email me if you would join a Zoom evening office hour!
+
+Plan:
+
+- Start with discussion question & poll
+- Help commands and doing stuff commands
