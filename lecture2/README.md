@@ -93,3 +93,7 @@ Plan:
 - Start with discussion question & poll
 
 - Help commands and doing stuff commands
+
+- Hope to get through most/all of remainder of lecture 2.
+
+Questions?

@@ -640,34 +640,27 @@ Next time we will talk about:
 
 Monday, October 20
 
+Continuing with the shell!
+
 Showing two more commands before the discussion question:
 
-- cat:
-- less:
+- cat <path>:
+  Prints out the contents of a file at <path>
+
+- less <path>:
+  Show "less" of the contents of the file at <path>
+  u to go up, d to go down, q to quit
+
+- open <path>:
+  Open the file in your default program for that file.
+
+(Three ways to view/open a file)
 
 Discussion Question & Poll:
 Which of the following are "informational" commands?
 <Options cut>
 
 https://forms.gle/XkbkUL2QxsLz6dLq7
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 =====
 
@@ -676,18 +669,10 @@ Informational commands (finishing up)
 Information about the current state of our shell includes:
 - what folder we are in
 - what environment variables (local variables) are set (and to what values)
+- other system information and system data
+- file contents etc.
 
 A few other commands:
-
-- cat:
-  Print out the entire file to the terminal
-  Useful programmatically
-
-- less:
-  Slightly more helpful if you are a human
-  Type 'q' to quit
-
-- open:
 
 - ls <directory>:
 
@@ -724,6 +709,10 @@ than the last thing -- is getting help if you *don't* know what to do.
 
 One of the following 3 things usually works:
 - `man cmd` or `cmd --help` or `cmd -h`
+
+Examples:
+- ls: has a man entry, but no --help or -h
+- python3: has all three options
 
 Some ways to get help (examples running these from Python):
 """
@@ -786,14 +775,33 @@ So what should we do?
 We need a way to move around and modify stuff:
 
 - cd -- change directory
-- mkdir -- make a new directory
-- touch -- make a new file
+  This modifies the state of the system by changing the current
+  working directory
 
-Some examples in Python:
+- mkdir -- make a new (empty) directory in the current locaiton
+  (current working directory)
+
+- cp -- copy a file from one place to another
+
+(demo: copy folder.txt to ../folder.txt)
+
+(I follow this pattern a lot -- information first, then do something, then information again)
+
+- touch <file or path> -- make a new file
+
+  Create a new empty file at <file or path>
+
+(Another example - creating a new Python module)
 - mkdir subfolder
 - cd subfolder
 - touch mod.py
 - open mod.py
+
+- mv <file1> <file2>:
+  Move a file from one path to another, or rename it
+  from one file name to another.
+
+Examples of how to accomplish similar purposes in Python:
 """
 
 def cd(dir):
@@ -815,16 +823,32 @@ Commands are given arguments, like this:
 cmd -<argument name> <argument value>
 cmd --<argument name> <argument value>
 
+Some arguments don't have values:
+
+cmd -<argument flag>
+
+You can chain together any number of arguments:
+
+cmd -<arg1> <val1> -<arg2> <val2> ...
+
 Example:
   git --version to get the version of git
-  OR git -v are both equivalent
+  git -v : equivalent to the above
+
+(Informational commands for git)
 
 This is typical: usually we use a single dash + a single letter
 as a shortcut for a double dash plus a long argument name.
 
 We have seen some of these already.
 
-How subprocess works:
+Commands also have "positional" arguments, which don't use - or -- flags
+
+  - cd <val>
+
+  - cp <val1> <val2>
+
+(More examples in Python:)
 """
 
 def run_git_version():
@@ -865,11 +889,15 @@ Most useful:
   cmd1 || cmd2 -- do cmd1, if it fails, do command 2
   cmd1 && cmd2 -- do cmd1, if it succeeds, do command 2
 
+  These are "shortcircuiting" boolean operations,
+  just as in most programming languages, but based
+  on whether the command succeeds or fails.
+
 Examples:
   python3 lecture.py || echo "Hello"
   python3 lecture.py && echo "Hello"
 
-(Skip most of these depending on time)
+===== Skip the following for time =====
 
 - |
   Chains together two commands
@@ -901,7 +929,6 @@ Exercises:
     tzdata                    2024a                h04d1e81_0
     unicodedata2              15.1.0          py312h80987f9_0
 
-Skipped for time:
 - ls followed by cat
   (equivalent to just ls)
 - cat followed by cd
@@ -912,7 +939,28 @@ Skipped for time:
   (using >)
 - (Hard) cat followed by cd into the first directory of interest
 
-=== Git ===
+Recap:
+
+Help commands: see a command usage & options
+
+Doing stuff commands:
+  various ways of creating files, moving files,
+  copying files, etc.
+
+Anatomy of commands:
+  cmd <val1> <val2> ... or
+  cmd -<option1> <val1> -<option2> <val2> etc.
+
+We saw various ways of combining and composing
+different commands, which can be used for
+advanced shell programming to write arbitrary
+scripts in the shell.
+
+****** Where we ended for today ******
+
+==========================================================
+
+===== Git =====
 
 We can think of git under the same model as other shell commands!
 

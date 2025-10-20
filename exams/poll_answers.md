@@ -39,3 +39,6 @@ Correct answers: 1, 2, 3, 4, 5, and 7 (all except 6: "To load & use pandas to ca
 Oct 17:
 1) B, C, and D
 2) B, C, D, E, and F (all except "A: A python3 'Hello, world!' program works only on certain operating systems")
+
+Oct 20:
+ls, ls -alh, python3 --version, conda list, git status, cat, less
