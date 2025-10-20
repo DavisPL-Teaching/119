@@ -651,34 +651,50 @@ Which of the following are "informational" commands?
 
 https://forms.gle/XkbkUL2QxsLz6dLq7
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 =====
 
-Informational commands
+Informational commands (finishing up)
 
-Remember that "looking around" is trying to see or look at the various
-information about the current state of our shell.
-That state includes:
+Information about the current state of our shell includes:
 - what folder we are in
 - what environment variables (local variables) are set (and to what values)
 
-We can also look inside files and directories:
+A few other commands:
 
-- cat
+- cat:
   Print out the entire file to the terminal
   Useful programmatically
 
-- less
+- less:
   Slightly more helpful if you are a human
   Type 'q' to quit
 
-- open
-  Open the file using a GUI application on your computer, if available
+- open:
 
-- ls inside an existing directory
+- ls <directory>:
 
   ls ..
   ls ../lecture2
 
+Examples in Python:
 """
 
 def cat_1():
@@ -698,42 +714,18 @@ def less():
 
 """
 This concludes the first part on "looking around"
-Next time we'll finish this 3-part model
-
-If you're trying to understand really any system, but in particular the shell,
-the three things you're going to need to know is
-- looking around: how to view the current state of the system
-- help: how to get help with what commands are available
-- actually doing something
-
-e.g.: git status is telling you the current state of the system.
 
 === Getting help ===
 
+Recall the three-part model: Looking around, getting help, doing something
+
 Another thing that is fundamentally important -- and perhaps even more important
-than the last thing -- is getting help!
+than the last thing -- is getting help if you *don't* know what to do.
 
 One of the following 3 things usually works:
 - `man cmd` or `cmd --help` or `cmd -h`
 
-=== Recap ==
-
-We saw looking around
-Tutorial on the state of the shell (current working directory, environment variables, file contents)
-Next time we will look at getting help + navigating/doing stuff
-And we will also talk about Git, dangers of the shell, and other Q+A.
-
-=============================================
-
-Recall the three-part model: Looking around, getting help, doing something
-
-=== Zork demo ===
-
-https://textadventures.co.uk/games/play/5zyoqrsugeopel3ffhz_vq
-
-=== Getting help, continued ===
-
-Let's run our "getting help" commands in Python:
+Some ways to get help (examples running these from Python):
 """
 
 def get_help_for_command(cmd):
@@ -744,20 +736,15 @@ def get_help_for_command(cmd):
 # get_help_for_command("python3")
 
 """
-Other ways to get help?
+Other ways to get help:
 
-Some shell experts will tell you that you that you shouldn't be "alt-tab"ing outside of the
-shell, and should know how to do everything purely within it by getting help as above.
-I don't agree with this advice.
-Using Google/AI can be really useful for a number of reasons!
+Using Google/StackOverflow/AI can also be really useful for a number of reasons!
 
-You can usually use:
-- Google
-- chatGPT
-- (new!) AI tools in the shell: e.g. https://github.com/ibigio/shell-ai
+- A more recent development:
+  AI tools in the shell: e.g. https://github.com/ibigio/shell-ai
   (use at your own risk)
 
-# Example: q make a new git branch -> returns the right git syntax
+  Example: q make a new git branch -> returns the right git syntax
 
 to determine the right command to run for what you want to do.
 
@@ -770,15 +757,15 @@ Important caveat: you need to know what it is you want to do first!
 # https://stackoverflow.com/questions/3786606/find-all-files-matching-name-on-linux-system-and-search-with-them-for-text
 # find ../lecture1 -type f -name lecture.py -exec grep -l "=== Poll ===" {} +
 
-# Some observations:
-# Using Google+AI doesn't obliviate the need to understand things ourselves.
-# - we still needed to know how to modify the command for your own purposes
-# - we still needed to know the platform we are on (Unix)
-# - (for the AI tool) you still need to figure out how to install it (:
-#   + as some of you have noticed (especially on Windows), installing some software dev tools
-#     can seem like even more work than using/understanding the program itself.
-
 """
+Some observations:
+Using AI doesn't obliviate the need to understand things ourselves.
+- we still needed to know how to modify the command for your own purposes
+- we still needed to know the platform we are on (Unix)
+- (for the AI tool) you still need to figure out how to install it (:
+  + as some of you have noticed (especially on Windows), installing some software dev tools
+    can seem like even more work than using/understanding the program itself.
+
 === Doing stuff ===
 
 Once we know how to "look around", and how to "get help",
@@ -802,7 +789,7 @@ We need a way to move around and modify stuff:
 - mkdir -- make a new directory
 - touch -- make a new file
 
-Example:
+Some examples in Python:
 - mkdir subfolder
 - cd subfolder
 - touch mod.py
@@ -853,7 +840,7 @@ def run_python3_file_interactive(file):
 # run_python3_file_interactive("subfolder/mod.py")
 
 """
-=== I/O ===
+=== I/O & Composing Shell Commands ===
 
 What about I/O?
 Remember that one of the primary reasons for the shell's existence is to
@@ -971,17 +958,9 @@ For sharing/publishing your own changes
 
 - git push
 
-=== Recap ===
-
-We finished the "getting help" part and saw the "doing stuff" part
-We saw command arguments and input/output
-We saw the basics of git
-
-We will finish the rest of the file next time.
-
 =========================================
 
-Three things that came up last time:
+===== Other miscellaneous things =====
 
 i) Text editors in the shell
 
@@ -1155,7 +1134,7 @@ A: Both of these are useful "glue" languages -- ways to
 
    Knowing the shell can improve your Python scripts and vice versa.
 
-=== Skipped topics ===
+=== Some skipped topics ===
 
 Things we didn't cover:
 
@@ -1179,12 +1158,6 @@ Regular expressions
 - Regex explainer: https://regexr.com/
 
   Example to try for a URL: [a-zA-Z]+\\.[a-z]+( |\\.|\n)
-
-=== Finishing up ===
-
-
-
-
 
 End.
 """

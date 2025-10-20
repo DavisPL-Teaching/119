@@ -71,10 +71,25 @@ Questions?
 
 Announcements:
 
-- I have to cancel my office hours today; please
-  email me if you would join a Zoom evening office hour!
+- Canvas and Piazza outage today :-)
+
+    + Canvas still down, Piazza is back up
+
+- My office hours are cancelled today! (I have to make a different appointment)
+
+    **If you need to reach me:** I can be available for Zoom hours, I plan to hold these hours either today or tomorrow evening or Wednesday late afternoon. Please email me if you would like to attend office hours at one of these times and let me know which of these times you would be available.
+
+- A quick note about uploading to Gradescope
+
+    + Please do try to download your code and run it!
+
+    + Part of why we are doing all of this work on the shell is to get you used to figuring out how/why
+      programs do and don't run :-)
+
+    + It is your responsibility to ensure that the autograder runs on your code.
 
 Plan:
 
 - Start with discussion question & poll
+
 - Help commands and doing stuff commands
