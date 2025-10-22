@@ -960,15 +960,42 @@ scripts in the shell.
 
 ==========================================================
 
+Wednesday, October 22
+
+Poll quesiton:
+
+1. Give an example of a command that uses a positional argument
+
+2. Give an example of a command that uses a named argument
+
+3. Why do you think that commands have both positional and named arguments?
+
+A) There is no reason for this, it's a historical accident
+B) Positional arguments are more often optional, named arguments are more often required
+C) Named arguments are more often optional, positional arguments are more often required
+D) Named arguments can be combined with positional arguments to specify options or modify command behavior
+E) Named arguments emphasize the intended purpose of the argument for readability purposes
+F) Positional arguments allow easily specifying Boolean flags (like turning debug mode on or off)
+
+https://forms.gle/UNCmxWcRE53MkLNv7
+
+
+
+
+
+
+
+
 ===== Git =====
 
-We can think of git under the same model as other shell commands!
+Git follows the same model as other shell commands!
 
 Informational commands:
 - git status
 - git log
 - git log --oneline
 - git branch -v
+- git diff
 
 What about help commands? Try:
 - man git
@@ -1037,7 +1064,7 @@ def edit_file(file):
 Text editors get opened when you run git commands
 like git commit without a message.
 
-ii) Here is a very important "informational" command I missed:
+ii) Variations of git diff
 
   git diff
   git diff --word-diff (word level diff)
@@ -1046,23 +1073,8 @@ ii) Here is a very important "informational" command I missed:
   git diff --staged -- after you do a git add, shows diff from green
   changes
 
-iii) A general principle that we have seen several times:
-After doing a "doing stuff" command,
-we often want to go back to the informational commands
-to see what changed.
+iii) Other git commands (selected most useful):
 
-Example:
-- git status
-- git add
-- git status
-- git commit
-- git status
-- git push
-- git status
-
-=== Finishing up git ===
-
-Other git commands (selected most useful):
 - git merge -- merge together different conflicting versions of the code
 - git rebase
 - git rebase -i -- often useful for modifying commit messages
