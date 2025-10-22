@@ -100,25 +100,25 @@ Questions?
 
 ## Wednesday Oct 22
 
-Full disclosure: we are a bit behind from where I wanted to be
-at this point in the quarter!
-
-I know I said we would try to finish the shell lecture last time,
-but there are a couple of topics left that I want to cover
-and these are part of the material for the midterm.
-
-I will discuss more details about the midterm on Friday.
-
 Announcements:
 
-- None
+- Full disclosure: we are a bit behind from where I wanted to be
+  at this point in the quarter!
+
+  I know I said we would try to finish the shell lecture last time,
+  but there are a couple of topics left that I want to cover
+  and these are part of the material for the midterm.
+
+- I will discuss more details about the midterm on Friday.
+
+Questions?
 
 Plan:
+
+- Poll
 
 - Git
 
 - Dangers of the shell
 
 - Overview of advanced topics / things we didn't cover.
-
-Questions?
