@@ -1318,6 +1318,8 @@ https://twitter.com/bshlgrs/status/1840577720465645960
 # sudo rm -rf "/very/important/operating-system/file"
 
 """
+=============== Closing material (discusses advanced topics and recap; feel free to review on your own time!) ===============
+
 === What is the Shell? (revisited) ===
 
 The shell IS:

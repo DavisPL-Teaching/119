@@ -1,37 +1,41 @@
 """
 Lecture 4: Parallelism
 
-(Oct 21)
+Oct 24
 
 === Poll ===
 
-- Definition of a data operator
+Which of the following is an accurate statement about Git's core philosophies?
 
-- (Dis)advantages of Pandas
+https://forms.gle/zB1qhdrP2xXswHMX8
 
-https://forms.gle/3syqeqUwqTi6LBAP6
-https://tinyurl.com/3az4pfx3
 
 ===== Introduction =====
 
 So far, we know how to set up a basic working data processing pipeline
 for our project:
 
-- We have a prototype of the input, processing, and output stages (Lecture 1)
+- We have a prototype of the input, processing, and output stages
+  and we can think about our pipeline as a dataflow graph (Lecture 1)
 
 - We have used scripts and shell commands to download any necessary
   data, dependencies, and set up any other system configuration (Lecture 2)
   (running these automatically if needed, see HW1 part 3)
 
-- We have used a vectorized internal memory representation to represent
-  the data in-memory in the processing stage (Lecture 3)
-  (for a review on vectorization, see discussion section and HW1 part 2)
+How did we build our pipeline?
+
+So far (in Lecture 1 / HW1), we have been building our pipelines in Pandas
+
+- Pandas can efficiently representing data in memory as a DataFrame
+
+- Pandas uses vectorization - you studied this a little in HW1 part 2
 
 The next thing we need to do is **scale** our application.
 
 === What is scaling? ===
 
-Scalability is the ability of a computer system to handle an increasing amount of work.
+Scalability is...
+
 
 === Why scaling? ===
 
@@ -52,16 +56,16 @@ Basically we should scale if we want one of two things:
       that responds to input from users in real-time
       (more on this later in the quarter!)
 
-Why might you want to do this?
+Questions we might ask:
 
-- Biggest difference between a toy project and industry!
+- How likely would it be that you want to scale for a toy project?
+  For an industry project?
 
-- More data ==
-    more accurate models
-    more precise results
-    more insight that can guide decisions
+- What advantages would scaling have on an ML training pipeline?
 
-- Example: GPT-4
+=== An example: GPT-4 ===
+
+Some facts:
     + trained on roughly 13 trillion tokens
     + 25,000 A100 processors
     + span of 3 months
@@ -69,8 +73,15 @@ Why might you want to do this?
     https://www.kdnuggets.com/2023/07/gpt4-details-leaked.html
     https://en.wikipedia.org/wiki/GPT-4
 
-- Contrast:
-    our population dataset is roughly 60,000 lines and roughly 1.6 MB on disk.
+(And the next generation of models have taken even more)
+
+Contrast:
+
+    our population dataset in HW1 is roughly 60,000 lines and roughly 1.6 MB on disk.
+
+NVIDIA stock:
+
+    https://www.google.com/finance/quote/NVDA:NASDAQ?window=5Y
 
 === Thinking about scalability ===
 
@@ -84,11 +95,18 @@ Points:
     double the # of processors => double the throughput
     (best case scenario)
 
+    double the # of processors => half the latency? (Y or N)
+
 - Sequential (non-parallel) applications exhibit
-"linear scaling" which means the amount of time it will
-take your system to proces N input data items is O(N)
-(constant throughput!)
-When we talk about scaling, we are looking for something better than O(N).
+"linear scaling"
+
+    Linear scaling:
+
+
+
+When we talk about scaling, we are looking for something better that this.
+
+=== A bit about Pandas ===
 
 Disdavantage of Pandas: does not scale!
 
@@ -103,21 +121,20 @@ Exercise:
     According to McKinney's estimate, how much how large of a dataset in population.csv
     could your laptop handle?
 
-Amount of RAM: 16GB (x4), 8GB (x2), 18GB,
+(Let me show how to do this)
 
-Mode answer: 16GB
-We can process: 1.6GB-3.2GB of data
+Answers:
 
-    population.csv was 1.6MB
 
-roughly, we can process like a 1000X as much data
+
+Fill in:
+
+Roughly, we can process like _____ as much data
 and then we'll a bottleneck.
 
-- NVIDIA stock:
+=== Getting Started ===
 
-    https://www.google.com/finance/quote/NVDA:NASDAQ?window=5Y
-
-===== Getting started: Some Definitions and Examples =====
+Some definitions and examples:
 
 Parallel, concurrent, and distributed computing
 
@@ -135,10 +152,10 @@ Baseline:
 
 (Rule 0 of parallel computing:
 Any time we're measuring parallelism we want to start
-with a sequential version of the code!
-Scalability! But at what COST?
-https://www.usenix.org/system/files/conference/hotos15/hotos15-paper-mcsherry.pdf
-)
+with a sequential version of the code!)
+
+    Scalability! But at what COST?
+    https://www.usenix.org/system/files/conference/hotos15/hotos15-paper-mcsherry.pdf
 """
 
 def average_numbers(N):
@@ -246,7 +263,7 @@ def average_numbers_parallel():
 """
 === What is concurrency? ===
 
-Concurrency is when there are conflicting or out-of-order operations happening.
+Concurrency is when there are multiple operations happening that might conflict.
 
 In a conveyor belt, it means multiple workers are taking items off the belt.
 
@@ -299,8 +316,7 @@ Difference between parallelism & concurrency & distribution:
 Review from definitions last time;
 Which of the following scenarios are parallel, concurrent, and distributed?
 
-https://forms.gle/RY4QH5utjLtww6Ur8
-https://tinyurl.com/m3pvbdwe
+
 
 === Poll Answers ===
 
@@ -577,8 +593,7 @@ The scenario above exhibits... (select all that apply)
 - Race condition
 - Data race
 
-https://forms.gle/wb8WEUF4fRgGcPVeA
-https://tinyurl.com/3k9yeuym
+
 
 === What is distribution? ===
 
@@ -823,8 +838,7 @@ A Python script needs to:
 - calculate a new column which is the total course load for each student
 - send an email to each student with their total course load
 
-https://forms.gle/bfbjmwhJHgWqRRux8
-https://tinyurl.com/5kvanhwv
+
 
 Answer: data + pipeline parallelism, no task parallelism in the pipeline as described.
 
@@ -1194,7 +1208,6 @@ Assume that it takes 1 ms (per row) to read in each input row, 1 ms (per row) to
 
 Q: What is the theoretical bound on the maximum speedup in the pipeline?
 
-https://forms.gle/JrnevTyVbxFzuFzq9
 
     T = 300 ms
     S = 3 ms
