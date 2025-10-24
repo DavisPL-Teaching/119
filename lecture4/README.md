@@ -6,7 +6,7 @@ Changing gears today!
 
 Announcements:
 
-- A few details about the midterm:
+- A few details about the midterm (scheduled for Wed, Nov 5):
 
     Format:
 
@@ -33,6 +33,9 @@ Announcements:
         More topics will be added after next week!
 
     + Please ask questions at the OH and discussion section and on Piazza!
+
+- I have to leave class right at 4pm today - I will end class 5 minutes early
+  (3:55) in case there are questions after class.
 
 Plan for today:
 
