@@ -46,3 +46,6 @@ ls, ls -alh, python3 --version, conda list, git status, cat, less
 Oct 22:
 1) Some possible answers: `cd folder/`, `cp file1.txt file2.txt`
 2) Some possible answers: `ls -alh`, `python3 --version`
+
+Oct 24:
+B, E, and F.

@@ -3,12 +3,11 @@ Lecture 4: Parallelism
 
 Oct 24
 
-=== Poll ===
+=== Discussion Question and Poll ===
 
 Which of the following is an accurate statement about Git's core philosophies?
 
 https://forms.gle/zB1qhdrP2xXswHMX8
-
 
 ===== Introduction =====
 
@@ -34,8 +33,7 @@ The next thing we need to do is **scale** our application.
 
 === What is scaling? ===
 
-Scalability is...
-
+Scalability is the ability of a system to handle an increasing amount of work.
 
 === Why scaling? ===
 
@@ -61,6 +59,8 @@ Questions we might ask:
 - How likely would it be that you want to scale for a toy project?
   For an industry project?
 
+  A: probably more likely for an industry project.
+
 - What advantages would scaling have on an ML training pipeline?
 
 === An example: GPT-4 ===
@@ -77,8 +77,11 @@ Some facts:
 
 Contrast:
 
-    our population dataset in HW1 is roughly 60,000 lines and roughly 1.6 MB on disk.
+    our population dataset in HW1 is roughly 60,000 lines and roughly 1.6 MB on disk.'
 
+    Over 1 million times less data than the amount of tokens for GPT-4!
+
+Conclusion: scaling matters.
 NVIDIA stock:
 
     https://www.google.com/finance/quote/NVDA:NASDAQ?window=5Y
@@ -89,24 +92,22 @@ Points:
 
 - We can think of scaling in terms of throughput and latency
 
-    See scaling/ folder for some examples!
+    See scaling-examples/ folder for some examples!
 
     If your application is scaling successfully,
-    double the # of processors => double the throughput
+    double the # of workers or processors => double the throughput
     (best case scenario)
 
     double the # of processors => half the latency? (Y or N)
 
-- Sequential (non-parallel) applications exhibit
-"linear scaling"
+        A: Not necessarily
 
-    Linear scaling:
+        Often latency is not affected in the same way.
 
+If we can scale our application successfully,
+we are typically looking to increase the throughput of the application.
 
-
-When we talk about scaling, we are looking for something better that this.
-
-=== A bit about Pandas ===
+=== A note about Pandas ===
 
 Disdavantage of Pandas: does not scale!
 
@@ -122,6 +123,20 @@ Exercise:
     could your laptop handle?
 
 (Let me show how to do this)
+
+My answer: 18 GB
+
+Next time at the start of class, we'll poll the class for various
+answers and figure out how large of a dataset we could handle in Pandas.
+
+Recap:
+
+- We went over midterm topics
+- We saw some motivation for why you might want to scale your application
+- We defined scalability and types of scalability (running on more data vs. running more often)
+- Pandas does not scale in this sense.
+
+----- Where we ended for today -----
 
 Answers:
 
