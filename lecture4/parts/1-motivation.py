@@ -139,6 +139,7 @@ Recap:
 
 ----- Where we ended for today -----
 
+(Finishing up)
 
 NOTE: to get exact RAM:
 
@@ -174,6 +175,10 @@ print("Amount of RAM on this machine (method 2):")
 get_ram_2()
 
 """
+Poll:
+
+https://forms.gle/sqGrHBdQBrykDoSdA
+
 Answers:
 
 
