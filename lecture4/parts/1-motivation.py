@@ -179,21 +179,35 @@ Poll:
 Answers:
 
 Method 1:
-    8.5, 8.6, 17.1
+    8.5, 8.6, 17.1, 15, 17.1, 16.5, 17.1
 
 Method 2:
-    8, 8, 16, 7.62
+    8, 8, 16, 7.62, 15.61, 14.45, 15.4, 7.82, 16, 15.3, 31.6
+"""
 
+method1 = [8.5, 8.6, 17.1, 15, 17.1, 16.5, 17.1]
+method2 = [8, 8, 16, 7.62, 15.61, 14.45, 15.4, 7.82, 16, 15.3, 31.6]
 
+average1 = sum(method1) / len(method1)
+average2 = sum(method2) / len(method2)
 
+print(f"method 1 avg: {average1}", f"method 2 avg: {average2}")
 
-Fill out your answers in the poll:
+ram_needed = average2 / 10
+
+print(f"Using method 2: we can handle a dataset up to size: {ram_needed} GB")
+
+"""
+Please fill out your answers in the poll:
 
 https://forms.gle/sqGrHBdQBrykDoSdA
-
-
 
 Roughly, we can process like _____ as much data
 and then we'll a bottleneck.
 
+population.csv from HW1: 1.5 MB
+
+According to the class average, we could go up to 1000x the population
+and still handle it with Pandas, beyond that we will run out of space,
+according to McKinney's statement.
 """

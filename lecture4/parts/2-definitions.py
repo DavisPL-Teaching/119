@@ -1,9 +1,14 @@
 """
 Part 2: Definitions and Parallel/Concurrent Distinction
 
+Parallel computing: speeding up our pipeline by doing more than
+one thing at a time!
+
 === Getting Started ===
 
 Parallel, concurrent, and distributed computing
+
+They're different, but often get (incorrectly) used synonymously!
 
 What is the difference between the three?
 
@@ -17,18 +22,34 @@ vectorized operations as well (as we will see soon).
 Baseline:
 (sequential pipeline)
 
+    Sequential means "not parallel", i.e. one thing happening at a time,
+    run on a single worker.
+
 (Rule 0 of parallel computing:
 Any time we're measuring parallelism we want to start
 with a sequential version of the code!)
 
     Scalability! But at what COST?
     https://www.usenix.org/system/files/conference/hotos15/hotos15-paper-mcsherry.pdf
+
+Q: can I think of sequential computing like a monolithic application,
+and parallel computing like microservices?
+
+    That's related to the distibuted computing part - we'll talk more about
+    the difference between parallel/distributed soon.
+
+For now think of:
+
+    Sequential baseline = 1 machine, only 1 CPU runs (1 worker)
+
+    Parallel = multiple workers (machines or CPUs)
 """
 
 def average_numbers(N):
     sum = 0
     count = 0
     for i in range(N):
+        # Busy loop with some computation in it
         sum += i
         count += 1
     return sum / count
@@ -38,7 +59,7 @@ def average_numbers(N):
 # result = average_numbers(N)
 # print(f"Result: {result}")
 
-# baseline (Sequential performance) is at 6.7s
+# baseline (Sequential performance) is at 9.07s
 
 # From the command line:
 # time python3 lecture.py
@@ -47,31 +68,23 @@ def average_numbers(N):
 # Activity Monitor in MacOS (Window -> CPU Usage)
 
 """
-=== What is parallelism? ===
+Task gets moved from CPUs from time to time, making it a little difficult to see,
+but at any given time one CPU is being used to run our program.
 
-Imagine a conveyor belt, where our numbers are coming in on the belt...
+What if we want to do more than one thing at a time?
 
-ASCII art:
+Let's say we want to make our pipeline twice as fast.
 
-    ==>   | 10 | 9 | 8 | 7 | 6 | 5 | 4 | 3 | 2 | 1 |   ==>
-    ...   ==========================================  worker1
-                                                      worker2
+We're adding the numbers from 1 to N... so we could:
 
-Our worker takes the items off the belt and
-adds them up as they come by.
+- Have worker1 add up the first half of the numbers
 
-Worker:
-    (sum, count)
-    (0, 0) -> (1, 1) -> (3, 2) -> (6, 3) -> (10, 4) -> ...
+- Have worker2 add up the second half
 
-When is this parallel?
+At the end, combine worker1's and worker2's results
 
+Our hope: we take about half the time to complete the computation.
 
-
-The workers could be working on the same conveyor belt
-or two different conveyor belts
-
-Example:
 """
 
 # **************************************
@@ -124,13 +137,67 @@ def average_numbers_parallel():
 #     freeze_support() # another boilerplate line to ignore
 #     average_numbers_parallel()
 
-# time python3 lecture.py
+# time python3 lecture.py: 5.2s
 # CPU usage
 
 """
+New result: roughly half the time! (Twice as fast)
+
+Not exactly twice as fast - why?
+
+    One reason is because of the additional boilerplate required
+    to run multiple workers and combine the results.
+
+    We actually didn't combine the results!
+    (We should add the results from worker1 and worker2)
+    This would also add a small amount of overhead
+
+We've successfully achieved parallelism!
+We have two workers running at the same time.
+
+=== What is parallelism? ===
+
+Imagine a conveyor belt, where our numbers are coming in on the belt...
+
+ASCII art:
+
+    ==>   | 10 | 9 | 8 | 7 | 6 | 5 | 4 | 3 | 2 | 1 |   ==>
+    ...   ==========================================  worker1
+                                                      worker2
+
+Our worker takes the items off the belt and
+adds them up as they come by.
+
+Worker:
+    (sum, count)
+    (0, 0) -> (1, 1) -> (3, 2) -> (6, 3) -> (10, 4) -> ...
+
+When is this parallel?
+
+    There are multiple workers working at the same time.
+
+The workers could be working on the same conveyor belt
+or two different conveyor belts
+
+Worker1 and worker2 are working on separate conveyer belts!
+
+    ==>   | 10 | 9 | 8 | 7 | 6 | 5 | 4 | 3 | 2 | 1 |   ==>
+    ...   ==========================================  worker1
+
+    ==>   |  | ... | 1000002 | 1000001 | 1000000 |   ==>
+    ...   ==========================================  worker2
+
 === What is concurrency? ===
 
 Concurrency is when there are multiple tasks happening that might overlap or conflict.
+
+- If the workers are working on the same conveyer belt ... then operations might conflict
+
+- If the workers are working on different conveyer belts ... then operations won't conflict!
+
+----- Where we ended for today -----
+
+-----------------------------
 
 In a conveyor belt, this means...
 

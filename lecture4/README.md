@@ -63,8 +63,10 @@ For today, see `parts/1-motivation.py` and `parts/2-definitions.py`
 
 Plan:
 
-- Finish discussion on RAM and Pandas + poll
+- Finish small activity on RAM and Pandas + poll
 
 - Key definitions: parallel/concurrent/distributed distinction
 
 - Example pipeline and running it with parallel workers
+
+Questions?
