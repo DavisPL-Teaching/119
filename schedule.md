@@ -19,15 +19,15 @@ I will try to keep it up to date, but please see Piazza for the latest informati
 | 3 | Oct 13 | The Shell |  | 2 |
 |   | Oct 15 |  |  | 2 |
 |   | Oct 17 |  | HW1 Due | 2 |
-| 4 | Oct 20 | Data validation and cleaning |  | 3 |
-|   | Oct 22 |  |  | 3 |
-|   | Oct 24 |  |  | 3 |
+| 4 | Oct 20 |  |  | 2 |
+|   | Oct 22 |  |  | 2 |
+|   | Oct 24 | Parallelism |  | 4 |
 
 ## Section 2: Parallelism
 
 | Week | Date | Topic | Readings & HW | Lecture # |
 | --- | --- | --- | --- | --- |
-| 5 | Oct 27 | Parallelism | HW1 due | 4 |
+| 5 | Oct 27 |  |  | 4 |
 |   | Oct 29 |  |  | 4 |
 |   | Oct 31 |  |  | 4 |
 | 6 | Nov 3  | Review or Overflow |  | 4 |
