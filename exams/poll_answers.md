@@ -49,3 +49,7 @@ Oct 22:
 
 Oct 24:
 B, E, and F.
+
+Oct 27:
+1, 2: no one correct answer, most answers were clustered 8 GB or 16GB
+3: Pandas requires 5-10x the amount of RAM as your dataset, so for 16GB you should have gotten 1.6GB to 3.2GB for the lagest dataset you can handle.

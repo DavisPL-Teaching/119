@@ -1,9 +1,11 @@
 """
 Part 3: Concurrency and Data Races
 
+Wednesday, Oct 29
+
 === Poll ===
 
-Review from definitions last time;
+Review of definitions:
 Which of the following scenarios are parallel, concurrent, and distributed?
 
 

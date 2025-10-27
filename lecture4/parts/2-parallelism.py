@@ -199,10 +199,24 @@ Concurrency is when there are multiple tasks happening that might overlap or con
 
 -----------------------------
 
-In a conveyor belt, this means...
+Oct 29
 
+Recap:
 
+- Once our pipeline is working sequentially, we want to figure
+  out how to **scale** to more data and more frequent updates
 
+- We talked about parallelism: multiple workers working at once
+
+=== Related definitions and sneak peak ===
+
+Difference between parallelism & concurrency & distribution:
+
+- Parallelism: multiple workers working at the same time
+- Concurrency: multiple workers accessing the same data (even at different times) by performing potentially conflicting operations
+- Distribution: workers operating over multiple physical devices which are independently controlled and may fail independently.
+
+In the conveyor belt analogy, this means...
 
 - Parallelism can exist without concurrency!
   (How?)
@@ -232,17 +246,15 @@ In a conveyor belt, this means...
     Multiple workers working concurrently, only one
     active at a given time.
 
-=== Recap and sneak peak ===
+- Both parallelism and concurrency can exist with/without distribution!
 
-Once our pipeline is working sequentially, we want to figure
-out how to **scale** to more data and more frequent updates
+    Are the different conveyer belts operated by different computers?
+    Do they function and fail independently?
 
-We talked about parallelism: multiple workers working at once
+    Are the different workers running on different computers?
+    Do they function and fail independently?
 
-Difference between parallelism & concurrency & distribution:
-- Parallelism: multiple workers working at the same time
-- Concurrency: multiple workers accessing the same data or performing potentially conflicting operations
-- Distribution: spatially distributed workers and data that operate and may fail completely independently.
-
-=======================================================
+Good analogy:
+    Distribution is like multiple warehouses, each with its own
+    workers and conveyer belts.
 """
