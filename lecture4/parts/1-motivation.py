@@ -141,12 +141,9 @@ Recap:
 
 (Finishing up)
 
-NOTE: to get exact RAM:
+Recall: statement from Wes McKinney
 
-From the shell:
-    sysctl -nh hw.memsize
-
-Or uncomment and run this code:
+Uncomment and run this code to find out your RAM
 """
 
 import subprocess
@@ -154,8 +151,10 @@ import platform
 
 def get_ram_1():
     system = platform.system()
-    if system in ["Linux", "Darwin"]:
+    if system == "Darwin":
         subprocess.run(["sysctl", "-nh", "hw.memsize"])
+    elif system == "Linux":
+        subprocess.run(["grep", "MemTotal", "/proc/meminfo"])
     elif system == "Windows":
         print("Windows unsupported, try running in WSL?")
     else:
@@ -177,14 +176,24 @@ get_ram_2()
 """
 Poll:
 
-https://forms.gle/sqGrHBdQBrykDoSdA
-
 Answers:
 
+Method 1:
+    8.5, 8.6, 17.1
+
+Method 2:
+    8, 8, 16, 7.62
 
 
-Fill in:
+
+
+Fill out your answers in the poll:
+
+https://forms.gle/sqGrHBdQBrykDoSdA
+
+
 
 Roughly, we can process like _____ as much data
 and then we'll a bottleneck.
+
 """
