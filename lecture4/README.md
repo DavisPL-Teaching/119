@@ -53,15 +53,17 @@ Questions?
 
 Reminders:
 
-- OH after class today, and Friday 11am
+- OH after class today, Friday 11am
 
 Plan for today:
 
 I am trying a slightly new format for the lecture notes by dividing them into
-"parts", one per class period.
-See `parts/1-motivation.py` and `parts/2-definitions.py`
+parts, roughly one per class period.
+For today, see `parts/1-motivation.py` and `parts/2-definitions.py`
 
-- Report RAM calculation
+Plan:
+
+- Finish discussion on RAM and Pandas + poll
 
 - Key definitions: parallel/concurrent/distributed distinction
 
