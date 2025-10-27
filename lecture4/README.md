@@ -48,3 +48,21 @@ Plan for today:
 - Key definitions: parallel, concurrent, and distributed computing
 
 Questions?
+
+## Monday, October 27
+
+Reminders:
+
+- OH after class today, and Friday 11am
+
+Plan for today:
+
+I am trying a slightly new format for the lecture notes by dividing them into
+"parts", one per class period.
+See `parts/1-motivation.py` and `parts/2-definitions.py`
+
+- Report RAM calculation
+
+- Key definitions: parallel/concurrent/distributed distinction
+
+- Example pipeline and running it with parallel workers
