@@ -31,6 +31,15 @@ Exercises:
 Modify our example to keep track of an output.
 """
 
+from multiprocessing import Process, freeze_support
+
+def run_in_parallel(*tasks):
+    running_tasks = [Process(target=task) for task in tasks]
+    for running_task in running_tasks:
+        running_task.start()
+    for running_task in running_tasks:
+        result = running_task.join()
+
 # Shared memory between the processes
 # Shared list for results
 # this has to be a special Array instead of a Python
@@ -48,7 +57,7 @@ def worker3(results):
 
     print(f"Worker 3 result: {sum} {count}")
     # Save the results in the shared results array
-    results[0] += sum
+    results[0] = sum + results[0]
     results[1] += count
 
 def worker4(results):
@@ -60,8 +69,8 @@ def worker4(results):
 
     print(f"Worker 4 result: {sum} {count}")
     # Save the results in the shared results array
-    results[2] += sum
-    results[3] += count
+    results[0] = sum + results[0]
+    results[1] += count
 
 def average_numbers_concurrent():
     # Create a shared results array
@@ -113,6 +122,11 @@ Answer: it seems to work!
     and destroy worker3's work.
 
     This is called a race condition.
+
+Definition of a race condition:
+    The output of your program depends on the exact order in which different
+    potentially conflicting operations occur --
+        "who wins the race"
 
 What do you think would happen if we modified the example to use the shared
 results list directly for each worker's local variables?
@@ -176,7 +190,7 @@ Does something go wrong?
 
     Contention:
 
-    Multiple threads or processes trying to access the same data at the
+    Multiple workers, threads, or processes trying to access the same data at the
     same time causes a vast decline in performance.
 
     AND
@@ -186,6 +200,18 @@ Does something go wrong?
     Observe that not only do some reads/writes not get counted,
     they also corrupt the data and produce completely random
     results.
+
+Recap:
+
+    Definitions of parallelism, concurrency, and distribution
+    - In terms of workers, memory that they may share, whether the workers
+      run at the same time, and whether not the operations to the memory may conflict.
+    - We saw multiple concurrent (not just parallel) versions of the code
+      from last time, where two workers are now updating memory that they
+      share together, and performing operations which may conflict
+    - We saw: data races and contention.
+
+    ********** We will end here for today **********
 
     A "data race" is a particular race condition where a read
     and a write happens to the same memory location at the same

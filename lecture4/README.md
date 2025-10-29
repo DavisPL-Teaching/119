@@ -77,6 +77,8 @@ Announcements:
 
 - First part of practice midterm released; second part released late this week
 
+- HW1 grading underway; please stay tuned for a Piazza post when official grades are released.
+
 - I have sorted the rest of the lecture material into parts
 
 Plan:
@@ -86,3 +88,5 @@ Plan:
 - Poll
 
 - Concurrency.
+
+Questions?

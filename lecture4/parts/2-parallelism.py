@@ -209,13 +209,27 @@ Recap:
 
 - We talked about parallelism: multiple workers working at once
 
+- Conveyer belt analogy:
+    parallel = multiple workers working at the samt eim.
+
 === Related definitions and sneak peak ===
 
 Difference between parallelism & concurrency & distribution:
 
 - Parallelism: multiple workers working at the same time
 - Concurrency: multiple workers accessing the same data (even at different times) by performing potentially conflicting operations
+
+    For now: think about it as multiple workers modifying or moving items
+    on the same conveyer belt.
+
 - Distribution: workers operating over multiple physical devices which are independently controlled and may fail independently.
+
+Good analogy:
+    Distributed computing is like multiple warehouses, each with its own
+    workers and conveyer belts.
+
+For the purposes of this class: if code is running on multiple devices,
+it is distributed; otherwise it's not.
 
 In the conveyor belt analogy, this means...
 
@@ -254,8 +268,4 @@ In the conveyor belt analogy, this means...
 
     Are the different workers running on different computers?
     Do they function and fail independently?
-
-Good analogy:
-    Distribution is like multiple warehouses, each with its own
-    workers and conveyer belts.
 """
