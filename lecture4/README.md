@@ -65,8 +65,20 @@ Plan:
 
 - Finish small activity on RAM and Pandas + poll
 
-- Key definitions: parallel/concurrent/distributed distinction
-
 - Example pipeline and running it with parallel workers
 
+- Key definitions: parallel/concurrent/distributed distinction
+
 Questions?
+
+## Wednesday, October 29
+
+Announcement:
+
+- First part of practice midterm released; second part released late this week
+
+Plan:
+
+- Finish parallel/concurrent/distributed distinction (`2-parallelism.py`)
+
+- Concurrency.
