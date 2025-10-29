@@ -11,6 +11,10 @@ Two workers, threads, or processes are accessing the same shared memory variable
 
 What are possible values of x?
 
+You may assume that the programming language we are in executes all the workers concurrently (i.e., interleaving the operations in some way).
+You may ignore any possible "undefined behavior".
+(I will comment on this briefly after the poll how this would look in a language like C or Rust)
+
 2.
 The scenario above exhibits... (select all that apply)
 - Concurrency
@@ -20,6 +24,14 @@ The scenario above exhibits... (select all that apply)
 - Deadlock
 - Race condition
 - Data race
+
+https://forms.gle/Ar4QKXfBmcsiU9iM9
+
+.
+.
+.
+.
+
 
 ===== Back to parallelism! ======
 
@@ -176,6 +188,8 @@ A Python script needs to:
 - load a dataset into Pandas: students.csv, with 100 rows
 - calculate a new column which is the total course load for each student
 - send an email to each student with their total course load
+
+
 
 
 

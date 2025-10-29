@@ -90,3 +90,22 @@ Plan:
 - Concurrency.
 
 Questions?
+
+## Friday, October 31 (Happy Halloween!)
+
+Announcements:
+
+- HW1 is graded -- please submit any grade complaints through Gradescope
+
+    ** Please reserve grade complaints for cases where you disagree with the grade according to the
+       rubric, NOT where you disagree with the rubric!
+
+- Mid-quarter survey is available! (See Piazza)
+
+Plan:
+
+- Wrap up concurrency with a little bit of terminology
+
+- Poll
+
+- Part 4: Types of parallelism.

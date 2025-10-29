@@ -213,6 +213,10 @@ Recap:
 
     ********** We will end here for today **********
 
+    ================================================
+
+Finishing up a few things:
+
     A "data race" is a particular race condition where a read
     and a write happens to the same memory location at the same
     time.
@@ -237,7 +241,7 @@ generally speaking, we want different workers to be working on
 
 So that we avoid any of the above issues.
 
-=== Concepts ===
+=== Terminology ===
 
 - Race condition: when the order in which workers complete their task
   (which one completes it first) affects the final outcome
@@ -245,6 +249,10 @@ So that we avoid any of the above issues.
 - Data race
   A particular race condition where a read and a write happen at the same
   time and in the same memory location
+
+- Undefined Behavior: "Feature" in some programming languages where the existence
+  of a data race means that the compiler can do whatever it wants with your
+  code (even miscompile it to something else entirely)
 
 - Contention
   Reduction in performance due to competing concurrent operations
@@ -258,7 +266,7 @@ So that we avoid any of the above issues.
   sequential code.
   You want the same answers as if you just ran the code sequentially.
 
-=== Additional exercises ===
+=== Additional exercises (skip for time) ===
 
 (Probably skip)
 Exercise:
@@ -267,15 +275,16 @@ Write a version that uses (i) shared reads to the list and (ii) shared writes
 to the list (for example popping off elements as they are used).
 What happens?
 
-=== Recap from today ===
+=== Recap from this lecture ===
 
 We saw how code can be concurrent (not just parallel)
 We saw the main problems that you can run into with concurrent code
-In this class, we want to avoid all of the above problems and parallelize
-in a way that avoids reading/writing to the same memory at the same time.
 
-Next time: a very short distributed example
-and then get into:
+
+**In this class, we want to avoid all of the above problems and parallelize
+in a way that avoids reading/writing to the same memory at the same time.**
+
+Coming up next:
 - types of parallelism (in a pipeline)
 - quantifying parallelism (in a pipeline)
 """
