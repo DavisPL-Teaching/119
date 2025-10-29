@@ -200,6 +200,7 @@ Concurrency is when there are multiple tasks happening that might overlap or con
 -----------------------------
 
 Oct 29
+(Finishing up a few things)
 
 Recap:
 

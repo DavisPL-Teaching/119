@@ -73,12 +73,16 @@ Questions?
 
 ## Wednesday, October 29
 
-Announcement:
+Announcements:
 
 - First part of practice midterm released; second part released late this week
+
+- I have sorted the rest of the lecture material into parts
 
 Plan:
 
 - Finish parallel/concurrent/distributed distinction (`2-parallelism.py`)
+
+- Poll
 
 - Concurrency.
