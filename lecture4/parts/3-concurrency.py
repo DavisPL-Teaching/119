@@ -268,7 +268,6 @@ So that we avoid any of the above issues.
 
 === Additional exercises (skip for time) ===
 
-(Probably skip)
 Exercise:
 Modify the example to add up a shared list instead of an iterator.
 Write a version that uses (i) shared reads to the list and (ii) shared writes
@@ -277,9 +276,10 @@ What happens?
 
 === Recap from this lecture ===
 
-We saw how code can be concurrent (not just parallel)
-We saw the main problems that you can run into with concurrent code
+We saw how code can be concurrent (not just parallel):
+shared conflicting operations (typically, a read/write or a write/write)
 
+We saw the main problems that you can run into with concurrent code
 
 **In this class, we want to avoid all of the above problems and parallelize
 in a way that avoids reading/writing to the same memory at the same time.**

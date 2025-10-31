@@ -100,7 +100,11 @@ Announcements:
     ** Please reserve grade complaints for cases where you disagree with the grade according to the
        rubric, NOT where you disagree with the rubric!
 
+    Grade complaints due Nov 5 3pm (before midterm)
+
 - Mid-quarter survey is available! (See Piazza)
+
+    Due Nov 5 3pm (before midterm)
 
 Plan:
 
@@ -109,3 +113,5 @@ Plan:
 - Poll
 
 - Part 4: Types of parallelism.
+
+- End of class: midterm topics; will post full list + practice midterm on Piazza.

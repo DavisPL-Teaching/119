@@ -1,5 +1,5 @@
 """
-This is the data race example from the Oct 25
+This is the data race example from the Oct 31
 in-class poll, since some of you have asked about it,
 and it is worth going into in more detail:
 
@@ -15,7 +15,7 @@ TL;DR: The following are both correct:
 The latter bullet (any value) is also the technically correct answer in C/C++, where data races are something called "undefined behavior", meaning that the compiler is allowed to compile your code to do something entirely different than what you said.
 (And it may depend on the compiler!)
 
-This is why I want you to think about this is with the following simplified view:
+In a language with undefined behavior:
 
     *if there is a read and a write concurrently to the same data (or two concurrent writes), the value of that data is indeterminate.*
 
