@@ -95,30 +95,7 @@ About Q1:
 
 We often think about parallelism by dividing it into three types:
 
-- Data parallelism
-
-    This is the most important one
-
-    Different parts of your dataset can be processed in parallel.
-
-    Example 1: imagine an SQL query where you need to match
-    the employee name with their salary
-
-    Different rows in the input: I can match one employee
-    name totally independently from another employee name --
-    these tasks can be done in parallel!
-    That's data parallelism.
-
-    Example 2: In our running example, we were adding up
-    the numbers between 1 and 20,000,000.
-    We notice that we can add up the numbers between
-    1 and 10,000,000 and the numbers betweeen
-    10,000,001 and 20,000,000 separately!
-    That's data parallelism.
-
-    ----> i.e. same task, different data points
-
-- Task parallelism
+1. Task parallelism
 
     Different tasks can be done in parallel.
 
@@ -140,85 +117,22 @@ We often think about parallelism by dividing it into three types:
     and the count with the other worker.
     That's task parallelism.
 
-- Pipeline parallelism
-
-    (The last type of parallelism is the most strange)
-    It's that if two tasks are done in sequence,
-    we can still benefit (surprisingly) from parallelism!
-
-    (dataset) --> task 1 --> (output 1) --> task 2 --> (output 2)
-
-    Example: Take our dataset of employees, for each employee
-    name, strip the spaces from the name, then extract the first
-    name, then extract the last letter of the first name,
-    and save that to an output data frame.
-
-    This is a pipeline of tasks:
-    -> I have to strip the spaces before I extract the first name
-    -> I have to extract the first name before I can get the last letter
-    -> I have to get the last letter before I can save it to the output data frame
-
-    (dataset) --> task 1 --> task 2 --> task 3 --> task 4
-
-    It doesn't seem like there's any parallelism here!
-    But there is.
-
-              task 1     task 2     task 3     task 4
-    input 1:    1          2          3          4
-    input 2:    2          3          4          5
-    input 3:    3          4          5          6
-
-    That's pipeline parallelism!
-
-============================================
-
-Recap:
-We saw some examples (without writing code)
-of data parallelism, task parallelism, and pipeline parallelism.
-
-We saw that our original average_numbers computation exploited data parallelism.
-
-Let's do a poll to review.
-
-=== Poll ===
-
-Which types of parallelism are present in the following scenario? (select all that apply)
-
-A Python script needs to:
-- load a dataset into Pandas: students.csv, with 100 rows
-- calculate a new column which is the total course load for each student
-- send an email to each student with their total course load
-
-
-
-
-
-Answer: data + pipeline parallelism, no task parallelism in the pipeline as described.
-
-Visual aid (we'll come back to this very soon in lecture 5! Helpful way to think about it:)
-
-    Draw out the tasks your pipeline needs to compute as nodes, and dependencies between them
-    as arrows between the nodes
-
-    (load dataset) -> (calculate a new column) -> (send an email to each student)
-
-    (This is something called a dataflow graph)
-
-    Data parallelism exists if a single node in the pipeline can be done in parallel over
-    its inputs
-
-    Task parallelism exists if there two nodes that can be run in parallel without an arrow between them
-
-    Pipeline parallelism exists if there are two nodes that can be run in parallel with an arrow between them.
-
-=== Exercises ===
-
-Exercise: Let's write some actual code.
-
-1. Write a version of our average_numbers pipeline that exploits task parallelism.
+Exercise:
+Write a version of our average_numbers pipeline that exploits task parallelism.
 
 We will start with a skeleton of our code from the concurrent example.
 """
+
+from multiprocessing import Process, freeze_support
+
+def run_in_parallel(*tasks):
+    running_tasks = [Process(target=task) for task in tasks]
+    for running_task in running_tasks:
+        running_task.start()
+    for running_task in running_tasks:
+        result = running_task.join()
+
+from multiprocessing import Array
 
 def worker5(results):
     sum = 0
@@ -273,8 +187,79 @@ def average_numbers_task_parallelism():
 #     average_numbers_task_parallelism()
 
 """
-2. Write a version of our average_numbers pipeline that exploits pipeline parallelism.
-    (This one will be a bit more contrived)
+2. Data parallelism
+
+    This is the most important one
+
+    Different parts of your dataset can be processed in parallel.
+
+    Example 1: imagine an SQL query where you need to match
+    the employee name with their salary
+
+    Different rows in the input: I can match one employee
+    name totally independently from another employee name --
+    these tasks can be done in parallel!
+    That's data parallelism.
+
+    Example 2: In our running example, we were adding up
+    the numbers between 1 and 20,000,000.
+    We notice that we can add up the numbers between
+    1 and 10,000,000 and the numbers betweeen
+    10,000,001 and 20,000,000 separately!
+    That's data parallelism.
+
+    ----> i.e. same task, different data points
+
+3. Pipeline parallelism
+
+    (The last type of parallelism is the most strange)
+    It's that if two tasks are done in sequence,
+    we can still benefit (surprisingly) from parallelism!
+
+    (dataset) --> task 1 --> (output 1) --> task 2 --> (output 2)
+
+    Example: Take our dataset of employees, for each employee
+    name, strip the spaces from the name, then extract the first
+    name, then extract the last letter of the first name,
+    and save that to an output data frame.
+
+    This is a pipeline of tasks:
+    -> I have to strip the spaces before I extract the first name
+    -> I have to extract the first name before I can get the last letter
+    -> I have to get the last letter before I can save it to the output data frame
+
+    (dataset) --> task 1 --> task 2 --> task 3 --> task 4
+
+    It doesn't seem like there's any parallelism here!
+    But there is.
+
+              task 1     task 2     task 3     task 4
+    input 1:    1          2          3          4
+    input 2:    2          3          4          5
+    input 3:    3          4          5          6
+
+    That's pipeline parallelism!
+
+
+Visual aid!
+
+    Draw out the tasks your pipeline needs to compute as nodes, and dependencies between them
+    as arrows between the nodes
+
+    (load dataset) -> (calculate a new column) -> (send an email to each student)
+
+    (This is something called a dataflow graph)
+
+    Data parallelism exists if a single node in the pipeline can be done in parallel over
+    its inputs
+
+    Task parallelism exists if there two nodes that can be run in parallel without an arrow between them
+
+    Pipeline parallelism exists if there are two nodes that can be run in parallel with an arrow between them.
+
+Exercise:
+Write a version of our average_numbers pipeline that exploits pipeline parallelism.
+(This one will be a bit more contrived)
 
 If we want to exploit pipeline parallelism...
 
