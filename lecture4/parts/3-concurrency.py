@@ -69,8 +69,8 @@ def worker4(results):
 
     print(f"Worker 4 result: {sum} {count}")
     # Save the results in the shared results array
-    results[0] = sum + results[0]
-    results[1] += count
+    results[2] = sum + results[0]
+    results[3] += count
 
 def average_numbers_concurrent():
     # Create a shared results array
@@ -244,11 +244,14 @@ So that we avoid any of the above issues.
 === Terminology ===
 
 - Race condition: when the order in which workers complete their task
+  or certain operations
   (which one completes it first) affects the final outcome
 
 - Data race
   A particular race condition where a read and a write happen at the same
   time and in the same memory location
+
+  (Data races only exist in concurrent applications)
 
 - Undefined Behavior: "Feature" in some programming languages where the existence
   of a data race means that the compiler can do whatever it wants with your
@@ -261,10 +264,15 @@ So that we avoid any of the above issues.
   Different threads try to access the same data at the same time in a way
   that prevents any thread from continuing.
 
+  (Similar to an infinite loop)
+
 - Consistency
   The ability of parallel and concurent code to behave as if it were
   sequential code.
   You want the same answers as if you just ran the code sequentially.
+
+- Nondeterminism:
+  Multiple executions of the same code give different answers.
 
 === Additional exercises (skip for time) ===
 
@@ -279,7 +287,7 @@ What happens?
 We saw how code can be concurrent (not just parallel):
 shared conflicting operations (typically, a read/write or a write/write)
 
-We saw the main problems that you can run into with concurrent code
+We saw & defined many of the problems that you can run into with concurrent code
 
 **In this class, we want to avoid all of the above problems and parallelize
 in a way that avoids reading/writing to the same memory at the same time.**

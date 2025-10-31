@@ -1,7 +1,7 @@
 """
 Part 4: Parallelism Types
 
-=== Poll ===
+=== Discussion Question & Poll ===
 
 1.
 Two workers, threads, or processes are accessing the same shared memory variable "x". Each worker increments the variable 100 times:
@@ -9,7 +9,11 @@ Two workers, threads, or processes are accessing the same shared memory variable
     for i in range(100):
         x += 1
 
-What are possible values of x?
+What are possible values of x at the end of the program?
+
+If it helps: think of x += 1 as a read followed by a write, i.e.
+    temp = x + 1
+    x = temp
 
 You may assume that the programming language we are in executes all the workers concurrently (i.e., interleaving the operations in some way).
 You may ignore any possible "undefined behavior".
@@ -32,6 +36,57 @@ https://forms.gle/Ar4QKXfBmcsiU9iM9
 .
 .
 
+
+Walk through...
+
+Can we get the value 200?
+A: Yes, if for example worker1 increments 100 times, then worker 2 increments 100 time (no interleaving)
+
+Can we get the value 100?
+
+Yes:
+Idea: worker1 finishes, worker2 hasn't finished yet:
+worker1: 0 -> 1, 1 -> 2, ..., 99 -> 100
+
+worker2: 0 ->                           -> 1, 1 -> 2, 2 -> 3,
+    ..., 99 -> 100.
+
+Can we get 120?
+
+worker2 reads x when it's at the value 20 instead of 0.
+worker1: 0 -> 1, 1 -> 2, ..., 99 -> 100
+
+worker2:                 20             -> 21 -> ... -> 100.
+
+0 to 5 instead of 0 to 100:
+worker1: 0 -> 1, 1 -> 2,      2 -> 3, 3 -> 4, 4 -> 5
+worker2:                 2 ->                        3, 3 -> 4, 4 -> 5, 5 -> 6, 6 -> 7.
+
+Final boss: Can we get a value between 0 and 100? Like 70?
+
+We should try to construct an execution where both worker1 and worker2
+overwrite all of each other's work!
+
+worker1: 0 -> 1, 1 -> 2, 2 -> 3, 3 -> 4,       1                              -> 2
+worker2: 0                               -> 1, 1 -> 2, 2 -> 3, 3 -> 4, 4 -> 5
+
+We got 2! with two workers, 0 to 5.
+
+We can generalize this to two workers to get 2 (or any value between 2 and 100)
+with 100 increments.
+
+Probably not a way to get 0 or 1.
+
+**Correct answer should be: any value between 2 and 200.**
+
+Very scary!
+
+A simple program with a data race turned out to be extremely counterintuitive
+to think about.
+
+Concurrent programming is very hard! It's better if we can write code in a way
+that *exposes* parallelism but not concurrency - tasks that are parallel run in parallel,
+and we don't have to worry about concurrency and data races.
 
 ===== Back to parallelism! ======
 
@@ -95,6 +150,10 @@ About Q1:
 
 We often think about parallelism by dividing it into three types:
 
+If you want to know if a program is parallel, you should be looking
+for one of three types of parallelism; I'll show that all three can
+be viewed by looking at the dataflow graph.
+
 1. Task parallelism
 
     Different tasks can be done in parallel.
@@ -148,14 +207,6 @@ def worker6(results):
 
     results[1] = count
 
-"""
-**pictoral model** (dataflow graph)
-
-    (input) --> (sum)
-                         --> (compute average)
-    (input) --> (count)
-"""
-
 def average_numbers_task_parallelism():
     # Create a shared results array
     # i = integer, d = double (we use d here because the integers suffer from overflow)
@@ -187,6 +238,16 @@ def average_numbers_task_parallelism():
 #     average_numbers_task_parallelism()
 
 """
+**pictoral model** (dataflow graph)
+
+    (input1) --> (sum)
+                         --> (compute average)
+    (input2) --> (count)
+
+Any time there are two nodes which don't depend on each other, that's task parallelism.
+"""
+
+"""
 2. Data parallelism
 
     This is the most important one
@@ -201,6 +262,17 @@ def average_numbers_task_parallelism():
     these tasks can be done in parallel!
     That's data parallelism.
 
+    But I claim that this is not yet visible in the dataflow graph!
+
+    (load input employee database) ->
+                                      (match employee to salary) -> (print output)
+    (load salary database)         ->
+
+    Data parallelism is present at the level of an individual node (task) in the
+    graph: it tells me that different inputs to that node can be processed in parallel.
+
+    The (match employee to salary) node in our case can benefit from data parallelism.
+
     Example 2: In our running example, we were adding up
     the numbers between 1 and 20,000,000.
     We notice that we can add up the numbers between
@@ -208,7 +280,34 @@ def average_numbers_task_parallelism():
     10,000,001 and 20,000,000 separately!
     That's data parallelism.
 
+    We can add up different numbers from the input dataset in parallel.
+
     ----> i.e. same task, different data points
+
+    Summarize here:
+    Task parallelism = different tasks on same/different data points
+    Data parallelism = same task on different data points.
+
+----
+
+Recap:
+
+(I will post on Piazza about midterm topics / plan)
+
+In the poll, we talked about how programs with concurrency can have many different
+wildly different behaviors due to interleaved reads and writes
+
+We'd like to write programs which avoid this issue and benefit from parallelism,
+but we don't want to write any concurrent code ourselves
+
+We talked about two types of parallelism with examples and how to identify them in
+the dataflow graph:
+
+1. Task Parallelism -- exists between two nodes when there is a path from one to the other
+
+2. Data Parallelism -- exists at a single node when that task can be performed on different elements of the input data set (or sets) at that node in parallel.
+
+----
 
 3. Pipeline parallelism
 

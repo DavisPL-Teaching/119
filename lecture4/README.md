@@ -104,6 +104,8 @@ Announcements:
 
 - Mid-quarter survey is available! (See Piazza)
 
+    1 pt extra credit
+
     Due Nov 5 3pm (before midterm)
 
 Plan:
@@ -115,3 +117,5 @@ Plan:
 - Part 4: Types of parallelism.
 
 - End of class: midterm topics; will post full list + practice midterm on Piazza.
+
+Questions?

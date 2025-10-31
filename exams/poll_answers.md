@@ -61,3 +61,7 @@ Oct 29:
 4. Concurrent + Distributed
 5. Parallel + Distributed
 6. Parallel + Concurrent + Distributed
+
+Oct 31:
+Intended answer was between 0 and 200;
+to be fully precise, the correct answer should be any value between 2 and 200 (inclusive).
