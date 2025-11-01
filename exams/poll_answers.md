@@ -63,5 +63,9 @@ Oct 29:
 6. Parallel + Concurrent + Distributed
 
 Oct 31:
-Intended answer was between 0 and 200;
+1. Intended answer was between 0 and 200;
 to be fully precise, the correct answer should be any value between 2 and 200 (inclusive).
+
+2. ABDEFG
+   Concurrency, Parallelism, Contention, Race Condition, Data Race -
+   and Spooky Halloween Vibes, because data races are scary!! :-)

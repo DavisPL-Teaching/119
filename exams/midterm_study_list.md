@@ -1,14 +1,14 @@
 # Midterm Study List
 
-**Please note: this will be updated again next week with additional topics.**
-
 Study list of topics for the midterm.
 
-Only Lecture 1 and Lecture 2 parts for now.
+**The midterm will cover Lecture 1, Lecture 2, and Lecture 4 up through Data Parallelism (in Part 4).**
 
-Some notes:
-  concepts, not syntax - you won't be tested on syntax
-  no questions which ask you to write actual code.
+You should know all of the following concepts, but I won't test you on syntax.
+- For example, you won't be asked to write code on the exam,
+  but you might be asked to explain how you might to dome task in words
+  or asked to calculate how much time a task would take given some
+  assumptions about how long the parts take.
 
 ## Lecture 1 (Introduction to data processing)
 
@@ -80,3 +80,41 @@ Some notes:
 - Git, philoslophy of git
 
 - dangers of the shell, file deletion, concept of "ambient authority"
+
+## Lecture 4 (Parallelism)
+
+Part 1:
+
+- Scaling: scaling in input data or # of tasks; Pandas does not scale
+
+Part 2:
+
+- Definitions of parallelism, concurrency, and distribution;
+  how to identify these in tasks; conveyer belt analogy
+
+- Should be able to give an example scenario using these terms, or an example
+  scenario satisfying soem of parallelism, concurrency, and distribution but not
+  the others
+
+- How parallelism speeds up a pipeline; be able to estimate how fast a program would take given some assumptions about how long it takes to process each item and how
+it is parallelized
+
+Part 3:
+
+- Know terminology: Concurrency, race condition, data race, undefined behavior, contention, deadlock, consistency, nondeterminism
+
+- "Conflicting operations": for example, a read/write are conflicting, two writes are conflicting, two reads are not conflicting as they can both occur simultaneously (this is also part of the definition of a data race)
+
+- Know possible concurrent executions of a program: you won't be asked a scenario as complex as the poll on Oct 31. However, you might be asked about a simpler program, like one with two workers, one increments x += 1, the other implements x += 1 twice, etc.
+
+- Why we avoid concurrency in data pipelines: difficult to program with; no one
+  should write any program with data races in it.
+
+Part 4:
+
+- Motivation: is parallelism present? how much parallelism?
+  Want to parallelize without writing concurrent code ourselves
+
+- Types of parallelism: task parallelism, data parallelism
+
+- How to identify each of these in the dataflow graph.
