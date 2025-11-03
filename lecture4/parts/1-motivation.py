@@ -93,7 +93,7 @@ Points:
 
 - We can think of scaling in terms of throughput and latency
 
-    See scaling-examples.png for an example!
+    See extras/scaling-example.png for an example!
 
     If your application is scaling successfully,
     double the # of workers or processors => double the throughput

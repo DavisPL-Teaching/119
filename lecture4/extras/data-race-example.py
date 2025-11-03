@@ -1,14 +1,11 @@
 """
-This is the data race example from the Oct 31
-in-class poll, since some of you have asked about it,
-and it is worth going into in more detail:
-
-https://forms.gle/NnC2EF5mNBaisHPF6
+A more extended data race example - related to the Oct 31 in-class poll -
+that discusses the relationship between data races and UB.
 
 This is a subtle topic!
 TL;DR: The following are both correct:
 
-- x will always between 100 and 200 in Python using multiprocess (multiprocess.Array and multiprocess.Value)
+- x will always between 2 and 200 in Python using multiprocess (multiprocess.Array and multiprocess.Value)
 
 - x could be any integer value making no assumptions about the programming language implementation of += or the underlying architecture.
 
@@ -35,13 +32,12 @@ So why did I say that x can be *any* value?
 
 This has to do with what assumptions we are making about how Python represents integers
 -- for example, assuming that it consistently handles reads and writes to integers (+= consistently).
-This assumption is very dangerous! It is generally *not* true when using operations that aren't designed to be safely called in a concurrent programming context,
-such as big integers. (A Python integer is not just a single byte, it contains multiple bytes! That makes it something called a big integer. It may be the case that a read and a write to a Python integer at the same time don't just execute one after the other, but actually completely invalidate that integer, by modifying the different bytes in different ways -- or even, moving the integer somewhere else in memory.
-If there is time or during a make-up lecture, I will do an example of this in more detail.)
+This assumption is very dangerous! It is generally *not* true when using operations that aren't designed to be safely called in a concurrent programming context, such as big integers.
+(A Python integer is not just a single byte, it contains multiple bytes! That makes it something called a big integer. It may be the case that a read and a write to a Python integer at the same time don't just execute one after the other, but actually completely invalidate that integer, by modifying the different bytes in different ways -- or even, moving the integer somewhere else in memory.)
 
 This actually occurs and is not just a hypothetical:
 
-    - It will occur in Python when using data structures more than just a single byte
+    - It will occur in Python when using data structures more than just a single byte, if not protected by a shared lock
 
     - It will occur in any data structure implementation in C, C++, or Java or any implementation that stores raw pointers in memory.
 

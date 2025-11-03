@@ -309,6 +309,19 @@ the dataflow graph:
 
 ----
 
+***** Resuming here for Monday, Nov 3 *****
+
+Example so far: task parallelism
+
+Do we need another example for data parallelism?
+
+"""
+
+def average_numbers_task_parallelism():
+    #  We already saw an example of this
+    pass
+
+"""
 3. Pipeline parallelism
 
     (The last type of parallelism is the most strange)
@@ -339,22 +352,46 @@ the dataflow graph:
 
     That's pipeline parallelism!
 
-
 Visual aid!
 
-    Draw out the tasks your pipeline needs to compute as nodes, and dependencies between them
-    as arrows between the nodes
+    Draw out the tasks your pipeline as a dataflow graph
+    (recall how we did this in Lecture 1):
 
     (load dataset) -> (calculate a new column) -> (send an email to each student)
 
-    (This is something called a dataflow graph)
+    Data parallelism exists if a single node in the pipeline can
+    be done in parallel over its inputs
 
-    Data parallelism exists if a single node in the pipeline can be done in parallel over
-    its inputs
-
-    Task parallelism exists if there two nodes that can be run in parallel without an arrow between them
+    Task parallelism exists if there two nodes that can be run in parallel without any path from one to the other
 
     Pipeline parallelism exists if there are two nodes that can be run in parallel with an arrow between them.
+
+=== Discussion Question & Poll ===
+
+https://forms.gle/RWw7i4o5UX1xquhx7
+
+Which types of parallelism are present in the following scenario? (select all that apply)
+
+A Python script is written to complete the following 3 tasks:
+1. load a dataset into Pandas: students.csv, with 100 rows
+2. calculate a new column which is the total course load for each student; this is the sum of several other columns
+3. send an email to each student with their total course load
+
+A. Data parallelism
+B. Task parallelism
+C. Pipeline parallelism (please note: will not appear on the midterm)
+
+(For each one: be specific about which of task(s) 1-3 is has parallelism)
+
+.
+.
+.
+.
+.
+
+--------------------
+
+Back to pipeline parallelism example:
 
 Exercise:
 Write a version of our average_numbers pipeline that exploits pipeline parallelism.
@@ -457,10 +494,56 @@ Pipeline parallelism:
 
 Task parallelism:
 
-Which of these is most important in the real world?
+=== Additional practice question ===
+
+(We can do this in class if time, if not I will ask the TA to do it as a practice question in discussion section)
+
+A second practice question:
+
+In `extras/dataflow-graph-example.png`
+you will find a picture of a dataflow graph.
+
+You don't need to know what all the individual stages are!
+
+(Recall from Lecture 1: Each node represents a task. Arrows --> mean that one task depends on the previous one.)
+
+Assume that yellow nodes mean tasks that load input datasets.
+Blue nodes (Map, Semijoin, and Distinct) mean to perform some data transformation or other data operator.
+
+1.
+Based on the dataflow graph above, give an example of two tasks that would exhibit task parallelism, or state N/A if no task parallelism is present.
+
+2.
+Based on the dataflow graph above, give an example of two tasks that would exhibit pipeline parallelism, or state N/A if no pipeline parallelism is present.
+
+3.
+Based on the dataflow graph above, give an example of a task that would exhibit data parallelism, or state N/A if no data parallelism is present.
+
+For this one, you might have to guess a bit as to what "Map", "Semijoin", and "Distinct" mean. Use your best intuition.
+
+.
+.
+.
+.
+.
+
+=== Finishing up ===
+
+Q: Which of these is most important in the real world?
 (Hint: it's not a close contest)
 
-A: Data parallelism.
+A:
+
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
 
 Example: You may be doing 10-15 different tasks as part of your pipeline,
 but if your pipeline is 10 million items large, 10-15 is very small

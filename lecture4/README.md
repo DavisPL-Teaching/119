@@ -119,3 +119,29 @@ Plan:
 - End of class: midterm topics; will post full list + practice midterm on Piazza.
 
 Questions?
+
+## Monday, November 3
+
+Announcements:
+
+- The midterm is this Wednesday in class!
+
+  Help with midterm:
+
+  + **Today** OH after class: I will go over any requested topic, any in-class poll, or any practice exam question
+
+  + **Wednesday** discussion section will be a midterm review
+
+  + **Piazza** for all other questions
+
+- Next week, Nov 10 and Nov 12 class will be remote on Zoom
+
+- Regrades + mid-quarter survey due Wednesday
+
+Plan:
+
+- Finish Part 4: Pipeline parallelism
+  (Note that pipeline parallelism will not appear on the midterm,
+  but data+task parallelism will.)
+
+- Discussion question & poll

@@ -1,5 +1,5 @@
 """
-Part 6: Concluding thoughts
+Part 6: Distribution and concluding thoughts
 
 === Distributed computing: some examples ===
 
