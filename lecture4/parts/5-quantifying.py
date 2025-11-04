@@ -1,5 +1,7 @@
 
 """
+Part 5: Quantifying Parallelism and Amdahl's Law.
+
 === Quantifying parallelism ===
 
 We know how to tell *if* there's parallelism.
@@ -23,9 +25,7 @@ https://en.wikipedia.org/wiki/Amdahl%27s_law
 
 Amdahl's law gives an upper bound on the amount of speedup that is possible for any task.
 
-===============================================
-
-Continuing: quantifying parallelism in your pipeline
+=== Amdahl's Law ===
 
 We're interested in knowing: how much speedup is possible?
 
@@ -33,7 +33,7 @@ Amdahl's law gives us a theoretical upper bound on the amount of speedup
 that is possible (in arbitrary code, but also applying specifically
 to data processing code).
 
-=== Standard form of the law ===
+Standard form of the law:
 
 Suppose we have a computation that exhibits one or more types of parallelism.
 The amount of speedup in a computation is at most

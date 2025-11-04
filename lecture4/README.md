@@ -156,3 +156,15 @@ Plan:
   (Else, we can begin part 5.)
 
 Questions?
+
+## Friday, November 7
+
+Announcements:
+
+- Next week, Nov 10 and Nov 12 class will be remote on Zoom
+
+Plan:
+
+- Part 5: Quantifying parallelism and Amdahl's Law
+
+- If time: Part 6 on distribution and conclusions.
