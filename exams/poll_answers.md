@@ -69,3 +69,9 @@ to be fully precise, the correct answer should be any value between 2 and 200 (i
 2. ABDEFG
    Concurrency, Parallelism, Contention, Race Condition, Data Race -
    and Spooky Halloween Vibes, because data races are scary!! :-)
+
+Nov 3:
+Data parallelism (at tasks 1 and 2)
+No task parallelism
+Pipeline parallelism from 1 -> 2 and 2 -> 3.
+(Pipeline parallelism will not appear on midterm)

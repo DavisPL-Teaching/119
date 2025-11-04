@@ -311,9 +311,12 @@ the dataflow graph:
 
 ***** Resuming here for Monday, Nov 3 *****
 
-Example so far: task parallelism
+Recall example so far:
+task parallelism
 
 Do we need another example for data parallelism?
+
+No, because we had a data parallelism example in part 2 (2-parallelism.py).
 
 """
 
@@ -328,7 +331,7 @@ def average_numbers_task_parallelism():
     It's that if two tasks are done in sequence,
     we can still benefit (surprisingly) from parallelism!
 
-    (dataset) --> task 1 --> (output 1) --> task 2 --> (output 2)
+    (load dataset) --> (task 1) ---[interm output 1]---> (task 2) ---[interm output 2]---> (save output)
 
     Example: Take our dataset of employees, for each employee
     name, strip the spaces from the name, then extract the first
@@ -345,14 +348,23 @@ def average_numbers_task_parallelism():
     It doesn't seem like there's any parallelism here!
     But there is.
 
-              task 1     task 2     task 3     task 4
-    input 1:    1          2          3          4
-    input 2:    2          3          4          5
-    input 3:    3          4          5          6
+                  task 1     task 2     task 3     task 4
+    input/row 1:    1          2          3          4
+    input/row 2:    2          3          4          5
+    input/row 3:    3          4          5          6
+
+    Overall:
+        If we had done this sequentially, would have required 3 * 4 = 12 timesteps
+
+        But! we were able to do it in 6 timesteps
+
+        And we were able to do that all while doing all 4 tasks in order.
 
     That's pipeline parallelism!
 
 Visual aid!
+
+How do we identify pipeline parallelism in a dataflow graph?
 
     Draw out the tasks your pipeline as a dataflow graph
     (recall how we did this in Lecture 1):
@@ -365,6 +377,12 @@ Visual aid!
     Task parallelism exists if there two nodes that can be run in parallel without any path from one to the other
 
     Pipeline parallelism exists if there are two nodes that can be run in parallel with an arrow between them.
+
+Summary:
+    two nodes without any path = task parallelism
+    1 node with processing different inputs in parallel = data par.
+    two nodes with an edge = pipeline parallelism, as long as the second task can begin
+    processing the outputs as soon as they are produced, before the first task completes.
 
 === Discussion Question & Poll ===
 
@@ -382,6 +400,31 @@ B. Task parallelism
 C. Pipeline parallelism (please note: will not appear on the midterm)
 
 (For each one: be specific about which of task(s) 1-3 is has parallelism)
+
+Answers:
+There is data parallelism + pipeline parallelism, but no task parallelism
+
+Let's draw our dataflow graph:
+
+We are given an example with 3 tasks, so we should have three nodes
+
+(1) Load the dataset
+(2) Calculate the new column
+(3) Send the email
+
+Edges:
+(1) -> (2)
+and from (2) -> (3)
+
+    Dataflow graph:
+    (1) -> (2) -> (3)
+
+    Task parallelism requires two nodes that don't have a path from one to
+    the other.
+
+    Pipeline parallelism is present - from (1) -> (2) and from (2) -> (3)
+
+    Data parallelism is present at nodes (1), (2), and (3).
 
 .
 .
@@ -471,6 +514,8 @@ def average_numbers_pipeline_parallelism():
 """
 It works!
 And it illustrates the basic idea of pipeline parallelism.
+
+--------------------
 
 BUT: there is 1 potential problem here, does anyone see it?
 

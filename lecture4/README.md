@@ -126,6 +126,9 @@ Announcements:
 
 - The midterm is this Wednesday in class!
 
+  Reminders: In class, single-sided cheat sheet (typed or handwritten)
+  Topics: see Piazza, midterm_study_list (Lecture 4, up to data parallelism in part 4)
+
   Help with midterm:
 
   + **Today** OH after class: I will go over any requested topic, any in-class poll, or any practice exam question
@@ -134,9 +137,9 @@ Announcements:
 
   + **Piazza** for all other questions
 
-- Next week, Nov 10 and Nov 12 class will be remote on Zoom
+- Last chance to submit mid-quarter survey! (Due Wednesday before class)
 
-- Regrades + mid-quarter survey due Wednesday
+- Next week, Nov 10 and Nov 12 class will be remote on Zoom
 
 Plan:
 
@@ -145,3 +148,11 @@ Plan:
   but data+task parallelism will.)
 
 - Discussion question & poll
+
+- (~about 3:45)
+  I'll reserve the last 15 minutes of class in case there are
+  any questions from the midterm study list, polls, or practice exam
+  that anyone wants to go over.
+  (Else, we can begin part 5.)
+
+Questions?
