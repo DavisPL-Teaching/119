@@ -41,7 +41,7 @@ Oct 17:
 2) B, C, D, E, and F (all except "A: A python3 'Hello, world!' program works only on certain operating systems")
 
 Oct 20:
-ls, ls -alh, python3 --version, conda list, git status, cat, less
+ls, ls -alh, echo $PATH, python3 --version, conda list, git status, cat, less
 
 Oct 22:
 1) Some possible answers: `cd folder/`, `cp file1.txt file2.txt`
