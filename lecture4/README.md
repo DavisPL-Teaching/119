@@ -163,8 +163,16 @@ Announcements:
 
 - Next week, Nov 10 and Nov 12 class will be remote on Zoom
 
+  OH also remote on Zoom
+
+- Midterm grading is underway
+
 Plan:
+
+- Poll with some review questions
 
 - Part 5: Quantifying parallelism and Amdahl's Law
 
 - If time: Part 6 on distribution and conclusions.
+
+Questions?

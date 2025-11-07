@@ -2,6 +2,17 @@
 """
 Part 5: Quantifying Parallelism and Amdahl's Law.
 
+=== Poll ===
+
+For this poll, you may find it helpful to review the dataflow graph example that is drawn at:
+lecture4/extras/dataflow-graph-example.png
+
+1. For each type of parallelism that can be present in a dataflow graph, does it occur at a single node, or between a pair of nodes?
+
+2. For two different ways of drawing a dataflow graph (with different delineations of tasks as nodes), could we get different types of parallelism present, based on the above? Briefly comment on why or why not.
+
+https://forms.gle/arFaFVM7DhBpuVqSA
+
 === Quantifying parallelism ===
 
 We know how to tell *if* there's parallelism.
@@ -157,25 +168,6 @@ Q: What is the maximum speedup here?
     T = time it takes to complete with 1 worker
     S = time it takes to complete the task with a theoretically infinite number of workers and no cost of overhead when communicating between workers.
 
-=== Poll ===
-
-Use Amdahl's law to estimate the maximum speedup in the following scenario.
-
-As in Wednesday's poll, a Python script needs to:
-- load a dataset into Pandas: students.csv, with 100 rows
-- calculate a new column which is the total course load for each student
-- send an email to each student with their total course load
-
-Assume that it takes 1 ms (per row) to read in each input row, 1 ms (per row) to calculate the new column, and 1 ms (per row) to send an email.
-
-Q: What is the theoretical bound on the maximum speedup in the pipeline?
-
-
-    T = 300 ms
-    S = 3 ms
-
-    Speedup <= 100x
-
 === More examples ===
 
 (Skip)
@@ -223,5 +215,24 @@ Given T and S...
     (not just a single item), the _minimum_ latency is
 
     latency >= S.
+
+=== Poll (For next time) ===
+
+Use Amdahl's law to estimate the maximum speedup in the following scenario.
+
+As in Wednesday's poll, a Python script needs to:
+- load a dataset into Pandas: students.csv, with 100 rows
+- calculate a new column which is the total course load for each student
+- send an email to each student with their total course load
+
+Assume that it takes 1 ms (per row) to read in each input row, 1 ms (per row) to calculate the new column, and 1 ms (per row) to send an email.
+
+Q: What is the theoretical bound on the maximum speedup in the pipeline?
+
+
+    T = 300 ms
+    S = 3 ms
+
+    Speedup <= 100x
 
 """
