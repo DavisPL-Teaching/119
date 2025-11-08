@@ -161,7 +161,7 @@ Questions?
 
 Announcements:
 
-- Next week, Nov 10 and Nov 12 class will be remote on Zoom
+- Next week, Monday (Nov 10) and Wed (Nov 12) class will be remote on Zoom
 
   OH also remote on Zoom
 
@@ -169,7 +169,11 @@ Announcements:
 
 Plan:
 
-- Poll with some review questions
+Midterm review:
+
+- Poll with a review question
+
+Continuing lecture 4:
 
 - Part 5: Quantifying parallelism and Amdahl's Law
 

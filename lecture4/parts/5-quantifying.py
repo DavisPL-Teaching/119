@@ -4,14 +4,91 @@ Part 5: Quantifying Parallelism and Amdahl's Law.
 
 === Poll ===
 
+Review:
+Identifying parallelism in dataflow graphs!
+
+- Data parallelism:
+
+    Running the same task on different data points
+
+- Task parallelism
+
+    Running two different tasks on same or different data points
+
+- Pipeline parallelism
+
+    When feeding the output of one task to another, having the second
+    task process the partial results of the first task while the first
+    task is still running.
+
+How do we connect these types of parallelism to this concept of
+dataflow graphs?
+
+    Note: the word "task" as referring to a node in the dataflow graph.
+
+    Different nodes in the graph = different tasks
+
 For this poll, you may find it helpful to review the dataflow graph example that is drawn at:
 lecture4/extras/dataflow-graph-example.png
 
-1. For each type of parallelism that can be present in a dataflow graph, does it occur at a single node, or between a pair of nodes?
+1. For each type of parallelism that can be present in a dataflow graph, does it occur at a single node, or between a pair of two nodes?
 
 2. For two different ways of drawing a dataflow graph (with different delineations of tasks as nodes), could we get different types of parallelism present, based on the above? Briefly comment on why or why not.
 
 https://forms.gle/arFaFVM7DhBpuVqSA
+
+examples:
+
+    1. load employee dataset
+
+    2. strip the spaces from employee names, followed by extracting the first/given name
+
+    grouping both parts of task 2 as a single task as numbered above:
+
+    (load) -> (strip and extract)
+
+    then (strip and extract) has data parallelism,
+    but no pipeline parallelism; but, if I group it as two different tasks
+
+    (there is pipeline parallelism between "load" and "strip and extract")
+
+    1. load employee dataset
+
+    2. strip the spaces from employee names
+
+    3. extract the first/given name
+
+    (load) -> (strip) -> (extract)
+
+    Now there is pipeline parallelism between (strip) and (extract)
+    and data parallelism at (strip) and data parallelism at (extract)
+
+    I can also modify my graph to turn data parallelism into task parallelism
+
+    My dataset got too large, so I split into two halves
+
+    (load dataset1) -> (strip and extract dataset1)
+
+    (load dataset2) -> (strip and extract dataset2)
+
+    Now I have four nodes!
+
+    Now there is task parallelism between "strip and extract dataset1"
+    and "strip and extract dataset2"
+
+This was tricky point
+
+If you don't want to remember the discussion above, just remember:
+
+    1. Data parallelism always exists at a single node, and I can identify
+    it by checking if that particular node/task can be run in parallel over
+    different chunks/batches of the input
+
+    2. Task parallelism always exists between any two different nodes that are
+    independent of one another
+
+    3. Pipeline parallelism always exists between any
+    two different nodes which are connected by an edge.
 
 === Quantifying parallelism ===
 
@@ -29,24 +106,37 @@ example:
     9.2s for sequential impl
 
 Speedup would be 2x.
+(We can run 2-parallelism.py to check; and we might get different numbers
+on different platforms or machines, for example, if your machine has only one CPU
+you might not see any speedup.)
+
+Re-running:
+Speedup = 9.6 / 5.2 = 1.84x speedup.
+
+You could run with four workers, and get up to a 4x speedup
+... or with 8 workers, and get up to an 8x speedup ...
+
+You might wonder, how much can I keep speeding up this computation,
+won't this stop working at some point?
+
+At some point ... we hit a bottleneck
 
 Fundamental law of parallelism:
 Amdahl's law:
 https://en.wikipedia.org/wiki/Amdahl%27s_law
 
-Amdahl's law gives an upper bound on the amount of speedup that is possible for any task.
+Amdahl's law gives a theoretical upper bound on the amount of speedup that is possible for any task (in arbitrary code, but also applying specifically
+to data processing code).
+
+It's a useful way to quantify parallelism & see how useful it would be.
 
 === Amdahl's Law ===
 
 We're interested in knowing: how much speedup is possible?
 
-Amdahl's law gives us a theoretical upper bound on the amount of speedup
-that is possible (in arbitrary code, but also applying specifically
-to data processing code).
-
 Standard form of the law:
 
-Suppose we have a computation that exhibits one or more types of parallelism.
+Suppose we have a computation that I think could benefit from one or more types of parallelism.
 The amount of speedup in a computation is at most
 
     Speedup <= 1 / (1 - p)
@@ -58,7 +148,7 @@ where:
 === Example with a simple task ===
 
 We have written a complex combination of C and Python code to train our ML model.
-Based on profiling the code, we believe that
+Based on profiling the code (callgrind or some other profiling tool), we believe that
 95% of the code can be fully parallelized, however there is a 5% of the time of the code
 that is spent parsing the input model file and producing as output an output model file
 that we have determined cannot be parallelized.
@@ -71,7 +161,16 @@ Applying Amdahl's law:
 
     Speedup <= 1 / (1 - .95) = 1 / .05 = 20x.
 
+Pretty good - but not infinite!
+
 Example: the best we can get is from 100 hours to 5 hours, a 20x speedup.
+
+How to apply this knowledge?
+I was considering purchasing a supercomputer server machine with 160 cores.
+Based on the above calculation, I realize that I'm only going to effectively
+be able to make use of an at most 20x speedup,
+so I think my 160 cores may not be useful, and I buy a smaller machine
+with 24 cores.
 
 === Alternate form ===
 
@@ -81,7 +180,7 @@ Let:
   (without any parallelism)
   (in our example: 100 hours)
 
-- S be the amount of time to compute some inherently sequential portion of the task
+- S be the amount of time to compute some inherently sequential bottleneck
     --> We don't believe it's possible to do any part of S in parallel
   (in our example: 5 hours)
 
@@ -94,6 +193,33 @@ Note: this applies to distributed computations as well!
 This is giving a theoretical upper bound, not taking into account
 other overheads (for example, it doesn't take into account
 communication overhead between threads, processes or distributed devices).
+
+So it's not an actual number on what speedup we will get, but it still can be a
+useful upper bound.
+
+Recap:
+
+- We reviewed 3 type of parallelism in dataflow graphs
+
+- We define speedup
+
+- We talked about estimating the "maximum speedup" in a pipeline, using
+  a law called Amdahl's Law
+
+- We saw two forms of the law:
+
+    Speedup <= 1 / (1 - p)
+
+    Speedup <= T / S
+
+    where:
+        T is running time of sequential code
+        S is running time of a bottleneck that can't be parallelized
+        p is % of code that can be parallelized
+
+        p = (T - S) / T.
+
+---- where we ended for today ----
 
 === Example ===
 
