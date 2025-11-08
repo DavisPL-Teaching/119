@@ -2,93 +2,7 @@
 """
 Part 5: Quantifying Parallelism and Amdahl's Law.
 
-=== Poll ===
-
-Review:
-Identifying parallelism in dataflow graphs!
-
-- Data parallelism:
-
-    Running the same task on different data points
-
-- Task parallelism
-
-    Running two different tasks on same or different data points
-
-- Pipeline parallelism
-
-    When feeding the output of one task to another, having the second
-    task process the partial results of the first task while the first
-    task is still running.
-
-How do we connect these types of parallelism to this concept of
-dataflow graphs?
-
-    Note: the word "task" as referring to a node in the dataflow graph.
-
-    Different nodes in the graph = different tasks
-
-For this poll, you may find it helpful to review the dataflow graph example that is drawn at:
-lecture4/extras/dataflow-graph-example.png
-
-1. For each type of parallelism that can be present in a dataflow graph, does it occur at a single node, or between a pair of two nodes?
-
-2. For two different ways of drawing a dataflow graph (with different delineations of tasks as nodes), could we get different types of parallelism present, based on the above? Briefly comment on why or why not.
-
-https://forms.gle/arFaFVM7DhBpuVqSA
-
-examples:
-
-    1. load employee dataset
-
-    2. strip the spaces from employee names, followed by extracting the first/given name
-
-    grouping both parts of task 2 as a single task as numbered above:
-
-    (load) -> (strip and extract)
-
-    then (strip and extract) has data parallelism,
-    but no pipeline parallelism; but, if I group it as two different tasks
-
-    (there is pipeline parallelism between "load" and "strip and extract")
-
-    1. load employee dataset
-
-    2. strip the spaces from employee names
-
-    3. extract the first/given name
-
-    (load) -> (strip) -> (extract)
-
-    Now there is pipeline parallelism between (strip) and (extract)
-    and data parallelism at (strip) and data parallelism at (extract)
-
-    I can also modify my graph to turn data parallelism into task parallelism
-
-    My dataset got too large, so I split into two halves
-
-    (load dataset1) -> (strip and extract dataset1)
-
-    (load dataset2) -> (strip and extract dataset2)
-
-    Now I have four nodes!
-
-    Now there is task parallelism between "strip and extract dataset1"
-    and "strip and extract dataset2"
-
-This was tricky point
-
-If you don't want to remember the discussion above, just remember:
-
-    1. Data parallelism always exists at a single node, and I can identify
-    it by checking if that particular node/task can be run in parallel over
-    different chunks/batches of the input
-
-    2. Task parallelism always exists between any two different nodes that are
-    independent of one another
-
-    3. Pipeline parallelism always exists between any
-    two different nodes which are connected by an edge.
+Content from Nov 7 poll was moved to end of Part 4 lecture.
 
 === Quantifying parallelism ===
 
@@ -219,17 +133,25 @@ Recap:
 
         p = (T - S) / T.
 
----- where we ended for today ----
+---- where we ended for Nov 7 ----
+
+Recall from last time:
+
+
 
 === Example ===
 
-1. Let's take our data parallelism example:
+1. SQL query example
+
 - imagine an SQL query where you need to match
   the employee name with their salary and produce a joined table
   (join on name_table and salary_table)
 
+Dataflow graph:
+
+
 Assume that all operations take 1 second per row:
-    - 1 second to load each input row rom name_table
+    - 1 second to load each input row from name_table
     - 1 second to load each input row from salary_table
     - 1 second to join -- per row in the joined table
 
@@ -284,30 +206,47 @@ Q: What is the maximum speedup here?
 
         Speedup <= T / S = 300 / 2 = 150x.
 
-
     Note:
     You can think of this as the limit as number of cores/processes
     goes to infinity.
 
-    There's a version of the law that takes this into account.
-
     T = time it takes to complete with 1 worker
     S = time it takes to complete the task with a theoretically infinite number of workers and no cost of overhead when communicating between workers.
 
-=== More examples ===
+    **Advanced topics note:**
+    There's a version of the law that takes the number of processes into account.
 
-(Skip)
-2. average_numbers example
+=== More examples and exercises ===
+(Skip - may do in discussion section)
+
+2. Let's take our data parallelism example:
+
+    We had an employee database, and tasks:
+
+    1. load employee dataset
+
+    2. strip the spaces from employee names
+
+    3. extract the first/given name
+
+    with dataflow graph:
+
+        (1) -> (2) -> (3)
+
+Again assume 1ms for each task per input row.
+What are T and S here?
+
+3. average_numbers example
 
 Our average_numbers example is slightly more complex than above as it involves an aggregation
 (group-by).
 Aggregation can be parallelized.
     (Why? What type of parallelism?)
 
-For the purposes of Amdahl's law, we can think of aggregation as requiring at least 1 operation
+For the purposes of Amdahl's law, let's think of aggregation as requiring at least 1 operation
 (1 unit of time to compute the total).
 
-Q: What is the maximum speedup here?
+Q: What does Amdahl's law say the maximum speedup for our simple average_numbers pipeline?
 
 3. An extended version of the table join example.
 We have two tables, of employee names and employee salaries.
@@ -320,11 +259,8 @@ convert it from USD to Euros, and filter only the rows where the
 result is over 1 million.
 Assume all basic operations take 1 unit of time per row.
 
-What does Amdahl's law say about our simple
-average_numbers pipeline?
-"""
+=== Connection to throughput & latency ===
 
-"""
 Let's also connect Amdahl's law back to throughput & latency.
 
 Given T and S...
@@ -337,12 +273,15 @@ Given T and S...
 
 2. Rephrase in terms of latency:
 
-    Assuming we care about latency for the whole task
-    (not just a single item), the _minimum_ latency is
+    Observation:
+    In the above examples the "sequential bottleneck" we chose
+    is essentially the latency of a single item!
+
+    Therefore we have:
 
     latency >= S.
 
-=== Poll (For next time) ===
+=== Discussion question and poll ===
 
 Use Amdahl's law to estimate the maximum speedup in the following scenario.
 
@@ -355,10 +294,5 @@ Assume that it takes 1 ms (per row) to read in each input row, 1 ms (per row) to
 
 Q: What is the theoretical bound on the maximum speedup in the pipeline?
 
-
-    T = 300 ms
-    S = 3 ms
-
-    Speedup <= 100x
-
+https://forms.gle/W5NpbuZGs4Se45VCA
 """

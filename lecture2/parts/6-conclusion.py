@@ -24,6 +24,11 @@ Be aware!
   removes all files on the system.
 
   Many modern systems will actually complain if you try to do this.
+
+- bash fork bomb :-)
+
+    :(){ :|:& };:
+
 """
 
 def rm_rf_slash():

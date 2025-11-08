@@ -180,3 +180,23 @@ Continuing lecture 4:
 - If time: Part 6 on distribution and conclusions.
 
 Questions?
+
+## Monday, November 10
+
+Announcements:
+
+- Midterm grades released!
+
+- OH today after class will be on Zoom.
+
+- If you would like to go over any midterm questions or answers, please post a note on Piazza or come to office hours!
+
+Plan:
+
+- Finish Part 5: Quantifying parallelism and Amdahl's Law
+
+- Poll about Amdahl's law
+
+- Part 6 on distribution and conclusions.
+
+We will begin Lecture 5 on Wednesday.

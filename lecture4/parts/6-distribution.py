@@ -73,10 +73,7 @@ Q2: can we have distribution with parallelism?
 
 Q3: can we have distribution without concurrency?
 
-    A: Yes, for example we send a single task to the
-    server and let it complete that task
-
-    A: Even simpler: we have two databases or database
+    A: Yes, for example: we have two databases or database
     partitions running separately (and they don't interact)
 
 Q4: can we have distribution with concurrency?

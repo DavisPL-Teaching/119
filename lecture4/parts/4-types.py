@@ -597,4 +597,94 @@ compared to the size of your pipeline.
 For this reason, data parallelism is the main focus of most
 parallel and distributed data processing frameworks.
 (Again, looking forward to lecture 5).
+
+=== Poll and an important note about dataflow graphs ===
+
+(Nov 7 poll)
+
+An important note about identifying parallelism in dataflow graphs!
+
+- Data parallelism:
+
+    Running the same task on different data points
+
+- Task parallelism
+
+    Running two different tasks on same or different data points
+
+- Pipeline parallelism
+
+    When feeding the output of one task to another, having the second
+    task process the partial results of the first task while the first
+    task is still running.
+
+How do we connect these types of parallelism to this concept of
+dataflow graphs?
+
+    Note: the word "task" as referring to a node in the dataflow graph.
+
+    Different nodes in the graph = different tasks
+
+For this poll, you may find it helpful to review the dataflow graph example that is drawn at:
+lecture4/extras/dataflow-graph-example.png
+
+1. For each type of parallelism that can be present in a dataflow graph, does it occur at a single node, or between a pair of two nodes?
+
+2. For two different ways of drawing a dataflow graph (with different delineations of tasks as nodes), could we get different types of parallelism present, based on the above? Briefly comment on why or why not.
+
+https://forms.gle/arFaFVM7DhBpuVqSA
+
+examples:
+
+    1. load employee dataset
+
+    2. strip the spaces from employee names, followed by extracting the first/given name
+
+    grouping both parts of task 2 as a single task as numbered above:
+
+    (load) -> (strip and extract)
+
+    then (strip and extract) has data parallelism,
+    but no pipeline parallelism; but, if I group it as two different tasks
+
+    (there is pipeline parallelism between "load" and "strip and extract")
+
+    1. load employee dataset
+
+    2. strip the spaces from employee names
+
+    3. extract the first/given name
+
+    (load) -> (strip) -> (extract)
+
+    Now there is pipeline parallelism between (strip) and (extract)
+    and data parallelism at (strip) and data parallelism at (extract)
+
+    I can also modify my graph to turn data parallelism into task parallelism
+
+    My dataset got too large, so I split into two halves
+
+    (load dataset1) -> (strip and extract dataset1)
+
+    (load dataset2) -> (strip and extract dataset2)
+
+    Now I have four nodes!
+
+    Now there is task parallelism between "strip and extract dataset1"
+    and "strip and extract dataset2"
+
+This was tricky point
+
+If you don't want to remember the discussion above, just remember:
+
+    1. Data parallelism always exists at a single node, and I can identify
+    it by checking if that particular node/task can be run in parallel over
+    different chunks/batches of the input
+
+    2. Task parallelism always exists between any two different nodes that are
+    independent of one another
+
+    3. Pipeline parallelism always exists between any
+    two different nodes which are connected by an edge.
+
 """
