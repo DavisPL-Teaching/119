@@ -187,9 +187,13 @@ Announcements:
 
 - Midterm grades released!
 
-- OH today after class will be on Zoom.
+  Statistics & midterm answers on Piazza: https://piazza.com/class/mfvn4ov0kuc731/post/112
 
-- If you would like to go over any midterm questions or answers, please post a note on Piazza or come to office hours!
+  Suggested questions to review: q3, q7, q8, q9, q10
+
+- OH today after class will be on Zoom. (I will share link on Piazza)
+
+- We have time to go over one midterm question; if you would like to go over any other midterm questions or answers, please post a note on Piazza or come to office hours!
 
 Plan:
 
@@ -199,4 +203,4 @@ Plan:
 
 - Part 6 on distribution and conclusions.
 
-We will begin Lecture 5 on Wednesday.
+Plan to begin Lecture 5 on Wednesday.

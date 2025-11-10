@@ -281,11 +281,11 @@ Given T and S...
 
     latency >= S.
 
-=== Discussion question and poll ===
+=== Poll ===
 
 Use Amdahl's law to estimate the maximum speedup in the following scenario.
 
-As in Wednesday's poll, a Python script needs to:
+As in last Monday's poll, a Python script needs to:
 - load a dataset into Pandas: students.csv, with 100 rows
 - calculate a new column which is the total course load for each student
 - send an email to each student with their total course load
