@@ -189,6 +189,8 @@ Announcements:
 
   Statistics & midterm answers on Piazza: https://piazza.com/class/mfvn4ov0kuc731/post/112
 
+  Regrade requests due one week from today
+
   Suggested questions to review: q3, q7, q8, q9, q10
 
 - OH today after class will be on Zoom. (I will share link on Piazza)

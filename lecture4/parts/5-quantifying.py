@@ -135,9 +135,7 @@ Recap:
 
 ---- where we ended for Nov 7 ----
 
-Recall from last time:
-
-
+Recall formulas from last time
 
 === Example ===
 
@@ -147,74 +145,79 @@ Recall from last time:
   the employee name with their salary and produce a joined table
   (join on name_table and salary_table)
 
-Dataflow graph:
-
-
-Assume that all operations take 1 second per row:
-    - 1 second to load each input row from name_table
-    - 1 second to load each input row from salary_table
-    - 1 second to join -- per row in the joined table
+Assume that all operations take 1 ms per row:
+    - 1 ms to load each input row from name_table
+    - 1 ms to load each input row from salary_table
+    - 1 ms to join -- per row in the joined table
 
 Also assume that there are 100 employees in name_table,
 100 in salary_table, and 100 in the joined table.
 
 Q: What is the maximum speedup here?
 
+Dataflow graph:
+
+    (load name_table) ----|
+                          |---> (join tables)
+    (load salary_table) --|
+
     speedup <= (T / S)
 
     What are T and S?
 
     T = ?
-        201?
-        300s =
-            100s to load first table
-            100s to load second table,
-            100s to calculate joined table.
+        300ms =
+            100ms to load first table
+            100ms to load second table,
+            100ms to calculate joined table.
 
     with no parallelism!
 
     S = what cannot be parallelized?
-        Joining the two tables?
-        How can we take into account data parallelism?
-        Idea: Once both tables are loaded, I should be able to join
-            different rows in parallel.
 
-            If I have all the computational resources in the world,
-            I could send each employee to its own worker.
-            I should then be able to join all the values associated
-            with each worker individually -- different
-            employees are processed in parallel.
+        Idea: view at the level of input rows!
 
-    Let's draw a data flow graph again of our tasks:
+        Let's identify what needs to happen for some specific employee
 
-    (load table 1)
-                    --> (join tables)
-    (load table 2)
+        - I need to load the employee name before I produce the particular output row in joined table for that employee
 
-    What's the minimum bundle of computation that I can't process in
-    parallel?
+        - I need to load the employee salary before I produce the particular output row in joined table for that employee
 
-    Imagine a specific employee A:
+        x I need to load the employee name, then load the employee salary, then produce the particular output row
 
-    - I have to load table 1, row corresponding to A (1s)
-    - I have to load table 2, row corresponding to A (1s)
-    - I have to compute joined table, row corresponding to A (1s)
+          ^^^ not really a sequential bottleneck
 
-    Minimum time is 2 seconds!
+    Minimum "sequential bottleneck" is 2 ms!
 
     Therefore:
 
-        Speedup <= T / S = 300 / 2 = 150x.
+        Speedup <= T / S = 300 ms / 2 ms = 150x.
 
-    Note:
-    You can think of this as the limit as number of cores/processes
-    goes to infinity.
+=== Poll ===
 
-    T = time it takes to complete with 1 worker
-    S = time it takes to complete the task with a theoretically infinite number of workers and no cost of overhead when communicating between workers.
+Use Amdahl's law to estimate the maximum speedup in the following scenario.
 
-    **Advanced topics note:**
-    There's a version of the law that takes the number of processes into account.
+As in last Monday's poll, a Python script needs to:
+- load a dataset into Pandas: students.csv, with 100 rows
+- calculate a new column which is the total course load for each student
+- send an email to each student with their total course load
+
+Assume that it takes 1 ms (per row) to read in each input row, 1 ms (per row) to calculate the new column, and 1 ms (per row) to send an email.
+
+Q: What is the theoretical bound on the maximum speedup in the pipeline?
+
+https://forms.gle/W5NpbuZGs4Se45VCA
+
+DFG:
+
+    (load) -> (calculate col) -> (send email)
+    100 ms         100 ms           100ms
+
+    T = 100 + 100 + 100 = 300 ms
+
+S = 3ms -- need to perform 3 actions in sequence for a single student - can't be parallelized!
+
+    300 ms / 3 ms = 100x.
 
 === More examples and exercises ===
 (Skip - may do in discussion section)
@@ -236,18 +239,6 @@ Q: What is the maximum speedup here?
 Again assume 1ms for each task per input row.
 What are T and S here?
 
-3. average_numbers example
-
-Our average_numbers example is slightly more complex than above as it involves an aggregation
-(group-by).
-Aggregation can be parallelized.
-    (Why? What type of parallelism?)
-
-For the purposes of Amdahl's law, let's think of aggregation as requiring at least 1 operation
-(1 unit of time to compute the total).
-
-Q: What does Amdahl's law say the maximum speedup for our simple average_numbers pipeline?
-
 3. An extended version of the table join example.
 We have two tables, of employee names and employee salaries.
 We want to compute which employees make more than 1 million Euros.
@@ -258,6 +249,41 @@ We want to get the salary associated with the CEO,
 convert it from USD to Euros, and filter only the rows where the
 result is over 1 million.
 Assume all basic operations take 1 unit of time per row.
+
+=== Additional notes ===
+
+Note 1:
+You can think of this as the limit as number of cores/processes
+goes to infinity.
+
+T = time it takes to complete with 1 worker
+S = time it takes to complete the task with a theoretically infinite number of workers and no cost of overhead when communicating between workers.
+
+**Advanced topics note:**
+There's a version of the law that takes the number of processes into account.
+
+    - basically the law would take the portion of the pipeline that *can* be parallelized, and divide it by
+      # of processors
+
+      S portion - cannot be parallelized
+      T - S - can be parallelized
+
+    - Don't need to know this for this class.
+
+Note 2:
+How Amdahl's law applies to aggregation cases.
+
+average_numbers example
+
+Our average_numbers example is slightly more complex than above as it involves an aggregation
+(group-by).
+Aggregation can be parallelized.
+    (Why? What type of parallelism?)
+
+For the purposes of Amdahl's law, let's think of aggregation as requiring at least 1 operation
+(1 unit of time to compute the total).
+
+Q: What does Amdahl's law say the maximum speedup for our simple average_numbers pipeline?
 
 === Connection to throughput & latency ===
 
@@ -271,6 +297,10 @@ Given T and S...
 
     throughput <= (N / S)
 
+    (Num input items) / (running time of pipeline)
+
+    Amdahl's law is just assuming that the minimum running time of the pipeline is S - "maximum speedup" case.
+
 2. Rephrase in terms of latency:
 
     Observation:
@@ -279,20 +309,7 @@ Given T and S...
 
     Therefore we have:
 
-    latency >= S.
+    latency >= S,
 
-=== Poll ===
-
-Use Amdahl's law to estimate the maximum speedup in the following scenario.
-
-As in last Monday's poll, a Python script needs to:
-- load a dataset into Pandas: students.csv, with 100 rows
-- calculate a new column which is the total course load for each student
-- send an email to each student with their total course load
-
-Assume that it takes 1 ms (per row) to read in each input row, 1 ms (per row) to calculate the new column, and 1 ms (per row) to send an email.
-
-Q: What is the theoretical bound on the maximum speedup in the pipeline?
-
-https://forms.gle/W5NpbuZGs4Se45VCA
+    if S is computed in the way that we have computed above.
 """

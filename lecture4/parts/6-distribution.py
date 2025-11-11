@@ -6,7 +6,7 @@ Part 6: Distribution and concluding thoughts
 === What is distribution? ===
 
 Distribution means that we have multiple workers and belts
-**in different physical locations**
+**in different physical warehouses**
 can process and fail independently.
 
 The workers must be on different physical computers or physical devices.
@@ -51,7 +51,7 @@ def average_numbers_distributed():
 
 # Uncomment to run
 # This won't work on your machine!
-# average_numbers_distributed()
+average_numbers_distributed()
 
 # This waits until the first connection finishes before
 # starting the next connection; but we could easily modify
@@ -82,9 +82,8 @@ Q4: can we have distribution with concurrency?
     communicate via passing messages to each other
 """
 
-
 """
-=== Parallelizing our code in Pandas? ===
+=== Parallelizing our code in Pandas? (Skip) ===
 
 We don't want to parallelize our code by hand.
 (why? See problems with concurrency from last week!)
@@ -149,8 +148,21 @@ Everything we have said about identifying and quantifying parallelism also appli
 distributing the code (for the most part -- we will only see exceptions to this if we cover
 distributed consistency issues and faults and crashes, this is an optional topic that we will
 get to only if we have time.)
-In addition to scaling even further, distribution can offer an even
-more seamless performance compared to parallelism as it can eliminate
+
+In addition to scaling even further, distribution + parallelism can offer an even
+more seamless performance compared to parallelism alone as it can eliminate
 many coordination overheads and contention between workers
 (see partitioning: different partitions of the database are operated entirely independently by different machines).
+
+Recap:
+
+- Finished Amdahl's law, did an example, and a practice example with the poll
+
+- Connected Amdahl's law back to latency & throughput (with two formulas)
+
+- We talked about distribution; ran our same running example as a distributed pipeline over ssh
+
+- We talked about vertical vs horizontal scaling
+
+- We contrasted parallelism with distributed scaling - where we will be going next in Lecture 5.
 """
