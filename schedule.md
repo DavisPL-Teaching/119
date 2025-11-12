@@ -13,7 +13,7 @@ I will try to keep it up to date, but please see Piazza for the latest informati
 | 1 | Sep 29 |  |  | 1.2 |
 |   | Oct 1  | **No class** | HW0 Due |  |
 |   | Oct 3  |  |  | 1.3 |
-| 2 | Oct 6  |  |  | 1.4 |
+| 2 | Oct 6  |  | HW1 Available | 1.4 |
 |   | Oct 8  |  |  | 1.5 |
 |   | Oct 10 |  |  | 1.6 |
 | 3 | Oct 13 | The Shell |  | 2.1 |
@@ -30,21 +30,21 @@ I will try to keep it up to date, but please see Piazza for the latest informati
 | 5 | Oct 27 |  |  | 4.2 |
 |   | Oct 29 |  |  | 4.3 |
 |   | Oct 31 |  |  | 4.3, 4.4 |
-| 6 | Nov 3  | Review or Overflow |  | 4.4, 4.5 |
+| 6 | Nov 3  | Review or Overflow |  | 4.4 |
 |   | Nov 5  | **Midterm** |  |  |
 |   | Nov 7  |  |  | 4.5 |
-| 7 | Nov 10 | Distributed Pipelines |  | 5 |
-|   | Nov 12 |  |  | 5 |
-|   | Nov 14 |  |  | 5 |
-| 8 | Nov 17 |  |  | 5 |
-|   | Nov 19 |  |  | 5 |
-|   | Nov 21 |  |  | 5 |
+| 7 | Nov 10 |  |  | 4.5, 4.6 |
+|   | Nov 12 | Distributed Pipelines | HW2 available | 5.1 |
+|   | Nov 14 |  |  | 5.2 |
+| 8 | Nov 17 |  |  | 5.3 |
+|   | Nov 19 |  |  | 5.4 |
+|   | Nov 21 |  |  | 5.5 |
 
 ## Section 3: Distributed Computing
 
 | Week | Date | Topic | Readings & HW | Lecture # |
 | --- | --- | --- | --- | --- |
-| 9 | Nov 24 | Streaming Pipelines |  | 6 |
+| 9 | Nov 24 | Streaming Pipelines | HW2 due | 6 |
 |   | Nov 26 |  |  | 6 |
 |   | Nov 28 | **No Class** (Thanksgiving) |
 | 10 | Dec 1 |  |  | 6 |
