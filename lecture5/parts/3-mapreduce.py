@@ -411,13 +411,13 @@ MapReduce was originally created by
 Jeffrey Dean and Sanjay Ghemawat at Google to simplify the large-scale data processing jobs that
 engineers were running on Google clusters.
 
-One of the paper readings from Wednesday asked you to read the original paper:
+Here is the original paper:
 
     MapReduce: Simplified Data Processing on Large Clusters
     https://dl.acm.org/doi/pdf/10.1145/1327452.1327492
 
 (BTW, this paper is very famous. Probably one of the most cited papers ever with
-23,309 citations (last I checked))
+almost 25,000 citations (last I checked))
 
 Blog article: "The Friendship That Made Google Huge"
 
@@ -465,8 +465,8 @@ which we will cover now (see Sec 2.2):
     ---> reduce computes one answer per key (value of type k2)
 
 ===== Cut, skip to the bottom =====
-This material was cut from the lecture,
-instead, some of it will appear as exercises on HW2.
+
+Some of this material will appear as exercises on HW2.
 
 The above is written very abstractly, what does it mean?
 

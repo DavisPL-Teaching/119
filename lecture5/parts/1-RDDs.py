@@ -1,30 +1,23 @@
 """
 Lecture 5: Distributed Pipelines
 
-Part 1: Scalable collection types and RDDs
+Part 1: Introduction to Spark: Scalable collection types and RDDs
 
-----
+=== Poll ===
 
-Agenda:
+Speedup through parallelism alone (vertical scaling) is significantly limited by...
+(Select all that apply)
 
-- Recap: on dataflow graphs
+1. The number of lines in the Python source code
+2. The version of the operating system (e.g., MacOS Sonoma)
+3. The number of CPU cores on the machine
+4. The number of wire connections on the computer's motherboard
+5. The amount of RAM (memory) and disk space (storage) available
 
-- Scalable collection types
+https://forms.gle/LUsqdy7YYKy7JFVH6
 
-- Programming over collection types
+=== Apache Spark (PySpark) ===
 
-Possible topics/optional:
-
-- Throughput and latency model
-
-- Partitioning strategies
-
-- Distributed consistency: crashes, failures, duplicated/dropped messages
-
-- Pitfalls
-"""
-
-"""
 In this lecture, we will use Apache Spark (PySpark).
 
 Spark is a parallel and distributed data processing framework.
@@ -39,7 +32,7 @@ https://spark.apache.org/docs/latest/api/python/index.html
 To test whether you have PySpark installed successfully, try running
 the lecture now:
 
-python3 lecture.py
+python3 1-RDDs.py
 """
 
 # Test whether import works
@@ -47,7 +40,7 @@ import pyspark
 
 # All spark code generally starts with the following setup code:
 from pyspark.sql import SparkSession
-spark = SparkSession.builder.appName("DataflowGraphExample").getOrCreate()
+spark = SparkSession.builder.appName("SparkExample").getOrCreate()
 sc = spark.sparkContext
 
 """
@@ -83,35 +76,8 @@ handle the "how"
 
 So what is that higher level abstraction?
 
-SPOILER: It's a dataflow graph.
+Dataflow graphs are almost enough alone, but we need one more secret ingredient ...
 """
-
-# Recall: distributed pipeline from previous lecture below:
-
-# for os.popen to run a shell command (like we did on HW1 part 3)
-import os
-
-def ssh_run_command(cmd):
-    result = os.popen("ssh cdstanfo@set.cs.ucdavis.edu " + cmd).read()
-    # Just print the result for now
-    print(f"result: {result.strip()}")
-
-def worker1_distributed():
-    ssh_run_command("seq 1 1000000 | awk '{s+=$1} END {print s}'")
-    print("Worker 1 finished")
-
-def worker2_distributed():
-    ssh_run_command("seq 1000001 2000000 | awk '{s+=$1} END {print s}'")
-    print("Worker 2 finished")
-
-def average_numbers_distributed():
-    worker1_distributed()
-    worker2_distributed()
-    print("Distributed computation complete")
-
-# Uncomment to run
-# This won't work on your machine!
-# average_numbers_distributed()
 
 """
 === Introduction to distributed programming ===
@@ -147,9 +113,11 @@ Basic scalable collection types in Spark:
 basic_rdd = sc.parallelize(range(0, 1_000))
 
 # --- run some commands on the RDD ---
-# mapped_rdd = basic_rdd.map(lambda x: x + 2)
-# filtered_rdd = mapped_rdd.filter(lambda x: x > 500)
-# filtered_rdd.collect()
+mapped_rdd = basic_rdd.map(lambda x: x + 2)
+filtered_rdd = mapped_rdd.filter(lambda x: x > 500)
+result = filtered_rdd.collect()
+
+print(result)
 
 """
 We can visualize our pipeline!
@@ -157,10 +125,161 @@ We can visualize our pipeline!
 Open up your browser to:
 http://localhost:4040/
 
-Let's wrap up there:
+We saw scalable collection types
+(with an initial RDD example)
 
-- We saw scalable collection types
-  (with an initial RDD example)
+Some examples are listed at the bottom of the file.
 
-  And we will do more examples next time.
+=== Recap ===
+
+Scalable collection types are just like normal collection types,
+but they behave (behind the scenes) like they work in parallel!
+
+Behind the scenes, both vertical scaling and horizontal scaling
+can be performed automatically by the underlying data processing
+engine (in our case, Spark).
+This depends on the engine to do its job well -- for the most part,
+we will assume in this class that the engine does a better job than
+we do, but we will get to some limitations later on.
+
+Many other data processing engines exist...
+(to name a few, Hadoop, Google Cloud Dataflow, Materialize, Storm, Flink)
+(we will discuss more later on and the technology behind these.)
+
+I said:
+    "scalable collection types are just like normal collection types"
+
+Let's show this!
+
+Exercise:
+1.
+Write a function
+a) in Python
+b) in PySpark using RDDs
+that takes an input list of integers,
+and finds only the integers x such that x * x is exactly 3 digits...
+
+- .map
+- .filter
+- .collect
+"""
+
+def ex1_python(l1):
+    l2 = map(lambda x: x * x, l1)
+    l3 = filter(lambda x: 100 <= x <= 999, l2)
+    print(list(l3))
+
+INPUT_EXAMPLE = list(range(100))
+
+# ex1_python(INPUT_EXAMPLE)
+
+# Output:
+# [100, 121, 144, 169, 196, 225, 256, 289, 324, 361, 400, 441, 484, 529, 576, 625, 676, 729, 784, 841, 900, 961]
+# All the 3 digit square numbers!
+
+def ex1_rdd(list):
+    l1 = sc.parallelize(list)
+    l2 = l1.map(lambda x: x * x)
+    # BTW: equivalent to:
+    # def square(x):
+    #     return x * x
+    # l2 = l1.map(square)
+    l3 = l2.filter(lambda x: 100 <= x <= 999)
+    print(l3.collect())
+
+# ex1_rdd(INPUT_EXAMPLE)
+
+"""
+2.
+Write a function
+a) in Python
+b) in PySpark using RDDs
+that takes as input a list of integers,
+and adds up all the even integers and all the odd integers
+
+- .groupBy
+- .reduceBy
+- .reduceByKey
+- .partitionBy
+"""
+
+def ex2_python(l1):
+    # (Skip: leave as exercise)
+    # TODO
+    raise NotImplementedError
+
+def ex2_rdd(l1):
+    l2 = sc.parallelize(l1)
+    l3 = l2.groupBy(lambda x: x % 2)
+    l4 = l3.flatMapValues(lambda x: x)
+    # ^^ needed for technical reasons
+    # actually, would be easier just to run a map to (x % 2, x)
+    # then call reduceByKey, but I wanted to conceptually separate
+    # out the groupBy step from the sum step.
+    l5 = l4.reduceByKey(lambda x, y: x + y)
+    for key, val in l5.collect():
+        print(f"{key}: {val}")
+    # Uncomment to inspect l1, l2, l3, l4, and l5
+    # breakpoint()
+
+# ex2_rdd(INPUT_EXAMPLE)
+
+"""
+Good! But there's one thing left -- we haven't really measured
+that our pipeline is actually getting run in parallel.
+
+Can we check that?
+
+    Test: parallel_test.py
+
+Tools:
+
+    time (doesn't work)
+
+    Activity monitor
+
+    localhost:4040
+    (see Executors tab)
+
+Q: what is localhost? What is going on behind the scenes?
+
+A: Spark is running a local cluster on our machine to schedule and run
+   tasks (batch jobs).
+
+Q: Why do we need sc. context?
+
+A:
+Not locally using Python compute, so any operation we do
+needs to get submitted and run as a job through the cluster.
+
+Q: What does RDD stand for?
+
+RDD means Resilient Distributed Dataset.
+https://www.usenix.org/system/files/conference/nsdi12/nsdi12-final138.pdf
+
+=== That's Just Data Parallelism! (TM) ===
+
+Yes, the following is a punchline:
+
+    scalable collection type == data parallelism.
+
+They are really the same thing.
+
+=== Plan for remaining parts ===
+
+Overall plan for Lecture 5:
+
+- Scalable collection types
+
+- Programming over collection types
+
+- MapReduce
+
+- Important properties of collection types: partitioning, operator types, ...
+
+Possible topics/optional:
+
+- Distributed consistency: crashes, failures, duplicated/dropped messages
+
+- Pitfalls.
 """

@@ -1,171 +1,141 @@
 """
 Lecture 5, Part 2:
 Properties of RDDs
+and
+Laziness
+
+=== Properties of scalable collection types ===
+
+We will see that
+    RDDs are: scalable, parallel, lazy, immutable, partitioned, and fault-tolerant.
+
+    Operators on RDDs create dataflow graphs! (more on this soon)
+
+We have seen the first 2 properties.
+We will cover the 3rd and 4th and get to the 5th one in Part 4.
+
+Not just about RDDs!
+
+---> Most of this generalizes to all distributed programming contexts.
 
 === Poll ===
 
-Speedup through parallelism alone (vertical scaling) is significantly limited by...
-(Select all that apply)
+Review question about RDDs:
 
-1. The number of lines in the Python source code
-2. The version of the operating system (e.g., MacOS Sonoma)
-3. The number of CPU cores on the machine
-4. The number of wire connections on the computer's motherboard
-5. The amount of RAM (memory) and disk space (storage) available
 
-=== Recap ===
 
-Scalable collection types are just like normal collection types,
-but they behave (behind the scenes) like they work in parallel!
+Takeaway message: Scalable collection types == data parallelism!
 
-Behind the scenes, both vertical scaling and horizontal scaling
-can be performed automatically by the underlying data processing
-engine (in our case, Spark).
-This depends on the engine to do its job well -- for the most part,
-we will assume in this class that the engine does a better job than
-we do, but we will get to some limitations later on.
+=== Laziness ===
 
-Many other data processing engines exist...
-(to name a few, Hadoop, Google Cloud Dataflow, Materialize, Storm, Flink)
-(we will discuss more later on and the technology behind these.)
+In Spark, and in particular on RDDs,
+operators are divided into *transformations* and *actions.*
 
-I said:
-    "scalable collection types are just like normal collection types"
+https://spark.apache.org/docs/latest/api/python/reference/api/pyspark.RDD.html
 
-Let's show this!
+Transformation: transform the data without computing the answer (yet)
+Action: compute an answer
 
-Exercise:
-1.
-Write a function
-a) in Python
-b) in PySpark using RDDs
-that takes an input list of integers,
-and finds only the integers x such that x * x is exactly 3 digits...
+This is called "laziness" because we don't always compute the answer right away.
 
-- .map
-- .filter
-- .collect
+Terminology (this comes from programming language design):
+    (e.g. Haskell is lazy)
+Transformations are also called "lazy" operators
+and actions are called "eager" operators.
+(Why?)
+
+Let's consider an example
+
+A toy chemical dataset:
 """
 
-def ex1_python(l1):
-    l2 = map(lambda x: x * x, l1)
-    l3 = filter(lambda x: 100 <= x <= 999, l2)
-    print(list(l3))
-
-INPUT_EXAMPLE = list(range(100))
-
-# ex1_python(INPUT_EXAMPLE)
-
-# Output:
-# [100, 121, 144, 169, 196, 225, 256, 289, 324, 361, 400, 441, 484, 529, 576, 625, 676, 729, 784, 841, 900, 961]
-# All the 3 digit square numbers!
-
-def ex1_rdd(list):
-    l1 = sc.parallelize(list)
-    l2 = l1.map(lambda x: x * x)
-    # BTW: equivalent to:
-    # def square(x):
-    #     return x * x
-    # l2 = l1.map(square)
-    l3 = l2.filter(lambda x: 100 <= x <= 999)
-    print(l3.collect())
-
-# ex1_rdd(INPUT_EXAMPLE)
+# Chem names by atomic number
+CHEM_NAMES = [None, "H", "He", "Li", "Be", "B", "C", "N", "O", "F", "Ne"]
+CHEM_DATA = {
+    # H20
+    "water": [0, 2, 0, 0, 0, 0, 0, 0, 1, 0, 0],
+    # N2
+    "nitrogen": [0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0],
+    # CO2
+    "carbon dioxide": [0, 0, 0, 0, 0, 0, 1, 0, 2, 0, 0],
+    # CH4
+    "methane": [0, 4, 0, 0, 0, 0, 1, 0, 0, 0, 0],
+    # C8 H F15 O2
+    "PFOA": [0, 1, 0, 0, 0, 0, 8, 0, 2, 15, 0],
+}
 
 """
-2.
-Write a function
-a) in Python
-b) in PySpark using RDDs
-that takes as input a list of integers,
-and adds up all the even integers and all the odd integers
+Motivation for this example:
+Suppose we want to find chemicals that are heavy in Fluorine (F),
+because we are worried these might have negative health effects.
 
-- .groupBy
-- .reduceBy
-- .reduceByKey
-- .partitionBy
+Further reading:
+Dark Waters (2019 film)
+https://en.wikipedia.org/wiki/Dark_Waters_(2019_film)
+PFOA:
+https://en.wikipedia.org/wiki/Perfluorooctanoic_acid#Health_effects
+
+For a simple computation, let's try to compute the number of Fluorines,
+compared to the number of Carbons for all of our data points,
+and then compute an average.
 """
 
-def ex2_python(l1):
-    # (Skip: leave as exercise)
-    # TODO
-    raise NotImplementedError
+def fluorine_carbon_ratio(data):
+    # Note: a nice thing in Spark is that we can parallelize any iterable collection!
+    # (We should really use a DataFrame for this, I just want to show RDDs as we have been using
+    # RDD syntax so far. DataFrames are based on RDDs under the hood.)
+    rdd1 = sc.parallelize(data.values())
+    # .keys() gives water, nitrogen, etc.
+    # .values() gives the lists [0, 1, ...]
+    # .items() to get the (name, list) pair
 
-def ex2_rdd(l1):
-    l2 = sc.parallelize(l1)
-    l3 = l2.groupBy(lambda x: x % 2)
-    l4 = l3.flatMapValues(lambda x: x)
-    # ^^ needed for technical reasons
-    # actually, would be easier just to run a map to (x % 2, x)
-    # then call reduceByKey, but I wanted to conceptually separate
-    # out the groupBy step from the sum step.
-    l5 = l4.reduceByKey(lambda x, y: x + y)
-    for key, val in l5.collect():
-        print(f"{key}: {val}")
-    # Uncomment to inspect l1, l2, l3, l4, and l5
+    # We can't compute the ratio if there are no carbons
+    rdd2 = rdd1.filter(lambda x: x[6] > 0)
+
+    # Compute ratio
+    rdd3 = rdd2.map(lambda x: x[9] / x[6])
+
+    # Compute avg
+    stats = rdd3.stats()
+    ans = stats.mean()
+
+    # Print
+    print(f"Stats: {stats}")
+    print(f"Average Fluorine-Carbon Ratio: {ans}")
+
+    # Uncomment to debug
     # breakpoint()
 
-# ex2_rdd(INPUT_EXAMPLE)
+# Uncomment to run
+# fluorine_carbon_ratio(CHEM_DATA)
 
 """
-Good! But there's one thing left -- we haven't really measured
-that our pipeline is actually getting run in parallel.
+How can we determine which of the above are transformations and which are actions?
 
-Can we check that?
+Ideas?
 
-    Test: parallel_test.py
+- Print it out!
 
-Tools:
+  Transformation = prints out as an RDD (it's just a blob that doesn't have any data output)
 
-    time (doesn't work)
+    After a transformation: PythonRDD[3] at RDD at PythonRDD.scala:53
 
-    Activity monitor
+  Action = prints out as Python data.
 
-    localhost:4040
-    (see Executors tab)
+    After an action: (count: 3, mean: 0.625, stdev: 0.8838834764831844, max: 1.875, min: 0.0)
 
-Q: what is localhost? What is going on behind the scenes?
+Answers:
 
-A: Spark is running a local cluster on our machine to schedule and run
-   tasks (batch jobs).
+Transformations (lazy):
 
+- .map(), .filter()
 
-Q: Why do we need sc. context?
+Actions (not lazy):
 
-A:
-Not locally using Python compute, so any operation we do
-needs to get submitted and run as a job through the cluster.
-
-Q: What is an RDD?
-
-RDD means Resilient Distributed Dataset.
-https://www.usenix.org/system/files/conference/nsdi12/nsdi12-final138.pdf
-
-Important properties of RDDs:
-
-- Scalability (we have already discussed this)
-
-- Fault tolerance
-    RDD data will actually automatically recover if a node (worker or machine) crashes
-    It does this while still mostly maintaining data in-memory, which is impressive.
-
-- Immutability
-
-Let's illustrate this:
-
-Exercise: try this:
-- Create an RDD
-- Collect
-- Modify the result
-What happens?
-
-(It doesn't work)
-
-RDDs are optimized for computing static, immutable results.
+- .stats()
 """
 
 """
-- Laziness
 
 === Laziness ===
 
@@ -186,9 +156,114 @@ Conjectures?
 
 - More generally: we want to optimize the pipeline before running it.
 
-Recap:
+"""
 
-- We saw RDDs, properties of RDDs: parallelism, laziness, partitioning.
-- We'll go into these more next time (next Wed) and talk about the DataFrame
-  API as well.
+"""
+=== More examples of laziness ===
+
+More examples of transformations are:
+
+- .map
+- .filter
+- .sample(withReplacement, fraction)
+- .distinct()
+
+Some examples of actions are:
+
+- .collect
+- .count()
+- .sum()
+- .reduce()
+- .fold()
+- .flatMap()
+
+The most important of these is .collect -- how to take any RDD and get the results.
+You can that at any intermediate stage.
+"""
+
+# Try this (in the above function):
+# rdd3.distinct().collect()
+
+"""
+
+=== Visualizing the dataflow graph ===
+
+All distributed pipelines can be viewed as dataflow graphs.
+
+What is the connection between RDDs and dataflow graphs?
+
+Q: let's draw the above as a dataflow graph using ASCII art.
+
+(What are our tasks/nodes and arrows?)
+
+    Tasks: Operators that were done on the RDD
+    Arrows: dependencies from one operator to another
+
+    Our dataflow graph:
+
+    (input chem data) --> (filter) --> (map) --> (stats)
+
+    Each task computes a new RDD based on the old RDD.
+
+    Calling an operator/method .do_something on an RDD creates a new node (do_something)
+
+    This:
+    rdd = sc.parallelize(...)
+    rdd1 = rdd.operator1()
+    rdd2 = rdd.operator2()
+    rdd3 = rdd2.operator3()
+
+    Is the same as
+
+    This:
+                --> (operator1)
+    (load input)
+                --> (operator2) --> (operator3)
+
+(In fact, underneath the hood, PySpark is actually creating the dataflow graph.)
+
+Can we view this more programmatically?
+
+Unfortunately the visualization capabilities of RDDs are a bit limited.
+Two ways for now:
+Both of these are not super helpful and don't give precise information.
+
+- Go to localhost:4040/
+- .toDebugString()
+
+There is a better way available when we get to DataFrames.
+"""
+
+# Try going to localhost:4040/
+
+# Try .toDebugString()
+
+"""
+=== Additional properties ===
+
+- Immutability
+
+Let's illustrate this:
+
+Exercise: try this:
+- Create an RDD
+- Collect
+- Modify the result
+What happens?
+
+(It doesn't work)
+
+- Fault tolerance
+
+RDD data will actually automatically recover if a node (worker or machine) crashes
+It does this while still mostly maintaining data in-memory, which is impressive.
+
+=== Wrapping up ===
+
+We saw Laziness of RDDs: all RDD operators are divided into transformations
+(which return another RDD object/handle and don't compute anything)
+and actions (which return result data in plain Python)
+
+We saw that all computations over RDDs are really dataflow graphs.
+    code == dataflow graph
 """
