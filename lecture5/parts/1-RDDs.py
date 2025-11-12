@@ -5,7 +5,7 @@ Part 1: Introduction to Spark: Scalable collection types and RDDs
 
 === Poll ===
 
-Speedup through parallelism alone (vertical scaling) is significantly limited by...
+Speedup through parallelism alone (vertical scaling) is most significantly limited by...
 (Select all that apply)
 
 1. The number of lines in the Python source code
@@ -71,12 +71,15 @@ Analogy: kind of like a compiler or interpreter!
     (A long time ago, people use to write all code in assembly language/
     machine code)
 
-We say "what" we want, the distriuted data processing software framework will
+We say "what" we want, the distributed data processing software framework will
 handle the "how"
 
 So what is that higher level abstraction?
 
-Dataflow graphs are almost enough alone, but we need one more secret ingredient ...
+Spoiler:
+It's dataflow graphs!
+
+(With one additional thing)
 """
 
 """
@@ -106,7 +109,7 @@ Basic scalable collection types in Spark:
 - RDD
     Resilient Distributed Dataset
 
-- PySpark DataFrame APi
+- PySpark DataFrame API
     Will bear resemblance to DataFrames in Pandas (and Dask)
 """
 
@@ -125,33 +128,11 @@ We can visualize our pipeline!
 Open up your browser to:
 http://localhost:4040/
 
-We saw scalable collection types
-(with an initial RDD example)
+Scalable collection types are just like normal collection types!
 
-Some examples are listed at the bottom of the file.
+Let's show this:
 
-=== Recap ===
-
-Scalable collection types are just like normal collection types,
-but they behave (behind the scenes) like they work in parallel!
-
-Behind the scenes, both vertical scaling and horizontal scaling
-can be performed automatically by the underlying data processing
-engine (in our case, Spark).
-This depends on the engine to do its job well -- for the most part,
-we will assume in this class that the engine does a better job than
-we do, but we will get to some limitations later on.
-
-Many other data processing engines exist...
-(to name a few, Hadoop, Google Cloud Dataflow, Materialize, Storm, Flink)
-(we will discuss more later on and the technology behind these.)
-
-I said:
-    "scalable collection types are just like normal collection types"
-
-Let's show this!
-
-Exercise:
+Exercises:
 1.
 Write a function
 a) in Python
@@ -265,6 +246,31 @@ Yes, the following is a punchline:
 
 They are really the same thing.
 
+Task, pipeline parallelism are limited by the # of nodes in the graph!
+Data parallelism = arbitrary scaling, so it's what enables scalable
+collectiont types.
+
+=== Summary ===
+
+We saw scalable collection types
+(with an initial RDD example)
+
+Scalable collection types are just like normal collection types,
+but they behave (behind the scenes) like they work in parallel!
+
+They do this by automatically exploiting data parallelism.
+
+Behind the scenes, both vertical scaling and horizontal scaling
+can be performed automatically by the underlying data processing
+engine (in our case, Spark).
+This depends on the engine to do its job well -- for the most part,
+we will assume in this class that the engine does a better job than
+we do, but we will get to some limitations later on.
+
+Many other data processing engines exist...
+(to name a few, Hadoop, Google Cloud Dataflow, Materialize, Storm, Flink)
+(we will discuss more later on and the technology behind these.)
+
 === Plan for remaining parts ===
 
 Overall plan for Lecture 5:
@@ -273,9 +279,11 @@ Overall plan for Lecture 5:
 
 - Programming over collection types
 
+- Important properties: immutability, laziness
+
 - MapReduce
 
-- Important properties of collection types: partitioning, operator types, ...
+- Partitioning in RDDs and collectiont ypes
 
 Possible topics/optional:
 

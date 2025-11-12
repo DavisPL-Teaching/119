@@ -1,7 +1,6 @@
 """
-Part 6: End note
-
-=== End note: Latency/throughput tradeoff ===
+Part 6: End note:
+Latency and throughput, revisited
 
 So, we know how to build distributed pipelines.
 
