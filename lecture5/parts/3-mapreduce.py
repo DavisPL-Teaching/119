@@ -1,173 +1,6 @@
 """
 Part 5: MapReduce
 
-=== MapReduce and DataFrames ===
-
-DataFrames are based on RDDs and RDDs are based on MapReduce!
-A little picture:
-
-  DataFrames
-  |
-  RDDs
-  |
-  MapReduce
-
-=== DataFrame ===
-
-(Will probably skip some of this for time)
-
-Our second example of a collection type is DataFrame.
-
-DataFrame is like a Pandas DataFrame.
-
-https://spark.apache.org/docs/latest/api/python/reference/pyspark.sql/api/pyspark.sql.DataFrame.html
-
-An example of a dataframe computation is shown in
-
-    examples.py
-
-The main difference is we need to create the dataframe using a tuple or dictionary.
-
-We can also create one from an RDD by doing
-
-    .map(lambda x: (x,)).toDF()
-"""
-
-def ex_dataframe(data):
-    # Load the data (CHEM_DATA) and turn it into a DataFrame
-
-    # A few ways to do this
-
-    """
-    Method 1: directly from the RDD
-    """
-    rdd = sc.parallelize(data.values())
-
-    # RDD is just a collection of items where the items can have any Python type
-    # a DataFrame requires the items to be rows.
-
-    df1 = rdd.map(lambda x: (x,)).toDF()
-
-    # Breakpoint for inspection
-    # breakpoint()
-
-    # Try: df1.show()
-
-    # What happened?
-
-    # Not very useful! Let's try a different way.
-    # Our lambda x: (x,) map looks a bit sus. Does anyone see why?
-
-    """
-    Method 2: unpack the data into a row more appropriately by constructing the row
-    """
-    # don't need to do the same thing again -- RDDs are persistent and immutable!
-    # rdd = sc.parallelize(data.values())
-
-    # In Python you can unwrap an entire list as a tuple by using *x.
-    df2 = rdd.map(lambda x: (*x,)).toDF()
-
-    # Breakpoint for inspection
-    # breakpoint()
-
-    # What happened?
-
-    # Better!
-
-    """
-    Method 3: create the DataFrame directly with column headers
-    (the correct way)
-    """
-
-    # What we need (similar to Pandas): list of columns, iterable of rows.
-
-    # For the columns, use our CHEM_NAMES list
-    columns = ["chemical"] + CHEM_NAMES[1:]
-
-    # For the rows: any iterable -- i.e. any sequence -- of rows
-    # For the rows: can use [] or a generator expression ()
-    rows = ((name, *(counts[1:])) for name, counts in CHEM_DATA.items())
-
-    # Equiv:
-    # rows = [(name, *(counts[1:])) for name, counts in CHEM_DATA.items()]
-    # Also equiv:
-    # for name, counts in CHEM_DATA.items():
-    #     ...
-
-    df3 = spark.createDataFrame(rows, columns)
-
-    # Breakpoint for inspection
-    # breakpoint()
-
-    # What happened?
-
-    # Now we don't have to worry about RDDs at all. We can use all our favorite DataFrame
-    # abstractions and manipulate directly using SQL operations.
-
-    # Adding a new column:
-    from pyspark.sql.functions import col
-    df4 = df3.withColumn("H + C", col("H") + col("C"))
-    df4 = df3.withColumn("H + F", col("H") + col("F"))
-
-    # This is the equiv of Pandas: df3["H + C"] = df3["H"] + df3["C"]
-
-    breakpoint()
-
-    # We could continue this example further (showing other Pandas operation equivalents).
-
-# Uncomment to run
-# ex_dataframe(CHEM_DATA)
-
-"""
-One more thing about DataFrames: revisiting the web interface
-and .explain():
-
-localhost:4040/
-
-getting the internal dataflow graph used:
-
-.explain()
-
-.explain("extended")
-"""
-
-"""
-Another misc. DataFrame example:
-(skip for time, feel free to uncomment and play with it offline)
-"""
-
-# Just to show how to create a data frame from a Python dict.
-
-# people = spark.createDataFrame([
-#     {"deptId": 1, "age": 40, "name": "Hyukjin Kwon", "gender": "M", "salary": 50},
-#     {"deptId": 1, "age": 50, "name": "Takuya Ueshin", "gender": "M", "salary": 100},
-#     {"deptId": 2, "age": 60, "name": "Xinrong Meng", "gender": "F", "salary": 150},
-#     {"deptId": 3, "age": 20, "name": "Haejoon Lee", "gender": "M", "salary": 200}
-# ])
-
-# people_filtered = people.filter(people.age > 30)
-
-# people_filtered.show()
-
-# people2 = sc.parallelize([
-#     {"deptId": 1, "age": 40, "name": "Hyukjin Kwon", "gender": "M", "salary": 50},
-#     {"deptId": 1, "age": 50, "name": "Takuya Ueshin", "gender": "M", "salary": 100},
-#     {"deptId": 2, "age": 60, "name": "Xinrong Meng", "gender": "F", "salary": 150},
-#     {"deptId": 3, "age": 20, "name": "Haejoon Lee", "gender": "M", "salary": 200}
-# ])
-
-# people2_filtered = people2.filter(lambda x: x["age"] > 30)
-
-# result = people2_filtered.collect()
-
-# print(result)
-
-"""
-So we know how to work with DataFrames, once we do that, we don't have to worry about RDDs
-at all. We get nice SQL abstractions.
-
-What is the "magic" behind how Spark works?
-
 === MapReduce ===
 
 MapReduce is a simplified way to implement and think about
@@ -260,7 +93,7 @@ https://spark.apache.org/docs/latest/api/python/reference/api/pyspark.RDD.map.ht
 https://spark.apache.org/docs/latest/api/python/reference/api/pyspark.RDD.reduce.html#pyspark.RDD.reduce
 
 As we mentioned last time, this is slightly simplified.
-We will do the fully general case today!
+You will do the fully general case as part of HW2!
 
 Also equivalent to reduce (but needs an initial value)
 - .fold
@@ -353,7 +186,7 @@ def get_total_hydrogens(data):
 
 Describe how you might do the following task as a MapReduce computation.
 
-Same input dataset as in Nov 20 poll:
+Input dataset:
 US state, city name, population, avg temperature
 
 "Find the city with the largest temperature per unit population"
@@ -561,6 +394,171 @@ def fluorine_carbon_ratio_map_reduce(data):
     raise NotImplementedError
 
 """
+=== MapReduce and DataFrames ===
+
+DataFrames are based on RDDs and RDDs are based on MapReduce!
+A little picture:
+
+  DataFrames
+  |
+  RDDs
+  |
+  MapReduce
+
+=== DataFrame ===
+
+(Will probably skip some of this for time)
+
+Our second example of a collection type is DataFrame.
+
+DataFrame is like a Pandas DataFrame.
+
+https://spark.apache.org/docs/latest/api/python/reference/pyspark.sql/api/pyspark.sql.DataFrame.html
+
+An example of a dataframe computation is shown in
+
+    examples.py
+
+The main difference is we need to create the dataframe using a tuple or dictionary.
+
+We can also create one from an RDD by doing
+
+    .map(lambda x: (x,)).toDF()
+"""
+
+def ex_dataframe(data):
+    # Load the data (CHEM_DATA) and turn it into a DataFrame
+
+    # A few ways to do this
+
+    """
+    Method 1: directly from the RDD
+    """
+    rdd = sc.parallelize(data.values())
+
+    # RDD is just a collection of items where the items can have any Python type
+    # a DataFrame requires the items to be rows.
+
+    df1 = rdd.map(lambda x: (x,)).toDF()
+
+    # Breakpoint for inspection
+    # breakpoint()
+
+    # Try: df1.show()
+
+    # What happened?
+
+    # Not very useful! Let's try a different way.
+    # Our lambda x: (x,) map looks a bit sus. Does anyone see why?
+
+    """
+    Method 2: unpack the data into a row more appropriately by constructing the row
+    """
+    # don't need to do the same thing again -- RDDs are persistent and immutable!
+    # rdd = sc.parallelize(data.values())
+
+    # In Python you can unwrap an entire list as a tuple by using *x.
+    df2 = rdd.map(lambda x: (*x,)).toDF()
+
+    # Breakpoint for inspection
+    # breakpoint()
+
+    # What happened?
+
+    # Better!
+
+    """
+    Method 3: create the DataFrame directly with column headers
+    (the correct way)
+    """
+
+    # What we need (similar to Pandas): list of columns, iterable of rows.
+
+    # For the columns, use our CHEM_NAMES list
+    columns = ["chemical"] + CHEM_NAMES[1:]
+
+    # For the rows: any iterable -- i.e. any sequence -- of rows
+    # For the rows: can use [] or a generator expression ()
+    rows = ((name, *(counts[1:])) for name, counts in CHEM_DATA.items())
+
+    # Equiv:
+    # rows = [(name, *(counts[1:])) for name, counts in CHEM_DATA.items()]
+    # Also equiv:
+    # for name, counts in CHEM_DATA.items():
+    #     ...
+
+    df3 = spark.createDataFrame(rows, columns)
+
+    # Breakpoint for inspection
+    # breakpoint()
+
+    # What happened?
+
+    # Now we don't have to worry about RDDs at all. We can use all our favorite DataFrame
+    # abstractions and manipulate directly using SQL operations.
+
+    # Adding a new column:
+    from pyspark.sql.functions import col
+    df4 = df3.withColumn("H + C", col("H") + col("C"))
+    df4 = df3.withColumn("H + F", col("H") + col("F"))
+
+    # This is the equiv of Pandas: df3["H + C"] = df3["H"] + df3["C"]
+
+    breakpoint()
+
+    # We could continue this example further (showing other Pandas operation equivalents).
+
+# Uncomment to run
+# ex_dataframe(CHEM_DATA)
+
+"""
+One more thing about DataFrames: revisiting the web interface
+and .explain():
+
+localhost:4040/
+
+getting the internal dataflow graph used:
+
+.explain()
+
+.explain("extended")
+"""
+
+"""
+Another misc. DataFrame example:
+(skip for time, feel free to uncomment and play with it offline)
+"""
+
+# Just to show how to create a data frame from a Python dict.
+
+# people = spark.createDataFrame([
+#     {"deptId": 1, "age": 40, "name": "Hyukjin Kwon", "gender": "M", "salary": 50},
+#     {"deptId": 1, "age": 50, "name": "Takuya Ueshin", "gender": "M", "salary": 100},
+#     {"deptId": 2, "age": 60, "name": "Xinrong Meng", "gender": "F", "salary": 150},
+#     {"deptId": 3, "age": 20, "name": "Haejoon Lee", "gender": "M", "salary": 200}
+# ])
+
+# people_filtered = people.filter(people.age > 30)
+
+# people_filtered.show()
+
+# people2 = sc.parallelize([
+#     {"deptId": 1, "age": 40, "name": "Hyukjin Kwon", "gender": "M", "salary": 50},
+#     {"deptId": 1, "age": 50, "name": "Takuya Ueshin", "gender": "M", "salary": 100},
+#     {"deptId": 2, "age": 60, "name": "Xinrong Meng", "gender": "F", "salary": 150},
+#     {"deptId": 3, "age": 20, "name": "Haejoon Lee", "gender": "M", "salary": 200}
+# ])
+
+# people2_filtered = people2.filter(lambda x: x["age"] > 30)
+
+# result = people2_filtered.collect()
+
+# print(result)
+
+"""
+So we know how to work with DataFrames, once we do that, we don't have to worry about RDDs
+at all. We get nice SQL abstractions.
+
 === Additional exercises ===
 (Depending on extra time)
 

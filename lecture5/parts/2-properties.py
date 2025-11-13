@@ -1,13 +1,14 @@
 """
 Lecture 5, Part 2:
 Properties of RDDs
-and
-Laziness
 
 === Properties of scalable collection types ===
 
 We will see that
+
     RDDs are: scalable, parallel, lazy, immutable, partitioned, and fault-tolerant.
+
+    (Recall: scalable collection types = data parallelism)
 
     Operators on RDDs create dataflow graphs! (more on this soon)
 
@@ -20,31 +21,67 @@ Not just about RDDs!
 
 === Poll ===
 
-Review question about RDDs:
+https://forms.gle/XqVuiQw8WFRUBku69
 
+Which of the following can NOT easily be converted into an operator over a scalable collection type?
+(Select all that apply)
 
+1. From each country in a dataset, extract the capital city column
 
-Takeaway message: Scalable collection types == data parallelism!
+2. Match each employee in a name_table with their salary in salary_table
+
+3. Add up all the integers between 1 and 100,000,000
+
+4. Given a dataset containing (t, x, y, z) points in a single plane's flight path,
+   where t is the time and (x, y, z) is the 3D location of the plane, determine
+   the total **time** traveled by the plane
+
+5. Given a dataset containing (t, x, y, z) points in a single plane's flight path,
+    where t is the time and (x, y, z) is the 3D location of the plane, determine
+    the total **distance** traveled by the plane
+
+6. Given a dataset containing (t, x, y, z) points in a single plane's flight path,
+   where t is the time and (x, y, z) is the 3D location of the plane, fill in any
+   missing points along the flight path where "missing point" is determined by
+   interpolating between the adjacent flight path points.
+
+(For fun, optional:)
+
+7. Given a dataset containing (t, x, y, z) points in a single plane's flight path,
+   where t is the time and (x, y, z) is the 3D location of the plane, determine
+   the **average velocity** traveled by the plane
+
+8. Given a dataset containing (t, x, y, z) points in a single plane's flight path,
+   where t is the time and (x, y, z) is the 3D location of the plane, determine
+   the **average speed** traveled by the plane
+
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
 
 === Laziness ===
 
-In Spark, and in particular on RDDs,
-operators are divided into *transformations* and *actions.*
+What is laziness?
 
-https://spark.apache.org/docs/latest/api/python/reference/api/pyspark.RDD.html
+    Definition: A operator is **lazy** if it delays computing answers until
+    you ask for them, as much as possible.
 
-Transformation: transform the data without computing the answer (yet)
-Action: compute an answer
+    Spark is lazy and does the above.
+    (Dask does the same thing -- we saw a very brief example)
 
-This is called "laziness" because we don't always compute the answer right away.
-
-Terminology (this comes from programming language design):
-    (e.g. Haskell is lazy)
-Transformations are also called "lazy" operators
-and actions are called "eager" operators.
-(Why?)
-
-Let's consider an example
+First, a running example.
 
 A toy chemical dataset:
 """
@@ -110,6 +147,22 @@ def fluorine_carbon_ratio(data):
 # fluorine_carbon_ratio(CHEM_DATA)
 
 """
+In Spark, and in particular on RDDs,
+operators are divided into *transformations* and *actions.*
+
+https://spark.apache.org/docs/latest/api/python/reference/api/pyspark.RDD.html
+
+Transformation: transform the data without computing the answer (yet)
+Action: compute an answer
+
+In other words...
+
+Terminology (this comes from programming language design):
+    (e.g. Haskell is lazy)
+Transformations are also called "lazy" operators
+and actions are called "eager" operators.
+(Why?)
+
 How can we determine which of the above are transformations and which are actions?
 
 Ideas?
@@ -137,13 +190,7 @@ Actions (not lazy):
 
 """
 
-=== Laziness ===
-
-What is laziness?
-
---> Spark will delay computing answers until you ask for them, as much
-    as possible.
-    (Dask does the same thing -- we saw a very brief example)
+Why Laziness?
 
 You might wonder: why not just compute all the answers up front?
 
@@ -201,7 +248,7 @@ Q: let's draw the above as a dataflow graph using ASCII art.
 
     Our dataflow graph:
 
-    (input chem data) --> (filter) --> (map) --> (stats)
+    *** FILL OUT ***
 
     Each task computes a new RDD based on the old RDD.
 
