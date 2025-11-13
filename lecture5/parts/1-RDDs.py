@@ -39,6 +39,7 @@ python3 1-RDDs.py
 import pyspark
 
 # All spark code generally starts with the following setup code:
+# (Boiler plate code - ignore for now)
 from pyspark.sql import SparkSession
 spark = SparkSession.builder.appName("SparkExample").getOrCreate()
 sc = spark.sparkContext
@@ -91,6 +92,8 @@ What is a collection type? A set, a list, a dictionary, a table,
 a DataFrame, a database (for example), any collection of objects, rows,
 or data items.
 
+    - Pandas DataFrame is one example.
+
 When we talk about collection types, we usually assume the whole
 thing is stored in memory. (Refer to 800GB limit comment above.)
 
@@ -113,20 +116,26 @@ Basic scalable collection types in Spark:
     Will bear resemblance to DataFrames in Pandas (and Dask)
 """
 
-basic_rdd = sc.parallelize(range(0, 1_000))
+# Uncomment to run
+# # RDD - scalable version of a Python set of integers
+# basic_rdd = sc.parallelize(range(0, 1_000))
 
-# --- run some commands on the RDD ---
-mapped_rdd = basic_rdd.map(lambda x: x + 2)
-filtered_rdd = mapped_rdd.filter(lambda x: x > 500)
-result = filtered_rdd.collect()
+# print(basic_rdd)
 
-print(result)
+# # --- run some commands on the RDD ---
+# mapped_rdd = basic_rdd.map(lambda x: x + 2)
+# filtered_rdd = mapped_rdd.filter(lambda x: x > 500)
+# result = filtered_rdd.collect()
+
+# print(result)
 
 """
 We can visualize our pipeline!
 
 Open up your browser to:
 http://localhost:4040/
+
+=== More examples ===
 
 Scalable collection types are just like normal collection types!
 
@@ -146,7 +155,14 @@ and finds only the integers x such that x * x is exactly 3 digits...
 """
 
 def ex1_python(l1):
+    # anonymous functions with map filter!
     l2 = map(lambda x: x * x, l1)
+    # ^^ equivalent to
+    # def anon_function_square(x):
+    #     return x * x
+    # l2 = map(anon_function_square, l1)
+    # list comprehension syntax:
+    # [x * x for x in l1]
     l3 = filter(lambda x: 100 <= x <= 999, l2)
     print(list(l3))
 
@@ -159,7 +175,7 @@ INPUT_EXAMPLE = list(range(100))
 # All the 3 digit square numbers!
 
 def ex1_rdd(list):
-    l1 = sc.parallelize(list)
+    l1 = sc.parallelize(list) # how you construct an RDD
     l2 = l1.map(lambda x: x * x)
     # BTW: equivalent to:
     # def square(x):
@@ -209,11 +225,11 @@ def ex2_rdd(l1):
 Good! But there's one thing left -- we haven't really measured
 that our pipeline is actually getting run in parallel.
 
-Can we check that?
+Q: Can we check that?
 
     Test: parallel_test.py
 
-Tools:
+A: Tools:
 
     time (doesn't work)
 
@@ -227,7 +243,7 @@ Q: what is localhost? What is going on behind the scenes?
 A: Spark is running a local cluster on our machine to schedule and run
    tasks (batch jobs).
 
-Q: Why do we need sc. context?
+Q: Why do we need sc.context?
 
 A:
 Not locally using Python compute, so any operation we do
@@ -250,10 +266,15 @@ Task, pipeline parallelism are limited by the # of nodes in the graph!
 Data parallelism = arbitrary scaling, so it's what enables scalable
 collectiont types.
 
+Brings us to: how can we tell from looking at a dataflow graph if it can
+be parallelized and distributed automatically in a framework like PySpark?
+
+    A: All tasks must be data-parallel.
+
 === Summary ===
 
 We saw scalable collection types
-(with an initial RDD example)
+(with some initial RDD examples)
 
 Scalable collection types are just like normal collection types,
 but they behave (behind the scenes) like they work in parallel!
@@ -263,6 +284,7 @@ They do this by automatically exploiting data parallelism.
 Behind the scenes, both vertical scaling and horizontal scaling
 can be performed automatically by the underlying data processing
 engine (in our case, Spark).
+
 This depends on the engine to do its job well -- for the most part,
 we will assume in this class that the engine does a better job than
 we do, but we will get to some limitations later on.
@@ -283,11 +305,13 @@ Overall plan for Lecture 5:
 
 - MapReduce
 
-- Partitioning in RDDs and collectiont ypes
+    Simpler abstraction underlying RDDs and Spark
+
+- Partitioning in RDDs and collection types
 
 Possible topics/optional:
 
-- Distributed consistency: crashes, failures, duplicated/dropped messages
+- Distributed consistency: crashes, failures, duplicated/dropped/reorder messages
 
 - Pitfalls.
 """

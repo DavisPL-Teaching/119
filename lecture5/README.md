@@ -1,6 +1,6 @@
 # Lecture 5: Distributed Pipelines
 
-## Nov 10
+## Nov 12
 
 Announcements:
 
@@ -10,10 +10,12 @@ Announcements:
 
     Due Monday, Nov 24
 
-    Some changes possible before Monday, will be announced on Piazza
+    Some minor changes possible before Monday, will be announced on Piazza
 
 Plan:
 
-- Lecture 5, part 1: introduction to distributed pipelines.
+- Start with poll
+
+- Lecture 5, part 1: introduction to distributed pipelines and PySpark.
 
 Questions?
