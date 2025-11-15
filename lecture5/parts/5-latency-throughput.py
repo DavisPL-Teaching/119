@@ -1,5 +1,5 @@
 """
-Part 6: End note:
+Part 5: End note:
 Latency and throughput, revisited
 
 So, we know how to build distributed pipelines.

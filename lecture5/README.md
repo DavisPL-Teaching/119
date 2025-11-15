@@ -42,3 +42,17 @@ Plan:
 - (If time) continue to Lecture 6, part 3: MapReduce.
 
 Questions?
+
+## Monday, Nov 17
+
+Reminders:
+
+- HW2 due Nov 24
+
+Plan:
+
+- Finish loose ends from Lecture 5, part 2
+
+- Poll
+
+- Lecture 5, part 3: introduction to MapReduce.
