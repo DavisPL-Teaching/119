@@ -20,9 +20,9 @@ Plan:
 
 Questions?
 
-## Nov 14
+## Friday, November 14
 
-Reminders:
+Announcements:
 
 - HW2 due Nov 24
 
@@ -40,3 +40,5 @@ Plan:
 - Lecture 5, part 2: Properties of RDDs
 
 - (If time) continue to Lecture 6, part 3: MapReduce.
+
+Questions?

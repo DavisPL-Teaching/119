@@ -6,7 +6,7 @@ Properties of RDDs
 
 We will see that
 
-    RDDs are: scalable, parallel, lazy, immutable, partitioned, and fault-tolerant.
+    RDDs are: scalable, (data-)parallel, lazy, immutable, partitioned, and fault-tolerant.
 
     (Recall: scalable collection types = data parallelism)
 
@@ -19,7 +19,7 @@ Not just about RDDs!
 
 ---> Most of this generalizes to all distributed programming contexts.
 
-=== Poll ===
+=== Discussion Question & Poll ===
 
 https://forms.gle/XqVuiQw8WFRUBku69
 
@@ -32,26 +32,26 @@ Which of the following can NOT easily be converted into an operator over a scala
 
 3. Add up all the integers between 1 and 100,000,000
 
-4. Given a dataset containing (t, x, y, z) points in a single plane's flight path,
+4. Given a dataset containing (t, x, y, z) points in a single airplane's flight path,
    where t is the time and (x, y, z) is the 3D location of the plane, determine
    the total **time** traveled by the plane
 
-5. Given a dataset containing (t, x, y, z) points in a single plane's flight path,
+5. Given a dataset containing (t, x, y, z) points in a single airplane's flight path,
     where t is the time and (x, y, z) is the 3D location of the plane, determine
     the total **distance** traveled by the plane
 
-6. Given a dataset containing (t, x, y, z) points in a single plane's flight path,
+6. Given a dataset containing (t, x, y, z) points in a single airplane's flight path,
    where t is the time and (x, y, z) is the 3D location of the plane, fill in any
    missing points along the flight path where "missing point" is determined by
    interpolating between the adjacent flight path points.
 
 (For fun, optional:)
 
-7. Given a dataset containing (t, x, y, z) points in a single plane's flight path,
+7. Given a dataset containing (t, x, y, z) points in a single airplane's flight path,
    where t is the time and (x, y, z) is the 3D location of the plane, determine
    the **average velocity** traveled by the plane
 
-8. Given a dataset containing (t, x, y, z) points in a single plane's flight path,
+8. Given a dataset containing (t, x, y, z) points in a single airplane's flight path,
    where t is the time and (x, y, z) is the 3D location of the plane, determine
    the **average speed** traveled by the plane
 
@@ -71,11 +71,20 @@ Which of the following can NOT easily be converted into an operator over a scala
 .
 .
 
+Answers:
+5, 6, and 8
+
+Takeaway: These are just about data parallelism
+Think about splitting the dataset in half
+5, 6: if split in half, two adjacent points in the path might end up in different halves
+8: similar reason, 7 can be done technically as avg velocity = (final point - begin point) / (total time).
+
 === Laziness ===
 
 What is laziness?
 
-    Definition: A operator is **lazy** if it delays computing answers until
+    Definition: A operator (or computer program)
+    is **lazy** if it delays computing answers until
     you ask for them, as much as possible.
 
     Spark is lazy and does the above.
@@ -85,6 +94,12 @@ First, a running example.
 
 A toy chemical dataset:
 """
+
+# Boilerplate from part 1
+import pyspark
+from pyspark.sql import SparkSession
+spark = SparkSession.builder.appName("SparkExample").getOrCreate()
+sc = spark.sparkContext
 
 # Chem names by atomic number
 CHEM_NAMES = [None, "H", "He", "Li", "Be", "B", "C", "N", "O", "F", "Ne"]
@@ -107,10 +122,10 @@ Suppose we want to find chemicals that are heavy in Fluorine (F),
 because we are worried these might have negative health effects.
 
 Further reading:
-Dark Waters (2019 film)
-https://en.wikipedia.org/wiki/Dark_Waters_(2019_film)
-PFOA:
-https://en.wikipedia.org/wiki/Perfluorooctanoic_acid#Health_effects
+    Dark Waters (2019 film)
+    https://en.wikipedia.org/wiki/Dark_Waters_(2019_film)
+    PFOA:
+    https://en.wikipedia.org/wiki/Perfluorooctanoic_acid#Health_effects
 
 For a simple computation, let's try to compute the number of Fluorines,
 compared to the number of Carbons for all of our data points,
@@ -122,6 +137,8 @@ def fluorine_carbon_ratio(data):
     # (We should really use a DataFrame for this, I just want to show RDDs as we have been using
     # RDD syntax so far. DataFrames are based on RDDs under the hood.)
     rdd1 = sc.parallelize(data.values())
+    # breakpoint()
+
     # .keys() gives water, nitrogen, etc.
     # .values() gives the lists [0, 1, ...]
     # .items() to get the (name, list) pair
@@ -141,10 +158,10 @@ def fluorine_carbon_ratio(data):
     print(f"Average Fluorine-Carbon Ratio: {ans}")
 
     # Uncomment to debug
-    # breakpoint()
+    breakpoint()
 
 # Uncomment to run
-# fluorine_carbon_ratio(CHEM_DATA)
+fluorine_carbon_ratio(CHEM_DATA)
 
 """
 In Spark, and in particular on RDDs,
@@ -160,8 +177,7 @@ In other words...
 Terminology (this comes from programming language design):
     (e.g. Haskell is lazy)
 Transformations are also called "lazy" operators
-and actions are called "eager" operators.
-(Why?)
+and actions are not lazy (also called "eager" operators)
 
 How can we determine which of the above are transformations and which are actions?
 
@@ -180,10 +196,12 @@ Ideas?
 Answers:
 
 Transformations (lazy):
+    Will always return RDDs
 
 - .map(), .filter()
 
 Actions (not lazy):
+    Will directly return Python results
 
 - .stats()
 """
@@ -195,6 +213,7 @@ Why Laziness?
 You might wonder: why not just compute all the answers up front?
 
 Conjectures?
+
 - If you're pipelining the output, you could save memory!
   (operator1) --> (operator2)
   Doing operator1, then operator2 is ineficient (lots of stuff stored in memory)
@@ -202,7 +221,6 @@ Conjectures?
   Doing them both at once allows Spark to optimize the pair of them together.
 
 - More generally: we want to optimize the pipeline before running it.
-
 """
 
 """
@@ -217,7 +235,7 @@ More examples of transformations are:
 
 Some examples of actions are:
 
-- .collect
+- .collect()
 - .count()
 - .sum()
 - .reduce()
@@ -232,6 +250,14 @@ You can that at any intermediate stage.
 # rdd3.distinct().collect()
 
 """
+Dataflow graph:
+
+                                    -> (stats)
+(load inpput) -> (filter) -> (map)
+                                    -> (mean)
+
+                 ^^^^^^^^^^^transformations
+                                        ^^^^^^^^^ actions
 
 === Visualizing the dataflow graph ===
 
@@ -286,6 +312,14 @@ There is a better way available when we get to DataFrames.
 # Try .toDebugString()
 
 """
+We saw: Laziness in RDDs
+
+We worked through a chemistry dataset example -- transformations and actions
+
+We will pick this up on Monday.
+
+***** Where we ended for today *****
+
 === Additional properties ===
 
 - Immutability

@@ -75,3 +75,24 @@ Data parallelism (at tasks 1 and 2)
 No task parallelism
 Pipeline parallelism from 1 -> 2 and 2 -> 3.
 (Pipeline parallelism will not appear on midterm)
+
+Nov 7:
+1. Data parallelism: **single node**
+Task parallelism: **between a pair of nodes**
+Pipeline parallelism: **between a pair of nodes**
+
+2. Answer is yes. For instance, splitting one node "task" into two separate tasks could reveal additional pipeine and task parallelism that would not be present in the graph.
+
+Nov 10:
+T = 300 ms
+S = 3 ms
+Speedup <= T / S = 100x.
+Maximum speedup is 100x (same as the # of data items - this is not a coincidence).
+
+Nov 12:
+C and E: CPU cores & RAM available
+
+Nov 14:
+5, 6, and 8.
+Note that, depending on assumptions about how regular the timestamps are or if the input data is sorted by row #, it may be possible to make these data-parallel also.
+It is just not quite as straightforward as the others.
