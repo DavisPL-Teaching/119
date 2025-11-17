@@ -49,10 +49,12 @@ Reminders:
 
 - HW2 due Nov 24
 
+  OH: today, Friday, 1 week from today
+
 Plan:
 
 - Finish loose ends from Lecture 5, part 2
 
 - Poll
 
-- Lecture 5, part 3: introduction to MapReduce.
+- Part 3: introduction to MapReduce.

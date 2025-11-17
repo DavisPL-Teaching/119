@@ -158,10 +158,17 @@ def fluorine_carbon_ratio(data):
     print(f"Average Fluorine-Carbon Ratio: {ans}")
 
     # Uncomment to debug
-    breakpoint()
+    # breakpoint()
+    # BTW: can add ! at the start of a command in PDB to run a regular Python command
+
+    # Uncomment to run and inspect
+    # return rdd1, rdd2, rdd3
 
 # Uncomment to run
-fluorine_carbon_ratio(CHEM_DATA)
+# fluorine_carbon_ratio(CHEM_DATA)
+
+# Uncomment to run with -i
+# rdd1, rdd2, rdd3 = fluorine_carbon_ratio(CHEM_DATA)
 
 """
 In Spark, and in particular on RDDs,
@@ -320,24 +327,34 @@ We will pick this up on Monday.
 
 ***** Where we ended for today *****
 
-=== Additional properties ===
+=== Additional properties: ===
 
-- Immutability
+===== Immutability =====
 
 Let's illustrate this:
 
 Exercise: try this:
 - Create an RDD
-- Collect
+- Get one or more of the rows
 - Modify the result
-What happens?
 
-(It doesn't work)
+Useful commands:
+    - .collect()
+    - .first()
+    - .take(n)
 
-- Fault tolerance
+What happened?
 
-RDD data will actually automatically recover if a node (worker or machine) crashes
+===== Fault tolerance =====
+
+Recall: def. of distribution, why faults are a particular concern
+
+RDD data will try to automatically recover if a node (worker or machine) crashes
 It does this while still mostly maintaining data in-memory, which is impressive.
+
+We will not have time to cover this in detail in this lecture!
+
+I can do an extra lecture on distributed consistency and distributed algorithms if there is interest.
 
 === Wrapping up ===
 
@@ -347,4 +364,7 @@ and actions (which return result data in plain Python)
 
 We saw that all computations over RDDs are really dataflow graphs.
     code == dataflow graph
+
+RDDs are: scalable, (data-)parallel, lazy, immutable, partitioned, and fault-tolerant.
+                                                      ^^^part 4
 """

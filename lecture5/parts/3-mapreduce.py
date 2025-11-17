@@ -1,14 +1,60 @@
 """
 Part 3: MapReduce
 
+=== Discussion Question & Poll ===
+
+An exercise on laziness:
+
+https://forms.gle/zFjVES96i5jjnMCRA
+
+Suppose we want to do 3 tasks:
+
+1. Generate 100,000 random data points (vectors v)
+2. Map each data point v to a normalized vector v / ||v||
+3. Print the first 5 answers
+
+As a dataflow graph:
+(1) ---> (2) ---> (3)
+
+We want to know which of 1, 2, 3 should be lazy, and which should be evaluated right away.
+
+Which tasks should be executed lazily if we want to get the answer in the most efficient way?
+
+Bonus:
+If we assume that all operators take 1 ms per input that they process, how long would the pipeline take in the optimal case?
+
+Assume that creating the dataflow graph itself doesn't take any time, only evaluating it takes time.
+
+Assume there is no parallelism.
+
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+
 === MapReduce ===
 
 MapReduce is a simplified way to implement and think about
 distributed pipelines.
 
-MapReduce tries to take all distributed data pipelines you might want to
-compute, and reduce them down to the bear essence of the very minimal
-number of possible operations.
+In MapReduce there are only two operators,
+Map and Reduce.
+
+PySpark equivalents:
+- .map
+https://spark.apache.org/docs/latest/api/python/reference/api/pyspark.RDD.map.html
+- .reduce
+https://spark.apache.org/docs/latest/api/python/reference/api/pyspark.RDD.reduce.html#pyspark.RDD.reduce
+
+Also equivalent to reduce (but needs an initial value)
+- .fold
+https://spark.apache.org/docs/latest/api/python/reference/api/pyspark.RDD.fold.html
 
 In fact, a MapReduce pipeline is the simplest possible pipeline
 you can create, with just two stages!
@@ -22,82 +68,59 @@ called a MapReduce job.
 (Sometimes you might you need more than one MapReduce job to get some computations
 done.)
 
-(Simplified)
+=== Definitions ===
 
 Map stage:
     - Take our input a scalable collection of items of type T, and apply
-      the same function f: T -> T to all inputs.
+      the same function f: T1 -> T2 to all inputs.
 
-      (T could be, integers, floats, chemicals, rows, anything)
+      (T, U could be, integers, floats, chemicals, rows, anything)
 
 Reduce stage:
 (This differs a little by implementation)
     - a way of combining two different intermediate outputs:
-      a function f: T x T -> T.
+      a function f: T2 x T2 -> T2.
 
-Example:
+=== Examples ===
 
-    My input dataset consists of populations by city.
-    I want the total population over all cities.
+My input dataset consists of populations by city.
+I want the total population over all cities.
 
-    If I wanted to do this as MapReduce:
+If I wanted to do this as MapReduce:
 
-    Map: do nothing, on each input row x, return x
-        lambda x: x
+Map: do nothing, on each input row x, return x
+    lambda x: x
 
-        If input x was a row insetad of a integer, you could do
-        lambda x: x["population"]
+    If input x was a row insetad of a integer, you could do
+    lambda x: x["population"]
 
-    Reduce: if I have two outputs x and y, return x + y
-        lambda x, y: x + y.
+Reduce: if I have two outputs x and y, return x + y
+    lambda x, y: x + y.
 
-    The MapReduce computation will repeatedly apply the reduce function
-    until there is no more reducing to do.
+The MapReduce computation will repeatedly apply the reduce function
+until there is no more reducing to do.
 
-This is only very slightly simplified. Two things to make it general:
-(We don't need to cover this for the purposes of this class)
-
-1) it's not all the same type T (input, intermediate, and output stages)
-(in fact, intermediate stage can be a list of zero or more outputs, not just one)
-
-2) both stages are partitioned by key.
-    + for map, this doesn't matter!
-    + for reduce, we actually get one output per key.
-
-Punchline:
-In fact we have been writing MapReduce pipelines all along!
-See our original CHEM_DATA example:
+We have actually been writing MapReduce pipelines all along!
+In our CHEM_DATA example:
 - map stage: we apply a local computation to each input row: in our case,
   we wanted to get the number of fluorines / num carbons for all rows which
   have at least one carbon.
 - reduce stage: we aggregate all outputs across input rows: in our case,
   we wanted to compute the avg across all inputs.
 
-All operators fit into this dichotomy:
-- Mapper-style operators are local, can be narrow, and can be lazy
-- Reducer-style operators are global, usually wide, and not lazy.
+=== MapReduce in PySpark ===
 
-We'll pick this up and finish up the lecture on Friday.
+Let's copy in our boilerplate from Part 1:
 """
 
+# Boilerplate from part 1
+import pyspark
+from pyspark.sql import SparkSession
+spark = SparkSession.builder.appName("SparkExample").getOrCreate()
+sc = spark.sparkContext
+
 """
-=== MapReduce ===
-
-In MapReduce there are only two operators,
-Map and Reduce.
-
-PySpark equivalents:
-- .map
-https://spark.apache.org/docs/latest/api/python/reference/api/pyspark.RDD.map.html
-- .reduce
-https://spark.apache.org/docs/latest/api/python/reference/api/pyspark.RDD.reduce.html#pyspark.RDD.reduce
-
-As we mentioned last time, this is slightly simplified.
-You will do the fully general case as part of HW2!
-
-Also equivalent to reduce (but needs an initial value)
-- .fold
-https://spark.apache.org/docs/latest/api/python/reference/api/pyspark.RDD.fold.html
+Chemistry dataset again, with a few more entries:
 """
 
 # Re-defining from earlier in the file
@@ -127,9 +150,9 @@ CHEM_DATA_2 = {
 
 def map(rdd, f):
     """
-    rdd: RDD where the items have type v1
-    f: a function v1 -> v2
-    output: RDD where the items have type v2
+    rdd: RDD where the items have type T1
+    f: a function T1 -> T2
+    output: RDD where the items have type T2
 
     Apply the f to each input item
     """
@@ -142,10 +165,10 @@ def map(rdd, f):
 
 def reduce(rdd, f):
     """
-    rdd: RDD where the items have type v2
-    f: v2 x v2 -> v2
-       (v2, v2) -> v2
-    output: a single value v2
+    rdd: RDD where the items have type T2
+    f: T2 x T2 -> T2
+       (T2, T2) -> T2
+    output: a single value T2
 
     Apply the f to pairs of values until there's only one left.
     """
@@ -158,13 +181,13 @@ def get_total_hydrogens(data):
     rdd = sc.parallelize(data.values())
 
     # list x, x[1] gives us the Hydrogen coordinate
-    # v1 = list[integers]
-    # v2 = integer
+    # T1 = list[integers]
+    # T2 = integer
     # f: list[integers] -> integer
     res1 = map(rdd, lambda x: x[1])
 
     # reduce should just add together integers
-    # v2 = integer
+    # T2 = integer
     # f: (integer, integer) -> integer
     res2 = reduce(res1, lambda x, y: x + y)
 
@@ -182,62 +205,6 @@ def get_total_hydrogens(data):
 # Many MapReduce implementations work this way.
 
 """
-=== Poll ===
-
-Describe how you might do the following task as a MapReduce computation.
-
-Input dataset:
-US state, city name, population, avg temperature
-
-"Find the city with the largest temperature per unit population"
-
-Map stage:
-(For each row, output ...)
-
-- divide the temperature by the population
-- add a new column, save the new value in a new column
-
-What are the types?
-Map: for each item of type v1, output an item of type v2
-v1 = (state, city name, population, avg temperature)
-
-- v2 = (temperature / population)
-- v2 = (state, city name, population, avg temp, temperature / population)
-
-Minimal info we need:
-- v2 = (city name, temp / population)
-
-Pseudocode:
-f((state, city name, population, avg temperature)):
-    return (city name, temp / population)
-
-Reduce stage:
-(For each pair of results r1 and r2, combine them to get ...)
-
-- (v2, v2) -> v2
-- (city name 1, ratio 1), (city name 2, ratio 2) -> combine
-
-Ideas:
-- For each pair, select the max
-    + max of the two ratios
-    + what do we do with the city names?
-      A: keep the one with the larger ratio
-- explicit pseudocode:
-  f((city name 1, ratio 1), (city name 2, ratio 2))
-  if ratio1 > ratio2:
-      return (city name 1, ratio 1)
-  else:
-      return (city name 2, ratio 2)
-
-What seemed like a simple/easy idea
-(calculate avg for each row, calculate max of the avgs)
-gets slightly more tricky when we have to figure out exactly
-what to use for the types v1 and v2,
-and in particular our v2 needs not just the avg, but the city name.
-
-Moral: figure out the data that you need, and write down
-explicitly the types v1 and v2.
-
 === Some history ===
 
 MapReduce was originally created by
@@ -259,7 +226,9 @@ Blog article: "The Friendship That Made Google Huge"
 
 === Fully general case ===
 
-We stated last time that MapReduce is slightly more general than the above.
+This is only very slightly simplified. Two things to make it general:
+
+(You will do the general case as part of HW2!)
 
 Two limitations with what we did above:
 
@@ -288,113 +257,21 @@ Maybe I want one maximum city per state, for example.
     General version of MapReduce: both stages are partitioned
     by key, Reduce stage computes one answer per key.
 
-In the paper, Dean and Ghemawat propose the more general version of map and reduce,
-which we will cover now (see Sec 2.2):
+In the paper, Dean and Ghemawat propose the more general version of map and reduce
+(See Sec 2.2),
+which is covered on the homework:
 
-    map: (k1, v1) -> list((k2, v2))
-    reduce: (k2, list(v2)) -> list(v2)
+    map: (K1, T1) -> list((K2, T2))
+    reduce: (K2, list(T2)) -> list(T2)
 
     ---> map computes 0 or more answer
-    ---> reduce computes one answer per key (value of type k2)
-
-===== Cut, skip to the bottom =====
-
-Some of this material will appear as exercises on HW2.
-
-The above is written very abstractly, what does it mean?
-
-Let's walk through each part:
-
-Keys:
-
-The first thing I want to point out is that all the data is given as
-    (key, value)
-
-pairs. (k1 and k2)
-
-Generally speaking, we use the first coordinate (key) for partitioning,
-and the second one to compute values.
-
-Ignore the keys for now, we'll come back to that.
-
-Map:
-    map: (k1, v1) -> list((k2, v2))
-
-- we might want to transform the data into a different type
-    v1 and v2
-- we might want to output zero or more than one output -- why?
-    list(k2, v2)
-
-Examples:
-(write pseudocode for the corresponding lambda function)
-
-- Compute a list of all Carbon-Fluorine bonds
-
-- Compute the total number of Carbon-Fluorine bonds
-
-- Compute the average of the ratio F / C for every molecule that has at least one Carbon
-  (our original example)
-
-In Spark:
-https://spark.apache.org/docs/latest/api/python/reference/api/pyspark.RDD.flatMap.html
+    ---> reduce computes one answer per key (value of type K2)
 """
-
-def map_general_ex(rdd, f):
-    # TODO
-    raise NotImplementedError
-
-# Uncomment to run
-# map_general_ex()
-
-"""
-What about Reduce?
-
-    reduce: (k2, list(v2)) -> list(v2)
-
-The following is a common special case:
-
-    reduce_by_key: (v2, v2) -> v2
-
-Reduce:
-- data has keys attached. Keys are used for partitioning
-- we aggregate the values *by key* instead of over the entire dataset.
-
-Examples:
-(write the corresponding Python lambda function)
-(you can use the simpler reduce_by_key version)
-
-- To compute a total for each key?
-
-- To compute a count for each key?
-
-- To compute an average for each key?
-
-- To compute an average over the entire dataset?
-
-Important note:
-k1 and k2 are different! Why?
-
-In Spark:
-
-https://spark.apache.org/docs/latest/api/python/reference/api/pyspark.RDD.reduceByKey.html
-"""
-
-def reduce_general(rdd, f):
-    # TODO
-    raise NotImplementedError
-
-"""
-Finally, let's use our generalized map and reduce functions to re-implement our original task,
-computing the average Fluorine-to-Carbon ratio in our chemical
-dataset, among molecules with at least one Carbon.
-"""
-
-def fluorine_carbon_ratio_map_reduce(data):
-    # TODO
-    raise NotImplementedError
 
 """
 === MapReduce and DataFrames ===
+
+(We may skip some of this for time)
 
 DataFrames are based on RDDs and RDDs are based on MapReduce!
 A little picture:
@@ -404,10 +281,6 @@ A little picture:
   RDDs
   |
   MapReduce
-
-=== DataFrame ===
-
-(Will probably skip some of this for time)
 
 Our second example of a collection type is DataFrame.
 
@@ -563,4 +436,6 @@ at all. We get nice SQL abstractions.
 (Depending on extra time)
 
 Some additional MapReduce exercises in extras/exercises.py.
+
+Cut material that will appear as part of HW2 in extras/cut.py
 """
