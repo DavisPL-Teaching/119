@@ -1,64 +1,6 @@
 """
 Part 4: Partitioning
 
-=== Discussion Question & Poll ===
-
-An exercise on MapReduce:
-
-Describe how you might do the following task as a MapReduce computation.
-
-Input dataset:
-US state, city name, population, avg temperature
-
-"Find the city with the largest temperature per unit population"
-
-Map stage:
-(For each row, output ...)
-
-- divide the temperature by the population
-- add a new column, save the new value in a new column
-
-What are the types?
-Map: for each item of type T1, output an item of type T2
-T1 = (state, city name, population, avg temperature)
-
-- T2 = (temperature / population)
-- T2 = (state, city name, population, avg temp, temperature / population)
-
-Minimal info we need:
-- T2 = (city name, temp / population)
-
-Pseudocode:
-f((state, city name, population, avg temperature)):
-    return (city name, temp / population)
-
-Reduce stage:
-(For each pair of results r1 and r2, combine them to get ...)
-
-- (T2, T2) -> T2
-- (city name 1, ratio 1), (city name 2, ratio 2) -> combine
-
-Ideas:
-- For each pair, select the max
-    + max of the two ratios
-    + what do we do with the city names?
-      A: keep the one with the larger ratio
-- explicit pseudocode:
-  f((city name 1, ratio 1), (city name 2, ratio 2))
-  if ratio1 > ratio2:
-      return (city name 1, ratio 1)
-  else:
-      return (city name 2, ratio 2)
-
-What seemed like a simple/easy idea
-(calculate avg for each row, calculate max of the avgs)
-gets slightly more tricky when we have to figure out exactly
-what to use for the types T1 and T2,
-and in particular our T2 needs not just the avg, but the city name.
-
-Moral: figure out the data that you need, and write down
-explicitly the types T1 and T2.
-
 === Revisiting RDDs ===
 
 One last property (an important one!): Partitioning

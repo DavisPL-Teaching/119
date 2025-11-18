@@ -38,7 +38,7 @@ I will try to keep it up to date, but please see Piazza for the latest informati
 |   | Nov 14 |  |  | 5.2 |
 | 8 | Nov 17 |  |  | 5.3 |
 |   | Nov 19 |  |  | 5.4 |
-|   | Nov 21 |  |  | 5.5 |
+|   | Nov 21 |  |  | 5.5, 5.6 |
 
 ## Section 3: Distributed Computing
 
