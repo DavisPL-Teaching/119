@@ -47,9 +47,9 @@ Questions?
 
 Reminders:
 
-- HW2 due Nov 24
+- HW2 due Nov 24 (1 week from today)
 
-  OH: today, Friday, 1 week from today
+  OH: today 415pm, Friday 11am, Monday 24th 4:15pm
 
 Plan:
 
@@ -58,3 +58,5 @@ Plan:
 - Poll
 
 - Part 3: introduction to MapReduce.
+
+Questions?

@@ -341,13 +341,34 @@ Exercise: try this:
 Useful commands:
     - .collect()
     - .first()
-    - .take(n)
+    - .take(n) # first n rows
 
 What happened?
+
+It didn't work - even after modifying the list after
+    l = rdd.first()
+we were unable to see those changes in the original RDD.
+
+RDDs are immutable: you can't modify them!
 
 ===== Fault tolerance =====
 
 Recall: def. of distribution, why faults are a particular concern
+
+    PySpark jobs or RDD operations can be distributed and run in parallel
+    over multiple!
+
+    Multiple warehouses running separate computations
+
+    Part of the problem of running distributed code is that one
+    warehouse (machine) can fail, while another warehouse (machine) is
+    still running.
+
+    We want to silently recover in case of errors.
+
+    This is a property known as "fault tolerance"
+
+    Your pipeline is tolerant to faults, network failures, or crashes
 
 RDD data will try to automatically recover if a node (worker or machine) crashes
 It does this while still mostly maintaining data in-memory, which is impressive.
@@ -356,11 +377,13 @@ We will not have time to cover this in detail in this lecture!
 
 I can do an extra lecture on distributed consistency and distributed algorithms if there is interest.
 
+We will just assume PySpark gives us correct results.
+
 === Wrapping up ===
 
-We saw Laziness of RDDs: all RDD operators are divided into transformations
+We saw Laziness of RDDs: all RDD operators are divided into lazy transformations
 (which return another RDD object/handle and don't compute anything)
-and actions (which return result data in plain Python)
+and non-lazy actions (which return result data in plain Python)
 
 We saw that all computations over RDDs are really dataflow graphs.
     code == dataflow graph

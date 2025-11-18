@@ -20,7 +20,7 @@ We want to know which of 1, 2, 3 should be lazy, and which should be evaluated r
 
 Which tasks should be executed lazily if we want to get the answer in the most efficient way?
 
-Bonus:
+Bonus (optional):
 If we assume that all operators take 1 ms per input that they process, how long would the pipeline take in the optimal case?
 
 Assume that creating the dataflow graph itself doesn't take any time, only evaluating it takes time.
@@ -37,6 +37,22 @@ Assume there is no parallelism.
 .
 .
 .
+
+If 1, 2, 3 are NOT lazy: 100,000 + 100,000 + 5 = 200,005 steps (200,005 ms),
+    that's a lot of compute!
+
+If 1, 2 are lazy:
+
+    - 1 does no computation (yet)
+    - 2 does no computation (yet)
+    - 3 says, "I need 5 answers"
+        + 3 talks back to 2, "I need 5 answers"
+        + 2 talks back to 1, "I need 5 answers"
+        + 1 will compute the first 5 data points (5 steps / 5 ms)
+        + 2 will compute the first 5 v / ||v|| (5 steps / 5 ms)
+        + 3 will print out the 5 answers (5 ms)
+
+    Total time: 5ms + 5ms + 5ms = 15ms.
 
 === MapReduce ===
 
@@ -65,16 +81,20 @@ It's a dataflow graph with just three nodes:
 The kind of amazing thing is that essentially all operators on distributed
 pipelines can be reduced down to this simple form,
 called a MapReduce job.
+    (Insight of original MapReduce paper coming out of Google)
+
 (Sometimes you might you need more than one MapReduce job to get some computations
 done.)
 
 === Definitions ===
 
 Map stage:
-    - Take our input a scalable collection of items of type T, and apply
+    - Take our input a scalable collection of items of type T1, and apply
       the same function f: T1 -> T2 to all inputs.
 
       (T, U could be, integers, floats, chemicals, rows, anything)
+
+      (The transformation applies to individual input rows! Data-parallel)
 
 Reduce stage:
 (This differs a little by implementation)
@@ -99,6 +119,15 @@ Reduce: if I have two outputs x and y, return x + y
 
 The MapReduce computation will repeatedly apply the reduce function
 until there is no more reducing to do.
+
+    In this case:
+
+        T1 = Rows with a population field
+
+        T2 = Integers
+
+        map: Row -> Integer
+        reduce: Integer x Integer -> Integer
 
 We have actually been writing MapReduce pipelines all along!
 In our CHEM_DATA example:
@@ -159,7 +188,7 @@ def map(rdd, f):
     rdd2 = rdd.map(f)
 
     # Uncomment to show intermediate stage
-    print(f"Intermediate: {rdd2.collect()}")
+    # print(f"Intermediate: {rdd2.collect()}")
 
     return rdd2
 
@@ -184,11 +213,13 @@ def get_total_hydrogens(data):
     # T1 = list[integers]
     # T2 = integer
     # f: list[integers] -> integer
+    # x[1] is the no. of hydrogens
     res1 = map(rdd, lambda x: x[1])
 
     # reduce should just add together integers
     # T2 = integer
     # f: (integer, integer) -> integer
+    # Two total #s of hydrogens: take them out, add them up, put them back
     res2 = reduce(res1, lambda x, y: x + y)
 
     print(f"Result: {res2}")
@@ -198,6 +229,8 @@ def get_total_hydrogens(data):
 # (Count by hand to check)
 # 16 :checkmark:
 
+# Intermediate result:  [2, 0, 0, 0, 0, 4, 6, 1, 3, 0]
+
 # Note:
 # We could also .collect() and then .parallelize() the results after the
 # map stage if we wanted to simulate completing the results of the Map stage
@@ -205,6 +238,13 @@ def get_total_hydrogens(data):
 # Many MapReduce implementations work this way.
 
 """
+map is the quintessential lazy operator (transformation)
+
+reduce is the quintessential not-lazy operator (action)
+
+In general, most "row-level" operations are transformation, and most
+aggregations are actions
+
 === Some history ===
 
 MapReduce was originally created by
@@ -249,6 +289,14 @@ L1. In the map stage, for each input row, we had to produce
     ---> If we want a filter, we would output empty list []
     ---> we could also output more than one item if we want.
 
+    Instead of
+
+        f: T1 -> T2
+
+    Map stage will use a function f of the form
+
+        f: T1 -> List<T2>
+
 L2. In the reduce stage, we always end up with just a single answer!
 In our example, we were left with just one value (city name, global max)
 What if we want to produce more than one value as output?
@@ -266,6 +314,29 @@ which is covered on the homework:
 
     ---> map computes 0 or more answer
     ---> reduce computes one answer per key (value of type K2)
+
+Recap:
+
+    We reviewed laziness and saw immutability for PySpark RDDs & operators
+
+    We introduced MapReduce: a simplified model for writing distributed pipelines
+
+    MapReduce features two operators, map and reduce
+
+    We saw a simplified form of both
+
+    - Map: apply a function f to each input row, producing exactly one output row
+
+    - Reduce: repeatedly apply a reduce function to pairs of output rows, until
+      there is only one output row left.
+
+Idea for generalizing:
+    - Map stage will produce zero or more intermediate output rows
+        (instead of exactly one)
+
+    - Reduce stage will work by key:
+        + For each key K2, it will aggregate all the rows of that key, and produce
+          one answer per key.
 """
 
 """

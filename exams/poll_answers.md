@@ -96,3 +96,7 @@ Nov 14:
 5, 6, and 8.
 Note that, depending on assumptions about how regular the timestamps are or if the input data is sorted by row #, it may be possible to make these data-parallel also.
 It is just not quite as straightforward as the others.
+
+Nov 17:
+1: Lazy, 2: Lazy, 3: Not Lazy
+Bonus: 5ms + 5ms + 5ms = 15 ms.
