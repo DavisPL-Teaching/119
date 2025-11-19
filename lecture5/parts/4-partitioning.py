@@ -12,15 +12,12 @@ US state, city name, population, avg temperature
 
 "Find the city with the largest temperature per unit population"
 
-https://forms.gle/YS787c6aeDe3mZR59
+https://forms.gle/VpXZ3c9Zam7SxFVi7
 
 Answer (go through together):
 
 Map stage:
-(For each row, output ...)
 
-- divide the temperature by the population
-- add a new column, save the new value in a new column
 
 What are the types?
 Map: for each item of type T1, output an item of type T2

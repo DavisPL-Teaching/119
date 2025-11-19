@@ -65,13 +65,26 @@ Questions?
 
 Announcements and reminders:
 
-- HW2 due Monday
+- HW2 due Monday (in 5 days)
 
-  Partial autograder is now available to try out!
-  It will give you a score out of a maximum of 28.
+  Partial autograder is now available!
+  Try it out ahead of time
+
+  It will give you a preliminary score out of a maximum of 28.
+  (Currently 38 - will be updated after this evening, will be 28.)
+
+- ICYMI:
+
+  + `github_help.md` file for setting up your own Git repo!
+
+  + `hints.md` has hints for some problems.
+
+- Some extra MapReduce material in `extras/` - some of this is covered as part of your homework
 
 Plan:
 
 - Part 4: Data Partitioning
 
 - (If time) Part 5 on DataFrames
+
+Any questions?
