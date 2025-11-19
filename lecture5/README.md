@@ -60,3 +60,18 @@ Plan:
 - Part 3: introduction to MapReduce.
 
 Questions?
+
+## Wednesday, Nov 19
+
+Announcements and reminders:
+
+- HW2 due Monday
+
+  Partial autograder is now available to try out!
+  It will give you a score out of a maximum of 28.
+
+Plan:
+
+- Part 4: Data Partitioning
+
+- (If time) Part 5 on DataFrames

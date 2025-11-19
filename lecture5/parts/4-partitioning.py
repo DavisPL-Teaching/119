@@ -1,10 +1,111 @@
 """
 Part 4: Partitioning
 
+=== Discussion Question & Poll ===
+
+An exercise on MapReduce:
+
+Describe how you might do the following task as a MapReduce computation.
+
+Input dataset:
+US state, city name, population, avg temperature
+
+"Find the city with the largest temperature per unit population"
+
+https://forms.gle/YS787c6aeDe3mZR59
+
+Answer (go through together):
+
+Map stage:
+(For each row, output ...)
+
+- divide the temperature by the population
+- add a new column, save the new value in a new column
+
+What are the types?
+Map: for each item of type T1, output an item of type T2
+
+- T1
+- T2
+
+Minimal info we need?
+
+Pseudocode:
+
+Map stage:
+    f(x):
+
+
+
+
+Reduce stage:
+    f(x, y):
+
+
+
+.
+.
+.
+.
+.
+
+=== Comment ===
+
+What seemed like a simple/easy idea
+(calculate avg for each row, calculate max of the avgs)
+gets slightly more tricky when we have to figure out exactly
+what to use for the types T1 and T2,
+and in particular our T2 needs not just the avg, but the city name.
+
+Moral: figure out the data that you need, and write down
+explicitly the types T1 and T2.
+
+--------------------------------------
+
 === Revisiting RDDs ===
 
-One last property (an important one!): Partitioning
+MapReduce has taught us that for general distributed data processing, we only need two things:
 
+1. a way of transforming values "locally" (at each distributed node or parallel worker - no coordination!)
+
+2. a way of combining results (from different distributed nodes or parallel workers) to get a final answer
+
+But even the combining results part is done "per key" in general! This helps immensely
+as it means that even this stage can be done in a data-parallel way.
+
+This brings us to our last property of RDDs (an important one!): Partitioning!
+"""
+
+# Boilerplate and dataset from previous part
+import pyspark
+from pyspark.sql import SparkSession
+spark = SparkSession.builder.appName("SparkExample").getOrCreate()
+sc = spark.sparkContext
+
+CHEM_DATA = {
+    # H20
+    "water": [0, 2, 0, 0, 0, 0, 0, 0, 1, 0, 0],
+    # N2
+    "nitrogen": [0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0],
+    # O2
+    "oxygen": [0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0],
+    # F2
+    "fluorine": [0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0],
+    # CO2
+    "carbon dioxide": [0, 0, 0, 0, 0, 0, 1, 0, 2, 0, 0],
+    # CH4
+    "methane": [0, 4, 0, 0, 0, 0, 1, 0, 0, 0, 0],
+    # C2 H6
+    "ethane": [0, 6, 0, 0, 0, 0, 2, 0, 0, 0, 0],
+    # C8 H F15 O2
+    "PFOA": [0, 1, 0, 0, 0, 0, 8, 0, 2, 15, 0],
+    # C H3 F
+    "Fluoromethane": [0, 3, 0, 0, 0, 0, 1, 0, 0, 1, 0],
+    # C6 F6
+    "Hexafluorobenzene": [0, 0, 0, 0, 0, 0, 6, 0, 0, 6, 0],
+}
+
+"""
 === Partitioning ===
 
 Whenever we consruct an RDD, under the hood it is going to be partitioned
@@ -49,14 +150,16 @@ def show_partitions(data, num_partitions=None):
         print(f"Partition: {part}")
 
 # Uncomment to run
-# show_partitions(CHEM_DATA)
+show_partitions(CHEM_DATA)
 
 """
 What numbers did we get?
 - I got 12 -- my machine has 12 cores
 
 Other people got?
-- 8
+-
+
+
 
 In this case, all partitions are on the same machine (my laptop),
 but in general they could be split accross several machines.
@@ -70,8 +173,7 @@ Syntax:
      sc.parallelize(data, number of partitions)
 """
 
-# Exercise: update the above to also control the number of partitions as an optional
-# parameter, then print
+# Exercise: using the number of partitions as an optional parameter, print:
 # show_partitions(CHEM_DATA, 1)
 # show_partitions(CHEM_DATA, 5)
 # show_partitions(CHEM_DATA, 10)
@@ -100,6 +202,14 @@ A friend of mine who worked as a data/ML engineer told me the following story:
 
 (Dataproc is Google Cloud's framework for running Spark and other distributed
 data processing tasks: https://cloud.google.com/dataproc)
+
+Try it out:
+Run
+    show_partitions(CHEM_DATA, 1000)
+
+    show_partitions(CHEM_DATA, 10000)
+
+What happens?
 
 Moral of the story:
 In an ideal world, we wouldn't worry about partitioning,
@@ -165,21 +275,14 @@ Image:
     narrow_wide.png
     (Credit: LinkedIn)
 
-We saw partitioning and that it gives rise to narrow/wide operators,
-and what it does to the input data flow graph.
+"""
+
+"""
+=== Finishing up narrow and wide ===
 
 All operators fit into this dichotomy:
-- Mapper-style operators are local, can be narrow, and can be lazy
-- Reducer-style operators are global, usually wide, and not lazy.
-
-"""
-
-"""
-=== Poll ===
-
-Consider the following scenario where a temperature dataset is partitioned in Spark across several locations. Which of the following tasks on the input dataset could be done with a narrow operator, and which would require a wide operator?
-
-=== Finishing up narrow and wide ===
+- Mapper-style operators are local, narrow, and usually lazy
+- Reducer-style operators are global, usually wide, and usually not lazy.
 
 Let's use the definitions above to classify all the operations in our example pipelines above
 into narrow and wide.
@@ -214,4 +317,8 @@ Implementation and optimization details:
 
 These can be more important if you are worried about performance,
 or crashes/failures and other distributed concerns.
+
+=== Poll (for next time) ===
+
+Consider the following scenario where a temperature dataset is partitioned in Spark across several locations. Which of the following tasks on the input dataset could be done with a narrow operator, and which would require a wide operator?
 """

@@ -6,66 +6,38 @@ We said that PySpark supports at least two scalable collection types.
 Our first example was RDDs.
 
 Our second example of a collection type is DataFrame.
+"""
 
-=== Discussion Question & Poll ===
+# Boilerplate and dataset from previous part
+import pyspark
+from pyspark.sql import SparkSession
+spark = SparkSession.builder.appName("SparkExample").getOrCreate()
+sc = spark.sparkContext
 
-An exercise on MapReduce:
+CHEM_DATA = {
+    # H20
+    "water": [0, 2, 0, 0, 0, 0, 0, 0, 1, 0, 0],
+    # N2
+    "nitrogen": [0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0],
+    # O2
+    "oxygen": [0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0],
+    # F2
+    "fluorine": [0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0],
+    # CO2
+    "carbon dioxide": [0, 0, 0, 0, 0, 0, 1, 0, 2, 0, 0],
+    # CH4
+    "methane": [0, 4, 0, 0, 0, 0, 1, 0, 0, 0, 0],
+    # C2 H6
+    "ethane": [0, 6, 0, 0, 0, 0, 2, 0, 0, 0, 0],
+    # C8 H F15 O2
+    "PFOA": [0, 1, 0, 0, 0, 0, 8, 0, 2, 15, 0],
+    # C H3 F
+    "Fluoromethane": [0, 3, 0, 0, 0, 0, 1, 0, 0, 1, 0],
+    # C6 F6
+    "Hexafluorobenzene": [0, 0, 0, 0, 0, 0, 6, 0, 0, 6, 0],
+}
 
-Describe how you might do the following task as a MapReduce computation.
-
-Input dataset:
-US state, city name, population, avg temperature
-
-"Find the city with the largest temperature per unit population"
-
-https://forms.gle/YS787c6aeDe3mZR59
-
-Answer (go through together):
-
-Map stage:
-(For each row, output ...)
-
-- divide the temperature by the population
-- add a new column, save the new value in a new column
-
-What are the types?
-Map: for each item of type T1, output an item of type T2
-
-- T1
-- T2
-
-Minimal info we need?
-
-Pseudocode:
-
-Map stage:
-    f(x):
-
-
-
-
-Reduce stage:
-    f(x, y):
-
-
-
-.
-.
-.
-.
-.
-
-=== Comment ===
-
-What seemed like a simple/easy idea
-(calculate avg for each row, calculate max of the avgs)
-gets slightly more tricky when we have to figure out exactly
-what to use for the types T1 and T2,
-and in particular our T2 needs not just the avg, but the city name.
-
-Moral: figure out the data that you need, and write down
-explicitly the types T1 and T2.
-
+"""
 === DataFrames ===
 
 DataFrames are based on RDDs and RDDs are based on MapReduce!
