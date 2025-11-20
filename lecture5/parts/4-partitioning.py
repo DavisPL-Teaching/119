@@ -18,33 +18,89 @@ Answer (go through together):
 
 Map stage:
 
+    What to do:
+    For each input row, map that input row to ....
+
+    f: T1 -> T2
+
+Reduce:
+
+    Describe what to do for a pair of output rows
+
+    f: T2 x T2 -> T2
 
 What are the types?
 Map: for each item of type T1, output an item of type T2
 
 - T1
+
 - T2
 
-Minimal info we need?
+After the map stage, what info do we need?
 
-Pseudocode:
+    - don't need the state
 
-Map stage:
-    f(x):
+    - DO need the city
 
+    - Do need the ratio: (avg temperature) / population
 
+Idea for map stage (in words):
 
+    For each row, return the ordered pair
+
+        (city, (avg temp) / (population))
 
 Reduce stage:
-    f(x, y):
 
+Take a pair of output rows, and return one output row.
 
+    Find the max of the two output rows! Since we are
+    trying to find the maximum average temperature.
 
-.
-.
-.
-.
-.
+    Reduce stage input? Two rows:
+
+        (city1, (avg temp1) / (population1))
+
+        (city2, (avg temp2) / (population2))
+
+    Or if you like:
+
+        (city1, ratio1)
+
+        (city2, ratio2)
+
+    We must return something of the form:
+
+        (city3, ratio3)
+
+    We know that ratio3 should be max(ratio1, ratio2)
+
+    We see which of ratio1 and ratio2 is bigger
+
+    What should do for city3?
+    --> We should pick whichever city was accompanied by
+        the bigger ratio
+
+    Pseudocode:
+
+        if ratio1 < ratio2:
+
+            return (city2, ratio2)
+
+        else:
+
+            return (city1, ratio1)
+
+What was T1 and what was T2?
+
+    input: US state, city name, population, avg temperature
+    T1 = (string, string, integer, float)
+
+    T2 = (string, float)
+
+The tricky thing is that reduce must be of the form
+
+    T2 x T2 -> T2
 
 === Comment ===
 
@@ -56,6 +112,10 @@ and in particular our T2 needs not just the avg, but the city name.
 
 Moral: figure out the data that you need, and write down
 explicitly the types T1 and T2.
+
+You can't go back to the original dataset in your map stage!
+Your map stage must therefore return all information you
+need as part of the type T2.
 
 --------------------------------------
 
@@ -110,7 +170,7 @@ into several chunks or subsets of the data; these could be all stored on the sam
 or they could be stored on separate distributed machines.
 
 Partitioning is what makes RDDs a scalable collection type.
-It's data parallelism.
+It's how Spark implements data parallelism.
 
 How does partitioning work?
 
@@ -147,16 +207,16 @@ def show_partitions(data, num_partitions=None):
         print(f"Partition: {part}")
 
 # Uncomment to run
-show_partitions(CHEM_DATA)
+# show_partitions(CHEM_DATA)
 
 """
 What numbers did we get?
 - I got 12 -- my machine has 12 cores
 
 Other people got?
--
-
-
+- 8
+- 8
+- 8
 
 In this case, all partitions are on the same machine (my laptop),
 but in general they could be split accross several machines.
@@ -210,7 +270,11 @@ What happens?
 
 Moral of the story:
 In an ideal world, we wouldn't worry about partitioning,
-if the number of partitions created is wildly off from the
+however, in practice, we may need to configure the number of partitions
+in Spark for various reasons (availability of compute, how many nodes we
+want to allocate, etc.)
+
+If the number of partitions created is wildly off from the
 size of the data set (too small or too large), it could have severe impacts
 on performance.
 
@@ -226,6 +290,28 @@ A:
 It controls the amount of data parallelism in the pipeline
 Too little data parallelism, and we don't benefit from parallelism
 Too much, and we might have severe/large overheads from creating and managing all the partitions.
+
+Recap:
+
+- we did a practice MapReduce question on the poll
+
+    + think about what intermediate output you need to store in order to
+      compute a query
+
+    + think about what the types T1 and T2 need to be
+      (without keys, reduce must always be a function taking two items of type T2
+       and returning a single item of type T2)
+
+- we saw that RDDs implement data parallelism via partitioning
+
+    + we saw that one can set and view the number of partitions
+
+    + generally in an ideal world, we would not worry about the # of partitions
+
+      however, having too few or too many partitions can severely impact
+      pipeline performance.
+
+------------------
 
 === Two types of operators (again) ===
 
