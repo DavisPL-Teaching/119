@@ -88,3 +88,13 @@ Plan:
 - (If time) Part 5 on DataFrames
 
 Any questions?
+
+## Friday, Nov 19
+
+Plan:
+
+- Narrow and wide operators
+
+- We will skip over most of Part 5
+
+- Part 6: end note on disadvantages of Spark.

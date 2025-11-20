@@ -1,6 +1,11 @@
 """
-Part 5: End note:
+Part 6: End notes
+
 Latency and throughput, revisited
+and
+Disadvantages of Spark
+
+=== Latency and throughput ===
 
 So, we know how to build distributed pipelines.
 
@@ -26,8 +31,6 @@ Let's talk a little bit about latency...
 
 === Understanding latency (intuitive) ===
 
-This is related to the last question on Q10 of the midterm.
-
 A more intuitive real-world example:
 imagine a restaurant that has to process lots of orders.
 
@@ -35,7 +38,7 @@ imagine a restaurant that has to process lots of orders.
 
 - Latency is how long *one* person waits for their order.
 
-Some of you wrote on the midterm: throughput != 1 / latency
+Some of you wrote on the midterm: throughput == 1 / latency
 
 These are not the same! Why not? Two extreme cases:
 

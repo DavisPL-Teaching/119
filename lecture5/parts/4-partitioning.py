@@ -313,6 +313,11 @@ Recap:
 
 ------------------
 
+One note from after class last time!
+
+Partitioning = Sharding.
+It's the same concept.
+
 === Two types of operators (again) ===
 
 Like laziness, partitioning also introduces an interesting dichotomy of operators into two groups.
@@ -361,7 +366,7 @@ Image:
 """
 
 """
-=== Finishing up narrow and wide ===
+=== Example operators ===
 
 All operators fit into this dichotomy:
 - Mapper-style operators are local, narrow, and usually lazy
@@ -400,8 +405,4 @@ Implementation and optimization details:
 
 These can be more important if you are worried about performance,
 or crashes/failures and other distributed concerns.
-
-=== Poll (for next time) ===
-
-Consider the following scenario where a temperature dataset is partitioned in Spark across several locations. Which of the following tasks on the input dataset could be done with a narrow operator, and which would require a wide operator?
 """

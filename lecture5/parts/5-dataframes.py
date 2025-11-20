@@ -1,5 +1,42 @@
 """
-Part 4: DataFrames
+Part 5: DataFrames
+
+(We will skip over most of this part due to time)
+
+=== Discussion Question & Poll ===
+
+This was the poll I accidentally shared last time :-)
+
+https://forms.gle/TB823v4HSWqYadP88
+
+Consider the following scenario where a temperature dataset is partitioned in Spark across several locations. Which of the following tasks on the input dataset can be done with a narrow operator, and which will require a wide operator?
+
+Assume the input dataset consists of locations:
+US state, city, population, avg temperature
+
+It is partitioned into one dataset per US state (50 partitions total).
+
+1. Add one to each temperature
+
+2. Compute a 5-number summary
+
+3. Throw out duplicate city names (multiple cities in the US with the same name)
+
+4. Throw out cities that are below 100,000 residents
+
+5. Throw out "outlier" temperatures below -50 F or above 150 F
+
+6. Throw out "outlier" temperatures 3 std deviations above or 3 std deviations below the mean
+
+7. Filter the dataset to include only California cities
+
+.
+.
+.
+.
+.
+
+==================
 
 We said that PySpark supports at least two scalable collection types.
 
