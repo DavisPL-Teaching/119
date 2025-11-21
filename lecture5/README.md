@@ -91,12 +91,16 @@ Any questions?
 
 ## Friday, Nov 19
 
+Reminders:
+
+- HW2 due on Monday
+
 Plan:
 
 - Narrow and wide operators
 
 - Poll
 
-- We will skip over most of Part 5
+- Part 5: DataFrames (this will be covered relatively briefly)
 
 - Part 6: end note on disadvantages of Spark.

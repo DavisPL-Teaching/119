@@ -1,7 +1,7 @@
 """
 Part 5: DataFrames
 
-(We will skip over most of this part due to time)
+In the interest of time, we will cover this part relatively briefly.
 
 === Discussion Question & Poll ===
 
@@ -43,6 +43,8 @@ We said that PySpark supports at least two scalable collection types.
 Our first example was RDDs.
 
 Our second example of a collection type is DataFrame.
+
+Here is an example:
 """
 
 # Boilerplate and dataset from previous part
@@ -76,78 +78,21 @@ CHEM_DATA = {
 }
 
 """
-=== DataFrames ===
-
-DataFrames are based on RDDs and RDDs are based on MapReduce!
-A little picture:
-
-  DataFrames
-  |
-  RDDs
-  |
-  MapReduce
-
 DataFrame is like a Pandas DataFrame.
 
 https://spark.apache.org/docs/latest/api/python/reference/pyspark.sql/api/pyspark.sql.DataFrame.html
 
-An example of a dataframe computation is shown in
-
-    cut/examples.py
-
-The main difference is we need to create the dataframe using a tuple or dictionary.
+The main difference with RDDs is we need to create the dataframe
+using a tuple or dictionary.
 
 We can also create one from an RDD by doing
 
     .map(lambda x: (x,)).toDF()
+
+For more examples of creating dataframes from RDDs, see extras/dataframe.py.
 """
 
 def ex_dataframe(data):
-    # Load the data (CHEM_DATA) and turn it into a DataFrame
-
-    # A few ways to do this
-
-    """
-    Method 1: directly from the RDD
-    """
-    rdd = sc.parallelize(data.values())
-
-    # RDD is just a collection of items where the items can have any Python type
-    # a DataFrame requires the items to be rows.
-
-    df1 = rdd.map(lambda x: (x,)).toDF()
-
-    # Breakpoint for inspection
-    # breakpoint()
-
-    # Try: df1.show()
-
-    # What happened?
-
-    # Not very useful! Let's try a different way.
-    # Our lambda x: (x,) map looks a bit sus. Does anyone see why?
-
-    """
-    Method 2: unpack the data into a row more appropriately by constructing the row
-    """
-    # don't need to do the same thing again -- RDDs are persistent and immutable!
-    # rdd = sc.parallelize(data.values())
-
-    # In Python you can unwrap an entire list as a tuple by using *x.
-    df2 = rdd.map(lambda x: (*x,)).toDF()
-
-    # Breakpoint for inspection
-    # breakpoint()
-
-    # What happened?
-
-    # Better!
-
-    """
-    Method 3: create the DataFrame directly with column headers
-    (the correct way)
-    """
-
     # What we need (similar to Pandas): list of columns, iterable of rows.
 
     # For the columns, use our CHEM_NAMES list
@@ -168,11 +113,6 @@ def ex_dataframe(data):
     # Breakpoint for inspection
     # breakpoint()
 
-    # What happened?
-
-    # Now we don't have to worry about RDDs at all. We can use all our favorite DataFrame
-    # abstractions and manipulate directly using SQL operations.
-
     # Adding a new column:
     from pyspark.sql.functions import col
     df4 = df3.withColumn("H + C", col("H") + col("C"))
@@ -189,27 +129,26 @@ def ex_dataframe(data):
 # ex_dataframe(CHEM_DATA)
 
 """
-use .show()! - nicer version of .collect()!
-Only available on dataframes.
+Notes:
 
-=== Web interface ===
+- We can use .show() to print out - nicer version of .collect()!
+  Only available on dataframes.
 
-Revisiting the web interface & dataflow graph
+- DataFrames are based on RDDs internally.
+  A little picture:
 
-localhost:4040/
+  DataFrames
+  |
+  RDDs
+  |
+  MapReduce
 
-(see under Stages and click on a "collect" job for the dataflow graph)
+- Web interface gives us a more helpful dataflow graph this time:
 
-=== Extras ===
+  localhost:4040/
 
-Another misc. DataFrame example can be found in
-extras/dataframe.py.
+  (see under Stages and click on a "collect" job for the dataflow graph)
 
-(feel free to uncomment and play with it offline)
-
-=== Advantages of DataFrames? ===
-
-Higher level than RDDs, more structured.
-
-We can work directly with SQL and relational abstractions.
+- DataFrames are higher level than RDDs! They are "structured" data --
+  we can work with them using SQL and relational abstractions.
 """
