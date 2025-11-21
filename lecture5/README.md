@@ -95,6 +95,8 @@ Plan:
 
 - Narrow and wide operators
 
+- Poll
+
 - We will skip over most of Part 5
 
 - Part 6: end note on disadvantages of Spark.

@@ -313,6 +313,8 @@ Recap:
 
 ------------------
 
+(picking up here on Friday, Nov 21)
+
 One note from after class last time!
 
 Partitioning = Sharding.
@@ -334,7 +336,7 @@ Suppose there are two partitions for each task.
 If we draw one node per partition, instead of one node per task,
 what dataflow graph would we get?
 
-A (class input):
+A:
 
     (load input data, 1st half) ---> (filter, 1st half) ---> (map, 1st half)
                                                                              ----->
@@ -390,8 +392,8 @@ Wide:
 """
 
 """
-=== Other miscellaneous interesting operations ===
-(Likely skip for time)
+=== Other miscellaneous partitioning-related operations ===
+(Skip for time)
 
 Implementation and optimization details:
 (See PySpark documentation)

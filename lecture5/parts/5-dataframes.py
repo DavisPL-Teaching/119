@@ -51,6 +51,7 @@ from pyspark.sql import SparkSession
 spark = SparkSession.builder.appName("SparkExample").getOrCreate()
 sc = spark.sparkContext
 
+CHEM_NAMES = [None, "H", "He", "Li", "Be", "B", "C", "N", "O", "F", "Ne"]
 CHEM_DATA = {
     # H20
     "water": [0, 2, 0, 0, 0, 0, 0, 0, 1, 0, 0],
@@ -175,11 +176,12 @@ def ex_dataframe(data):
     # Adding a new column:
     from pyspark.sql.functions import col
     df4 = df3.withColumn("H + C", col("H") + col("C"))
-    df4 = df3.withColumn("H + F", col("H") + col("F"))
+    df5 = df4.withColumn("H + F", col("H") + col("F"))
 
     # This is the equiv of Pandas: df3["H + C"] = df3["H"] + df3["C"]
 
-    breakpoint()
+    # Uncomment to debug:
+    # breakpoint()
 
     # We could continue this example further (showing other Pandas operation equivalents).
 
@@ -187,50 +189,27 @@ def ex_dataframe(data):
 # ex_dataframe(CHEM_DATA)
 
 """
-One more thing about DataFrames: revisiting the web interface
-and .explain():
+use .show()! - nicer version of .collect()!
+Only available on dataframes.
+
+=== Web interface ===
+
+Revisiting the web interface & dataflow graph
 
 localhost:4040/
 
-getting the internal dataflow graph used:
+(see under Stages and click on a "collect" job for the dataflow graph)
 
-.explain()
+=== Extras ===
 
-.explain("extended")
-"""
+Another misc. DataFrame example can be found in
+extras/dataframe.py.
 
-"""
-Another misc. DataFrame example:
-(skip for time, feel free to uncomment and play with it offline)
-"""
+(feel free to uncomment and play with it offline)
 
-# Just to show how to create a data frame from a Python dict.
+=== Advantages of DataFrames? ===
 
-# people = spark.createDataFrame([
-#     {"deptId": 1, "age": 40, "name": "Hyukjin Kwon", "gender": "M", "salary": 50},
-#     {"deptId": 1, "age": 50, "name": "Takuya Ueshin", "gender": "M", "salary": 100},
-#     {"deptId": 2, "age": 60, "name": "Xinrong Meng", "gender": "F", "salary": 150},
-#     {"deptId": 3, "age": 20, "name": "Haejoon Lee", "gender": "M", "salary": 200}
-# ])
+Higher level than RDDs, more structured.
 
-# people_filtered = people.filter(people.age > 30)
-
-# people_filtered.show()
-
-# people2 = sc.parallelize([
-#     {"deptId": 1, "age": 40, "name": "Hyukjin Kwon", "gender": "M", "salary": 50},
-#     {"deptId": 1, "age": 50, "name": "Takuya Ueshin", "gender": "M", "salary": 100},
-#     {"deptId": 2, "age": 60, "name": "Xinrong Meng", "gender": "F", "salary": 150},
-#     {"deptId": 3, "age": 20, "name": "Haejoon Lee", "gender": "M", "salary": 200}
-# ])
-
-# people2_filtered = people2.filter(lambda x: x["age"] > 30)
-
-# result = people2_filtered.collect()
-
-# print(result)
-
-"""
-So we know how to work with DataFrames, once we do that, we don't have to worry about RDDs
-at all. We get nice SQL abstractions.
+We can work directly with SQL and relational abstractions.
 """
