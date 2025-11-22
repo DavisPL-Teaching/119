@@ -44,6 +44,8 @@ Our first example was RDDs.
 
 Our second example of a collection type is DataFrame.
 
+A DataFrame is like a DataFrame in Pandas - but it's scalable :-)
+
 Here is an example:
 """
 

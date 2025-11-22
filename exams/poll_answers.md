@@ -100,3 +100,15 @@ It is just not quite as straightforward as the others.
 Nov 17:
 1: Lazy, 2: Lazy, 3: Not Lazy
 Bonus: 5ms + 5ms + 5ms = 15 ms.
+
+Nov 19:
+Multiple solutions are possible
+Map stage should describe a map on each input row (T1) to an output row (T2)
+Reduce stage should describe how to combine two output rows (two T2s, get a single T2)
+Example solution:
+Map stage: map each row to (city name, avg_temp / population)
+Reduce stage: for (city1, ratio1), (city2, ratio2), return (city3, ratio3) where ratio3 = max(ratio1, ratio2) and city3 is the corresponding city.
+
+Nov 21:
+Narrow: 1, 4, 5, 7
+Wide: 2, 3, 6

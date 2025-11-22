@@ -333,6 +333,8 @@ Dataflow graph:
 
 Q:
 Suppose there are two partitions for each task.
+Let's saw we want to explicitly view the partioning so that we can
+visualize it -
 If we draw one node per partition, instead of one node per task,
 what dataflow graph would we get?
 

@@ -21,9 +21,11 @@ pipelines. Operators/tasks can be:
 
 But there is just one problem with what we have so far :)
 Spark and MapReduce are optimized for throughput.
+
 It's what we call a *batch processing engine.* That means?
 
-A: It processes all the data, then comes back with an answer
+A: It processes all the data "as one batch", or as "one job",
+then comes back with an answer
 
 But doesn't optimizing for throughput always optimize for latency? Not necessarily!
 
@@ -39,6 +41,9 @@ imagine a restaurant that has to process lots of orders.
 - Latency is how long *one* person waits for their order.
 
 Some of you wrote on the midterm: throughput == 1 / latency
+
+    That's not true!
+    throughput != 1 / latency
 
 These are not the same! Why not? Two extreme cases:
 
@@ -57,19 +62,32 @@ Latency is not the same as 1 / throughput! Two extreme cases:
     and got it back at the end.
 
     Latency = 1 hour
-        (customers are not very happy)
+
+        - customers are not very happy
+
+        - BUT the restaurant can do things very efficiently!
 
 2.
     One order submitted every 6 minutes,
     and completed 6 minutes later.
 
     Latency = 6 minutes
-        (customers are happy)
+
+        - customers are happy
+
+        - BUT the restaurant may have a harder time optimizing their process
+          as they have to make each order individually.
 
     (A more abstract example of this is given below in the "Understanding latency (abstract)" section below.)
 
 Throughput is the same in both cases!
 10 events / 1 hour
+
+    Throughput = N / T
+
+    In first case, latency = T
+
+    In second case, latency = T / N
 
 (The first scenario is similar to a parallel execution,
 the second scenario more similar to a sequential execution.)
@@ -94,6 +112,9 @@ Grouping together items (via lazy transformations) helps optimize the pipeline, 
 *doesn't* necessarily help get results as soon as possible when they're needed.
 (Remember: laziness poll/example)
 That's why there is a tradeoff between throughput and latency.
+
+Data processing for low-latency applications is known as "streaming" or "stream processing"
+and systems for this case are known as "stream processing applications".
 
     "To achieve low latency, a system must be able to perform
     message processing without having a costly storage operation in
