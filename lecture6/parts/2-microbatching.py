@@ -10,8 +10,6 @@ Which of the following are most likely application scenarios for which latency m
 .
 .
 
-Latency doesn't always matter, but for some applications, it matters a lot.
-
 === Spark Streaming ===
 
 In particular: Structured Streaming
@@ -23,6 +21,12 @@ Batch processing application using DataFrames <---> Streaming application using 
 
 Let's see an actually streaming example.
 """
+
+# Old imports
+import pyspark
+from pyspark.sql import SparkSession
+spark = SparkSession.builder.appName("OrderProcessing").getOrCreate()
+sc = spark.sparkContext
 
 # New imports
 from pyspark.sql.functions import array_repeat, from_json, col, explode
@@ -89,17 +93,18 @@ This will require us to open up another terminal and run the following command:
 
 # (Uncomment to run)
 # Set up the input stream using a local network socket
-# order_stream = spark.readStream.format("socket") \
-#     .option("host", "localhost") \
-#     .option("port", 9999) \
-#     .load()
+order_stream = spark.readStream.format("socket") \
+    .option("host", "localhost") \
+    .option("port", 9999) \
+    .load()
 
-# # Call the function
-# out_stream = process_orders_stream(order_stream)
+# Call the function
+out_stream = process_orders_stream(order_stream)
 
-# # Print the output stream and run the computation
-# out = out_stream.writeStream.outputMode("append").format("console").start()
-# out.awaitTermination()
+# Print the output stream and run the computation
+out = out_stream.writeStream.outputMode("append").format("console").start()
+
+out.awaitTermination()
 
 """
 There are actually two streaming APIs in Spark,

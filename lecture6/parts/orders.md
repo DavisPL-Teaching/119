@@ -1,9 +1,16 @@
+# Orders (copy paste into `nc` window)
+
 {"order_number": 1, "item": "Apple", "timestamp": "2024-11-24 10:00:00", "qty": 2}
 {"order_number": 2, "item": "Banana", "timestamp": "2024-11-24 10:01:00", "qty": 3}
 {"order_number": 3, "item": "Orange", "timestamp": "2024-11-24 10:02:00", "qty": 1}
+
+### More examples
 {"order_number": 4, "item": "Apple", "timestamp": "2024-11-24 10:03:00", "qty": 2}
 {"order_number": 5, "item": "Banana", "timestamp": "2024-11-24 10:04:00", "qty": 1}
 {"order_number": 6, "item": "Orange", "timestamp": "2024-11-24 10:05:00", "qty": 1}
+
+### Stress testing
+
 {"order_number": 6, "item": "Orange", "timestamp": "2024-11-24 10:05:00", "qty": 100}
 {"order_number": 6, "item": "Orange", "timestamp": "2024-11-24 10:05:00", "qty": 10000}
 {"order_number": 3, "item": "Grapes", "timestamp": "2024-11-27 15:44:00", "qty": 5}
