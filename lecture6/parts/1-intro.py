@@ -25,7 +25,7 @@ in the rest of this lecture:
 
 Terminology:
 
-- Latency (revisited)
+- Latency - generalized to pipelines with more than one item
   (Part 1)
 
 - Batch vs. Streaming
@@ -101,6 +101,7 @@ def process_orders_batch(orders):
 
     # Ignore this for now
     output.foreach(lambda x: print(f"Processing order... {x}"))
+    # Be able to complete processing of each order here.
 
     # Return the result
     result = output.collect()
@@ -117,6 +118,21 @@ def process_orders_batch(orders):
 # print(f"Latency for item X = {end_time - start_time}")
 
 """
+Everything works so far!
+
+However, note that no orders actually get processed until
+we call the .collect() at the end
+
+(Actually, they get processed when we call .foreach)
+
+This means that any orders that come into our Amazon.com server
+will have to wait for the batch of orders to complete
+before seeing any results.
+
+Customers will experience increased latency as a result.
+
+===== Generalizing latency =====
+
 How to measure latency?
 
 On Homework 1 and earlier in the course,
@@ -126,17 +142,21 @@ In our case, we have 6 orders, so we would limit the input dataset to just 1 ord
 Then we would use the formula:
     latency = (end_time - start_time)
 
-This was a simplified model.
+(Try it above)
+
+We get that the latency is 5.24 seconds.
+
+This is a simplified model!
 It's like saying, to measure how long it takes for an order in a restaurant,
 let's just limit the number of customers allowed in the restaurant to 1,
 and see how long it takes to complete their order.
 
 Problem with this?
+    - If your restaurant is busy, it might be harder to process orders on time.
+      We might want to know how long it takes to process orders during a
+      busy time, not just when there's nothing else going on.
     - Not every order would take the same length! Some orders might take
       longer than others
-    - If you're processing multiple orders at the same time, that might
-      make it longer to process the orders!
-      If your restaurant is busy, it might be harder to process orders on time.
 
 What we did on HW1 is an optimistic case; it's assuming that other orders
 coming in don't intefere with the one that we're measuring.
@@ -145,22 +165,33 @@ Main point: In general, just looking at an input dataset of 1 item is not suffic
 
 === A more general formula ===
 
+Let's generalize latency to a pipeline with more than one item
+
 The fully general formula is:
 
     latency for item X
         latency_X = (end_time_X - start_time_X)
+
+        start_time_X = when input item X enters the pipeline
+
+        end_time_X = when ALL actions associated with input item X are completed
 
     avg latency =
              (sum over all items X) latency_X
             ----------------------------------
                  number of items
 
+    Note: Some people look at other metrics besides just average, a common one
+          is 99th percentile latency
+
 What does latency mean for our real-world example?
 
     - latency_X ==> it's the time taken to process some Amazon.com user's order.
     the actual thing the user cares about.
 
-OK, so let's apply our formula.
+This is all great! But there will be a problem.
+
+Let's try to apply our formula to the Amazon.com application.
 We have to pick an item X to measure latency for.
 
 We can use time.time() to get the time.
@@ -168,11 +199,15 @@ We can use time.time() to get the time.
 Try uncommenting the code to measure the start and end of the pipeline above
 ("Uncomment to measure time") above.
 What happens?
+
+We see a latency of 13.27 s
+
+Problem:
+The latency of each single item is the same as the running time of the entire
+pipeline!
 """
 
 """
-=== From batch to streaming ===
-
 Basically we have to consider where to insert:
 start_time = time.time()
 complete_time = time.time()
@@ -202,14 +237,16 @@ Orders are grouped into "batches" and processed all as one group.
 # print(f"Latency: {latency} seconds")
 
 """
-How can we do better?
-
 (Think about it in terms of the real-world scenario)
 
     Basically it was like the scenario 1 in the endnote
     to lecture 5.
 
     We want to do more like scenario 2, instead.
+
+=== From batch to streaming ===
+
+How can we do better?
 
 Main idea to fix it:
 Try uncommenting the "output.foreach" line above that we ignored.
@@ -220,9 +257,68 @@ We get to see the results come out as items are processed!
 That's what we're trying to do going forward, and the Spark Streaming
 API will make this easier.
 
-Recap:
+Sneak peak: 2-microbatching.py has an example of a true streaming pipeline:
+
+- orders come in in real time
+
+- orders are processed and the results are collected in real time -- we don't
+  have to wait for the entire pipeline to finish processing.
+
+=== Important definitions ===
+
+Definitions:
+
+- Batch processing: a paradigm where all data is loaded in to a pipeline, processed,
+  and output is generated in "one big batch"
+
+  + All of the pipelines we've seen up to this point have been batch processing
+    (Pandas, PySpark, MapReduce, etc.)
+
+  + For a batch processing pipeline, that means the latency of every individual
+    item is equal to the running time of the entire pipeline.
+
+      latency_X = (end_time_X - start_time_X) = T
+
+      where T = running time of the pipeline
+
+  + Every individual order does not see its results completed until the entire
+    pipeline is completed (customers are unhappy)
+
+- Streaming pipeline
+
+  (think of "streaming" like the data is streaming or flowing in to your application
+   in real time - this is similar to video streaming / audio streaming / etc.)
+
+  + In a streaming pipeline, data is taken in and taken out as the pipeline is
+    running, we don't need to finish processing all data before producing the output
+
+  + In a streaming pipeline, the latency of the individual items can differ
+
+      latency_X = (end_time_X - start_time_X)
+
+    will differ between different items X
+
+    We can define the average latency to be the average of the latency for individual
+    items
+
+  + Every individual order is going to see its results sooner, rather than later
+    (so individual customers are happy)
+
+  + Latency of individual items will be less than the running time of the entire
+    pipeline
+
+      latency_X < T
+
+Sneak peak: So far we're measuring end_time and start_time using time.time();
+we haven't talked about how time.time() works or how we are actually measuring
+time (this will come up in part 3).
+
+=== Recap & key points ===
+
 - Latency-critical, real-time, or streaming applications are those for which we are looking for low latency (typically, sub-second or even millisecond response times).
+
 - Latency is always measured for a single event
+
 - If throughput is about quantity (how many orders processed), latency is about quality (how fast individual orders processed).
 
 In contrast to "batch processing", "stream processing" or "streaming" applications process each item as soon as it arrives.
