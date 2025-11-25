@@ -23,3 +23,13 @@ Plan:
 - Introduction to streaming pipelines.
 
 Questions about HW2?
+
+## Wednesday, November 26
+
+Happy Thanksgiving!
+
+Lecture today:
+
+- Part 2 on microbatching.
+
+- Part 3 on time.

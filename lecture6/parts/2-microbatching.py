@@ -10,6 +10,8 @@ Which of the following are most likely application scenarios for which latency m
 .
 .
 
+https://forms.gle/Le4NZTDEujzcqmg47
+
 === Spark Streaming ===
 
 In particular: Structured Streaming
@@ -19,7 +21,9 @@ Structured Streaming syntax is similar (often almost identical) to Spark DataFra
 There's an analogy going on here!
 Batch processing application using DataFrames <---> Streaming application using Structured Streaming
 
-Let's see an actually streaming example.
+Let's see our streaming example in more detail.
+
+(We demoed this example last time)
 """
 
 # Old imports

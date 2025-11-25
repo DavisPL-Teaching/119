@@ -44,18 +44,18 @@ I will try to keep it up to date, but please see Piazza for the latest informati
 
 | Week | Date | Topic | Readings & HW | Lecture # |
 | --- | --- | --- | --- | --- |
-| 9 | Nov 24 | Streaming Pipelines | HW2 due | 6 |
-|   | Nov 26 |  |  | 6 |
+| 9 | Nov 24 | Streaming Pipelines | HW2 due | 6.1 |
+|   | Nov 26 |  |  | 6.2, 6.3, 6.4 |
 |   | Nov 28 | **No Class** (Thanksgiving) |
-| 10 | Dec 1 |  |  | 6 |
-|    | Dec 3 | Cloud computing or selection of additional topics[^1] |  | 7 |
-|    | Dec 5 | Cloud computing or selection of additional topics[^1] |  | 7 |
+| 10 | Dec 1 | selection of additional topics[^1] |  | 7 |
+|    | Dec 3 | selection of additional topics[^1] |  | 7 |
+|    | Dec 5 | selection of additional topics[^1] |  | 7 |
 | 11 | Dec 11 | **Final Exam (8am)** |  |  |
 
 ## Notes
 
 [^1]: Possible additional topics (depending on time and preference):
-web scraping;
+cloud computing;
 data validation and integrity;
 data cleaning;
 missing data;
