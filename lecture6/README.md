@@ -44,3 +44,5 @@ Lecture today:
 - Part 2 on microbatching.
 
 - Part 3 on time.
+
+Questions?

@@ -5,87 +5,22 @@ Part 3: Time
 
 - **Streaming pipelines** process each item as it arrives, without waiting for further items.
 
+    + **Microbatching** is an optimization of streaming pipelines where we group items
+      into small "batches" that we will process together,
+      to help improve efficiency.
+
+    + You can think of microbatching like a combination of streaming and batch processing.
+
 - **Latency** is the response time from when an input enters to when it exits the pipeline.
 
 Similarlities and differences from batch pipelines?
-Similarities: Similar concepts to Spark apply for streaming pipelines:
+
+Most concepts from batch pipelines still apply to streaming pipelines:
   wide/narrow operators and partitioning.
   lazy/not lazy (we will not cover this aspect)
 
 Differences: Because each item is processed as it arrives, latency is not equal
     to the running time of the entire batch.
-
-=== Poll ===
-
-(We can do this as an in-class option or save it for next time)
-
-A dataflow graph contains two nodes, a "map" node and a "filter" node:
-
-(input dataset) -> (map) -> (filter)
-
-The pipeline is evaluated as a streaming pipeline.
-
-If the input dataset has 500 items, the map stage takes 1 ms per input item, and the filter stage takes 1 ms per input item, and map and filter are done in parallel, what is the latency of the pipeline in milliseconds?
-
-.
-.
-.
-.
-.
-
-Bonus question:
-Would your answer change if the pipeline was based on microbatch sizes of 5 ms?
-
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-
-Answer: 2ms because we have to take 1ms to do the map, followed by 1ms to do the filter
-
-For the bonus question:
-- Items which arrive near the beginning of a batch will take 5ms + 2ms = 7ms.
-- Items which arrive near the end of a batch will take 0ms + 2ms = 2ms.
-
-General conclusions:
-- "parallel" was a red herring here.
-- pipeline parallelism doesn't really help with latency;
-  task parallelism and data parallelism do.
-- We can use dataflow graphs to understand the latency of a streaming pipeline,
-  by adding up the latencies along the path in the dataflow graph.
-
-    (input dataset) -> (map) -> (filter)
-                        1ms  +    1ms    = 2ms
 
 === Measuring time ===
 
@@ -98,6 +33,8 @@ In talking about latency, we constantly referred to time.
 When discussing progress in Spark Streaming, we saw how to use
 time to grab and process "microbatches" of data.
 
+    Using time to measure out microbatches is actually surprisingly complicated!
+
     What does it mean to wait for 5ms?
 
     Wait for 5ms, process the current batch,
@@ -105,10 +42,44 @@ time to grab and process "microbatches" of data.
     Do I wait for 3 more ms? Or do I wait for 5 more ms?
     What if 20ms have passed?
 
-Measuring time -- and thus, measuring progress in the system -- is
-central to both of these discussions.
+The problem is:
+
+    1. Time goes up as we are processing data (whether we want it to or not)
+
+    2. Time has to be tied to some digital/computer notion of time.
+
+        Our pipeline doesn't have access to the actual wall clock time in the room;
+        so it has to use some synthetic "proxy" or digital notion of time to figure
+        out how much time has ellapsed.
+
+(Measuring time -- and thus, measuring progress in the system -- is
+central to both of these discussions.)
+
+Most commonly (so far in this class), we've used time.time() to get the time;
+which is what we would refer to as "Operating System Time".
+
+This is not quite the same as the true time according to a well calibrated clock on the
+wall; for example, the OS time may be set wrong, or may be in a different time zone.
 
 Time is complicated!
+
+Where we're going - next time, we will explain a few of these different notions of time
+with some examples,
+and their relevance to stream processing pipelines and microbatching in these systems.
+
+***** Where we ended for today *****
+
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+
 Some optional but highly recommended reading:
 https://gist.github.com/timvisee/fcda9bbdff88d45cc9061606b4b923ca
 
@@ -339,4 +310,62 @@ We have seen these variants in the above code example:
 - Spark timestamp - system time (at the start of the batch)
 - Arrival time - system time (at the data item arrival)
 - Exit time - system time (at the data item exit)
+
+
+=== Poll ===
+
+(We can do this as an in-class option or save it for next time)
+
+A dataflow graph contains two nodes, a "map" node and a "filter" node:
+
+(input dataset) -> (map) -> (filter)
+
+The pipeline is evaluated as a streaming pipeline.
+
+If the input dataset has 500 items, the map stage takes 1 ms per input item, and the filter stage takes 1 ms per input item, and map and filter are done in parallel, what is the latency of the pipeline in milliseconds?
+
+.
+.
+.
+.
+.
+
+Bonus question:
+Would your answer change if the pipeline was based on microbatch sizes of 5 ms?
+
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+
 """

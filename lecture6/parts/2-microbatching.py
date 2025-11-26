@@ -4,7 +4,7 @@ Spark Streaming and Microbatching
 
 === Poll ===
 
-Which of the following are most likely application scenarios for which latency matters?
+Which of the following are most likely application scenarios for which latency is a primary concern?
 
 .
 .
@@ -84,7 +84,7 @@ def process_orders_stream(order_stream):
 """
 We need to decide where to get our input! Spark supports getting input from:
 - Apache Kafka (good production option)
-- Files on a distributed file system (HDFS, S3)
+- Files on a distributed file system (HDFS (Hadoop File system), S3)
 - A network socket (basically a connection to some other worker process or network service)
 
 We're looking for a toy example, so let's use a plain socket.
@@ -95,20 +95,28 @@ This will require us to open up another terminal and run the following command:
 
 """
 
+# We need an input (source)
+
 # (Uncomment to run)
-# # Set up the input stream using a local network socket
-# order_stream = spark.readStream.format("socket") \
-#     .option("host", "localhost") \
-#     .option("port", 9999) \
-#     .load()
+# Set up the input stream using a local network socket
+# One of the ways to get input - from a network socket
+order_stream = spark.readStream.format("socket") \
+    .option("host", "localhost") \
+    .option("port", 9999) \
+    .load()
 
-# # Call the function
-# out_stream = process_orders_stream(order_stream)
+# Call the function
+out_stream = process_orders_stream(order_stream)
 
-# # Print the output stream and run the computation
-# out = out_stream.writeStream.outputMode("append").format("console").start()
+# We need an output (sink)
 
-# out.awaitTermination()
+# Print the output stream and run the computation
+out = out_stream.writeStream.outputMode("append").format("console").start()
+
+# Run the pipeline
+
+# Run until the connection closes.
+out.awaitTermination()
 
 """
 There are actually two streaming APIs in Spark,
@@ -154,13 +162,34 @@ actual application logic of the pipline is the same.
 
 === Microbatching ===
 
-One thing we noted above and can see in the output is how Spark groups
-items into mini DataFrame updates, called "microbatches".
+To process a streaming pipeline, Spark groups several recent orders into something
+called a "microbatch", and processes that all at once.
 
 (Side note: this isn't how all streaming frameworks work, but this is
 the main idea behind how Spark Streaming works.)
 
+Why does Spark do this?
+
+- If you process every item one at a time, you get minimum latency!
+
+  Every user will get their order processed right away.
+
+  But, throughput will suck.
+
+  - We never benefit from parallelism (because we're never doing more than one order at the same time)
+
+  - We never benefit from techniques like vectorization (we can't put multiple orders into vector operations on a CPU or GPU)
+
+    (Recall: turning operatinos into vector or matrix multiplications is often faster and
+     I can only do that if I have many rows that look the same)
+
+So: by grouping items into these "microbatches", Spark hopes to still provide good latency (by processing microbatches frequently, e.g., every half a second) but at the same time benefit from
+throughput optimizations, e.g., parallelism and vectorization.
+
 That leads to an interesting question: how do we determine the microbatches?
+
+- There is a tension here; the smaller the batches, the better the latency;
+  but the worse the throughput!
 
 Possible ways?
 
@@ -169,12 +198,37 @@ Possible ways?
    items, close the batch
 3. Set a limit on the number of items, OR wait for a 2 second timeout
 
+Some observations:
+
+- Suggestion 1 will always result in latency < 0.5 s, but batches may be small
+
+- Suggestion 2 has a serious problem, on a non-busy day, imagine there's only 1 Amazon
+  user.
+
+  Amazon user submits their order -> we wait for the other 99 orders to come in (which
+  never happens, or takes hours)
+
+  Our one user will never get their results.
+
+- Suggestion 3 fixes the problem with suggestion 2, by imposing a timeout.
+
+  Suggestion 3 tries to achieve large batch sizes, but caps out at a certain maximum;
+  latency will always be at most 2 seconds (often smaller if there are many orders).
+
+=== Another way of thinking about this ===
+
 It comes down to a question of "time" and how to measure progress.
 
+All distributed systems measure progress by enforcing some notion of "time"
+
 Suggestion #1 measures time in terms of the operating system clock
+    (e.g., time.time())
 
 Suggestions #2 measures time in terms of how many items arrive in the pipeline,
 and uses that to decide when to move forward.
+
+    This is related to something called "logical time", and we will cover it in
+    the following part 3.
 
 Both of these suggestions become more interesting/complicated when you consider
 a distributed application, where you might have (say) 5-10 different machines

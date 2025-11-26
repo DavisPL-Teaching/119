@@ -112,3 +112,9 @@ Reduce stage: for (city1, ratio1), (city2, ratio2), return (city3, ratio3) where
 Nov 21:
 Narrow: 1, 4, 5, 7
 Wide: 2, 3, 6
+
+Nov 24:
+C and I only: "They are not optimized for latency" and "Reduce functions may be applied out-of-order"
+
+Nov 26:
+B (serving GPT), D (high frequency trading), E (login), F (order qty)
