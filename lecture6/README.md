@@ -37,7 +37,7 @@ Announcements
 
 3. Course evaluations open this Friday
 
-I will need to end lecture 5 minutes early today.
+I will need to end lecture 5-10 minutes early today.
 
 Lecture today:
 
