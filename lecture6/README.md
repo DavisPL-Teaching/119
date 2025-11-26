@@ -28,6 +28,17 @@ Questions about HW2?
 
 Happy Thanksgiving!
 
+Announcements
+(see [Piazza](https://piazza.com/class/mfvn4ov0kuc731/post/145)):
+
+1. No homework 3
+
+2. Homework make-up option
+
+3. Course evaluations open this Friday
+
+I will need to end lecture 5 minutes early today.
+
 Lecture today:
 
 - Part 2 on microbatching.

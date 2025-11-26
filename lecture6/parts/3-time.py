@@ -12,11 +12,12 @@ Similarities: Similar concepts to Spark apply for streaming pipelines:
   wide/narrow operators and partitioning.
   lazy/not lazy (we will not cover this aspect)
 
-Differences: The main difference will be that because each item is processed as it arrives:
-    Latency will be the time it takes a single item to go through the pipeline instead of
-    the entire batch.
+Differences: Because each item is processed as it arrives, latency is not equal
+    to the running time of the entire batch.
 
 === Poll ===
+
+(We can do this as an in-class option or save it for next time)
 
 A dataflow graph contains two nodes, a "map" node and a "filter" node:
 
@@ -26,8 +27,8 @@ The pipeline is evaluated as a streaming pipeline.
 
 If the input dataset has 500 items, the map stage takes 1 ms per input item, and the filter stage takes 1 ms per input item, and map and filter are done in parallel, what is the latency of the pipeline in milliseconds?
 
-(Multiple Choice)
-
+.
+.
 .
 .
 .
@@ -35,6 +36,30 @@ If the input dataset has 500 items, the map stage takes 1 ms per input item, and
 Bonus question:
 Would your answer change if the pipeline was based on microbatch sizes of 5 ms?
 
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
 .
 .
 .
