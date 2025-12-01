@@ -46,3 +46,21 @@ Lecture today:
 - Part 3 on time.
 
 Questions?
+
+## Wednesday, Dec 3
+
+Announcements:
+
+- ALL in-class polls due this Friday 11:59pm
+
+- Course eval due this Friday 11:59pm - you should have received by email
+
+- HW make-up option due by Friday 11:59pm
+
+- Final study list: see `exams/final_study_list.md`.
+
+Plan:
+
+- Finish Part 3 on time and end notes.
+
+- Go over details for the final.
