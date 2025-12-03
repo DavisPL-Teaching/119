@@ -69,252 +69,20 @@ and their relevance to stream processing pipelines and microbatching in these sy
 
 ***** Where we ended for today *****
 
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-
 Some optional but highly recommended reading:
 https://gist.github.com/timvisee/fcda9bbdff88d45cc9061606b4b923ca
 
 (scroll through a few of these)
 
 Optional, but required if you want to implement software that relies on time.
-
-I'd like you to know the following definitions of time in general:
-
-1. Real time:
-    Time in the real world.
-    Right now, it's 3:39pm (Pacific time) on December 2, 2024.
-    Problem: technically speaking, your application does not have access to real time.
-    Assuming your application does have access to the real time can lead to bugs
-    in a distributed system.
-
-In practice, systems only have access to one or more "synthetic" notions of time:
-
-2. Event time:
-
-    Event time is a piece of structured data associated with input data to your pipeline.
-    Users when submitting events include a time with that event.
-
-    Imagine you have a Pandas or Spark DataFrame or any other tabular data
-    Event time is just another column in your dataset.
-
-    | User name | password hash | account creation |
-    | Jane Doe  | xasdfasdf13415 | Dec 1, 2024 |
-
-    Event time is treated as data.
-    It has all of the problems that real world data has.
-    - It could be faulty
-    - It could be missing
-    - It requires validation to ensure it satisfies application requirements.
-    - Queries or pipeline operators can refer to event time and use it to make certain computations.
-    - In HW1, computed "year over year avg increase in population"
-      That was actually using event time!
-      The "year" field is just some piece of data that was given to us.
-
-3. System time:
-
-    System time is the time that is tracked a computer system,
-    typically, your operating system.
-
-    If you send me a file by email, and I look at the "date modified" on the file
-
-    System time can be out of sync due to time zone changes, computer is reset by manufacturer, ...
-
-4. Logical time:
-
-    Last time we talked about microbatching strategies, and a suggested came up
-    that we should batch every 10 items as one batch.
-
-    That's logical time.
-
-    Assign each item in your system an item number (index)
-
-        First item = 1
-        Second item = 2
-        Third item = 3
-
-    The "time" that the item occurs is the item #.
-
-    Logical time doesn't correspond to real time at all, it's not really
-    related to real time or system time,
-    but it can be very useful for measuring time in a more robust way.
-
-    Systems use logical time internally to measure progress.
-
-    Logical time also gets more complicated than just integers; for example
-    using vectors of integers (Vector Clocks look up if interested)
-
-Ways of measuring time:
-
-    time.time() in Python returns OS system time.
-
-5. Monotonic time:
-
-    A measure of time is called monotonic if whenever I call get_time() twice,
-    and the results are x and y, it should be true that
-        x <= y
-
-Unfortunately this property is not always true.
-
-Q: Which of 1-4 are guaranteed to be monotonic?
-
-1. Real time: monotonic according to physics.
-
-2. System time: not monotonic in general. Why?
-
-    Answers?
-    - Time got reset along the way? (Restarted the computer or rest it)
-    - Time zones
-
-        (Imagine you are doing the HW and get on a plane while measuring
-         throughput and latency; when you land, the time zone is 3 hours different,
-         and you get wrong values as a result)
-
-    - You can just go into the settings and change the clock.
-
-      What makes this problem in the real world is that servers will actually
-      reset their clock and modify the time in order to synchronize times across
-      machines.
-
-      When clocks are synched, time could go forward in time or backward in time!
-
-Q: In the context of a streaming application, which of the above do you think is useful?
-
-A:
-    OS time, event time, monotonic time.
-
-As a general rule,
-for queries on the data you should compute using event time,
-but if you're implementing a real system under the hood, the implementation
-should rely on things like system time and logical time to ensure progress
-and to measure time within the system.
-
-=== Code example ===
-
-Let's edit our streaming pipeline to log each notion of time.
-
-Syntax we need to know:
-    df.withColumn(...)
-
-    current_timestamp()
-
-    time.time()
-
-New concepts:
-    UDF = User Defined Function
-
-In the interest of time I will probably
-just show the final code and what it does.
 """
 
-from pyspark.sql.functions import current_timestamp, udf, date_format
-
-### Time logging UDF
-
-from datetime import datetime
-
-def current_system_time():
-    # Return the current system time
-    # Raw timestamp:
-    # return time.time()
-    # Pretty print the output:
-    readable_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    return readable_time
-
-time_udf = udf(current_system_time, StringType())
-
-def log_time(stream, suffix):
-    return (
-        stream
-        .withColumn(f"system_time_{suffix}", time_udf())
-        .withColumn(f"spark_time_{suffix}", date_format(current_timestamp(), "yyyy-MM-dd HH:mm:ss"))
-    )
-
-### Delay UDF to make the computation take longer
-
-def process_delay():
-    # Simulate a difficult processing step by inserting a delay
-    time.sleep(2)
-    return "delay applied"
-
-process_delay_udf = udf(process_delay, StringType())
-
-def log_delay(stream):
-    return stream.withColumn("delay", process_delay_udf())
-
-def process_orders_stream_with_timing(order_stream):
-    # Code from before
-    df0 = order_stream.select(from_json(col("value").cast("string"), schema).alias("parsed_value"))
-    df1 = df0.select(
-        col("parsed_value.order_number").alias("order_number"),
-        col("parsed_value.item").alias("item"),
-        col("parsed_value.timestamp").alias("timestamp"),
-        col("parsed_value.qty").alias("qty")
-    )
-
-    # Uncomment to include
-    df1 = log_time(df1, "start")
-
-    df2 = df1.withColumn("order_numbers", array_repeat(col("order_number"), col("qty")))
-
-    # Uncomment to include
-    df3 = df2.select(explode(col("order_numbers")).alias("order_no"), col("item"), col("timestamp"), col("system_time_start"), col("spark_time_start"))
-
-    # Uncomment to include
-    df3 = log_delay(df3)
-
-    # Uncomment to include
-    df3 = log_time(df3, "end")
-
-    # Return
-    return df3
-
-# (Uncomment to run)
-# order_stream = spark.readStream.format("socket") \
-#     .option("host", "localhost") \
-#     .option("port", 9999) \
-#     .load()
-# out_stream = process_orders_stream_with_timing(order_stream)
-# out = out_stream.writeStream.outputMode("append").format("console").start()
-# out.awaitTermination()
-
 """
-Things to play with:
-
-1. Comment/uncomment the lines for the time logging functions.
-
-2. Comment/uncomment the lines to include the delay function.
-
-3. Rename the time-related columns to make it clear which time they are
-
-4. Are some of the columns redundant? Remove them.
-
-=== System time variants in a streaming system ===
-
-In Spark Streaming, Spark uses system time internally to
-measure and track progress within the pipeline.
-
-Spark actually assigns a timestamp to each microbatch
-and uses the timestamp throughout the pipeline.
-
-We have seen these variants in the above code example:
-- Input data timestamp - event time
-- Spark timestamp - system time (at the start of the batch)
-- Arrival time - system time (at the data item arrival)
-- Exit time - system time (at the data item exit)
-
+December 3
 
 === Poll ===
 
-(We can do this as an in-class option or save it for next time)
+https://forms.gle/Fov9LZ2arcLG6WUVA
 
 A dataflow graph contains two nodes, a "map" node and a "filter" node:
 
@@ -368,4 +136,257 @@ Would your answer change if the pipeline was based on microbatch sizes of 5 ms?
 .
 .
 
+"""
+
+"""
+=== Different definitions of time ===
+
+I'd like you to know the following definitions of time in general:
+
+1. Real time:
+    Time in the real world.
+    Right now, it's 3:39pm (Pacific time) on December 2, 2024.
+    Problem: technically speaking, your application does not have access to real time.
+    Assuming your application does have access to the real time can lead to bugs
+    in a distributed system.
+
+In practice, systems only have access to one or more "synthetic" notions of time:
+
+2. Event time:
+
+    Event time is a piece of structured data associated with input data to your pipeline.
+    Users when submitting events include a time with that event.
+
+    Imagine you have a Pandas or Spark DataFrame or any other tabular data
+    Event time is just another column in your dataset.
+
+    | User name | password hash | account creation |
+    | Jane Doe  | xasdfasdf13415 | Dec 1, 2024 |
+
+    Event time is treated as data.
+    It has all of the problems that real world data has.
+    - It could be faulty
+    - It could be missing
+    - It requires validation to ensure it satisfies application requirements.
+    - Queries or pipeline operators can refer to event time and use it to make certain computations.
+    - In HW1, computed "year over year avg increase in population"
+      That was actually using event time!
+      The "year" field is just some piece of data that was given to us.
+
+3. System time:
+
+    System time is the time that is tracked a computer system,
+    typically, your operating system.
+
+    If you send me a file by email, and I look at the "date modified" on the file
+
+    System time can be out of sync due to time zone changes, computer is reset by manufacturer, ...
+
+    time.time() in Python returns OS system time.
+
+4. Logical time:
+
+    Last time we talked about microbatching strategies, and a suggested came up
+    that we should batch every 10 items as one batch.
+
+    That's logical time.
+
+    Assign each item in your system an item number (index)
+
+        First item = 1
+        Second item = 2
+        Third item = 3
+
+    The "time" that the item occurs is the item #.
+
+    Logical time doesn't correspond to real time at all, it's not really
+    related to real time or system time,
+    but it can be very useful for measuring time in a more robust way.
+
+    Systems use logical time internally to measure progress.
+
+    Logical time also gets more complicated than just integers; for example
+    using vectors of integers (Vector Clocks look up if interested)
+
+=== Code example ===
+
+Let's edit our streaming pipeline to log each notion of time.
+
+Syntax we need to know:
+    df.withColumn(...)
+
+    current_timestamp()
+
+    time.time()
+
+New concepts:
+    UDF = User Defined Function
+
+In the interest of time I will probably
+just show the final code and what it does.
+"""
+
+# Old imports
+import time
+import pyspark
+from pyspark.sql import SparkSession
+spark = SparkSession.builder.appName("OrderProcessing").getOrCreate()
+sc = spark.sparkContext
+from pyspark.sql.functions import array_repeat, from_json, col, explode
+from pyspark.sql.types import StructType, StructField, StringType, IntegerType
+
+# New imports
+from pyspark.sql.functions import current_timestamp, udf, date_format
+
+# Define the schema of the incoming JSON data
+schema = StructType([
+    StructField("order_number", IntegerType()),
+    StructField("item", StringType()),
+    StructField("timestamp", StringType()),
+    StructField("qty", IntegerType())
+])
+
+### Time logging UDF
+
+from datetime import datetime
+
+def current_system_time():
+    # Return the current system time
+    # Raw timestamp:
+    # return time.time()
+    # Pretty print the output:
+    readable_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    return readable_time
+
+time_udf = udf(current_system_time, StringType())
+
+def log_time(stream, suffix):
+    return (
+        stream
+        .withColumn(f"system_time_{suffix}", time_udf())
+        .withColumn(f"spark_time_{suffix}", date_format(current_timestamp(), "yyyy-MM-dd HH:mm:ss"))
+    )
+
+### Delay UDF to make the computation take longer
+
+def process_delay():
+    # Simulate a difficult processing step by inserting a delay
+    time.sleep(2)
+    return "delay applied"
+
+process_delay_udf = udf(process_delay, StringType())
+
+def log_delay(stream):
+    return stream.withColumn("delay", process_delay_udf())
+
+def process_orders_stream_with_timing(order_stream):
+    # Code from before
+    df0 = order_stream.select(from_json(col("value").cast("string"), schema).alias("parsed_value"))
+    df1 = df0.select(
+        col("parsed_value.order_number").alias("order_number"),
+        col("parsed_value.item").alias("item"),
+        col("parsed_value.timestamp").alias("timestamp"),
+        col("parsed_value.qty").alias("qty")
+    )
+
+    # Uncomment to include
+    df1 = log_time(df1, "start")
+
+    # df2 = df1.withColumn("order_numbers", array_repeat(col("order_number"), col("qty")))
+
+    # Uncomment to include
+    # df3 = df2.select(explode(col("order_numbers")).alias("order_no"), col("item"), col("timestamp"), col("system_time_start"), col("spark_time_start"))
+
+    # Uncomment to include
+    # df3 = log_delay(df3)
+
+    # Uncomment to include
+    # df3 = log_time(df3, "end")
+
+    # Return
+    # return df3
+
+# (Uncomment to run)
+# Remember to load up nc -lk 9999 before starting!
+# order_stream = spark.readStream.format("socket") \
+#     .option("host", "localhost") \
+#     .option("port", 9999) \
+#     .load()
+# out_stream = process_orders_stream_with_timing(order_stream)
+# out = out_stream.writeStream.outputMode("append").format("console").start()
+# out.awaitTermination()
+
+"""
+Things to play with:
+
+1. Comment/uncomment the lines for the time logging functions.
+
+2. Comment/uncomment the lines to include the delay function.
+
+3. Which columns correspond to which notion of time?
+
+4. Can we add logical time to the pipeline?  Why or why not?
+
+5. Can we add real time to the pipeline?  Why or why not?
+
+6. Are some of the columns monotonic? Mark them.
+
+7. Are some of the columns redundant? Remove them.
+
+=== Discussion ===
+
+Monotonic:
+
+    A measure of time is called monotonic if whenever I call get_time() twice,
+    and the results are x and y, it should be true that
+        x <= y
+
+Unfortunately this property is not always true.
+
+Q: Which of 1-4 are guaranteed to be monotonic?
+
+1. Real time: monotonic according to physics.
+
+2. System time: not monotonic in general. Why?
+
+    Answers?
+    - Time got reset along the way? (Restarted the computer or rest it)
+    - Time zones
+
+        (Imagine you are doing the HW and get on a plane while measuring
+         throughput and latency; when you land, the time zone is 3 hours different,
+         and you get wrong values as a result)
+
+    - You can just go into the settings and change the clock.
+
+      What makes this problem in the real world is that servers will actually
+      reset their clock and modify the time in order to synchronize times across
+      machines.
+
+      When clocks are synched, time could go forward in time or backward in time!
+
+Q: In the context of a streaming application, which of the above do you think is useful?
+
+A:
+    OS time, event time, monotonic time.
+
+As a general rule,
+for queries on the data you should compute using event time,
+but if you're implementing a real system under the hood, the implementation
+should rely on things like system time and logical time to ensure progress
+and to measure time within the system.
+
+=== System time variants in a streaming system ===
+
+In Spark Streaming, Spark uses system time internally to
+measure and track progress within the pipeline.
+
+Spark actually assigns a timestamp to each microbatch
+and uses the timestamp throughout the pipeline.
+
+We have seen these variants in the above code example:
+- Input data timestamp - event time
+- Spark timestamp - system time (at the start of the batch)
+- Arrival time - system time (at the data item arrival)
+- Exit time - system time (at the data item exit)
 """

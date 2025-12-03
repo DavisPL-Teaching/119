@@ -1,21 +1,21 @@
 """
 Part 4: End notes
 
-=== Poll ===
+We've seen:
 
-What type of time corresponds to each of the following scenarios?
+- Measuring latency at an individual item level:
 
-.
-.
-.
-
-=== Measuring latency ===
-
-Which type of time should we use to measure latency?
-
-Recall formula for latency:
+    Recall formula for latency:
 
     (exit time item X) - (start time item X)
+
+- Microbatching: an optimization that trades latency for higher throughput
+
+    Microbatching can be based on different notions of time! Usually event time or system time
+
+- Time: Real, Event, System, Logical
+
+    + Monotonic time
 
 === Discussion and Failure Cases ===
 

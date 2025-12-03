@@ -55,12 +55,22 @@ Announcements:
 
 - Course eval due this Friday 11:59pm - you should have received by email
 
-- HW make-up option due by Friday 11:59pm
+- HW2 grades were released
+
+  + Autograder timeout issue - please submit on Gradescope!
+
+- HW make-up option:
+
+  + HW1 make-up option due by Friday 11:59pm
+
+  + HW2 make-up option and regrades due by Monday 11:59pm
 
 - Final study list: see `exams/final_study_list.md`.
 
 Plan:
 
-- Finish Part 3 on time and end notes.
+- Poll
 
-- Go over details for the final.
+- Go over different notions of time (Part 3)
+
+- Go over details for the final and study guide.
