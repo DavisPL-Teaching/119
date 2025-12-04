@@ -92,67 +92,60 @@ The pipeline is evaluated as a streaming pipeline.
 
 If the input dataset has 500 items, the map stage takes 1 ms per input item, and the filter stage takes 1 ms per input item, and map and filter are done in parallel, what is the latency of the pipeline in milliseconds?
 
-.
-.
-.
-.
-.
+Answer:
+
+- This is a streaming pipeline, so one item comes in at a time.
+- Takes 1 ms to do map, 1 ms to do filter, and we have to do these in order, so 2 ms total
 
 Bonus question:
 Would your answer change if the pipeline was based on microbatch sizes of 5 ms?
 
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
+- we wait for 5ms for the microbatch -- on average, we wait 2.5ms per item
+- we do 1ms for map
+- we do 1ms for filer
+- total latency
+    = average of (end_time_item_X - start_time_item_X)
+    = (2.5ms) + 1ms + 1ms = 4.5ms.
 
+4.5 ms > 2ms, so we will wait longer on average (latency will increase).
+
+This is always teh case - microbatch trades latency for throughput.
+(Higher latency, but we get higher throughput in return.)
 """
 
 """
 === Different definitions of time ===
 
+Unlike a batch pipeline, streaming pipelines use time to figure out which items
+to process! (e.g., microbatching - wait for 5 ms)
+
+But how do we measure time?
+
 I'd like you to know the following definitions of time in general:
 
-1. Real time:
+1. Real time (also known as "wall clock time")
     Time in the real world.
-    Right now, it's 3:39pm (Pacific time) on December 2, 2024.
+    Right now, it's 3:38pm (Pacific time) on December 3, 2025.
     Problem: technically speaking, your application does not have access to real time.
     Assuming your application does have access to the real time can lead to bugs
     in a distributed system.
 
 In practice, systems only have access to one or more "synthetic" notions of time:
 
-2. Event time:
+2. System time:
+
+    System time is the time that is tracked a computer system,
+    typically, your operating system.
+
+    System time is generally kept up to date as much as possible - but this relies on the
+    system having access to the internet and syncing the time, so sometimes it can fail to update.
+
+    time.time() in Python returns OS system time.
+
+    System time is not always equal to real time!
+    It can be out of sync due to time zone changes, computer is reset by manufacturer, ...
+
+3. Event time:
 
     Event time is a piece of structured data associated with input data to your pipeline.
     Users when submitting events include a time with that event.
@@ -167,24 +160,18 @@ In practice, systems only have access to one or more "synthetic" notions of time
     It has all of the problems that real world data has.
     - It could be faulty
     - It could be missing
+    - We may need to validate to check for null values or extreme values (e.g., January 1, 1970 -
+      "start of Unix time"
+      an erroneous time that sometimes shows up due to systems not syncing the time correctly :-))
     - It requires validation to ensure it satisfies application requirements.
     - Queries or pipeline operators can refer to event time and use it to make certain computations.
     - In HW1, computed "year over year avg increase in population"
       That was actually using event time!
       The "year" field is just some piece of data that was given to us.
 
-3. System time:
-
-    System time is the time that is tracked a computer system,
-    typically, your operating system.
-
-    If you send me a file by email, and I look at the "date modified" on the file
-
-    System time can be out of sync due to time zone changes, computer is reset by manufacturer, ...
-
-    time.time() in Python returns OS system time.
-
 4. Logical time:
+
+    Not even really time - just a logical counter in your program
 
     Last time we talked about microbatching strategies, and a suggested came up
     that we should batch every 10 items as one batch.
@@ -201,12 +188,12 @@ In practice, systems only have access to one or more "synthetic" notions of time
 
     Logical time doesn't correspond to real time at all, it's not really
     related to real time or system time,
-    but it can be very useful for measuring time in a more robust way.
+    but it is much more reliable for the purposes of implementing a robust system.
 
     Systems use logical time internally to measure progress.
 
-    Logical time also gets more complicated than just integers; for example
-    using vectors of integers (Vector Clocks look up if interested)
+    Advanced: Logical time also gets more complicated than just integers; for example
+    using vectors of integers (Vector Clocks - look up if interested)
 
 === Code example ===
 
@@ -255,6 +242,7 @@ def current_system_time():
     # Raw timestamp:
     # return time.time()
     # Pretty print the output:
+    # similar to time.time() but more readable
     readable_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     return readable_time
 
@@ -292,19 +280,19 @@ def process_orders_stream_with_timing(order_stream):
     # Uncomment to include
     df1 = log_time(df1, "start")
 
-    # df2 = df1.withColumn("order_numbers", array_repeat(col("order_number"), col("qty")))
+    df2 = df1.withColumn("order_numbers", array_repeat(col("order_number"), col("qty")))
 
     # Uncomment to include
-    # df3 = df2.select(explode(col("order_numbers")).alias("order_no"), col("item"), col("timestamp"), col("system_time_start"), col("spark_time_start"))
+    df3 = df2.select(explode(col("order_numbers")).alias("order_no"), col("item"), col("timestamp"), col("system_time_start"), col("spark_time_start"))
 
     # Uncomment to include
-    # df3 = log_delay(df3)
+    df3 = log_delay(df3)
 
     # Uncomment to include
-    # df3 = log_time(df3, "end")
+    df3 = log_time(df3, "end")
 
     # Return
-    # return df3
+    return df3
 
 # (Uncomment to run)
 # Remember to load up nc -lk 9999 before starting!
@@ -317,6 +305,16 @@ def process_orders_stream_with_timing(order_stream):
 # out.awaitTermination()
 
 """
+Notes:
+
+System timestamp differs between input and output
+
+Everything in a microbatch has the same Spark timestamp!
+
+This is how Spark tracks progress for a microbatch.
+
+----------
+
 Things to play with:
 
 1. Comment/uncomment the lines for the time logging functions.

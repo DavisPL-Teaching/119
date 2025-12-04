@@ -2,9 +2,7 @@
 
 Study list of topics for the final.
 
-**The final will cover Lectures 1-7.**
-
-For lecture 7, it will be at most 1 multiple choice question.
+**The final will cover Lectures 1-6.**
 
 ## Lectures 1-4
 
@@ -38,7 +36,7 @@ Suggested review topics based on the midterm:
 - Scalable collection types
 
     + Differences from normal Python collections
-    + Types of scaling
+    + Types of scaling - vertical & horizontal scaling
     + Benefits/drawbacks
     + Examples (RDDs, PySpark DataFrames) and their properties
 
@@ -56,22 +54,29 @@ Suggested review topics based on the midterm:
     + Partitoning: Wide vs. narrow
         - What operators should be wide vs narrow
     + How partitioning works, what it means, how it affects performance
-    + Limitations of partitioning
     + Key-based partitioning (see MapReduce, HW2)
 
 - MapReduce
+
+    + For the purposes of the final, we will use either
+        the simple version of MapReduce from class,
+        or the generalized one from HW2
+        (I will remind you of the type of map/reduce for the exam)
 
     + simplified model (map and reduce, conceptually)
     + general model (that we saw on HW2) assuming I give you
       the actual types for map and reduce for reference
     + you may be asked to describe how to do a computation as a MapReduce
-      pipeline.
+      pipeline - describe the precise function
+
+        for map: function that takes 1 input row, produces 1 output row
+        for reduce: function that takes 2 output rows, returns 1 output row
 
 - Implementation details: In general, you do not need to know implementation details of Spark, but you should know:
     + Number of partitions and how it affects performance
         * too low, too high
     + Running on a local cluster, running on a distributed computing cluster
-    + Resilience: you may assume that Spark tolerates node failures (RDDs can recover from a computer or worker crash)
+    + Fault tolerance: you may assume that Spark tolerates node failures (RDDs can recover from a computer or worker crash)
 
 - Drawing a PySpark or MapReduce computation as a dataflow graph
 
@@ -124,9 +129,11 @@ Suggested review topics based on the midterm:
     + Monotonic time
         * which of the above or monotonic
 
-    + Measuring time: entrance time, processing time, exit time
+    + Measuring time: entrance time, processing time, exit time (These are all versions of system time.)
 
 ## Lecture 7
+
+Will not be covered on the final.
 
 TBD: the lecture is very brief and the last 1-2 days of class.
 
@@ -147,4 +154,4 @@ Example multiple choice question:
 Some things you do **not** need to know:
 Python, Pandas, and PySpark syntax.
 Implementation details of PySpark and Spark Streaming, except where mentioned above.
-Lecture 7 other than selected specifics (we will mention in class).
+Lecture 7.

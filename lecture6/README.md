@@ -59,13 +59,21 @@ Announcements:
 
   + Autograder timeout issue - please submit on Gradescope!
 
+  + Part 2 part2.png naming issue - please submit on Gradescope also (will reduce to a -5 pt deduction)
+
 - HW make-up option:
 
   + HW1 make-up option due by Friday 11:59pm
 
   + HW2 make-up option and regrades due by Monday 11:59pm
 
+  + Pick one of the two if you received < 90 score, 2/3 of the points back.
+
 - Final study list: see `exams/final_study_list.md`.
+
+- Final details: `exams/final.md`
+
+- OH after class today on Zoom.
 
 Plan:
 
@@ -74,3 +82,5 @@ Plan:
 - Go over different notions of time (Part 3)
 
 - Go over details for the final and study guide.
+
+Questions?
