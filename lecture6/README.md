@@ -84,3 +84,48 @@ Plan:
 - Go over details for the final and study guide.
 
 Questions?
+
+## Friday, Dec 5
+
+Last day of class!
+
+Announcements:
+
+- All in-class polls are due by EOD today! The final poll will occur in class today and then I will sync the polls to Canvas one more time (after class) prior to the deadline.
+
+- Final: next Thursday at 8-10am!
+  See `exams/` and Piazza for final study materials and the practice final.
+
+- I hope that we have resolved the HW2 grading issues!
+  I apologize for the stress. :-)
+  Please fill out a regrade request if we haven't resolved your case.
+  HW make-up option: HW1 due today 11:59pm, HW2 due Monday 11:59pm.
+
+- I will hold OH either on
+  + Monday at 415pm
+  + Tuesday at 445pm
+    (or both)
+  If you plan to attend, please let me know if you can NOT attend one of these two times!
+
+Plan:
+
+- Review & finish Part 3 on time
+
+- Poll on different types of time
+
+- End notes & wrapping up Lecture 6.
+
+If there is time:
+
+- A note on HW2 latency & throughput graphs!
+  And an easy mistake to make in Python
+
+- Since I am skipping Lecture 7, we will likely have some extra time at the end, I can answer questions or go over practice questions from the practice final.
+
+- Lecture 7 will not appear on the final,
+  but you are welcome to review the materials in lecture7/ on your own time!
+  It is a crash course covering the basics of AWS services:
+
+  - AWS S3,
+  - AWS EC2, and
+  - AWS Lambda.

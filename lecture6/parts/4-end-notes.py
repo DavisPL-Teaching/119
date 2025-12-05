@@ -1,6 +1,18 @@
 """
 Part 4: End notes
 
+=== Poll ===
+
+This is the last poll!
+
+What type of time corresponds to each of the following scenarios?
+
+(Real time, event time, system time, logical time)
+
+https://forms.gle/NCXfDV4J3ySWiyiT6
+
+=== Summary ===
+
 We've seen:
 
 - Measuring latency at an individual item level:

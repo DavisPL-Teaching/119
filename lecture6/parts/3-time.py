@@ -314,6 +314,7 @@ Everything in a microbatch has the same Spark timestamp!
 This is how Spark tracks progress for a microbatch.
 
 ----------
+*** picking up here for Friday ***
 
 Things to play with:
 
@@ -333,9 +334,9 @@ Things to play with:
 
 === Discussion ===
 
-Monotonic:
+Monotonicity:
 
-    A measure of time is called monotonic if whenever I call get_time() twice,
+    A measure of time is called *monotonic* if whenever I call get_time() twice,
     and the results are x and y, it should be true that
         x <= y
 
