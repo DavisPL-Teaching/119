@@ -118,3 +118,19 @@ C and I only: "They are not optimized for latency" and "Reduce functions may be 
 
 Nov 26:
 B (serving GPT), D (high frequency trading), E (login), F (order qty)
+
+Dec 3:
+1. 2ms
+3. Yes, the latency would be higher (specifically, around 4.5ms on average).
+
+Dec 5:
+1. Event Time
+2. Logical Time
+3. System Time
+4. Real Time
+5. Event Time
+6. Logical Time + System Time
+7. Logical Time + System Time
+8. Real Time + Logical Time
+9. Event Time
+10. Event Time + Logical Time

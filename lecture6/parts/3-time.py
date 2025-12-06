@@ -294,8 +294,8 @@ def process_orders_stream_with_timing(order_stream):
     # Return
     return df3
 
-# (Uncomment to run)
-# Remember to load up nc -lk 9999 before starting!
+# # (Uncomment to run)
+# # Remember to load up nc -lk 9999 before starting!
 # order_stream = spark.readStream.format("socket") \
 #     .option("host", "localhost") \
 #     .option("port", 9999) \
@@ -316,6 +316,23 @@ This is how Spark tracks progress for a microbatch.
 ----------
 *** picking up here for Friday ***
 
+e.g., Spark waits for around ~500 ms and collects all items in that microbatch,
+ALL of them get assigned the same "Spark timestamp".
+
+If you like you can think about latency in this way:
+
+    latency = end_time_item_X - start_time_item_X
+
+    what type of time?
+    For the purposes of a streaming system:
+    system time when the event enters and leaves our system
+
+        system time at end - system time at start.
+
+    (To be truly accurate, we should log the system time before/after entering
+    the pipeline at all, here we log it as part of the pipeline, which is
+    just for illustration purposes)
+
 Things to play with:
 
 1. Comment/uncomment the lines for the time logging functions.
@@ -326,15 +343,26 @@ Things to play with:
 
 4. Can we add logical time to the pipeline?  Why or why not?
 
+    Yes: We could use order_no as logical time, or
+    we could increment a counter on each new order, and that counter i
+    would be the latest logical time
+
 5. Can we add real time to the pipeline?  Why or why not?
 
+    No: Real time does not exist for the purposes of computing, because we
+    only ever have access to system time, never true real or wall-clock time.
+
 6. Are some of the columns monotonic? Mark them.
+
+    (See def of monotonicity below)
 
 7. Are some of the columns redundant? Remove them.
 
 === Discussion ===
 
 Monotonicity:
+
+    (get_time(): for example time.time() or datetime.now())
 
     A measure of time is called *monotonic* if whenever I call get_time() twice,
     and the results are x and y, it should be true that
@@ -363,6 +391,28 @@ Q: Which of 1-4 are guaranteed to be monotonic?
       machines.
 
       When clocks are synched, time could go forward in time or backward in time!
+
+    Example:
+        Fly from CA to NY -> clock is monotonic!
+        Fly from NY to CA -> clock is not monotonic.
+
+        Also:
+        Daily savings time
+
+    One of the things that systems need to do to track progress (e.g.
+    through microbatches) is make a monotonic time function.
+
+    Solution: define a wrapper around system time that is guaranteed to be monotonic.
+
+3. Event time:
+
+    May or may not be monotonic!
+
+    Checking if it's monotonic may be a good data validation step.
+
+4. Logical time:
+
+    Is monotonic, by design.
 
 Q: In the context of a streaming application, which of the above do you think is useful?
 

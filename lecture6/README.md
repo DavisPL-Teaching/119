@@ -93,7 +93,7 @@ Announcements:
 
 - All in-class polls are due by EOD today! The final poll will occur in class today and then I will sync the polls to Canvas one more time (after class) prior to the deadline.
 
-- Final: next Thursday at 8-10am!
+- Final: next Thursday (Dec 11) at 8-10am!
   See `exams/` and Piazza for final study materials and the practice final.
 
 - I hope that we have resolved the HW2 grading issues!
@@ -102,10 +102,10 @@ Announcements:
   HW make-up option: HW1 due today 11:59pm, HW2 due Monday 11:59pm.
 
 - I will hold OH either on
-  + Monday at 415pm
-  + Tuesday at 445pm
+  + Monday at 415pm - on Zoom
+  + Tuesday at 445pm - in person
     (or both)
-  If you plan to attend, please let me know if you can NOT attend one of these two times!
+  If you plan to attend, please let me know if you plan to attend one of these two times!
 
 Plan:
 
@@ -129,3 +129,5 @@ If there is time:
   - AWS S3,
   - AWS EC2, and
   - AWS Lambda.
+
+Questions?
