@@ -299,7 +299,9 @@ Definitions:
     will differ between different items X
 
     We can define the average latency to be the average of the latency for individual
-    items
+    items. E.g. for 5 items:
+
+      (latency_1 + latency_2 + latency_3 + ... + latency_5) / 5
 
   + Every individual order is going to see its results sooner, rather than later
     (so individual customers are happy)

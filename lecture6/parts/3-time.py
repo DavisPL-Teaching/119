@@ -109,7 +109,7 @@ Would your answer change if the pipeline was based on microbatch sizes of 5 ms?
 
 4.5 ms > 2ms, so we will wait longer on average (latency will increase).
 
-This is always teh case - microbatch trades latency for throughput.
+This is always the case - microbatch trades latency for throughput.
 (Higher latency, but we get higher throughput in return.)
 """
 
