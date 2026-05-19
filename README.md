@@ -67,14 +67,11 @@ It is also open to computer science majors.
 
 ### Textbook
 
-There is no required textbook.
-If you would like to pick up a textbook, I recommend the following:
+There is no required textbook; however, the following texts are recommended:
 
-- [**Python for Data Analysis.**](https://wesmckinney.com/pages/book.html) Wes McKinney. O'Reilly Media (2012).
+- [**Designing Data-Intensive Applications:** The Big Ideas Behind Reliable, Scalable, and Maintainable Systems](https://dataintensive.net/). Martin Kleppmann, O'Reilly Media (2017).
 
-- [**Spark: The Definitive Guide: Big Data Processing Made Simple.**](https://www.oreilly.com/library/view/spark-the-definitive/9781491912201/) Bill Chambers and Matei Zaharia. O'Reilly Media (2018).
-
-- [**Big Data: Concepts, Technology, and Architecture.**](https://www.wiley.com/en-us/Big+Data%3A+Concepts%2C+Technology%2C+and+Architecture-p-9781119701828) Nandhini Abirami R, Seifedine Kadry, Amir H. Gandomi, and Balamurugan Balusamy. Wiley; 1st edition (2021).
+- [**Spark: The Definitive Guide: Big Data Processing Made Simple**](https://www.oreilly.com/library/view/spark-the-definitive/9781491912201/). Bill Chambers and Matei Zaharia, O'Reilly Media (2018).
 
 ### Learning Objectives
 
