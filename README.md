@@ -12,19 +12,19 @@
 
 ## Welcome and Course Information
 
-Welcome to ECS 119! I look forward to teaching you this quarter!
+Welcome to ECS 119!
 
 **Lectures (in `lecture` folders) and other materials are from a previous iteration of the course, and have not yet been updated. These will be updated and posted as we go along this quarter.**
 
 - **Instructor:** Caleb Stanford
 - **TA:** Muhammad Hassnain
-- **CRN:** 29022
+- **CRN:** 29053
 - **Units:** 4
-- **Lectures:** Monday, Wednesday, Friday 3:10-4pm in Walker Hall 1330
-- **Discussion section:** Wednesdays at 11:00am in Young Hall 194
+- **Lectures:** MWF 3:10-4pm in Wellman Hall 126
+- **Discussion section:** Wednesdays at 11:00am in Olson Hall 206
 - **Office hours:** See Piazza
-- **Final exam:** Thursday, December 11, 8:00am
-- **[Piazza](https://piazza.com/class/mfvn4ov0kuc731)**
+- **Final exam:** 12/11/2026 10:30am
+- **Piazza:** TBD
 
 ## Lectures
 
