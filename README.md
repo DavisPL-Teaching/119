@@ -24,11 +24,14 @@ Welcome to ECS 119!
 - **Discussion section:** Wednesdays at 11:00am in Olson Hall 206
 - **Office hours:** See Piazza
 - **Final exam:** 12/11/2026 10:30am
-- **Piazza:** TBD
+- **[Piazza](https://piazza.com/class/ms5m0v40uh8613)**
+
+**Please join the course Piazza!** (link above)
+All important course announcements, homework deadlines, and course Q+A will be handled through Piazza.
 
 ## Lectures
 
-To give you a hands-on experience working with programming tools, I typically lecture via live coding.
+I often lecture via live coding.
 I will post the code for each lecture in this repository.
 To follow along with the lectures, clone the repository:
 ```shell
@@ -69,7 +72,7 @@ It is also open to computer science majors.
 
 There is no required textbook; however, the following texts are recommended:
 
-- [**Designing Data-Intensive Applications:** The Big Ideas Behind Reliable, Scalable, and Maintainable Systems](https://dataintensive.net/). Martin Kleppmann, O'Reilly Media (2017).
+- DDIA: [**Designing Data-Intensive Applications:** The Big Ideas Behind Reliable, Scalable, and Maintainable Systems](https://dataintensive.net/). Martin Kleppmann, O'Reilly Media (2017).
 
 - [**Spark: The Definitive Guide: Big Data Processing Made Simple**](https://www.oreilly.com/library/view/spark-the-definitive/9781491912201/). Bill Chambers and Matei Zaharia, O'Reilly Media (2018).
 
@@ -79,13 +82,17 @@ By the end of the course, students will be able to:
 
 - Use Python and other scripting tools to manage data processing jobs on a single machine, and understand their components, techniques, tools, and performance metrics.
 
-- Understand how software engineering tools and configuration are integrated into a data project, via tools like Git and the shell and other orchestration.
+- Understand how software engineering tools and configuration are integrated into a data project, via tools like Git and shell-based tools.
 
 - Understand the concepts of parallelism, types of parallelism, and parallelization mechanisms, via tools like MapReduce, Hadoop and Spark.
 
-- Understand the concepts of distributed computing and distributed data processing, including distributed consistency requirements, and how it manifests in real-world applications.
+- Understand key programming abstractions behind data processing jobs and how to understand their performance and bottlenecks.
 
-- Understand advanced topics including programming over real-time and streaming data sources and using cloud platforms such as AWS, Azure, and Google Cloud.
+- Understand the concepts of distributed computing and distributed data processing, including how it manifests in real-world applications.
+
+- Understand advanced topics including using real-time and streaming data sources.
+
+- Understand the basics of using cloud platforms such as AWS, Azure, and Google Cloud.
 
 ## Schedule
 
@@ -96,9 +103,9 @@ See `schedule.md`.
 Your grade is evaluated based on the following.
 
 - **Participation (10%):** via in-class polls
-- **Homeworks (35%):** I plan to assign about 3 homeworks, plus homework 0
-- **Midterm (20%):** covering the first half and main concepts of the course
-- **Final Exam (35%):** covering all topics covered in the course.
+- **Homeworks (25%):** about 2-3 programming assignments, plus homework 0
+- **Midterm (25%):** covering the first half and main concepts of the course
+- **Final Exam (40%):** covering all topics covered in the course.
 
 ### Attendance and Participation
 
@@ -114,7 +121,7 @@ It will be led by the TA and will also be recorded for those who cannot attend.
 
 Homeworks will consist of programming assignments in Python designed to bring together concepts we learned in class
 and to give you practice using all of the tools we cover.
-I plan to assign about 3 homeworks, plus homework 0, which is designed to help you install the relevant software for the course.
+I plan to assign about 2-3 homeworks, plus homework 0, which is designed to help you install the relevant software for the course.
 
 **Important: your code must run to get credit!**
 Frequently running and testing your code during development is an essential part of computer programming that can never be skipped.
@@ -134,8 +141,8 @@ There will be a midterm and a final exam.
 Exams are closed-book, but you may bring a single-sided cheat sheet to each exam.
 Exams will be graded on Gradescope.
 
-I may choose to curve exams to a lower maximum score.
-That means, for example, if 100 points are possible, it may be entered as out of a smaller number of points like 95 or 85 for the purposes of calculating your grade, if the average score of the class was low or if there were unexpectedly difficult questions.
+Exams are curved: if needed, I reserve the right to introduce a curve by lowering the maximum score.
+For example, if 100 points are possible, it may be entered as out of a smaller number of points like 95 or 90 for the purposes of calculating your grade, if the average score of the class was low or if there were unexpectedly difficult questions.
 
 ### Final Grade
 
@@ -160,11 +167,11 @@ This will be used to correct for the case that the assignments, midterm, and/or 
 
 ### AI Policy
 
-AI is a powerful tool! Please use it to help you (and not the other way around)
-
-AI collaboration is allowed and encouraged for homework assignments.
-However, the midterm and final exam will be in-class and closed-book.
-Please see also [Prof. Jason Lowe-Power's advice here](https://jlpteaching.github.io/comparch/syllabus/#using-generative-ai-tools).
+AI is an increasingly and incredibly powerful tool:
+I allow it, as I think understanding it is important for your future.
+Many students tell me that they learn better when limiting or restricting their use of AI early on.
+Please use it carefully.
+The midterm and final exam will be in-class and closed-book.
 
 ### Collaboration Policy and Academic Integrity
 
@@ -216,12 +223,12 @@ UC Davis has [policies against harassment and discrimination](https://hr.ucdavis
 Be inclusive of your classmates in group discussions and in your questions and answers in class.
 If you need to, you may reach me by email to report an issue with a classmate.
 
-### Recommendation Letter and Research Requests
+### Recommendation Letters and Research Requests
 
 I am happy to write recommendation letters for students!
 However, please note that I generally reserve recommendation letters for students who have done particularly well in a course (A or A+), or for students I have interacted more directly with through either research or office hours.
-If you would like to request a recommendation letter from me, please wait until after the quarter to do so
-(in rare cases, I may be able to make an exception to this rule if you have a deadline during the quarter).
+If you would like to request a recommendation letter from me, please wait until after the quarter to do so.
+In rare cases, I may be able to make an exception to this rule if you have a deadline during the quarter.
 
 If you are asking to get involved in research, a similar rule applies - please wait until after the quarter to ask.
 
