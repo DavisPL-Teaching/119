@@ -1,6 +1,4 @@
 """
-Monday, September 29
-
 Part 2: Extract, Transform, Load (ETL)
 
 === REMINDER: FOLLOWING ALONG ===
@@ -15,20 +13,7 @@ https://github.com/DavisPL-Teaching/119
 
 - `git pull`
 
-- **Why use the command line?**
-
-  Short answer: it's an important skill!
-
-  Long answer:
-  I do require learning how to use the command line for this course.
-  More in Lecture 2.
-  GUI tools only work if someone else already wrote them (they used the command line to write the tool)
-  You'll find that it is SUPER helpful to know the basics of the command line for stuff like installing software, managing dependencies, and debugging why installation didn't work.
-  The command prompt is how all internal commands work on your computer - and it's an important skill for data engineering in practice.
-
 === Continuing our example ===
-
-Recall from last time:
 
 - Want: a general model of data processing pipelines
 
@@ -79,30 +64,30 @@ First step: can we abstract this as an ETL job?
 """
 
 def extract():
-    data = {
-        "User": ["Alice", "Alice", "Charlie"],
-        "Website": ["Google", "Reddit", "Wikipedia"],
-        "Time spent (seconds)": [120, 300, 240],
-    }
-    df = pd.DataFrame(data)
-    return df
+    # TODO
+    raise NotImplementedError
+
+    # return df
 
 def transform(df):
-    u = df["User"]
-    w = df["Website"]
-    t = df["Time spent (seconds)"]
-    # Max of t
-    max = t.max()
-    # Filter
-    # This syntax in Pandas for filtering rows
-    # df[colname]
-    # df[row filter] (row filter is some sort of Boolean condition)
-    return df[df["Time spent (seconds)"] == max]
+    raise NotImplementedError
+
+    # u = df["User"]
+    # w = df["Website"]
+    # t = df["Time spent (seconds)"]
+    # # Max of t
+    # max = t.max()
+    # # Filter
+    # # This syntax in Pandas for filtering rows
+    # # df[colname]
+    # # df[row filter] (row filter is some sort of Boolean condition)
+    # return df[df["Time spent (seconds)"] == max]
 
 def load(df):
+    raise NotImplementedError
     # Save the dataframe somewhere
-    with open("save.txt", "w") as f:
-        print(df, file=f)
+    # with open("save.txt", "w") as f:
+    #     print(df, file=f)
 
 # Uncomment to run
 df = extract() # get the input
@@ -147,14 +132,14 @@ maintain pipelines (not just one-off scripts).
 
 Some of you may have used tools like Jupyter notebooks;
 (very good for exploration time!)
-while excellent tools,
+
 I will generally be working directly in Python in this course.
 
-Reasons: I want to get used to thinking of processing directly "as code",
+I want you to get used to thinking of processing directly "as code",
 good abstractions via functions and classes, and follow good practices like
 unit tests, etc. to integrate the code into a larger project.
 
-Abstractions mean we can test the code:
+Abstractions means we can test the code:
 """
 
 import pytest
@@ -187,7 +172,7 @@ Discussion Question / Poll:
 
 2. Will test_transform() always pass, no matter the input data set?
 
-https://forms.gle/j99n5ZN7jsJ6gHB2A
+===== Recap =====
 
-********** Where we ended for September 29 **********
+
 """
