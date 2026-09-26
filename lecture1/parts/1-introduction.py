@@ -55,7 +55,7 @@ Try this!
 
     git@github.com:DavisPL-Teaching/119.git
 
-5. Open a terminal and type:
+5. Open a terminal (Command+Space terminal on mac) and type:
 
     git clone git@github.com:DavisPL-Teaching/119.git
 
@@ -63,7 +63,7 @@ Try this!
 
     You should see a new folder called "119" in your home folder. This contains the lecture notes and source files for the class.
 
-7. Type `cd `119/lecture1/parts`, then type `ls`.
+7. Type `cd 119/lecture1/parts`, then type `ls`.
 
 8. Lastly type `python3 1-introduction.py`. You should see the message below.
 """
@@ -78,6 +78,8 @@ If some step above didn't work, raise your hand and I'll come around to try to h
 You may be missing some of the software we need installed.
 If that's the case, I'll recommend that you complete HW0 first and hopefully
 that will resolve the issue.
+
+***** Where we stopped for Sep 25 *****
 
 === Short digression ===
 
