@@ -1,11 +1,11 @@
 """
 Lecture 1: Introduction to data processing pipelines
 
-Part 1: Introduction
+Part 1: The basics, following along, and "Hello, world" example.
 
 This lecture will provide a basic conceptual framework for the rest of the course.
 
-Please bear with us if you have already seen some of this material before!
+Please bear with us if you have already seen some material before!
 I will use the polls to get a sense of your prior background and adjust the pacing accordingly.
 
 === Tour of Git repository ===
@@ -80,6 +80,60 @@ If that's the case, I'll recommend that you complete HW0 first and hopefully
 that will resolve the issue.
 
 ***** Where we stopped for Sep 25 *****
+"""
+
+"""
+=== REMINDER: FOLLOWING ALONG ===
+
+https://github.com/DavisPL-Teaching/119
+
+- Open terminal (Cmd+Space Terminal on Mac)
+
+- `git clone <paste repository link>`
+
+    + if you have already cloned, do a `git stash` or `git reset .`
+
+- `git pull`
+
+=== Starting point ===
+
+Let's start with a basic example of some data processing code:
+
+Example scenario:
+
+EXAMPLE:
+You have compiled a spreadsheet of website traffic data for various popular websites (Google, Instagram, chatGPT, Reddit, Wikipedia, etc.). You have a dataset of user sessions, each together with time spent, login sessions, and click-through rates. You want to put together an app which identifies trends in website popularity, duration of user visits, and popular website categories over time.
+
+This is a data processing job!
+
+We need a *pipeline* (some code) to run the job.
+"""
+
+data = {
+    "User": ["Alice", "Alice", "Charlie"],
+    "Website": ["Google", "Reddit", "Wikipedia"],
+    "Time spent (seconds)": [120, 300, 240],
+}
+
+# Uncomment to run
+# As dataframe:
+# import pandas as pd
+# df = pd.DataFrame(data)
+
+# print(data)
+# print(df)
+
+
+"""
+Running the code
+
+It can be useful to have open a Python shell while developing Python code.
+
+There are at least two ways to run Python code from the command line:
+- python3 lecture.py
+- python3 -i lecture.py
+
+Let's try both.
 
 === Short digression ===
 
@@ -105,99 +159,23 @@ that will resolve the issue.
 
   - Why not use AI to write commands?
 
-  AI or Google can help you if you forget some syntax --
+  AI or Google can help you if you forget some syntax.
   I want you to understand how commands are running "under the hood" --
   it's an important skill for data engineering in practice.
 
-=== The basics ===
+=== Recap ===
 
-I will introduce the class through a basic model of what a data processing
-pipeline is, that we will use throughout the class.
+So far, we have a basic example of a data pipeline running.
+We will build on this example to introduce important concepts for the rest of the class
+(see `parts/` on the left-hand side in your code editor or file browser to see some of the topics
+we are considering next).
 
 We will also explore:
 - Constraints that data processing pipelines have to satisfy
 - How they interact with one another
-- How to think about executing them - sneak peak of some future topics covered in the class.
+- How to think about executing them, how to execute them *faster* - which ties in to
+  future topics covered later in the class.
 
-To answer these questions, we need a basic model of "data processing pipeline" - Dataflow Graphs.
-
-=== Starting point ===
-
-Example scenario:
-
-EXAMPLE:
-You have compiled a spreadsheet of website traffic data for various popular websites (Google, Instagram, chatGPT, Reddit, Wikipedia, etc.). You have a dataset of user sessions, each together with time spent, login sessions, and click-through rates. You want to put together an app which identifies trends in website popularity, duration of user visits, and popular website categories over time.
-
-This is a data processing job!
-
-We need a *pipeline* (some code) to run the job.
-
-What are the main "abstract" components of the data processing job in this scenario?
-
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-
-- A dataset
-- Processing steps
-- Some kind of user-facing output
-
-closely related:
-"Extract, Transform, Load" model (ETL)
-
-What is an ETL job?
-
-- **Extract:** Load in some data from an input source
-    (e.g., CSV file, spreadsheet, a database)
-
-- **Transform:** Do some processing on the data
-
-- **Load:** (Sometimes a confusing name)
-  we save the output to an output source.
-    (e.g. CSV file, spreadsheet, a database)
-
-"""
-
-data = {
-    "User": ["Alice", "Alice", "Charlie"],
-    "Website": ["Google", "Reddit", "Wikipedia"],
-    "Time spent (seconds)": [120, 300, 240],
-}
-
-# As dataframe:
-# import pandas as pd
-# df = pd.DataFrame(data)
-
-# print(data)
-# print(df)
-
-"""
-=== Question ===
-
-Which of the above might be consider Extract, Transform, and Load?
-
-======
-
-So far, we got set up with a basic data processing pipeline (in Python)
-and we introduced a conceptual model to think about these pipelines.
-
-We'll continue this example in the next part.
-
+To answer these questions, we need a *model* of what a "data processing pipeline" is!
+We will start from the simplest model, Extract-Transform-Load (ETL).
 """

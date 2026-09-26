@@ -10,8 +10,10 @@ https://forms.gle/N7UhKAhdAFCNquhy7
 
 - This is an installation help homework. Please come to office hours and
   discussion section to get help!
-  + Monday OH after class
+  + Friday OH after class
   + Wednesday discussion section will cover installation help
+
+- My first OH: today after class (415-5pm), Academic Surge 2085
 
 Plan for today:
 
@@ -24,6 +26,35 @@ Plan for today:
 4. Following along with lectures; begin Lecture 1: Introduction to data processing pipelines (Parts 1 and 2).
 
 ## Monday, September 28
+
+Announcements:
+
+- HW0 due Wednesday (11:59pm)
+
+- Several of you are having installation issues with Java and Spark
+
+  + Root cause in most cases is that Spark and Java installations need to be compatible.
+
+  + Note: if everything worked up to that point, you will be able to do the first half of the class
+
+  + we need to get Java/Spark working by Weds. for the other half.
+
+  Please do the following:
+
+  + Post the error message on Piazza!
+
+  + Come to TA office hours on Monday and discussion section next week
+  will also be an installation help hour.
+
+  + I will note that AI is often helpful for installation related things, if you paste the installation errors it often gives you the right commands to run.
+
+Plan for today:
+
+1. Finish Part 1
+
+2. Part 2
+
+3. Poll
 
 ## Wednesday, September 30
 

@@ -1,63 +1,94 @@
 """
 Part 2: Extract, Transform, Load (ETL)
 
-=== REMINDER: FOLLOWING ALONG ===
-
-https://github.com/DavisPL-Teaching/119
-
-- Open terminal (Cmd+Space Terminal on Mac)
-
-- `git clone <paste repository link>`
-
-    + if you have already cloned, do a `git stash` or `git reset .`
-
-- `git pull`
-
-=== Continuing our example ===
-
-- Want: a general model of data processing pipelines
-
-- First-cut model: Extract Transform Load (ETL)
-
-    Any data process job can be split into three stages,
-    input, processing, output
-    (extract, transform, load)
-
-Example on finding popular websites:
+=== Returning to our example ===
 """
 
-# (Re-copying from above)
+# Copied from Part 1
 data = {
     "User": ["Alice", "Alice", "Charlie"],
     "Website": ["Google", "Reddit", "Wikipedia"],
     "Time spent (seconds)": [120, 300, 240],
 }
+
+# As dataframe:
+import pandas as pd
 df = pd.DataFrame(data)
 
-# Some logic to compute the maximum length of time website sessions
-u = df["User"]
-w = df["Website"]
-t = df["Time spent (seconds)"]
-# Max of t
-max = t.max()
-# Filter
-max_websites = df[df["Time spent (seconds)"] == max]
-
-# Let's print our data and save it to a file
-with open("save.txt", "w") as f:
-    print(max_websites, file=f)
+print(data)
+print(df)
 
 """
-Running the code
+Let's think about this example from a more abstract perspective.
 
-It can be useful to have open a Python shell while developing Python code.
+What are the main "abstract" components of the data processing job in this scenario?
 
-There are two ways to run Python code from the command line:
-- python3 lecture.py
-- python3 -i lecture.py
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
 
-Let's try both.
+- A dataset
+- Processing steps
+- Some kind of user-facing output
+
+Three components!
+
+=== "Extract, Transform, Load" model (ETL) ===
+
+What is an ETL job?
+
+- **Extract:** Load in some data from an input source
+    (e.g., CSV file, spreadsheet, a database)
+
+- **Transform:** Do some processing on the data
+
+- **Load:** (Sometimes a confusing name)
+  we save the output to an output source.
+    (e.g. CSV file, spreadsheet, a database)
+
+It turns out that a *lot* of data processing work in practice
+boils down to carrying out these three steps (often repeatedly),
+for various data sources and loading targets.
+
+=== Questions ===
+
+Which of the above might be consider Extract, Transform, and Load?
+
+Can we restructure the code to make the delineation into the three
+stages explicit?
+
 """
+
+# Uncomment to run
+# # Some logic to compute the maximum length of time website sessions
+# u = df["User"]
+# w = df["Website"]
+# t = df["Time spent (seconds)"]
+# # Max of t
+# max = t.max()
+# # Filter
+# max_websites = df[df["Time spent (seconds)"] == max]
+
+# # Let's print our data and save it to a file
+# with open("save.txt", "w") as f:
+#     print(max_websites, file=f)
 
 """
 First step: can we abstract this as an ETL job?
@@ -90,17 +121,17 @@ def load(df):
     #     print(df, file=f)
 
 # Uncomment to run
-df = extract() # get the input
-df = transform(df) # process the input
+# df = extract() # get the input
+# df = transform(df) # process the input
 # print(df) # printing (optional)
-load(df) # save the new data.
+# load(df) # save the new data.
 
 """
 We have a working pipeline!
 But this may seem rather silly ... why rewrite the pipeline
 to achieve the same behavior?
 
-=== Tangent: advantages of abstraction ===
+=== Advantages of abstraction ===
 
 Q: why abstract the steps into Python functions?
 
@@ -168,11 +199,22 @@ def test_transform():
 """
 Discussion Question / Poll:
 
+https://forms.gle/REBtUGxyzHQgH73V6
+
 1. Can you think of any scenario where test_extract() will fail?
 
 2. Will test_transform() always pass, no matter the input data set?
 
 ===== Recap =====
 
+- Want: a general model of data processing pipelines
+
+- First-cut model: Extract Transform Load (ETL)
+
+    Any data process job can be split into three stages,
+    input, processing, output
+    (extract, transform, load)
+
+Next we will introduce a better model for general data processing pipelines - Dataflow Graphs.
 
 """
