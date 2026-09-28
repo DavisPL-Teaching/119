@@ -31,6 +31,10 @@ Announcements/reminders:
 
 - HW0 due Wednesday (11:59pm)
 
+  TA OH: today 415-6pm
+
+  Discussion section: Weds 11a
+
 - Several of you have encountered installation issues with Java and Spark
 
   + Root cause in most cases is that Spark and Java installations need to be compatible.

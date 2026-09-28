@@ -50,28 +50,7 @@ for various data sources and loading targets.
 
 === Questions ===
 
-Which of the above might be consider Extract, Transform, and Load?
-
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
+Which of the above might be considered Extract, Transform, and Load?
 
 Can we restructure the code to make the delineation into the three
 stages explicit?
@@ -79,54 +58,54 @@ stages explicit?
 """
 
 # Uncomment to run
-# # Some logic to compute the maximum length of time website sessions
-# u = df["User"]
-# w = df["Website"]
-# t = df["Time spent (seconds)"]
-# # Max of t
-# max = t.max()
-# # Filter
-# max_websites = df[df["Time spent (seconds)"] == max]
+# Some logic to compute the maximum length of time website sessions
+u = df["User"]
+w = df["Website"]
+t = df["Time spent (seconds)"]
+# Max of t
+max = t.max()
+# Filter
+max_websites = df[df["Time spent (seconds)"] == max]
+# max_websites = df[t == max]
 
-# # Let's print our data and save it to a file
-# with open("save.txt", "w") as f:
-#     print(max_websites, file=f)
+# print(max_websites)
+
+# Let's print our data and save it to a file
+with open("save.txt", "w") as f:
+    print(max_websites, file=f)
 
 """
 First step: can we abstract this as an ETL job?
 """
 
 def extract():
-    # TODO
-    raise NotImplementedError
+    return data
 
-    # return df
+def transform(data):
+    df = pd.DataFrame(data)
 
-def transform(df):
-    raise NotImplementedError
+    u = df["User"]
+    w = df["Website"]
+    t = df["Time spent (seconds)"]
 
-    # u = df["User"]
-    # w = df["Website"]
-    # t = df["Time spent (seconds)"]
-    # # Max of t
-    # max = t.max()
-    # # Filter
-    # # This syntax in Pandas for filtering rows
-    # # df[colname]
-    # # df[row filter] (row filter is some sort of Boolean condition)
-    # return df[df["Time spent (seconds)"] == max]
+    # Max of t
+    max = t.max()
+
+    # Filter
+    max_websites = df[df["Time spent (seconds)"] == max]
+
+    return max_websites
 
 def load(df):
-    raise NotImplementedError
     # Save the dataframe somewhere
-    # with open("save.txt", "w") as f:
-    #     print(df, file=f)
+    with open("save2.txt", "w") as f:
+        print(df, file=f)
 
 # Uncomment to run
-# df = extract() # get the input
-# df = transform(df) # process the input
+data = extract() # get the input
+df = transform(data) # process the input
 # print(df) # printing (optional)
-# load(df) # save the new data.
+load(df) # save the new data.
 
 """
 We have a working pipeline!
@@ -152,7 +131,7 @@ A possible development lifecycle:
   Building or developing a working pipeline
   -> a script or abstracted functions would both work!
 
-- Production time:
+- Production (and maintenance) time:
   Deploying my pipeline & reusing it for various purposes
   (e.g., I want to run it like 5x per day)
   -> pipeline needs to be reused multiple times
@@ -172,7 +151,8 @@ I want you to get used to thinking of processing directly "as code",
 good abstractions via functions and classes, and follow good practices like
 unit tests, etc. to integrate the code into a larger project.
 
-Abstractions means we can test the code:
+Grouping our code into well-abstracted functions
+means we can test the code:
 """
 
 import pytest
@@ -180,7 +160,7 @@ import pytest
 # Unit test example
 # @pytest.mark.skip # uncomment to skip this test
 def test_extract():
-    df = extract()
+    df = pd.DataFrame(extract())
     # What do we want to test here?
     # Test that the result has the data type we expect
     assert type(df) is not None
@@ -190,13 +170,13 @@ def test_extract():
 
 # @pytest.mark.skip # uncomment to skip this test
 def test_transform():
-    df = extract()
-    df = transform(df)
+    data = extract()
+    df = transform(data)
     # check that there is exactly one output
     assert df.count().values[0] == 1
 
 # Run:
-# - pytest lecture.py
+# - pytest 2-etl.py
 
 """
 Discussion Question / Poll:
@@ -211,12 +191,19 @@ https://forms.gle/REBtUGxyzHQgH73V6
 
 - Want: a general model of data processing pipelines
 
-- First-cut model: Extract Transform Load (ETL)
+- We discussed a first-cut model: Extract Transform Load (ETL)
 
     Any data process job can be split into three stages,
     input, processing, output
     (extract, transform, load)
 
-Next we will introduce a better model for general data processing pipelines - Dataflow Graphs.
+- We discussed the benefits of abstraction:
 
+    Organizing our pipeline into "stages" -- abstracted via
+    Python functions -- can be a helpful way to think about the code,
+    but can also make the code more reusable, more maintainable,
+    more testable, and generally more useful in production,
+    especially for later stages in the development lifecycle.
+
+Next we will introduce a better model for general data processing pipelines - Dataflow Graphs.
 """

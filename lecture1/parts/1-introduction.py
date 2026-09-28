@@ -117,12 +117,11 @@ data = {
 
 # Uncomment to run
 # As dataframe:
-# import pandas as pd
-# df = pd.DataFrame(data)
+import pandas as pd
+df = pd.DataFrame(data)
 
-# print(data)
-# print(df)
-
+print(data)
+print(df)
 
 """
 Running the code
