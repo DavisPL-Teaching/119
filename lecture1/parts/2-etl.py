@@ -50,11 +50,13 @@ for various data sources and loading targets.
 
 === Questions ===
 
+Understanding check:
 Which of the above might be considered Extract, Transform, and Load?
 
 Can we restructure the code to make the delineation into the three
 stages explicit?
 
+Here is a slightly more complex example:
 """
 
 # Uncomment to run
@@ -80,6 +82,10 @@ First step: can we abstract this as an ETL job?
 
 def extract():
     return data
+
+    # (Alternatively, we may want to consider the Pandas dataframe
+    # as the input stage directly. In that case we would have
+    # return pd.DataFrame(data))
 
 def transform(data):
     df = pd.DataFrame(data)
