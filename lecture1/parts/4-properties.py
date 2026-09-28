@@ -1,7 +1,7 @@
 """
 Monday, October 6
 
-Part 4: Proeprties of Dataflow Graphs
+Part 4: Properties of Dataflow Graphs
 
 On Friday, I introduced the concept of dataflow graphs.
 Recall:
@@ -172,7 +172,7 @@ We practiced drawing dataflow graphs
 
 We used dataflow graphs to explore various features of a data processing computation
 
-We argued that analagous to regular computer programs for the traditional computing world,
+We argued that analogous to regular computer programs for the traditional computing world,
     dataflow graphs are the right notion of computer programs for the data processing world.
 
 ********** where we ended for today **********

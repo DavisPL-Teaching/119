@@ -9,11 +9,12 @@ From ETL to Dataflow Graphs.
 Which of the following are most likely advantages of writing or rewriting
 a data processing pipeline as well-structured software (separated into modules, classes, and functions)?
 
-https://forms.gle/akNYHe8SY1CSU5KT9
+https://forms.gle/CQT8dCgksmQtwsbX6
 
 === Dataflow graphs ===
 
-We can view all of the above steps as something called a dataflow graph.
+We can view all of the steps in our pipeline from Part 2 (2-etl.py)
+as something called a dataflow graph.
 
 ETL jobs can be thought of visually like this:
 
@@ -21,7 +22,7 @@ ETL jobs can be thought of visually like this:
 
 This is a Directed Acyclic Graph (DAG)
 
-A graph is set a nodes and a set of edges
+A graph is set a nodes () and a set of edges ->
 
     ()       () -> ()
         () -> ()
@@ -34,12 +35,13 @@ number of nodes and edges.
 
 Q: What are the nodes? What are the edges?
 
-    - Nodes:
-        Each node is a function that takes input data and produces output data.
+- Nodes:
 
-        Such a function is called an *operator.*
+    Each node is a function that takes input data and produces output data.
 
-        In Python:
+    Such a function is called an *operator.*
+
+    In Python:
 """
 
 # example: operator with 3 inputs:
@@ -63,7 +65,7 @@ def stage():
 
     - More specifically, we draw an edge
         from a node (A) to a node (B) if
-        the operator B directly uses the output of operator (A).
+        the operator B **directly uses** the output of operator (A).
 
 In our previous example?
 
@@ -73,12 +75,12 @@ In our previous example?
 
 (2) Transform = taking in the Pandas DataFrame and returning the session with the
   maximum time spent
-    + Input: The pandas DataFrame from the Extract stage
-    + Output: the maximum session
+    + Input:
+    + Output:
 
 (3) Load = taking the maximum session and saving that to a file (in our case, save.txt)
-    + Input: the maximum session from the Transform stage
-    + Output: None (because we saved to a file)
+    + Input:
+    + Output:
 
 Graph:
 
@@ -100,8 +102,8 @@ The graph is **acyclic,** meaning it does not have loops.
     (This is why it's a "directed acyclic graph" (DAG)).
 
 - (Why can we assume this?)
-    + It doesn't appear to make sense for stage (1) to use stage (2)'s output,
-      and stage (2) to use stage (1)'s output.
+    + It doesn't appear to make sense for example, for stage (1)
+      to use stage (2)'s output, and stage (2) to also use stage (1)'s output.
     + Generalizations of this are possible, but we will not get into this now.
 
 === Q: Do all data processing pipelines look like series of stages? ===
@@ -116,6 +118,8 @@ Let's do a quick example
 
 Suppose that in addition to the maximum session, we want the minimum session.
 """
+
+import pandas as pd
 
 def stage1():
     data = {
@@ -155,11 +159,11 @@ def stage5(df):
     print(df.head())
 
 # Try running the pipeline
-df1 = stage1()
-df2 = stage2(df1)
-df3 = stage3(df2) # uses output from stage 2
-df4 = stage4(df1)
-df5 = stage5(df4) # uses output from stage 4
+# df1 = stage1()
+# df2 = stage2(df1)
+# df3 = stage3(df2) # uses output from stage 2
+# df4 = stage4(df1)
+# df5 = stage5(df4) # uses output from stage 4
 
 """
 As a dataflow graph:
@@ -245,6 +249,12 @@ Q for next time: rewrite this as a Dataflow graph using the steps above
 
 === Recap ===
 
+.
+.
+.
+.
+.
+
 We learned that ETL jobs are a special case of dataflow graphs,
 where we have a set of nodes (operators/stages) and edges (which are drawn when the output
 of one operator or stage depends on the output of the previous operator or stage)
@@ -255,6 +265,4 @@ Revisiting the steps above:
 3. Implement the code (one Python function per stage)
 
 We have done 1 and (sort of) 3, we will do 2 at the start of class next time.
-
-********* Where we ended for today **********
 """

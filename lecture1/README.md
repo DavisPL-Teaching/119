@@ -62,6 +62,25 @@ Plan for today:
 
 ## Wednesday, September 30
 
+Announcements/reminders:
+
+- HW0 due today!
+
+  + Hopefully you were able to attend OH/discussion section
+
+  + Please post any last error messages to Piazza
+
+- Short announcement from a student club:
+  Davis Data Driven Change (D3C)
+
+Plan:
+
+- Go over poll from last time
+
+- Part 3: Dataflow Graphs.
+
+- Start with (this time's) poll
+
 ## Friday, October 2
 
 ### Notes for later
