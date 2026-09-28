@@ -1,7 +1,7 @@
 """
 Part 2: Extract, Transform, Load (ETL)
 
-=== Returning to our example ===
+===Continuing our example ===
 """
 
 # Copied from Part 1
@@ -23,26 +23,7 @@ Let's think about this example from a more abstract perspective.
 
 What are the main "abstract" components of the data processing job in this scenario?
 
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
+A:
 
 - A dataset
 - Processing steps
@@ -70,6 +51,27 @@ for various data sources and loading targets.
 === Questions ===
 
 Which of the above might be consider Extract, Transform, and Load?
+
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
 
 Can we restructure the code to make the delineation into the three
 stages explicit?
@@ -135,7 +137,7 @@ to achieve the same behavior?
 
 Q: why abstract the steps into Python functions?
 
-(instead of just using a plain script)
+(instead of just using a plain script, Jupyter notebook, etc.)
 
 ETL steps are not done just once!
 

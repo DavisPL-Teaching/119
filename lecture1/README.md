@@ -27,11 +27,11 @@ Plan for today:
 
 ## Monday, September 28
 
-Announcements:
+Announcements/reminders:
 
 - HW0 due Wednesday (11:59pm)
 
-- Several of you are having installation issues with Java and Spark
+- Several of you have encountered installation issues with Java and Spark
 
   + Root cause in most cases is that Spark and Java installations need to be compatible.
 

@@ -139,27 +139,26 @@ Let's try both.
 
 - **Why use the command line?**
 
-  Short answer: it's an important skill!
+  (More on this in Lecture 2)
 
-  Long answer:
-  The command line is a primary way how engineers and AI agents interface with
+  The command line is a primary way how engineers (and AI agents) interface with
   computers: installing software, running commands, etc. It's the
   "master switch" to get administrative access to anything that you want to do
   on any device.
 
-  I do require learning how to use the command line for this course.
-  Lecture 2 will provide an introduction to how to think about the command line.
+  I do require learning how to use the command line for this course,
+  which we will do in a bit more detail for Lecture 2.
 
   - Why not just use GUI tools?
 
   GUI tools only work if someone else already wrote them (they used the command line to write the tool).
-  GUI tools are typically not available for server machines, cloud/Amazon compute, etc.
+  GUI tools are often not available for server machines, cloud/Amazon compute, etc.
 
   You'll find that it is SUPER helpful to know the basics of the command line for stuff like installing software, managing dependencies, and debugging why installation didn't work.
 
   - Why not use AI to write commands?
 
-  AI or Google can help you if you forget some syntax.
+  Sure! AI or Google can help you if you forget some syntax.
   I want you to understand how commands are running "under the hood" --
   it's an important skill for data engineering in practice.
 
