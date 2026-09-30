@@ -21,7 +21,7 @@ Welcome to ECS 119!
 - **CRN:** 29053
 - **Units:** 4
 - **Lectures:** MWF 3:10-4pm in Wellman Hall 126
-- **Discussion section:** Wednesdays at 11:00am in Olson Hall 206
+- **Discussion section:** Wednesdays at 11:00am in Young Hall 194
 - **Office hours:** See Piazza
 - **Final exam:** 12/11/2026 10:30am
 - **[Piazza](https://piazza.com/class/ms5m0v40uh8613)**
