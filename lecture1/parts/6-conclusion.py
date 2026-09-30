@@ -1,5 +1,5 @@
 """
-October 10
+October 7 (Planned)
 
 Part 6:
 Recap on Throughput & Latency and Conclusion

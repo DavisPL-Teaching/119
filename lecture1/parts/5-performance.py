@@ -1,5 +1,5 @@
 """
-October 8
+October 5 (Planned)
 
 Part 5: Performance
 
@@ -17,9 +17,9 @@ True or false:
 
 3. Typically, every node in a dataflow graph takes the same amount of time to run.
 
-https://forms.gle/wAAyXqbJaCkEzyZP9
 
-Correct answers: T, F, F
+
+
 
 For 1:
 Max and min?

@@ -1,18 +1,20 @@
 """
-Monday, October 6
+Friday, October 2
 
 Part 4: Properties of Dataflow Graphs
 
 On Friday, I introduced the concept of dataflow graphs.
 Recall:
-    To build a dataflow graph, we divide our pipeline into a series of "stages"
+    1. To build a dataflow graph, we divide our pipeline into a series of "stages"
 To build the graph, we draw:
     - One node per stage of the pipeline
     - An edge from node A to B (A -> B) if node B directly uses the output of node A.
 
+    2. ETL is a special case of dataflow graphs with 3 nodes and 2 edges.
+
 === Practice with dataflow graphs ===
 
-At the end of last class period, we introduced a dataset for life expectancy.
+At the end of Part 3, we introduced a dataset for life expectancy.
 We saw a simple data pipeline for this dataset.
 Let's separate it into stages as follows:
 
@@ -28,17 +30,27 @@ Let's separate it into stages as follows:
 Suppose we draw a dataflow graph with the above nodes.
 
 1. What edges will the graph have?
-  (draw/write all edges)
+  (draw/fill out all edges)
 
 2. Give an example of two stages A and B, where the output for B depends on A, but there is no edge from A to B.
 
-https://forms.gle/6FB5hhwKpokTHhit9
+https://forms.gle/ZhpUziw8XTU5tgwC6
 
 Answer:
 
-           -> (max) ----|--> (print)
-    (read) -> (min) ----|
-           -> (avg) ----|--> (save)
+
+
+
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
 
 Key points:
 
@@ -63,7 +75,7 @@ A couple of more definitions:
 
 - A stage B *depends on* a stage A if...
 
-    there is a path from A to B
+
 
     point: The dataflow graph reveals exactly which computations depend on which others!
 
@@ -75,10 +87,10 @@ A couple of more definitions:
     (typically, a node which saves data to an external source)
     (corresponds to the L stage of the ETL model)
 
-- A small correction from last time: let's define
+- A small correction to the definition from last time: let's define
   an *operator* is any node that is not a source or a sink.
   Operators take input data, and produce output data
-    (corresponds to the T stage of the ETL model)
+    (corresponds to the T stage of the ETL model).
 
 Points:
 
@@ -95,9 +107,12 @@ Let's just write one example, in the interest of time
 """
 
 def max_stage(df):
-    return df["Year"].max()
+    # TODO
+    raise NotImplementedError
 
 """
+=== Why? ===
+
 Reminders for why this helps:
 
 (Maybe it's overkill for a one-liner example like this)
@@ -107,20 +122,13 @@ Reminders for why this helps:
 - Separation of concerns between different features, developers, or development efforts
 - Makes the software easier to maintain (or modify later)
 - Makes the software easier to debug
-
-Zooming in on one of these...
-(pick one)
-
-Q: How does this correspond to ETL model?
-
-ETL is basically a dataflow graph with 3 nodes.
 """
 
 """
 === Data validation ===
 
-We will talk more about data validation at some point, most likely as part of Lecture 3.
-(See failures.py for a further discussion)
+We may talk a little more about data validation and failures
+at some point (time permitting)
 
 Where in a pipeline is data validation most important?
 
@@ -144,7 +152,7 @@ and assumed by the next.
 
 === Performance ===
 
-Let's touch on one other thing that we can do with dataflow graphs:
+Let's touch on one thing that we can do with dataflow graphs:
 we can use them to think about performance.
 
 Dataflow graphs are basically the "data processing" equivalent of programs.
@@ -174,6 +182,4 @@ We used dataflow graphs to explore various features of a data processing computa
 
 We argued that analogous to regular computer programs for the traditional computing world,
     dataflow graphs are the right notion of computer programs for the data processing world.
-
-********** where we ended for today **********
 """

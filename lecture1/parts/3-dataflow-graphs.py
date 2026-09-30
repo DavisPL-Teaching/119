@@ -39,7 +39,8 @@ Q: What are the nodes? What are the edges?
 
     Each node is a function that takes input data and produces output data.
 
-    Such a function is called an *operator.*
+    Such a function is generally called an *operator.*
+    (there will be a small revision to this definition in Part 4)
 
     In Python:
 """
@@ -50,8 +51,8 @@ def operator_ex1(input1, input2, input3):
     # return the output
     return output
 
-# example: operator with 0 inputs:
-def operator_ex2():
+# example: operator with 1 input:
+def operator_ex2(input1):
     # do some processing
     # return the output
     return output
@@ -225,15 +226,15 @@ Recap:
 """
 A slightly more realistic example
 
-What I want to practice:
-1. Thinking about the stages involved in a data processing computation as separate stages
-    (List out all of the data processing stages)
-2. Writing down the dataflow graph
-3. Translating that to Python code using PySpark by writing a separate Python function
-   for each stage
+=== A recipe for writing (and implementing) dataflow graphs ===
 
-Let's consider how to write a minimal data processing pipeline
-as a more structured software pipeline.
+1. Write down all the stages in our pipeline
+2. Draw the nodes (one node per stage)
+3. Draw the edges
+4. Implement the code (one Python function per stage)
+
+Let's consider how to write a slightly more realistic data processing pipeline
+using this recipe, first as a Python script, then as a dataflow graph.
 
 First thing we need is a dataset!
 
@@ -250,6 +251,8 @@ We will also use Pandas, as we have been using:
 Useful tutorial on Pandas:
 https://pandas.pydata.org/docs/user_guide/10min.html
 https://pandas.pydata.org/docs/user_guide/indexing.html
+
+Uncomment the below to see the pipeline.
 """
 
 # Step 1: Getting a data source
@@ -257,7 +260,7 @@ https://pandas.pydata.org/docs/user_guide/indexing.html
 # DataFrame is just a table: it has rows and columns, and importantly,
 # each column has a type (all items in the column must share the same
 # type, e.g., string, number, etc.)
-df = pd.read_csv("life-expectancy.csv")
+# df = pd.read_csv("life-expectancy.csv")
 
 # To play around with our dataset:
 # python3 -i lecture.py
@@ -283,15 +286,11 @@ df = pd.read_csv("life-expectancy.csv")
 # out.to_csv("output.csv", index=False)
 
 """
-Q for next time: rewrite this as a Dataflow graph using the steps above
+Q for Part 4: rewrite this as a Dataflow graph using the steps above.
+
+(we will move on to Part 4 now.)
 
 === Recap ===
-
-.
-.
-.
-.
-.
 
 We learned that ETL jobs are a special case of dataflow graphs,
 where we have a set of nodes (operators/stages) and edges (which are drawn when the output
@@ -301,6 +300,4 @@ Revisiting the steps above:
 1. Write down all the stages in our pipeline
 2. Draw a dataflow graph (one node per stage)
 3. Implement the code (one Python function per stage)
-
-We have done 1 and (sort of) 3, we will do 2 at the start of class next time.
 """

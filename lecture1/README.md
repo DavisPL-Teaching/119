@@ -85,6 +85,24 @@ Questions?
 
 ## Friday, October 2
 
+Announcements:
+
+- HW1
+
+- My OH today
+
+Plan:
+
+- Loose ends from Part 3
+
+- Poll
+
+- Part 4 on Properties of dataflow graphs.
+
+
+
+
+
 ### Notes for later
 
 **There will be no class on Friday, October 9** as I will be away at a conference.
