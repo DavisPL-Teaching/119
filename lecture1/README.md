@@ -81,6 +81,8 @@ Plan:
 
 - Start with (this time's) poll
 
+Questions?
+
 ## Friday, October 2
 
 ### Notes for later

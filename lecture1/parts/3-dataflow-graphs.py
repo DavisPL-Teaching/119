@@ -1,5 +1,5 @@
 """
-Friday, October 3
+Wednesday, September 30
 
 Part 3:
 From ETL to Dataflow Graphs.
@@ -45,16 +45,24 @@ Q: What are the nodes? What are the edges?
 """
 
 # example: operator with 3 inputs:
-def stage(input1, input2, input3):
+def operator_ex1(input1, input2, input3):
     # do some processing
     # return the output
     return output
 
 # example: operator with 0 inputs:
-def stage():
+def operator_ex2():
     # do some processing
     # return the output
     return output
+
+# example: operator with 2 inputs, 2 outputs:
+def operator_ex1(input1, input2):
+    # do something process
+    # output1 = ...
+    # output2 = ...
+    # return two output datasets
+    return output1, output2
 
 """
     - Edges:
@@ -71,16 +79,16 @@ In our previous example?
 
 (1) Extract = loading the set of websites sessions into a Pandas dataframe
     + Input: None (because we loaded from a file)
-    + Output: A Pandas DataFrame
+    + Output: A Python dictionary or Pandas DataFrame
 
 (2) Transform = taking in the Pandas DataFrame and returning the session with the
   maximum time spent
-    + Input:
-    + Output:
+    + Input: output from extract stage
+    + Output: transformed Pandas DataFrame including the maximum information
 
 (3) Load = taking the maximum session and saving that to a file (in our case, save.txt)
-    + Input:
-    + Output:
+    + Input: maximum information DataFrame
+    + Output: None
 
 Graph:
 
@@ -92,10 +100,20 @@ Questions:
     Because the Transform stage uses the output from the Extract stage
 
 - Why is there NOT an edge from (2) to (1)?
-    Stage (1) doesn't use the output from stage (2)
+    - Output from stage2 is not being sent back to stage1, and
+      is not needed for stage1
 
 - Why is there NOT an edge from (1) to (3)?
-    Stage (3) doesn't directly use the output from stage (1).
+    - Stage 3: takes the transformed dataframe (in this case the maximum
+      rows)
+      and it uses + requires that dataframe in order to save it to output
+      It does NOT use (nor require) the raw output from stage 1
+
+  Important point:
+    stage 3 *does depend* on stage 1.
+    BUT it does not *directly depend* on stage 1
+    and it doesn't *directly* use the output from stage 1,
+    so there's no edge from 1 to 3.
 
 The graph is **acyclic,** meaning it does not have loops.
 
@@ -135,9 +153,6 @@ def stage2(df):
     # Max of t
     max = t.max()
     # Filter
-    # This syntax in Pandas for filtering rows
-    # df[colname]
-    # df[row filter] (row filter is some sort of Boolean condition)
     return df[df["Time spent (seconds)"] == max]
 
 def stage3(df):
@@ -159,11 +174,11 @@ def stage5(df):
     print(df.head())
 
 # Try running the pipeline
-# df1 = stage1()
-# df2 = stage2(df1)
-# df3 = stage3(df2) # uses output from stage 2
-# df4 = stage4(df1)
-# df5 = stage5(df4) # uses output from stage 4
+df1 = stage1()
+df2 = stage2(df1)
+df3 = stage3(df2) # uses output from stage 2
+df4 = stage4(df1)
+df5 = stage5(df4) # uses output from stage 4
 
 """
 As a dataflow graph:
@@ -175,7 +190,30 @@ This is our dataflow graph for this example.
 
 Seems like a simple idea, but this can be done for any data processing pipeline!
 
-We will see that this is a very powerful abstraction.
+We will see that this is a very powerful abstraction
+in order to optimize pipelines (make them run very fast)
+later in the class.
+
+Recap:
+
+1. Went over the results of last time's poll: saw some ways
+   that a pipeline could fail or have subtle edge cases
+   (and that unit tests could help detect that)
+
+2. We did today's poll - MC on the benefits of abstracting Python
+   code using functions, methods, and classes
+
+3. We introduced the core model of data pipeline called
+   Dataflow Graphs, which are sets of nodes (representing
+   processing stages or tasks) and sets of edges (representing
+   direct dependencies from the output of one node to the input
+   of another)
+
+4. We did a couple of examples of dataflow graphs showing that they
+   can be more interesting/more complicated than just a single
+   left-to-right pipeline like in ETL.
+
+------------------------------------
 
 === Why is this useful? ===
 
