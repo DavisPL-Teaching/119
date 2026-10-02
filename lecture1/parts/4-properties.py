@@ -87,8 +87,8 @@ A couple of more definitions:
     (typically, a node which saves data to an external source)
     (corresponds to the L stage of the ETL model)
 
-- A small correction to the definition from last time: let's define
-  an *operator* is any node that is not a source or a sink.
+- (Small correction to the definition from last time:)
+  An *operator* is any node that is not a source or a sink.
   Operators take input data, and produce output data
     (corresponds to the T stage of the ETL model).
 
@@ -111,17 +111,13 @@ def max_stage(df):
     raise NotImplementedError
 
 """
-=== Why? ===
-
-Reminders for why this helps:
-
-(Maybe it's overkill for a one-liner example like this)
+(Reminders for why this helps:
 
 - Better code re-use
 - Better ability to write unit tests
 - Separation of concerns between different features, developers, or development efforts
 - Makes the software easier to maintain (or modify later)
-- Makes the software easier to debug
+- Makes the software easier to debug)
 """
 
 """
@@ -163,6 +159,17 @@ For traditional programs, there are two notions of performance that matter:
 - Memory usage or space complexity
 
 For data processing programs?
+
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
 
 We'll care about the most:
 - Running time corresponds to: Throughput & Latency

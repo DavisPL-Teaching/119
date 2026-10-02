@@ -215,6 +215,11 @@ Recap:
    left-to-right pipeline like in ETL.
 
 ------------------------------------
+(continuing: Oct 2)
+
+Last time: we introduced a way of viewing our pipelines as dataflow graphs:
+nodes (processing steps), edges (direct dependencies).
+A dataflow graph is a "directed acyclic graph" (DAG).
 
 === Why is this useful? ===
 
@@ -224,7 +229,9 @@ Recap:
 """
 
 """
-A slightly more realistic example
+An example with an real world dataset
+(we won't go over this example in detail, but will continue it in part 4
+and for today's poll.)
 
 === A recipe for writing (and implementing) dataflow graphs ===
 
@@ -290,7 +297,7 @@ Q for Part 4: rewrite this as a Dataflow graph using the steps above.
 
 (we will move on to Part 4 now.)
 
-=== Recap ===
+=== Recap of Part 3 ===
 
 We learned that ETL jobs are a special case of dataflow graphs,
 where we have a set of nodes (operators/stages) and edges (which are drawn when the output
