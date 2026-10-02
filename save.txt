@@ -1,0 +1,2 @@
+    User Website  Time spent (seconds)
+1  Alice  Reddit                   300

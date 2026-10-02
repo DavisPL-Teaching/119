@@ -11,6 +11,9 @@ a data processing pipeline as well-structured software (separated into modules, 
 
 https://forms.gle/CQT8dCgksmQtwsbX6
 
+Better code re-use, ability to write unit tests, separation of concerns between different features, developers...,
+software easier to maintain, easier to debug
+
 === Dataflow graphs ===
 
 We can view all of the steps in our pipeline from Part 2 (2-etl.py)
@@ -39,8 +42,7 @@ Q: What are the nodes? What are the edges?
 
     Each node is a function that takes input data and produces output data.
 
-    Such a function is generally called an *operator.*
-    (there will be a small revision to this definition in Part 4)
+    Such a function is called an *operator.*
 
     In Python:
 """
@@ -85,11 +87,11 @@ In our previous example?
 (2) Transform = taking in the Pandas DataFrame and returning the session with the
   maximum time spent
     + Input: output from extract stage
-    + Output: transformed Pandas DataFrame including the maximum information
+    + Output: transformed Pandas DataFrame including the maximum
 
 (3) Load = taking the maximum session and saving that to a file (in our case, save.txt)
-    + Input: maximum information DataFrame
-    + Output: None
+    + Input: output from transform stage (maximum information DataFrame)
+    + Output: None (saves to txt file)
 
 Graph:
 
@@ -101,23 +103,17 @@ Questions:
     Because the Transform stage uses the output from the Extract stage
 
 - Why is there NOT an edge from (2) to (1)?
-    - Output from stage2 is not being sent back to stage1, and
-      is not needed for stage1
+    Stage (1) doesn't use the output from stage (2)
 
 - Why is there NOT an edge from (1) to (3)?
-    - Stage 3: takes the transformed dataframe (in this case the maximum
-      rows)
-      and it uses + requires that dataframe in order to save it to output
-      It does NOT use (nor require) the raw output from stage 1
+    Stage (3) doesn't directly use the output from stage (1).
+    Stage 3 takes the transformed output from stage 2, it does not use (nor require) raw output from stage 1
 
-  Important point:
-    stage 3 *does depend* on stage 1.
-    BUT it does not *directly depend* on stage 1
-    and it doesn't *directly* use the output from stage 1,
-    so there's no edge from 1 to 3.
+Important point:
+    stage 3 does depend on stage 1 but doesn't directly use the output from stage 1 so no edge is drawn
 
 The graph is **acyclic,** meaning it does not have loops.
-
+    Pipeline would get stuck 
     (This is why it's a "directed acyclic graph" (DAG)).
 
 - (Why can we assume this?)
@@ -154,6 +150,9 @@ def stage2(df):
     # Max of t
     max = t.max()
     # Filter
+    # This syntax in Pandas for filtering rows
+    # df[colname]
+    # df[row filter] (row filter is some sort of Boolean condition)
     return df[df["Time spent (seconds)"] == max]
 
 def stage3(df):
@@ -175,11 +174,11 @@ def stage5(df):
     print(df.head())
 
 # Try running the pipeline
-df1 = stage1()
-df2 = stage2(df1)
-df3 = stage3(df2) # uses output from stage 2
-df4 = stage4(df1)
-df5 = stage5(df4) # uses output from stage 4
+# df1 = stage1()
+# df2 = stage2(df1)
+# df3 = stage3(df2) # uses output from stage 2
+# df4 = stage4(df1)
+# df5 = stage5(df4) # uses output from stage 4
 
 """
 As a dataflow graph:
@@ -258,8 +257,6 @@ We will also use Pandas, as we have been using:
 Useful tutorial on Pandas:
 https://pandas.pydata.org/docs/user_guide/10min.html
 https://pandas.pydata.org/docs/user_guide/indexing.html
-
-Uncomment the below to see the pipeline.
 """
 
 # Step 1: Getting a data source
@@ -293,11 +290,15 @@ Uncomment the below to see the pipeline.
 # out.to_csv("output.csv", index=False)
 
 """
-Q for Part 4: rewrite this as a Dataflow graph using the steps above.
+Q for next time: rewrite this as a Dataflow graph using the steps above
 
-(we will move on to Part 4 now.)
+=== Recap ===
 
-=== Recap of Part 3 ===
+.
+.
+.
+.
+.
 
 We learned that ETL jobs are a special case of dataflow graphs,
 where we have a set of nodes (operators/stages) and edges (which are drawn when the output
@@ -307,4 +308,6 @@ Revisiting the steps above:
 1. Write down all the stages in our pipeline
 2. Draw a dataflow graph (one node per stage)
 3. Implement the code (one Python function per stage)
+
+We have done 1 and (sort of) 3, we will do 2 at the start of class next time.
 """

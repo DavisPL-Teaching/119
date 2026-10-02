@@ -1,65 +1,40 @@
 """
 Part 2: Extract, Transform, Load (ETL)
 
-===Continuing our example ===
-"""
+=== REMINDER: FOLLOWING ALONG ===
 
-# Copied from Part 1
+https://github.com/DavisPL-Teaching/119
+
+- Open terminal (Cmd+Space Terminal on Mac)
+
+- `git clone <paste repository link>`
+
+    + if you have already cloned, do a `git stash` or `git reset .`
+
+- `git pull`
+
+=== Continuing our example ===
+
+- Want: a general model of data processing pipelines
+
+- First-cut model: Extract Transform Load (ETL)
+
+    Any data process job can be split into three stages,
+    input, processing, output
+    (extract, transform, load)
+
+Example on finding popular websites:
+"""
+import pandas as pd
+
+# (Re-copying from above)
 data = {
     "User": ["Alice", "Alice", "Charlie"],
     "Website": ["Google", "Reddit", "Wikipedia"],
     "Time spent (seconds)": [120, 300, 240],
 }
-
-# As dataframe:
-import pandas as pd
 df = pd.DataFrame(data)
 
-print(data)
-print(df)
-
-"""
-Let's think about this example from a more abstract perspective.
-
-What are the main "abstract" components of the data processing job in this scenario?
-
-A:
-
-- A dataset
-- Processing steps
-- Some kind of user-facing output
-
-Three components!
-
-=== "Extract, Transform, Load" model (ETL) ===
-
-What is an ETL job?
-
-- **Extract:** Load in some data from an input source
-    (e.g., CSV file, spreadsheet, a database)
-
-- **Transform:** Do some processing on the data
-
-- **Load:** (Sometimes a confusing name)
-  we save the output to an output source.
-    (e.g. CSV file, spreadsheet, a database)
-
-It turns out that a *lot* of data processing work in practice
-boils down to carrying out these three steps (often repeatedly),
-for various data sources and loading targets.
-
-=== Questions ===
-
-Understanding check:
-Which of the above might be considered Extract, Transform, and Load?
-
-Can we restructure the code to make the delineation into the three
-stages explicit?
-
-Here is a slightly more complex example:
-"""
-
-# Uncomment to run
 # Some logic to compute the maximum length of time website sessions
 u = df["User"]
 w = df["Website"]
@@ -68,13 +43,22 @@ t = df["Time spent (seconds)"]
 max = t.max()
 # Filter
 max_websites = df[df["Time spent (seconds)"] == max]
-# max_websites = df[t == max]
-
-# print(max_websites)
 
 # Let's print our data and save it to a file
 with open("save.txt", "w") as f:
     print(max_websites, file=f)
+
+"""
+Running the code
+
+It can be useful to have open a Python shell while developing Python code.
+
+There are two ways to run Python code from the command line:
+- python3 lecture.py
+- python3 -i lecture.py
+
+Let's try both.
+"""
 
 """
 First step: can we abstract this as an ETL job?
@@ -83,34 +67,31 @@ First step: can we abstract this as an ETL job?
 def extract():
     return data
 
-    # (Alternatively, we may want to consider the Pandas dataframe
-    # as the input stage directly. In that case we would have
-    # return pd.DataFrame(data))
+    # return df
 
-def transform(data):
-    df = pd.DataFrame(data)
+def transform(df):
+    df = pd.DataFrame 
 
     u = df["User"]
     w = df["Website"]
     t = df["Time spent (seconds)"]
-
     # Max of t
     max = t.max()
-
+    
     # Filter
-    max_websites = df[df["Time spent (seconds)"] == max]
+    max_websites = df[df["Time spent (seconds)"==max]]
 
     return max_websites
 
 def load(df):
     # Save the dataframe somewhere
-    with open("save2.txt", "w") as f:
+    with open("save.txt", "w") as f:
         print(df, file=f)
 
 # Uncomment to run
-data = extract() # get the input
-df = transform(data) # process the input
-# print(df) # printing (optional)
+df = extract() # get the input
+df = transform(df) # process the input
+print(df) # printing (optional)
 load(df) # save the new data.
 
 """
@@ -118,11 +99,11 @@ We have a working pipeline!
 But this may seem rather silly ... why rewrite the pipeline
 to achieve the same behavior?
 
-=== Advantages of abstraction ===
+=== Tangent: advantages of abstraction ===
 
 Q: why abstract the steps into Python functions?
 
-(instead of just using a plain script, Jupyter notebook, etc.)
+(instead of just using a plain script)
 
 ETL steps are not done just once!
 
@@ -137,7 +118,7 @@ A possible development lifecycle:
   Building or developing a working pipeline
   -> a script or abstracted functions would both work!
 
-- Production (and maintenance) time:
+- Production time:
   Deploying my pipeline & reusing it for various purposes
   (e.g., I want to run it like 5x per day)
   -> pipeline needs to be reused multiple times
@@ -157,8 +138,7 @@ I want you to get used to thinking of processing directly "as code",
 good abstractions via functions and classes, and follow good practices like
 unit tests, etc. to integrate the code into a larger project.
 
-Grouping our code into well-abstracted functions
-means we can test the code:
+Abstractions means we can test the code:
 """
 
 import pytest
@@ -166,7 +146,7 @@ import pytest
 # Unit test example
 # @pytest.mark.skip # uncomment to skip this test
 def test_extract():
-    df = pd.DataFrame(extract())
+    df = extract()
     # What do we want to test here?
     # Test that the result has the data type we expect
     assert type(df) is not None
@@ -176,40 +156,24 @@ def test_extract():
 
 # @pytest.mark.skip # uncomment to skip this test
 def test_transform():
-    data = extract()
-    df = transform(data)
+    df = extract()
+    df = transform(df)
     # check that there is exactly one output
     assert df.count().values[0] == 1
 
 # Run:
-# - pytest 2-etl.py
+# - pytest lecture.py
 
 """
 Discussion Question / Poll:
 
-https://forms.gle/REBtUGxyzHQgH73V6
-
 1. Can you think of any scenario where test_extract() will fail?
+Anything relating to extract function failing and not returning anything
 
 2. Will test_transform() always pass, no matter the input data set?
+No
 
 ===== Recap =====
 
-- Want: a general model of data processing pipelines
 
-- We discussed a first-cut model: Extract Transform Load (ETL)
-
-    Any data process job can be split into three stages,
-    input, processing, output
-    (extract, transform, load)
-
-- We discussed the benefits of abstraction:
-
-    Organizing our pipeline into "stages" -- abstracted via
-    Python functions -- can be a helpful way to think about the code,
-    but can also make the code more reusable, more maintainable,
-    more testable, and generally more useful in production,
-    especially for later stages in the development lifecycle.
-
-Next we will introduce a better model for general data processing pipelines - Dataflow Graphs.
 """
