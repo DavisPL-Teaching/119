@@ -23,7 +23,7 @@ Let's separate it into stages as follows:
 (min) = compute the min
 (avg) = compute the avg
 (print) = Print the max, min, and avg
-(save) = Save the max, min, and avg in a dataframe to a file
+(save) = Save the max, min, and avg in a dataframe to the output CSV file.
 
 === Discussion Question and Poll ===
 
@@ -38,19 +38,11 @@ https://forms.gle/ZhpUziw8XTU5tgwC6
 
 Answer:
 
+    (see blackboard)
 
-
-
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
+           -> (max) ----|--> (print)
+    (read) -> (min) ----|
+           -> (avg) ----|--> (save)
 
 Key points:
 
@@ -73,9 +65,8 @@ Key points:
 
 A couple of more definitions:
 
-- A stage B *depends on* a stage A if...
-
-
+- A node B *depends on* a node A if...
+    there is a path of edges from A to B
 
     point: The dataflow graph reveals exactly which computations depend on which others!
 
@@ -107,10 +98,16 @@ Let's just write one example, in the interest of time
 """
 
 def max_stage(df):
-    # TODO
-    raise NotImplementedError
+    max_year = df["Year"].max()
+    return max_year
 
 """
+If we were to do this for all of the 6 stages, what we would obtain
+is then a Python function for each node in our dataflow graph
+
+And, the entire dataflow graph would then be a sequence of these Python
+functions that are called.
+
 (Reminders for why this helps:
 
 - Better code re-use
@@ -131,7 +128,7 @@ Where in a pipeline is data validation most important?
 (There is more than one place where validation could help, but what's the most obvious place to start?)
 
 A: Right before transformations
-    (After sources)
+    (Typically: right after source nodes, before any internal operator nodes)
 
 Why?
     - Most common problem: malformed input
@@ -159,6 +156,10 @@ For traditional programs, there are two notions of performance that matter:
 - Memory usage or space complexity
 
 For data processing programs?
+
+We'll answer this next time.
+
+-------------------------
 
 .
 .

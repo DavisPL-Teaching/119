@@ -85,11 +85,18 @@ Questions?
 
 ## Friday, October 2
 
-Announcements:
+Announcements/Reminders:
 
-- HW1
+- HW1 Available
+  Part 1 accessible now. Parts 2/3 cover some material we will see in the next few class periods
+  Get started early!
+  Due in 2 weeks: Friday, Oct 16
 
-- My OH today
+  + Will be autograded
+
+  + We will provide a preliminary version (/60) -> final version (/100)
+
+- My OH today 415p
 
 Plan:
 
@@ -99,7 +106,7 @@ Plan:
 
 - Part 4 on Properties of dataflow graphs.
 
-
+Questions?
 
 
 

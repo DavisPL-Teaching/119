@@ -238,7 +238,7 @@ and for today's poll.)
 1. Write down all the stages in our pipeline
 2. Draw the nodes (one node per stage)
 3. Draw the edges
-4. Implement the code (one Python function per stage)
+4. Implement the code (or reimplement it) as one Python function per stage
 
 Let's consider how to write a slightly more realistic data processing pipeline
 using this recipe, first as a Python script, then as a dataflow graph.
@@ -267,7 +267,7 @@ Uncomment the below to see the pipeline.
 # DataFrame is just a table: it has rows and columns, and importantly,
 # each column has a type (all items in the column must share the same
 # type, e.g., string, number, etc.)
-# df = pd.read_csv("life-expectancy.csv")
+df = pd.read_csv("life-expectancy.csv")
 
 # To play around with our dataset:
 # python3 -i lecture.py
@@ -278,19 +278,19 @@ Uncomment the below to see the pipeline.
 # What should we compute about this data?
 
 # # A simple example:
-# min_year = df["Year"].min()
-# max_year = df["Year"].max()
-# print("Minimum year: ", min_year)
-# print("Maximum year: ", max_year)
-# avg = df["Period life expectancy at birth - Sex: all - Age: 0"].mean()
-# print("Average life expectancy: ", avg)
+min_year = df["Year"].min()
+max_year = df["Year"].max()
+print("Minimum year: ", min_year)
+print("Maximum year: ", max_year)
+avg = df["Period life expectancy at birth - Sex: all - Age: 0"].mean()
+print("Average life expectancy: ", avg)
 
-# # Tangent:
-# # We can do all of the above with df.describe()
+# Tangent:
+# We can do all of the above with df.describe()
 
-# # Save the output
-# out = pd.DataFrame({"Min year": [min_year], "Max year": [max_year], "Average life expectancy": [avg]})
-# out.to_csv("output.csv", index=False)
+# Save the output
+out = pd.DataFrame({"Min year": [min_year], "Max year": [max_year], "Average life expectancy": [avg]})
+out.to_csv("output.csv", index=False)
 
 """
 Q for Part 4: rewrite this as a Dataflow graph using the steps above.
