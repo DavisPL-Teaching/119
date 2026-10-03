@@ -1,10 +1,11 @@
 # Final details
 
-Thursday, Dec 11, 8-10am, same room as lecture
+Thursday, Dec 11, 10:30am-12:30pm, same room as lecture
 
 Closed-book, on paper, one-sided cheat sheet allowed (handwritten or typed).
 
-Similar structure to the midterm:
+**TBD for Fall Quarter 2026.**
+Similar structure to midterm and previous years:
 10 true/false, 8 multiple choice / short answer, 2 free response
 
 Study topic list: see `final_study_list.md`

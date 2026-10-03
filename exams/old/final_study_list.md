@@ -1,8 +1,7 @@
 # Final Study List
 
 Study list of topics for the final.
-
-**The final will cover Lectures 1-6.**
+**This is a study list from Fall 2025. It has not yet been updated for Fall Quarter 2026.**
 
 ## Lectures 1-4
 
