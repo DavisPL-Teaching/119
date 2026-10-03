@@ -108,8 +108,26 @@ Plan:
 
 Questions?
 
+## Monday, October 5
+
+Announcements/reminders:
+
+- **There will be no class on Friday, October 9** as I will be away at a conference.
+
+- HW1 due Friday, Oct 16
+
+Plan:
+
+- End of Part 4 (spoiler from end of last time)
+
+- Poll
+
+- Part 5: Performance.
+
+## Wednesday, October 7
 
 
-### Notes for later
 
-**There will be no class on Friday, October 9** as I will be away at a conference.
+## Friday, October 9
+
+No class.
