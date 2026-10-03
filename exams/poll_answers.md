@@ -1,3 +1,7 @@
+# In-class poll answers
+
+You can use the in-class polls to help study.
+
 Sep 23:
 Tools required and characteristics and needs of your application will change drastically with the size of the dataset.
 
