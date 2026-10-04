@@ -131,7 +131,7 @@ Where in a pipeline is data validation most important?
 (There is more than one place where validation could help, but what's the most obvious place to start?)
 
 A: Right before transformations
-    (After sources)
+    (After source nodes and before internal operator nodes)
 
 Why?
     - Most common problem: malformed input

@@ -264,7 +264,7 @@ https://pandas.pydata.org/docs/user_guide/indexing.html
 # DataFrame is just a table: it has rows and columns, and importantly,
 # each column has a type (all items in the column must share the same
 # type, e.g., string, number, etc.)
-# df = pd.read_csv("life-expectancy.csv")
+df = pd.read_csv("life-expectancy.csv")
 
 # To play around with our dataset:
 # python3 -i lecture.py
@@ -275,19 +275,19 @@ https://pandas.pydata.org/docs/user_guide/indexing.html
 # What should we compute about this data?
 
 # # A simple example:
-# min_year = df["Year"].min()
-# max_year = df["Year"].max()
-# print("Minimum year: ", min_year)
-# print("Maximum year: ", max_year)
-# avg = df["Period life expectancy at birth - Sex: all - Age: 0"].mean()
-# print("Average life expectancy: ", avg)
+min_year = df["Year"].min()
+max_year = df["Year"].max()
+print("Minimum year: ", min_year)
+print("Maximum year: ", max_year)
+avg = df["Period life expectancy at birth - Sex: all - Age: 0"].mean()
+print("Average life expectancy: ", avg)
 
 # # Tangent:
 # # We can do all of the above with df.describe()
 
-# # Save the output
-# out = pd.DataFrame({"Min year": [min_year], "Max year": [max_year], "Average life expectancy": [avg]})
-# out.to_csv("output.csv", index=False)
+# Save the output
+out = pd.DataFrame({"Min year": [min_year], "Max year": [max_year], "Average life expectancy": [avg]})
+out.to_csv("output.csv", index=False)
 
 """
 Q for next time: rewrite this as a Dataflow graph using the steps above
@@ -311,3 +311,10 @@ Revisiting the steps above:
 
 We have done 1 and (sort of) 3, we will do 2 at the start of class next time.
 """
+
+'''
+Homework: delete junk files like pycache before submission, only submit povided py files 
+else gradescope might not accept 
+
+CURRENTLY 10/2 cannot locate life-expectancy.csv file
+'''
