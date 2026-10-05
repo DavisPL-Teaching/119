@@ -13,6 +13,67 @@ True or false:
 
 1. Two different ways of writing the same overall computation can have two different dataflow graphs.
 
+Answers:
+- Well, there's usually more than one way to write a valid program, so it would
+  make sense if that's also true for dataflow graphs.
+- Two operators that are independent of one another? we don't care about the
+  order between them, so they would result in the same dataflow graph
+  no matter which order we do those operations in.
+- One program might be more efficient than the other
+- Could get a different graph depending on how you divide your pipeline into
+  "stages" or "nodes".
+
+Can we give an example?
+
+    df0 = pd.DataFrame("my-dataset.csv")
+    df1 = df0["x"].max()
+    df2 = df0["y"].min()
+
+    I need to divide my pipeline into tasks!
+
+    At least two ways:
+
+    One way of doing it:
+    1. load input data
+    2. calculate max of x
+    3. calculate min of y
+
+        ----> (2)
+    (1)
+        ----> (3)
+
+    Another way:
+    1. load input data
+    2. calculate max of x and the min of y.
+
+    (1) ----> (2)
+
+    If we were to write:
+
+    df0 = pd.DataFrame("my-dataset.csv")
+    df2 = df0["y"].min()
+    df1 = df0["x"].max()
+
+    ^^^^^ Different way of writing the computation
+
+    In one case, we get:
+
+        ----> (2)
+    (1)
+        ----> (3)
+
+    In the other case, we get:
+
+        ----> (3)
+    (1)
+        ----> (2)
+
+    These are really the same dataflow graph! Same nodes and edges.
+    So, this is an example of a different phenomenon:
+
+    - Two different ways of writing the same computation can have
+      the *same* dataflow graph.
+
 2. Operators always take longer to run than sources and sinks.
 
 3. It is usually most useful to insert data validation steps at the end of a dataflow graph, right
@@ -116,9 +177,23 @@ And in this example, the dataflow graph is also different:
 (input) -> (compute x + z) => (compute b + z).
 
 An easier example is .describe() from last time.
-"""
 
-"""
+(input) --> (describe)
+
+vs.
+
+        --> (min)
+(input) --> (max)
+        --> (avg)
+
+Main points:
+    - different ways of writing a computation can result in the same dataflow graph
+    - different ways of writing a computation can result in a different dataflow graph
+    - the dataflow graph we get depends on the delineation of the computation into
+      nodes or "stages"
+    - the dataflow graph and the program represent the computation in structurally
+      or conceptually different ways.
+
 --------------------------------------------------------------------------------
 
 Last time, we reviewed the notions of performance for traditional programs.
@@ -188,6 +263,9 @@ Two ways:
 
     - Often linear!
 
+        Even if it's not linear: "linear" is almost always a better
+        approximation than "constant".
+
     - The more input items, the longer it will take to run
 
     So it makes sense to measure the performance in a way that takes this
@@ -215,6 +293,27 @@ Two ways:
     "number of things done per unit time"
 
 Is this the only way to measure performance?
+
+No - we will get to the other, "latency", next time.
+
+Recap:
+
+- Poll covered some T/F on dataflow graphs
+
+    We saw that different ways of writing a computation (for example in Python)
+    may or may not yield the same dataflow graph, depending on the computation
+    and on how we divide into stages
+
+    We defined throughput, which we argued is a better model of performance
+    for dataflow graphs compared to running time
+
+    We saw the formula:
+
+        Throughput = (total # of input rows processed)
+                     /
+                     (total running time of the pipeline).
+
+----
 
 We also care about the individual level view: how long it takes to process
 a *specific* item or order.

@@ -116,6 +116,8 @@ Announcements/reminders:
 
 - HW1 due Friday, Oct 16
 
+  After today: parts 1 + 2 accessible
+
 Plan:
 
 - End of Part 4 (spoiler from end of last time)

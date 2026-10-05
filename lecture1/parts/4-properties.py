@@ -203,5 +203,5 @@ We showed that dataflow graphs can be used to study and visualize different prop
 of a data processing job. (Example: testing/validation, input/output)
 
 We argued that analogous to regular computer programs for the traditional computing world,
-    dataflow graphs are the right notion of computer programs for the data processing world.
+dataflow graphs are the right notion of computer programs for the data processing world.
 """
