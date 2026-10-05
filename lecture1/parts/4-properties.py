@@ -171,6 +171,16 @@ We'll answer this next time.
 .
 .
 .
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
 
 We'll care about the most:
 - Running time corresponds to: Throughput & Latency
@@ -186,7 +196,11 @@ We reviewed the definition of dataflow graph
 
 We practiced drawing dataflow graphs
 
-We used dataflow graphs to explore various features of a data processing computation
+    The example in the poll was relatively straightforward!
+    In some cases these can get more complicated.
+
+We showed that dataflow graphs can be used to study and visualize different properties
+of a data processing job. (Example: testing/validation, input/output)
 
 We argued that analogous to regular computer programs for the traditional computing world,
     dataflow graphs are the right notion of computer programs for the data processing world.

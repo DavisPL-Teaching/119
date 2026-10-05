@@ -112,7 +112,7 @@ Questions?
 
 Announcements/reminders:
 
-- **There will be no class on Friday, October 9** as I will be away at a conference.
+- **There will be no class on Friday (October 9)** as I will be away at a conference.
 
 - HW1 due Friday, Oct 16
 
@@ -124,7 +124,12 @@ Plan:
 
 - Part 5: Performance.
 
+- Plan is to finish Lecture 1 this week.
+
+Questions?
+
 ## Wednesday, October 7
+
 
 
 
