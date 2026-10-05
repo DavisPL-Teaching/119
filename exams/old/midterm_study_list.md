@@ -1,8 +1,7 @@
 # Midterm Study List
 
 Study list of topics for the midterm.
-
-**The midterm will cover Lecture 1, Lecture 2, and Lecture 4 up through Data Parallelism (in Part 4).**
+**This is a study list from Fall 2025. It has not yet been updated for Fall Quarter 2026.**
 
 You should know all of the following concepts, but I won't test you on syntax.
 - For example, you won't be asked to write code on the exam,

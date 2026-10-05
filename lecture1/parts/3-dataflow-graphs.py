@@ -237,7 +237,7 @@ and for today's poll.)
 1. Write down all the stages in our pipeline
 2. Draw the nodes (one node per stage)
 3. Draw the edges
-4. Implement the code (one Python function per stage)
+4. Implement the code (or reimplement it) as one Python function per stage
 
 Let's consider how to write a slightly more realistic data processing pipeline
 using this recipe, first as a Python script, then as a dataflow graph.
@@ -282,8 +282,8 @@ print("Maximum year: ", max_year)
 avg = df["Period life expectancy at birth - Sex: all - Age: 0"].mean()
 print("Average life expectancy: ", avg)
 
-# # Tangent:
-# # We can do all of the above with df.describe()
+# Tangent:
+# We can do all of the above with df.describe()
 
 # Save the output
 out = pd.DataFrame({"Min year": [min_year], "Max year": [max_year], "Average life expectancy": [avg]})

@@ -23,7 +23,7 @@ Let's separate it into stages as follows:
 (min) = compute the min
 (avg) = compute the avg
 (print) = Print the max, min, and avg
-(save) = Save the max, min, and avg in a dataframe to a file
+(save) = Save the max, min, and avg in a dataframe to the output CSV file.
 
 === Discussion Question and Poll ===
 
@@ -38,19 +38,11 @@ https://forms.gle/ZhpUziw8XTU5tgwC6
 
 Answer:
 
+    (see blackboard)
 
-
-
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
+           -> (max) ----|--> (print)
+    (read) -> (min) ----|
+           -> (avg) ----|--> (save)
 
 Key points:
 
@@ -73,9 +65,8 @@ Key points:
 
 A couple of more definitions:
 
-- A stage B *depends on* a stage A if...
-
-
+- A node B *depends on* a node A if...
+    there is a path of edges from A to B
 
     point: The dataflow graph reveals exactly which computations depend on which others!
 
@@ -107,10 +98,16 @@ Let's just write one example, in the interest of time
 """
 
 def max_stage(df):
-    # TODO
-    raise NotImplementedError
+    max_year = df["Year"].max()
+    return max_year
 
 """
+If we were to do this for all of the 6 stages, what we would obtain
+is then a Python function for each node in our dataflow graph
+
+And, the entire dataflow graph would then be a sequence of these Python
+functions that are called.
+
 (Reminders for why this helps:
 
 - Better code re-use
@@ -160,6 +157,20 @@ For traditional programs, there are two notions of performance that matter:
 
 For data processing programs?
 
+We'll answer this next time.
+
+-------------------------
+
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
 .
 .
 .
@@ -185,7 +196,11 @@ We reviewed the definition of dataflow graph
 
 We practiced drawing dataflow graphs
 
-We used dataflow graphs to explore various features of a data processing computation
+    The example in the poll was relatively straightforward!
+    In some cases these can get more complicated.
+
+We showed that dataflow graphs can be used to study and visualize different properties
+of a data processing job. (Example: testing/validation, input/output)
 
 We argued that analogous to regular computer programs for the traditional computing world,
     dataflow graphs are the right notion of computer programs for the data processing world.

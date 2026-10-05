@@ -1,5 +1,5 @@
 """
-October 5 (Planned)
+October 5
 
 Part 5: Performance
 
@@ -15,17 +15,60 @@ True or false:
 
 2. Operators always take longer to run than sources and sinks.
 
-3. Typically, every node in a dataflow graph takes the same amount of time to run.
+3. It is usually most useful to insert data validation steps at the end of a dataflow graph, right
+   before the sinks.
 
+https://forms.gle/gJ7d2CuAqqntoB5g6
 
-
-
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
 
 For 1:
-Max and min?
-Say I have a dataset in a dataframe df with fields x and y
-And I want to do df["x"].max()
-and df["x"].min()
+An example?
+
+What about the opposite phenomenon:
+1b. Two different ways of writing the same overall computation can have *the same* dataflow graph?
+
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+
+Examples (as needed)
 """
 
 # df = load_input_dataset()
@@ -48,11 +91,9 @@ Dataflow graph with nodes
 
 Same graph! Has the same nodes, and has the same edges.
 
-This is actually a great example of a slightly different phenomenon:
+Returning to:
 
-1b. Two different ways of writing the same overall computation can have *the same* dataflow graph.
-
-A different example?
+1. Two different ways of writing the same overall computation can have *two different* dataflow graphs.
 
 If one operator does depend on the other, BUT the answer doesn't depend on the order, you could rearrange them to get an example where
 - the overall computation was the same, but
@@ -78,19 +119,26 @@ An easier example is .describe() from last time.
 """
 
 """
+--------------------------------------------------------------------------------
+
 Last time, we reviewed the notions of performance for traditional programs.
 
 There's two types of performance that matter: time & space.
 
 For data processing programs?
 
+It turns out, there are actually two different notions of running time.
+We will see how they are importantly different.
+
+.
+.
+.
+.
+.
+
 ===== Running time for data processing programs =====
 
-Running time has two analogs. We will see how these are importantly different!
-
-- Throughput
-
-    What is throughput?
+Motivation:
 
     Most pipelines run slower the more input items you have!
 
@@ -107,7 +155,40 @@ Running time has two analogs. We will see how these are importantly different!
     10,000 rows => ~10 ms
     100,000 rows => ~100 ms
 
-    - Often linear: the more input items, the longer it will take to run
+"This job is running very slow (4+ hours)" --> Probably just has a lot of data to process
+
+"This job terminates in a few seconds" --> Probably just not a lot of data involved! :-)
+
+    (Like our Alice, Charlie dataset from part 1, with only two users and 3 rows)
+
+BUT:
+This isn't very useful.
+dataset size changes!
+
+    --> we may run on only a few rows in testing, and then scale up to a huge dataset in
+        production
+
+So how do we measure running time in a way that isn't simply a reflection of the
+size of our dataset?
+
+===== Throughput and latency =====
+
+Two ways:
+
+- Throughput
+
+    What is throughput?
+
+    Revisting our example above:
+
+    Example:
+    1000 rows => 1 ms
+    10,000 rows => ~10 ms
+    100,000 rows => ~100 ms
+
+    - Often linear!
+
+    - The more input items, the longer it will take to run
 
     So it makes sense to measure the performance in a way that takes this
     into account:
