@@ -132,8 +132,19 @@ Questions?
 
 ## Wednesday, October 7
 
+Reminders:
 
+- No class on Friday
 
+  + No OH, but happy to schedule something outside of the regular hours if needed
+
+- HW1 due Friday, Oct 16
+
+Plan:
+
+- Finish Part 5
+
+- Part 6
 
 ## Friday, October 9
 

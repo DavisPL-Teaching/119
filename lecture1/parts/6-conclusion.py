@@ -4,12 +4,10 @@ October 7 (Planned)
 Part 6:
 Recap on Throughput & Latency and Conclusion
 
-Recap from last time:
-
 Throughput:
-    Measured in number items processed / second
+    Measured in number items or rows processed / second
 
-    N = number of input items (size of input dataset(s))
+    N = number of input items or rows (size of input dataset(s))
     T = running time of your full pipeline
     Formula =
         N / T
@@ -23,7 +21,7 @@ Latency:
     Often (but not always) measured for a pipeline with just
     one input item.
 
-Discussion question:
+=== Poll ===
 
 A health company's servers process 12,000 medical records per day.
 The medical records come in at a uniform rate between 9am and 9pm every day (1,000 records per hour).
@@ -35,7 +33,7 @@ What is the throughput of the pipeline?
 What number would best describe the *average latency* of the pipeline?
 Describe the justification for your answer.
 
-https://forms.gle/AFL2SrBr5MhwVV3h7
+https://forms.gle/3U3LspuTUbpAFY5Z8
 """
 
 """
@@ -45,10 +43,12 @@ Let's see an example
 
 We need a pipeline so that we can measure the total running time & the throughput.
 
-I've taken the pipeline from earlier for country data and rewritten it below.
+Using an example pipeline on the country dataset
 
 see throughput_latency.py
 """
+
+import pandas as pd
 
 def get_life_expectancy_data(filename):
     return pd.read_csv(filename)
@@ -76,7 +76,7 @@ def f():
     pipeline("life-expectancy.csv", "output.csv")
 
 # Run the pipeline
-# f()
+f()
 
 """
 === Latency (additional notes - SKIP) ===
@@ -136,11 +136,7 @@ https://github.com/DavisPL-Teaching/119/blob/main/schedule.md
 
 === Closing quotes ===
 
-Fundamental theorem of computer science:
-
-    "Every problem in computer science can be solved by another layer of abstraction."
-
-    - Based on a statement attributed to Butler Lampson
+    "Every problem in software engineering can be solved by another layer of abstraction."
     https://en.wikipedia.org/wiki/Fundamental_theorem_of_software_engineering
 
 A dataflow graph is an abstraction (why?), but it is a very useful one.
@@ -169,9 +165,3 @@ if __name__ == "__main__":
     # pipeline("life-expectancy.csv", "output.csv")
 
     pass
-
-# NB: If importing lecture.py as
-# a library, the main function (above) doesn't get run.
-# If running it directly from the terminal,
-# the main function does get run.
-# See test file: main_test.py

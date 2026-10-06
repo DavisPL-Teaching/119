@@ -5,7 +5,9 @@ Throughput: Number of items processed per unit time
 Latency: Time taken to process a single item
 """
 
-from lecture import pipeline, get_life_expectancy_data
+part6 = __import__('6-conclusion')
+pipeline = part6.pipeline
+get_life_expectancy_data = part6.get_life_expectancy_data
 
 """
 Timeit:

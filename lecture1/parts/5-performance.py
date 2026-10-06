@@ -246,51 +246,47 @@ dataset size changes!
 So how do we measure running time in a way that isn't simply a reflection of the
 size of our dataset?
 
-===== Throughput and latency =====
+===== Throughput =====
 
-Two ways:
+What is throughput?
 
-- Throughput
+Revisting our example above:
 
-    What is throughput?
+Example:
+1000 rows => 1 ms
+10,000 rows => ~10 ms
+100,000 rows => ~100 ms
 
-    Revisting our example above:
+- Often linear!
 
-    Example:
-    1000 rows => 1 ms
-    10,000 rows => ~10 ms
-    100,000 rows => ~100 ms
+    Even if it's not linear: "linear" is almost always a better
+    approximation than "constant".
 
-    - Often linear!
+- The more input items, the longer it will take to run
 
-        Even if it's not linear: "linear" is almost always a better
-        approximation than "constant".
+So it makes sense to measure the performance in a way that takes this
+into account:
 
-    - The more input items, the longer it will take to run
+    running time = (number of input items) * (running time per item)
 
-    So it makes sense to measure the performance in a way that takes this
-    into account:
+    (running time per item) = (running time) / (number of input items)
 
-        running time = (number of input items) * (running time per item)
+Throughput is the inverse of this:
+Definition / formula:
+    (Number of input items) / (Total running time).
 
-        (running time per item) = (running time) / (number of input items)
+Intuitively: how many rows my pipeline is capable of processing,
+per unit time
 
-    Throughput is the inverse of this:
-    Definition / formula:
-        (Number of input items) / (Total running time).
+There's many real-world examples of this concept:
 
-    Intuitively: how many rows my pipeline is capable of processing,
-    per unit time
+    -> the number of electrons passing through a wire per second
 
-    There's many real-world examples of this concept:
+    -> the number of drops of water passing through a stream per second
 
-        -> the number of electrons passing through a wire per second
+    -> the number of orders processed by a restaurant per hour
 
-        -> the number of drops of water passing through a stream per second
-
-        -> the number of orders processed by a restaurant per hour
-
-    "number of things done per unit time"
+"number of things done per unit time"
 
 Is this the only way to measure performance?
 
@@ -300,20 +296,24 @@ Recap:
 
 - Poll covered some T/F on dataflow graphs
 
-    We saw that different ways of writing a computation (for example in Python)
-    may or may not yield the same dataflow graph, depending on the computation
-    and on how we divide into stages
+We saw that different ways of writing a computation (for example in Python)
+may or may not yield the same dataflow graph, depending on the computation
+and on how we divide into stages
 
-    We defined throughput, which we argued is a better model of performance
-    for dataflow graphs compared to running time
+We defined throughput, which we argued is a better model of performance
+for dataflow graphs compared to running time
 
-    We saw the formula:
+We saw the formula:
 
-        Throughput = (total # of input rows processed)
-                     /
-                     (total running time of the pipeline).
+    Throughput = (total # of input rows processed)
+                    /
+                    (total running time of the pipeline).
 
-----
+---------
+
+Starting here 10/5.
+
+===== Latency =====
 
 We also care about the individual level view: how long it takes to process
 a *specific* item or order.
@@ -384,6 +384,4 @@ We introduced throughput + latency
 - Restaurant analogy
 - We saw formulas for each
 - Both measures of performance in terms of running time at an "individual row" level, but throughput is an aggregate measure and latency is viewed at the level of an individual row.
-
-********** Where we ended for today **********
 """
