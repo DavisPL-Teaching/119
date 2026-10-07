@@ -55,6 +55,7 @@ def throughput(num_runs):
         pipeline(IN_FILE_THROUGHPUT, "output.csv")
 
     # Measure execution time
+    # Returns seconds
     execution_time = timeit.timeit(f, number=num_runs)
 
     # Print and return throughput

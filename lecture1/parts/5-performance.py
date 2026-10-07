@@ -320,6 +320,10 @@ that is processed per unit time (seconds, ms, minutes, hours, etc.)
 Some of you noticed this is similar to "network throughput". Yes, this is
 another valid usage of where the terminology comes from.
 
+Formula:
+
+    Throughput = (Total # of input data rows processed) / (End time - start time)
+
 How to measure?
 
 - In the context of data processing we are interested in total data throughput,
@@ -338,16 +342,17 @@ a *specific* item or order.
 We also might measure, for an individual order, how long it takes for
 results for that order to come out of our pipeline.
 
+Formula:
+
     Latency =
-    (time at which output is produced) - (time at which input is received)
+    (time at which output for an item is produced) - (time at which input item is received)
 
 This is called latency.
 
 It almost seems like we've defined the same thing twice?
 
 But these are not the same.
-Simplest way to see this is that we might process more than one item at
-the same time.
+Simplest way to see it is with an example:
 
 Ex:
     Restaurant processes 60 orders per hour
@@ -384,21 +389,30 @@ What about latency?
 
         = roughly 1 minutes
 
+Reason they are different: we might process more than one item at
+the same time.
+
 Both measures of running time at a "per item" or "per row" level,
 but they can be very different.
 
 It is NOT always the case that Throughput = 1 / Latency
+
+    Throughput != 1 / Latency
+
 or that Throughput and Latency are directly correlated (or inversely correlated).
 
 ===== Recap =====
 
-We talked about how computations are represented as dataflow graphs
-to illustrate some important points:
-- The same computation (computed in different ways) can have two different dataflow graphs
-- The same computation (computed in different ways) could have two of the same dataflow graph
-
 We introduced throughput + latency
+
 - Restaurant analogy
 - We saw formulas for each
-- Both measures of performance in terms of running time at an "individual row" level, but throughput is an aggregate measure and latency is viewed at the level of an individual row.
+
+    Formulas:
+        Throughput = (Total # of input data rows processed) / (End time - start time)
+
+        Latency = (time at which output is produced) - (time at which input is received)
+
+- Both measures of performance in terms of running time --
+    latency is at an "individual row" level, but throughput is an aggregate measure.
 """

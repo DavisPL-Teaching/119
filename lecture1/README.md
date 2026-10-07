@@ -132,7 +132,14 @@ Questions?
 
 ## Wednesday, October 7
 
-Reminders:
+Announcements/Reminders:
+
+- Projector issues:
+
+  Ongoing fix! They have replaced the cables and a night crew will be coming in to work on
+  the projector (possible heat shutoff)
+
+  If heat shutoff occurs, I will try reconnecting 1-2x (third time I will switch to zoom)
 
 - No class on Friday
 
@@ -142,7 +149,17 @@ Reminders:
 - HW1 due Friday, Oct 16
 
 Plan:
+Finish up performance:
 
 - Finish Part 5
 
+  + We did throughput
+  + now latency
+  + formulas
+
 - Part 6.
+
+  + Conclusion
+  + Throughput/Latency calculation example
+
+Questions?

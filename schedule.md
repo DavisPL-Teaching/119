@@ -1,8 +1,6 @@
 # ECS 119 Tentative Course Schedule - Fall 2025
 
-**Important note:**
-This schedule is subject to change.
-I will try to keep it up to date, but please see Piazza for the latest information and homework deadlines.
+**Schedule from a previous iteration of the course -- Fall 2025**
 
 ## Section 1: Data Processing Basics
 

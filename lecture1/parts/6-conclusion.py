@@ -1,5 +1,5 @@
 """
-October 7 (Planned)
+October 7
 
 Part 6:
 Recap on Throughput & Latency and Conclusion
@@ -21,6 +21,9 @@ Latency:
     Often (but not always) measured for a pipeline with just
     one input item.
 
+    --> note on your HW! because you will need to take the input dataset(s)
+        for part 1, and define a version of each dataset with only one input row.
+
 === Poll ===
 
 A health company's servers process 12,000 medical records per day.
@@ -34,6 +37,35 @@ What number would best describe the *average latency* of the pipeline?
 Describe the justification for your answer.
 
 https://forms.gle/3U3LspuTUbpAFY5Z8
+
+1.:
+    12,000 / day
+    16.66 / minute
+        ===> 1,000 / hour
+
+    Throughput = N / T
+    N = 12,000 items
+    T = 9am to 9pm = 12 hours
+    12,000 / 12 hours = 1,000 / hr
+    days: 12,000 / 0.5 day = ...
+
+    Latency:
+
+        Medical records come in at a uniform rate
+        Worst case scenario: medical record comes at the beginning of the hour:
+            takes 60 minutes to process
+        Best case scenario: medical record comes at the end of the hour:
+            immediately processed
+
+        Average: roughly 30 minutes on average.
+
+    Main points:
+        - Apply formulas
+        - Latency you want to be thinking at an individual item / record / row level
+
+    Correct answers:
+        1000 items/hr or 16.67 / minute
+        30 minutes
 """
 
 """
@@ -114,10 +146,17 @@ What about the equivalent of memory usage?
 I will not discuss this in detail at this point, but will offer a few important ideas:
 
 - Input size:
+    "memory required by a pipeline" is
+    roughly proportional to size of all input datasets
+        (That's the same as that parameter N that we saw earlier)
 
 - Output size:
+    "memory required by a pipeline" is
+    also related to size of all output datasets
 
 - Window size:
+    For example: in the healthcare poll for today, window size could be defined
+    as "how many records are being processed at any given moment, in the worst case"
 
 - Distributed notions: Number of machines, number of addresses on each machine ...
 
@@ -134,7 +173,25 @@ For data processing programs?
 Overview of the schedule (tentative), posted at:
 https://github.com/DavisPL-Teaching/119/blob/main/schedule.md
 
-=== Closing quotes ===
+From a previous year, not updated for this year
+
+Check out the file structure in the GitHub repository for a complete
+list of topics.
+
+=== Closing thoughts ===
+
+We defined a dataflow graph, which we argued is a model of computation for general
+data processing programs
+
+    A better model of what data processing software is than a traditional program
+
+We saw (and will see) that using dataflow graphs can be helpful to think about properties
+of our pipeline, such as ordering/dependence, data validation, performance.
+
+Throughput&latency can be roughly calculated from the dataflow graph
+    (We'll talk about how to do that)
+
+Quote:
 
     "Every problem in software engineering can be solved by another layer of abstraction."
     https://en.wikipedia.org/wiki/Fundamental_theorem_of_software_engineering
