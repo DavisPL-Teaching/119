@@ -43,7 +43,7 @@ Let's see an example
 
 We need a pipeline so that we can measure the total running time & the throughput.
 
-Using an example pipeline on the country dataset
+This example pipeline uses the country dataset
 
 see throughput_latency.py
 """

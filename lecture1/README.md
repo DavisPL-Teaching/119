@@ -136,7 +136,8 @@ Reminders:
 
 - No class on Friday
 
-  + No OH, but happy to schedule something outside of the regular hours if needed
+  + No OH - please let me know if you need to schedule something outside of the regular hours,
+    and you **cannot** make the TA hours on Monday.
 
 - HW1 due Friday, Oct 16
 
