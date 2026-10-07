@@ -145,8 +145,4 @@ Plan:
 
 - Finish Part 5
 
-- Part 6
-
-## Friday, October 9
-
-No class.
+- Part 6.

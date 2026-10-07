@@ -313,7 +313,24 @@ We saw the formula:
 
 Starting here 10/5.
 
+Last time, we saw Throughput: it measures the
+**amount of data** (in data items, rows, or bytes)
+that is processed per unit time (seconds, ms, minutes, hours, etc.)
+
+Some of you noticed this is similar to "network throughput". Yes, this is
+another valid usage of where the terminology comes from.
+
+How to measure?
+
+- In the context of data processing we are interested in total data throughput,
+    which will be over all input datasets, and
+
+- total job time, which is from the start of a job to the end of when the job completes.
+
 ===== Latency =====
+
+Throughput is about the "big picture" view: how much data is being processed
+in how much time.
 
 We also care about the individual level view: how long it takes to process
 a *specific* item or order.
