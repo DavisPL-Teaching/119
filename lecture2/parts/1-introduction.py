@@ -46,6 +46,16 @@ The poll will also ask you a couple of questions to get feedback on how the cour
 
 https://forms.gle/B7oYUk3zfnH3qAf66
 
+For throughput:
+
+    Throughput = N / T
+
+    Generally, as a rule, throughput T is linearly related to
+    (or proportional to) the size of the dataset, meaning that
+    T = constant * N <-- first approximation
+
+    Throughput = N / (constant * N) = 1 / constant
+
 .
 .
 .
@@ -72,7 +82,7 @@ https://forms.gle/B7oYUk3zfnH3qAf66
 .
 .
 
-  ==== Some notes about running time and throughput (optional) ===
+  ==== Some notes about running time and throughput (optional) (SKIP) ===
 
   Throughput = N / T
 
@@ -92,6 +102,12 @@ https://forms.gle/B7oYUk3zfnH3qAf66
   - if N -> infinity (more data than the laptop/machine can handle at all), throughput will again tank because the system will
   just completely crash or lag / be unable to do things.
 
+.
+.
+.
+.
+.
+
 ===== Introduction =====
 
 === What is the Shell? ===
@@ -100,6 +116,7 @@ The shell is how commands are run on most systems - it is the "root user" interf
 
 The shell is a way to talk to your computer, run arbitrary commands,
 and connect those commands together.
+
 It solves the "glue code problem".
 
 === Why learn about the shell? ===
@@ -110,7 +127,8 @@ Questions:
 
 - If I can use a well-designed GUI app (such as my Git installation), why should I use the shell?
 
-- If I can use my AI to generate shell commands or have it interface with a computer directly, why use the shell?
+- If I can use my AI to generate shell commands or have it interface with a computer directly,
+  why should I know about the shell?
 
 Answers:
 
@@ -174,12 +192,40 @@ Let's open up the shell now.
 # VSCode: Ctrl+` (backtick)
 # GitHub Codespaces: Bottom part of the screen
 
+# You can use any shell you prefer, with the caveat that on Windows I do NOT recommend
+# using Windows Powershell - use WSL
+
 # Once we have a shell open, we have a "command prompt" where
 # we can run arbitrary commands/programs on the computer (so it's
 # like an admin window into your machine.)
 
+# python3 lecture.py
+print("Welcome to ECS 119 Lecture 2.")
+
+# python3 -i lecture.py
+# Quitting: Ctrl-C, Ctrl-D
+
 """
-=== Additional Examples where programmers and data scientists regularly use the shell ===
+=== Using the shell -- examples ===
+
+Examples we have seen:
+
+- ls (stands for "list")
+  Show all files/folders in the current folder
+
+- cd: change directory
+
+(ls/cd often work together)
+
+- python3 <code>.py: Run the python code found in <code>.py
+
+  if python3 doesn't work: try python
+
+NOTE: tab-autocomplete: very useful
+  (saves keystrokes)
+  (will cycle through theh options if there's more than one.)
+
+=== Additional Examples where programmers and data scientists regularly use the shell (SKIP) ===
 
 - You have bought a new server machine from Dell, and you want to connect to
   it to install some software on it.
@@ -216,31 +262,23 @@ Shell on different operating systems?
   Use the shell built into VSCode
 
 (don't recommend powershell)
-"""
-
-# python3 lecture.py
-print("Welcome to ECS 119 Lecture 2.")
-
-# python3 -i lecture.py
-# Quitting: Ctrl-C, Ctrl-D
-
-"""
-=== Using the shell -- examples ===
-
-Examples we have seen:
-
-- ls (stands for "list")
-  Show all files/folders in the current folder
-
-- cd: change directory
-
-(ls/cd often work together)
-
-- python3 <code>.py: Run the python code found in <code>.py
-
-NOTE: tab-autocomplete: very useful
-  (saves keystrokes)
-  (will cycle through theh options if there's more than one.)
 
 === Recap ===
+
+- On the poll,
+  We reviewed throughput/latency -- units; how to apply the formula N / T to make conclusions
+  about how throughput/latency change with N and with T
+  and other T/F questions
+
+- We introduced the shell, covering:
+
+  + Why learn about the shell? Why is it useful and important, and why is it used in data science
+    and data/ML engineering practice
+
+  + Motivation for the shell and the "glue code" problem - how to put together different pieces of
+    software written in or provided in various languages or frameworks
+
+  + We opened up a shell and ran a few basic commands to practice, covering
+
+    ls, cd, python/python3 and tab-autocomplete.
 """

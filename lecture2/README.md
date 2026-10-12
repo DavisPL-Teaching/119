@@ -2,9 +2,21 @@
 
 ## Monday, October 12
 
+First day of Lecture 2.
+
 Announcements/reminders:
 
 - HW1 due Friday
+
+    + We will make the "preliminary version" of the autograder
+      by tomorrow
+
+- Projector issues:
+
+    They did come by last week
+
+    Plan B to ask people in person to open up the Zoom remains in effect in case of
+    any issues that can't be resolved
 
 Plan:
 
@@ -20,3 +32,5 @@ Plan:
   + Why use the shell?
 
   + What it is used for and basic examples.
+
+Questions about HW1 or lecture plan?
