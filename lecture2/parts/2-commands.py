@@ -10,7 +10,7 @@ Which of the following are reasons you might want to use the shell? (Select all 
 
 <Options cut>
 
-https://forms.gle/YrsjyyXe5Ve1aqEM7
+https://forms.gle/UhQckCFjSP7rQpjF6
 
 -----
 
@@ -18,10 +18,11 @@ Last time we saw: ls, cd, python3
 
 (btw: ls is short for "list")
 (cd: . = current folder, .. = parent folder)
-
 (autocomplete; up/down arrow)
 
-Remaining commands:
+=== Additional material ===
+
+Additional commands:
 
 - pytest <code>.py:
   Run pytest (Python unit testing framework) on a Python program
@@ -165,7 +166,9 @@ Everything that can be done in Python can be done in the shell
 
 So knowing shell stuff might help you with running
 systems-level stuff in Python, and vice versa.
+"""
 
+"""
 ===== A model for interacting with the shell: 3 types of command =====
 
 We saw how to run basic commands in the shell and what it means.
@@ -198,7 +201,7 @@ https://textadventures.co.uk/games/play/5zyoqrsugeopel3ffhz_vq
 
 If you know how to play Zork then you know how to work with the shell.
 
-Recap:
+=== Recap ===
 
 - We saw some stuff about hidden files/folders (starting with .)
 
@@ -208,6 +211,4 @@ Recap:
   with the shell
 
 - We introduced a 3-category analogy for shell commands: Info commands, Help commands, and "Do something" commands.
-
-********** Where we ended for today **********
 """

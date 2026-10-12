@@ -34,3 +34,13 @@ Plan:
   + What it is used for and basic examples.
 
 Questions about HW1 or lecture plan?
+
+## Wednesday, October 14
+
+Announcements/reminders:
+
+- HW1 due Friday
+
+Plan:
+
+- Lecture 2 part 2:
