@@ -10,4 +10,13 @@ Plan:
 
 - Start with the poll
 
-- Begin lecture 2, part 1, on the shell.
+    + The poll will also ask you a couple of questions to get feedback on how the course is going so far.
+
+- Begin lecture 2: on the shell.
+  Part 1, introduction.
+
+  + What is the shell?
+
+  + Why use the shell?
+
+  + What it is used for and basic examples.

@@ -37,14 +37,42 @@ Seconds / item
 
 2. True or false?
 
-Throughput always (increases, decreases, is constant) with the size of the dataset
-Running time generally increases with the size of the dataset
-Latency is often measured using a dataset with only one item
-Latency always decreases if more than one item is processed at the same time
+- Throughput always (increases, decreases, is constant) with the size of the dataset
+- Running time generally increases with the size of the dataset
+- Latency is often measured using a dataset with only one item
+- Latency always decreases if more than one item is processed at the same time
 
-https://forms.gle/JE4R1bMU13JAvAE36
+The poll will also ask you a couple of questions to get feedback on how the course is going so far.
 
-Running time generally increases - True
+https://forms.gle/B7oYUk3zfnH3qAf66
+
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+
+  ==== Some notes about running time and throughput (optional) ===
 
   Throughput = N / T
 
@@ -66,44 +94,76 @@ Running time generally increases - True
 
 ===== Introduction =====
 
-=== Scripting and the "Glue code" problem ===
+=== What is the Shell? ===
 
-Programs are not very useful on their own.
-We need a way for programs to talk to each other!
-That is, we need to "glue" programs or program components together.
+The shell is how commands are run on most systems - it is the "root user" interface to your computer.
+
+The shell is a way to talk to your computer, run arbitrary commands,
+and connect those commands together.
+It solves the "glue code problem".
+
+=== Why learn about the shell? ===
+
+Questions:
+
+- If I can run commands from Python (we'll see that you can), then why should I use the shell?
+
+- If I can use a well-designed GUI app (such as my Git installation), why should I use the shell?
+
+- If I can use my AI to generate shell commands or have it interface with a computer directly, why use the shell?
+
+Answers:
+
+- The shell tells us what is happening "under the hood"
+
+- The shell is used very commonly in data engineering practice.
+  Data engineers and ML engineers often have to reach under the hood to see what's happening with
+  a data processing job, or to diagnose why it might be failing, or to set up software/installation/frameworks/etc.
+  surrounding data processing jobs
+
+- To understand what AI is doing "under the hood", or even to audit it/correct it/
+  provide our own expertise and input on top, we should understand how it works.
+
+- It's fun!
+
+=== What is glue code? ===
+
+The "glue code problem" is that we have some programs or components
+in different languages or frameworks, and we need a way to "glue" programs
+or program components together.
 
 Examples:
 
 - Our data processing pipeline talks to the operating system when it
   asks for the input file life-expectancy.csv.
 
-- Python module example: If another script wants to use our code, it must import it
-  which requires the Python runtime to find the code on the system
-  (see `module_test.py` for example)
-
 - Much of Pandas and Numpy are written in C. So we need our Python
   code to call into C code.
 
-What tools do people use to "glue" programs together?
+ + So, we can write a shell command to call the C code from Python, or vice versa
+
+ + OR, we can write a shell script that executes the entire job, and calls both C and Python
+
+What other tools do people use to "glue" programs together?
 
 1. Using system libraries (like os and sys in Python)
 
 2. Module systems within a programming language (`import` in Python)
 
-3. Shell: To talk to a a C program from Python, one way would be to run commands through the shell
+3. Scripting languages: Python, others (e.g. Ruby, Perl)
 
-Other solutions:
-
-4. Scripting languages: Python, others (e.g. Ruby, Perl)
+  (---> We can call shell commands from Python)
 
 For the most part, we can assume in this class that much of this interaction
 happens in Python
 (In fact, we will see how to do most things in today's lecture both
 in the shell, AND in Python!)
 But it is still useful to know how this program
-interaction happens "under the hood":
+interaction happens "under the hood".
 
-When Python interacts with the operating system and with programming languages other than Python, *internally* a common way to do this is through the shell.
+- (See reasons above)
+
+- When Python interacts with the operating system and with programming languages other than Python, *internally* a common way to do this is through the shell.
 
 ----
 
@@ -119,13 +179,7 @@ Let's open up the shell now.
 # like an admin window into your machine.)
 
 """
-Questions:
-
-+ If I can run commands from Python (we'll see that you can), then why should I use the shell?
-
-+ If I can use a well-designed GUI app (such as my Git installation), why should I use the shell?
-
-Examples where programmers and data scientists regularly use the shell:
+=== Additional Examples where programmers and data scientists regularly use the shell ===
 
 - You have bought a new server machine from Dell, and you want to connect to
   it to install some software on it.
@@ -171,10 +225,7 @@ print("Welcome to ECS 119 Lecture 2.")
 # Quitting: Ctrl-C, Ctrl-D
 
 """
-=== What is the Shell? ===
-
-The shell is a way to talk to your computer, run arbitrary commands,
-and connect those commands together.
+=== Using the shell -- examples ===
 
 Examples we have seen:
 
@@ -191,13 +242,5 @@ NOTE: tab-autocomplete: very useful
   (saves keystrokes)
   (will cycle through theh options if there's more than one.)
 
-Very quick recap:
-We introduced the shell/terminal/command prompt as a way to solve the "glue code" problem
-
-We went through some motivation for when data scientists might need to use the shell (esp. to interact with things like remote servers), and saw some basic commands.
-
-We'll pick this up on Wednesday, and remember that we will be at
-11am on Zoom, with discussion section in the usual classroom/class time.
-
-***** Where we ended for today. *****
+=== Recap ===
 """
