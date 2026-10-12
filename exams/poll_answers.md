@@ -23,3 +23,23 @@ max, min, and avg -> print
 max, min, and avg -> save
 
 2) read -> print or read -> save (give a specific example)
+
+Oct 5:
+T, F, F
+Note: we saw an example of the first one in class.
+For an example you could either consider two different ways to divide
+the pipeline into "tasks" or "nodes", or you could do something like
+(add columns x and y to get x + y) -> (add new column to z to get x + y + z)
+and
+(add columns x and z to get x + z) -> (add new column to y to get x + y + z)
+
+Oct 7:
+Throughput = 1,000 records/hr (or 16.7 records/minute or 24,000 records/day)
+
+Avg latency = 30 minutes
+The medical records are uniformly distributed and take between 0 and 60 minutes
+to process, so on average they take 30 minutes to process.
+
+Oct 12:
+1) A, C, D, G
+2) F, F, F, T, T, F
