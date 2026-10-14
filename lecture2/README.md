@@ -46,6 +46,13 @@ Announcements:
     + Note for my OH on Friday: I will need to end at 5pm sharp.
       If we run out of time, I can hold an additional hour at a separate time, likely Monday morning.
 
+- HW1 submission instructions:
+
+    README includes instructions under "Submitting Your Code"! please review these.
+
+    Download your code on a fresh machine (or maybe using a new user account)
+    and run it to check that it works!
+
 Plan:
 
 - Start with the poll
@@ -60,3 +67,5 @@ Plan:
     + Platform dependence
 
     + Running shell commands from Python; running Python commands from the shell.
+
+Questions?
