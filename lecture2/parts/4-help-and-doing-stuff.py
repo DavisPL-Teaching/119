@@ -1,5 +1,5 @@
 """
-Monday, October 20
+Lecture 2
 
 Part 4: Help, Doing Stuff, anatomy of shell commands
 

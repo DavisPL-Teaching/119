@@ -37,10 +37,26 @@ Questions about HW1 or lecture plan?
 
 ## Wednesday, October 14
 
-Announcements/reminders:
+Announcements:
 
-- HW1 due Friday
+- HW1 due date will be extended: to Monday EOD
+
+    + OH: Friday (me), Monday (TA)
+
+    + Note for my OH on Friday: I will need to end at 5pm sharp.
+      If we run out of time, I can hold an additional hour at a separate time, likely Monday morning.
 
 Plan:
 
+- Start with the poll
+
 - Lecture 2 part 2:
+    Shell commands + Platform dependence
+
+    + 3-type model for interacting with the shell
+
+    + Hidden files and folders
+
+    + Platform dependence
+
+    + Running shell commands from Python; running Python commands from the shell.

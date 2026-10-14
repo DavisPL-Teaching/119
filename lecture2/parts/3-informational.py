@@ -1,5 +1,5 @@
 """
-Friday, October 17
+Friday, October 16 (planned)
 
 Part 3: Informational Commands
 

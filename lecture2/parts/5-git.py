@@ -1,5 +1,5 @@
 """
-Wednesday, October 22
+Lecture 2
 
 Part 5: Git
 
