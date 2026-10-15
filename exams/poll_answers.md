@@ -43,3 +43,9 @@ to process, so on average they take 30 minutes to process.
 Oct 12:
 1) A, C, D, G
 2) F, F, F, T, T, F
+
+Oct 14:
+A, B, C, D, E, G.
+(All options except: To load & use pandas to calculate the max and average of a DataFrame)
+
+Oct 16:
