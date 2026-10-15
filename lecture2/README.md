@@ -69,3 +69,21 @@ Plan:
     + Running shell commands from Python; running Python commands from the shell.
 
 Questions?
+
+## Friday, October 16
+
+Reminders:
+
+- HW1 now due Monday 11:59pm
+
+- My OH today: have to end at 5pm sharp
+
+Plan:
+
+- I reorganized the parts a bit. Part 2 is now called "Navigating the filesystem and platform dependence."
+
+- A few notes at the bottom of Part 2
+
+- Poll
+
+- We will move to Part 3 on 3-part model of the shell and "informational" commands.

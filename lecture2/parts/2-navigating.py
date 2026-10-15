@@ -1,9 +1,10 @@
 """
 Wednesday, Oct 14
 
-Part 2: Commands and Platform Dependence
+Part 2: Navigating the Filesystem and Platform Dependence
 
-Continuing the shell.
+Continuing the shell, now talking about one of the main things the shell interacts with:
+the filesystem (files/directories) and your other operating system resources.
 
 Poll:
 Which of the following are reasons you might want to use the shell? (Select all that apply)
@@ -203,7 +204,7 @@ def ls_2():
 
 """
 
-Summary points:
+Q: Why know both Python and the shell?
 
 Sometimes in Python we just directly call into
 commands, and knowing shell syntax is useful as it
@@ -218,64 +219,10 @@ Everything that can be done in Python can be done in the shell
 
 So knowing shell stuff might help you with running
 systems-level stuff in Python, and vice versa.
-
-===== A model for interacting with the shell: 3 types of command =====
-
-We saw how to run basic commands in the shell and what it means.
-
-Three types of commands:
-
-1. Information
-2. Getting help
-3. Doing something
-
-=== Analogy: text-based adventure games ===
-
-An analogy:
-There used to be a whole genre of text-based adventure games.
-the shell is kind of like this.
-
-e.g.
-- Zork (1977):
-  https://textadventures.co.uk/games/play/5zyoqrsugeopel3ffhz_vq
-- Peasant's Quest (2004):
-  https://homestarrunner.com/disk4of12
-
-Back in the day you would then open up the game (and be provided no information to help. :-) )
-What would you do first?
-
-If you like, play around with Zork offline, it can be a fun game/distraction
-(bit of a blast from the past)
-
-https://textadventures.co.uk/games/play/5zyoqrsugeopel3ffhz_vq
-
-If you know how to play Zork then you know how to work with the shell.
-
-===== Examples? =====
-
-Examples for some of the commands we have seen so far:
-
-- ls: mostly was "informational" command - just figuring out what folder we're
-  curently inside
-
-- cd, conda, pip3, python3 - "doing stuff" commands - we're actually modifying the
-  state of the system when running these.
-
-Some examples of running these:
 """
 
-# Try:
-# python3, ls, pytest, conda
-
-# ls: doesn't show hidden folders and files
-# On Mac: anything starting with a . is hidden
-# Hidden files are used for many important purposes,
-# e.g., storing program data, caching information, writing
-# configuration for tools like Git, etc.
-
 """
-=== Recap ===
-
+=== Recap of Part 2 ===
 
 .
 .
@@ -292,5 +239,5 @@ Some examples of running these:
 - We talked about platform differences and how these can be an issue when working
   with the shell
 
-- We talked about running shell commands from Python using subprocess, and Python system libraries
+- We talked about running shell commands from Python using subprocess, and Python system libraries.
 """

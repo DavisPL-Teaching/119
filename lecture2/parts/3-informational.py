@@ -1,5 +1,5 @@
 """
-Friday, October 16 (planned)
+Friday, October 16
 
 Part 3: Informational Commands
 
@@ -11,7 +11,33 @@ Discussion Question & Poll:
 2. Platform-specific things to be aware of could include... (Select all that apply)
 <options cut>
 
-https://forms.gle/HmmT8BjXtiBvferRA
+https://forms.gle/NacFwy5oTzRSVP2o9
+
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
 
 Some notes:
 
@@ -31,21 +57,66 @@ Q2:
   Platform = The operating system + the architecture + any libraries or other environment packages that are installed
 
 Review poll answers: exams/poll_answers.md
+"""
 
+"""
 Continuing the shell:
 
-Last time:
+===== A model for interacting with the shell: 3 types of command =====
 
-I introduced a model for interacting with the shell which I called the
-3-part model:
-- Informational commands
-- Help commands
-- Doing stuff commands
+We saw how to run basic commands in the shell and what it means.
 
-Analogy:
-I mentioned this is kind of like playing a text-based adventure game
-like "Zork" (1970s), many other old games
+Three types of commands:
 
+1. Information
+2. Getting help
+3. Doing something
+
+=== Analogy: text-based adventure games ===
+
+An analogy:
+There used to be a whole genre of text-based adventure games.
+the shell is kind of like this.
+
+e.g.
+- Zork (1977):
+  https://textadventures.co.uk/games/play/5zyoqrsugeopel3ffhz_vq
+- Peasant's Quest (2004):
+  https://homestarrunner.com/disk4of12
+
+Back in the day you would then open up the game (and be provided no information to help. :-) )
+What would you do first?
+
+If you like, play around with Zork offline, it can be a fun game/distraction
+(bit of a blast from the past)
+
+https://textadventures.co.uk/games/play/5zyoqrsugeopel3ffhz_vq
+
+If you know how to play Zork then you know how to work with the shell.
+
+===== Examples? =====
+
+Examples for some of the commands we have seen so far:
+
+- ls: mostly was "informational" command - just figuring out what folder we're
+  curently inside
+
+- cd, conda, pip3, python3 - "doing stuff" commands - we're actually modifying the
+  state of the system when running these.
+
+Some examples of running these:
+"""
+
+# Try:
+# python3, ls, pytest, conda
+
+# ls: doesn't show hidden folders and files
+# On Mac: anything starting with a . is hidden
+# Hidden files are used for many important purposes,
+# e.g., storing program data, caching information, writing
+# configuration for tools like Git, etc.
+
+"""
 === Informational commands ===
 
 Just as in a text-based adventure,
