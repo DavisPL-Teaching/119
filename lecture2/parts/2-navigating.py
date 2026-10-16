@@ -1,7 +1,7 @@
 """
 Wednesday, Oct 14
 
-Part 2: Navigating the Filesystem and Platform Dependence
+Part 2: Filesystems and Platform Dependence
 
 Continuing the shell, now talking about one of the main things the shell interacts with:
 the filesystem (files/directories) and your other operating system resources.
@@ -232,12 +232,15 @@ systems-level stuff in Python, and vice versa.
 
 - We saw a few more commands
 
-- We introduced a 3-category analogy for shell commands: Info commands, Help commands, and "Do something" commands.
-
 - We talked about hidden files/folders (starting with .)
 
 - We talked about platform differences and how these can be an issue when working
   with the shell
 
 - We talked about running shell commands from Python using subprocess, and Python system libraries.
+
+Next part:
+
+- We will introduce a 3-part model for shell commands: Info commands, Help commands, and "Do something" commands.
+
 """

@@ -76,11 +76,11 @@ Reminders:
 
 - HW1 now due Monday 11:59pm
 
-- My OH today: have to end at 5pm sharp
+- I have OH after class: have to end at 5pm sharp
 
 Plan:
 
-- I reorganized the parts a bit. Part 2 is now called "Navigating the filesystem and platform dependence."
+- I reorganized the parts a bit. Part 2 is now called "Navigating Filesystems and Platform Dependence."
 
 - A few notes at the bottom of Part 2
 

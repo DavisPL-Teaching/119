@@ -1,11 +1,13 @@
 """
 Friday, October 16
 
-Part 3: Informational Commands
+Part 3: 3-Part Model and Informational Commands
 
 Discussion Question & Poll:
 
-1. Which of the following are a good use cases for things to list in .gitignore? (Select all that apply)
+1. Which of the following are good examples of things to remove from your code
+before sharing with others (for example, by manually removing them from a .zip
+or listing them in your .gitignore)? (Select all that apply)
 <options cut>
 
 2. Platform-specific things to be aware of could include... (Select all that apply)

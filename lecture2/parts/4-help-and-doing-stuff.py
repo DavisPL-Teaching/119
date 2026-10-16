@@ -25,7 +25,7 @@ Discussion Question & Poll:
 Which of the following are "informational" commands?
 <Options cut>
 
-https://forms.gle/XkbkUL2QxsLz6dLq7
+<form link Cut>
 
 =====
 
