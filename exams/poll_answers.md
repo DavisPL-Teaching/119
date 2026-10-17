@@ -49,3 +49,5 @@ A, B, C, D, E, G.
 (All options except: To load & use pandas to calculate the max and average of a DataFrame)
 
 Oct 16:
+1. B, C, D
+2. B, C, D, E, F (all except A)

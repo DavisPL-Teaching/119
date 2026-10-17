@@ -72,11 +72,13 @@ Questions?
 
 ## Friday, October 16
 
-Reminders:
+Announcements/Reminders:
 
 - HW1 now due Monday 11:59pm
 
 - I have OH after class: have to end at 5pm sharp
+
+- Midterm date: Friday, Nov 6 (in class)
 
 Plan:
 
@@ -87,3 +89,5 @@ Plan:
 - Poll
 
 - We will move to Part 3 on 3-part model of the shell and "informational" commands.
+
+Questions?

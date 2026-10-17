@@ -165,10 +165,10 @@ Quick recap:
 
 Observations:
 
-- You can run shell commands in Python
-
 - You can run Python programs from the shell
   (we've already seen how to do this)
+
+- You can run shell commands in Python
 
 Let's see an example
 """
@@ -199,7 +199,7 @@ def ls_2():
     subprocess.run(["ls", "-alh"])
     # Equivalent: ls -alh in the shell!
 
-# ls_2()
+ls_2()
 # ^^^^ same output as if I ran the command line directly
 
 """

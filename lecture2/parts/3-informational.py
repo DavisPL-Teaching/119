@@ -41,7 +41,8 @@ https://forms.gle/NacFwy5oTzRSVP2o9
 .
 .
 
-Some notes:
+Some notes on the poll
+(SKIP)
 
 Q1:
 - Not all hidden files are unimportant!
@@ -189,6 +190,8 @@ So how do we "look around"?
 
   Are there advantages to one shell over another?
 
+  (SKIP)
+
   Yes, there are also some advanced/modern shells that you can install
 
   - maybe with some interesting graphical interface
@@ -246,11 +249,15 @@ hood.
 In case you need to access similar functionality from a Python script:
 """
 
+import os
+
 # with a built-in Python library
 def pwd_1():
     print(os.getcwd())
 
 # pwd_1()
+
+import subprocess
 
 # with subprocess (run an arbitrary command)
 # This one is a bit harder
@@ -272,6 +279,12 @@ def pwd_3():
 
 """
 Recap:
+
+- We introduced a 3-part model: When opening up a shell:
+
+    1. Informational commands - get information about the system
+    2. Help commands - we'll see this next time
+    3. Doing stuff commands - actually do something, modifying the system.
 
 - We talked about informational commands - ways to get the state of the system
 
