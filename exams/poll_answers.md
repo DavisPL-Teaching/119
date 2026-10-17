@@ -1,6 +1,6 @@
 # In-class poll answers
 
-You can use the in-class polls to help study.
+You can use the in-class polls to help study for the exams.
 
 Sep 23:
 Tools required and characteristics and needs of your application will change drastically with the size of the dataset.
@@ -51,3 +51,9 @@ A, B, C, D, E, G.
 Oct 16:
 1. B, C, D
 2. B, C, D, E, F (all except A)
+
+Oct 19:
+
+Oct 21:
+
+Oct 23:

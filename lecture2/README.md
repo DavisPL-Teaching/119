@@ -91,3 +91,31 @@ Plan:
 - We will move to Part 3 on 3-part model of the shell and "informational" commands.
 
 Questions?
+
+## Monday, October 19
+
+Today's class is on Zoom - I am not feeling well.
+Hope to be back in person Wednesday, will keep you posted.
+
+Announcements/reminders:
+
+- HW1 due today!
+
+- TA office hours 415-6pm
+
+- Midterm date: Friday Nov. 6
+
+- Poll scores: synced over the weekend.
+
+Plan:
+
+- Aside:
+    What do ML and data engineers use the shell for in practice?
+
+- Continue the shell:
+
+    + Poll
+
+    + Doing stuff and help commands
+
+Questions?

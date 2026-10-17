@@ -5,9 +5,53 @@ Part 4: Help, Doing Stuff, anatomy of shell commands
 
 -----
 
-Continuing with the shell!
+Aside:
 
-Showing two more commands before the discussion question:
+The shell is used all the time by real data engineers!
+
+Asked my friend who worked as an ML engineer:
+
+  5-10% of their time spent working in the shell
+
+  Things did in the shell:
+    - write and test code
+    - messed with Docker
+    - Airflow (orchestration)
+    - call SQL commands from command line
+    - debugging, occasional data processing/viewing
+
+    Sometimes you can do GUIs -- GPQ in google cloud
+
+AI can be used to help write commands, *under the hood*
+it is running the shell (or you are manually copying and pasting
+commands to the shell),
+
+  You need to know what these commands are doing! If you can't audit
+  them if necessary, you aren't able to take responsibility for your work.
+
+Post from 4 years ago:
+
+  https://www.reddit.com/r/dataengineering/comments/utkwc4/how_much_time_are_you_spending_in_a_terminal/
+
+Data scientists and data engineers use all sorts of tools!
+The shell is often how you run commands to fetch input data, push output data,
+configure your tools,
+and chain those tools together
+
+Another post:
+(Example of real data pipelines you could build using the tools in this class!)
+
+https://www.reddit.com/r/dataengineering/comments/1aofkv9/updated_personal_endend_etl_data_pipelinegcp/
+
+Another post:
+https://www.hdatasystems.com/blog/why-should-you-learn-command-line-as-a-data-scientist
+
+(Browse other posts at:
+https://www.reddit.com/r/dataengineering/ )
+
+--------------------
+
+Showing two more commands before the poll:
 
 - cat <path>:
   Prints out the contents of a file at <path>
@@ -21,11 +65,37 @@ Showing two more commands before the discussion question:
 
 (Three ways to view/open a file)
 
-Discussion Question & Poll:
-Which of the following are "informational" commands?
+----
+
+POLL:
+
+Which of the following are "informational" commands? (Select all that apply)
 <Options cut>
 
-<form link Cut>
+https://forms.gle/Zu4ZhjdjzTLAVmMUA
+
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+
+-----
 
 =====
 
@@ -46,6 +116,8 @@ A few other commands:
 
 Examples in Python:
 """
+
+import os, subprocess, sys
 
 def cat_1():
     with open("lecture.py") as f:
@@ -262,7 +334,7 @@ Examples:
   python3 lecture.py || echo "Hello"
   python3 lecture.py && echo "Hello"
 
-===== Skip the following for time =====
+===== Other commands (or SKIP for time) =====
 
 - |
   Chains together two commands
@@ -320,6 +392,4 @@ We saw various ways of combining and composing
 different commands, which can be used for
 advanced shell programming to write arbitrary
 scripts in the shell.
-
-****** Where we ended for today ******
 """
