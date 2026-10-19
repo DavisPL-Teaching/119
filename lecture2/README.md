@@ -105,17 +105,27 @@ Announcements/reminders:
 
 - Midterm date: Friday Nov. 6
 
-- Poll scores: synced over the weekend.
+- Poll scores: for weeks 1-4 synced over the weekend.
+
+    + If you're missing any polls, please complete the missing polls
+      (I'll sync these approximately every 2 weeks)
+
+    + If you're seeing a 0 for all polls, we are probably missing HW0 and the very
+      first poll from you
 
 Plan:
 
 - Aside:
     What do ML and data engineers use the shell for in practice?
 
+- Last time:
+
+    + "Informational commands"
+
 - Continue the shell:
 
     + Poll
 
-    + Doing stuff and help commands
+    + "Help commands" and "Doing stuff"
 
 Questions?

@@ -30,7 +30,7 @@ commands to the shell)...
   them if necessary, you aren't able to take responsibility for your work.
 
   Employers will hire you for your expertise, ability to direct with more specificity,
-  understand what's going on under the hood.
+  audit/understand what's going on under the hood.
 
   Three-part model useful for AI shell commands!
   Common workflow:
@@ -41,14 +41,14 @@ Post from 4 years ago:
 
   https://www.reddit.com/r/dataengineering/comments/utkwc4/how_much_time_are_you_spending_in_a_terminal/
 
+Example of real data pipelines you could build using the tools in this class:
+
+https://www.reddit.com/r/dataengineering/comments/1aofkv9/updated_personal_endend_etl_data_pipelinegcp/
+
 Data scientists and data engineers use all sorts of tools!
 The shell is often how you run commands to fetch input data, push output data,
 configure your tools,
 and chain those tools together.
-
-Example of real data pipelines you could build using the tools in this class:
-
-https://www.reddit.com/r/dataengineering/comments/1aofkv9/updated_personal_endend_etl_data_pipelinegcp/
 
 Another post:
 https://www.hdatasystems.com/blog/why-should-you-learn-command-line-as-a-data-scientist
@@ -60,6 +60,8 @@ https://www.reddit.com/r/dataengineering/ )
 
 Showing two more commands before the poll:
 
+Three ways to view/open a file:
+
 - cat <path>:
   Prints out the contents of a file at <path>
 
@@ -69,8 +71,6 @@ Showing two more commands before the poll:
 
 - open <path>:
   Open the file in your default program for that file.
-
-(Three ways to view/open a file)
 
 ----
 
@@ -114,27 +114,20 @@ Information about the current state of our shell includes:
 - other system information and system data
 - file contents etc.
 
-A few other commands:
-
-- ls <directory>:
-
-  ls ..
-  ls ../lecture2
-
-Examples in Python:
+A few other examples in Python:
 """
 
 import os, subprocess, sys
 
 def cat_1():
-    with open("lecture.py") as f:
+    with open("4-help-and-doing-stuff.py") as f:
         print(f.read())
 
 def cat_2():
-    subprocess.run(["cat", "lecture.py"])
+    subprocess.run(["cat", "4-help-and-doing-stuff.py"])
 
 def less():
-    subprocess.run(["less", "lecture.py"])
+    subprocess.run(["less", "4-help-and-doing-stuff.py"])
 
 # cat_1()
 # cat_2()
@@ -192,6 +185,7 @@ Important caveat: you need to know what it is you want to do first!
 
 """
 Some observations:
+(SKIP)
 Using AI doesn't obliviate the need to understand things ourselves.
 - we still needed to know how to modify the command for your own purposes
 - we still needed to know the platform we are on (Unix)
@@ -227,9 +221,29 @@ We need a way to move around and modify stuff:
 
 - cp -- copy a file from one place to another
 
+    scp: remote version
+
 (demo: copy folder.txt to ../folder.txt)
 
 (I follow this pattern a lot -- information first, then do something, then information again)
+
+Quick Recap:
+
+    - Aside: I went over some additional motivation: why learn about the shell,
+             examples of why it's useful in practice / how it's used for real data
+             science and data engineering projects
+
+    - We finished up informational commands (with a practice question on the poll),
+      covering open, cat, less
+
+    - We talked about "getting help" and "doing stuff" commands, and tried some of these out
+
+    - We talked about the common workflow of: get information, get help (optional), then do something, then go back to get information again at the end.
+
+      Good workflow for making careful, deliberate changes.
+
+(end for Oct 19)
+----------------------------------------
 
 - touch <file or path> -- make a new file
 
