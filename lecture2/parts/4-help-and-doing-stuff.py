@@ -9,7 +9,7 @@ Aside:
 
 The shell is used all the time by real data engineers!
 
-Asked my friend who worked as an ML engineer:
+From a friend who worked as an ML engineer:
 
   5-10% of their time spent working in the shell
 
@@ -24,10 +24,18 @@ Asked my friend who worked as an ML engineer:
 
 AI can be used to help write commands, *under the hood*
 it is running the shell (or you are manually copying and pasting
-commands to the shell),
+commands to the shell)...
 
   You need to know what these commands are doing! If you can't audit
   them if necessary, you aren't able to take responsibility for your work.
+
+  Employers will hire you for your expertise, ability to direct with more specificity,
+  understand what's going on under the hood.
+
+  Three-part model useful for AI shell commands!
+  Common workflow:
+  "Tell me what you're doing on the system first, show me the state of the system
+   and modifications, then do it"
 
 Post from 4 years ago:
 
@@ -36,10 +44,9 @@ Post from 4 years ago:
 Data scientists and data engineers use all sorts of tools!
 The shell is often how you run commands to fetch input data, push output data,
 configure your tools,
-and chain those tools together
+and chain those tools together.
 
-Another post:
-(Example of real data pipelines you could build using the tools in this class!)
+Example of real data pipelines you could build using the tools in this class:
 
 https://www.reddit.com/r/dataengineering/comments/1aofkv9/updated_personal_endend_etl_data_pipelinegcp/
 
