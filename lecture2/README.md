@@ -129,3 +129,25 @@ Plan:
     + "Help commands" and "Doing stuff"
 
 Questions?
+
+## Wednesday, October 21
+
+Reminders:
+
+- Midterm date: Friday Nov. 6
+
+Plan:
+
+- Loose ends from Part 4
+
+    + Finish "doing stuff"
+
+    + Anatomy of a shell command
+
+- Poll
+
+- Part 5: Git
+
+If time, we can move to part 6: Conclusion.
+
+Questions?

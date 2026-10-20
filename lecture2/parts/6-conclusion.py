@@ -1,7 +1,7 @@
 """
 Lecture 2
 
-Part 6: Dangers of the Shell (and a few Loose Ends)
+Part 6: Dangers of the Shell (and a few miscellaneous topics).
 
 We covered this part briefly at the end of Wednesday, October 22.
 

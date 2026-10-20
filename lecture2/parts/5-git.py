@@ -18,7 +18,7 @@ D) Named arguments can be combined with positional arguments to specify options 
 E) Named arguments emphasize the intended purpose of the argument for readability purposes
 F) Named arguments allow easily specifying Boolean flags (like turning debug mode on or off)
 
-<Form link cut>
+https://forms.gle/5hS6JrrfE8mPZMRi7
 
 Comments:
 
