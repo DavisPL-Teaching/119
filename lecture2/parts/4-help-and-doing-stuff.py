@@ -260,6 +260,11 @@ Example - creating a new Python module:
   Move a file from one path to another, or rename it
   from one file name to another.
 
+- rm <file>
+
+  Delete a file (without moving it to trash!)
+  Dangerous.
+
 Examples of how to accomplish similar purposes in Python:
 """
 
@@ -272,19 +277,20 @@ def touch(file):
     with open(file, 'w') as fh:
         fh.write("\n")
 
-# touch("mod-2.py")
+touch("mod-2.py")
 
 """
 === Anatomy of a shell command ===
 
 Commands are given **named arguments**, like this:
 
-cmd -<argument name> <argument value>
-cmd --<argument name> <argument value>
+cmd -<argument name, single char> <argument value>
+cmd --<argument name, full word> <argument value>
 
 Some arguments don't have values:
 
 cmd -<argument flag>
+cmd --<argument flag>
 
 You can chain together any number of arguments:
 
@@ -306,9 +312,10 @@ which don't use - or -- flags
 
   - cd <val>
 
-  - cp <val1> <val2>
+  - mv <val1> <val2>
 
 (More examples in Python:)
+(SKIP)
 """
 
 def run_git_version():
@@ -334,7 +341,15 @@ Selected list of important operators
 (also called shell combinators):
 - |, ||, &&, >, >>, <, <<
 
-Most useful:
+Examples:
+  python3 4-help-and-doing-stuff.py || echo "Hello"
+  python3 4-help-and-doing-stuff.py && echo "Hello"
+
+  cat 4-help-and-doing-stuff.py | grep "forms.gle"
+  conda list | grep "data"
+
+===== Some useful commands which combine other commands (SKIP for time) =====
+
 - Operator >
   Ends the output into a file.
   (This is called redirection)
@@ -352,12 +367,6 @@ Most useful:
   These are "shortcircuiting" boolean operations,
   just as in most programming languages, but based
   on whether the command succeeds or fails.
-
-Examples:
-  python3 lecture.py || echo "Hello"
-  python3 lecture.py && echo "Hello"
-
-===== Other commands (or SKIP for time) =====
 
 - |
   Chains together two commands
@@ -403,6 +412,9 @@ Exercises to try (SKIP)
 ===== Recap of Part 4 =====
 
 Help commands: see a command usage & options
+  --help
+  -h
+  man <cmd>
 
 Doing stuff commands:
   various ways of creating files, moving files,

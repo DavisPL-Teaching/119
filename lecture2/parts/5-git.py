@@ -128,7 +128,23 @@ Two diverging branches:
 When you check out the code, you're at a particular point in
 the tree.
 
-=== The GitHub desktop app ===
+Git is a data structure, not always a friendly user interface!
+It's meant to have a lot of options, configuration,
+and primarily to track all changes robustly -- due to this complexity,
+we can get into an "inconsistent" state, where our data structure doesn't
+agree with the officially published one, leading to some of these errors.
+
+Similar problem: you're following along with lectures, and you make some notes
+
+                          root
+                          |
+                          lecture2
+                          |       \
+  lecture2 (instructor's changes)    lecture2 (your notes)
+
+This is exactly the same problem!
+
+=== Digression: The GitHub desktop app ===
 
 Some of you may use Git via the GitHub desktop app:
 
@@ -137,7 +153,7 @@ Some of you may use Git via the GitHub desktop app:
 OR via VSCode
 
 For shell commands, we saw that sometimes (not always) there is a
-GUI program or app that will have
+GUI program or app that will have the equivalent command built in,
 
 ====> internally, the app is just calling the shell under the hood
 
@@ -174,6 +190,33 @@ and diagnose if things are not working correctly.
 
 .
 .
+
+Recap of what we talked about today:
+
+  - Crash course on anatomy of a shell command:
+      positional arguments vs. named arguments and what they look like
+
+  - Introduction to git:
+
+    1. Git has a difficult learning curve --
+       Examples of mistakes/headaches that can be encountered
+       when working with Git
+
+    2. Git is a complex data structure with a lot of configuration options, and with the primary
+       goal of tracking changes and modifications across different collaborators
+       (we will see more about Git's philosophy next time - and why git is the way it is.)
+
+       As a result, it does not always provide a simple user interface
+
+    3. Why we should know how Git (or any other GUI program) works under the hood:
+
+        - A good GUI hides complexity in the underlying system state
+
+        - In order to understand/debug commands, we may need to access and investigate that system state
+          by going through the raw command line interface.
+
+--- where we ended for Oct 21.
+------------------------------
 
 === Notes on Git philosophy ===
 

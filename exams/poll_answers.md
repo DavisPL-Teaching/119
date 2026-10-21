@@ -53,7 +53,12 @@ Oct 16:
 2. B, C, D, E, F (all except A)
 
 Oct 19:
+Options #1-5, #7, and the last 2
+ls, ls -alh, echo $PATH, python3 --version, conda list, git status, cat, less
 
 Oct 21:
+1) Some possible answers: `cd folder/`, `cp file1.txt file2.txt`
+2) Some possible answers: `ls -alh`, `python3 --version`
+3) Correct answers: C, D, E, F
 
 Oct 23:
