@@ -244,6 +244,7 @@ Quick Recap:
 
 (end for Oct 19)
 ----------------------------------------
+Oct 21
 
 - touch <file or path> -- make a new file
 

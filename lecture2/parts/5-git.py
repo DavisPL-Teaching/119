@@ -1,7 +1,7 @@
 """
 Lecture 2
-
 Part 5: Git
+October 21
 
 Poll question:
 
