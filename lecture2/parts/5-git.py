@@ -3,7 +3,7 @@ Lecture 2
 
 Part 5: Git
 
-Poll quesiton:
+Poll question:
 
 1. Give an example of a command that uses a positional argument
 
@@ -20,6 +20,27 @@ F) Named arguments allow easily specifying Boolean flags (like turning debug mod
 
 https://forms.gle/5hS6JrrfE8mPZMRi7
 
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+
 Comments:
 
 Analogy:
@@ -30,8 +51,6 @@ positional argument
 named argument
     python --version
     def python(version=True)
-
-Correct answers: C, D, E, F
 
 Named arguments are more often optional
 
@@ -69,6 +88,20 @@ Info returned by git status?
 
   Shows a list of commits that have been made to the repository.
 
+=== Why does git have so many options? ===
+
+Git is a common case of developer headaches!
+
+- Merge conflicts https://stackoverflow.com/questions/161813/how-do-i-resolve-merge-conflicts-in-a-git-repository
+
+- "Detached head" https://stackoverflow.com/questions/10228760/how-do-i-fix-a-git-detached-head
+
+Q: Why?
+
+Some things to know about git!
+
+As someone once said: Git is an excellent data structure with a terrible user interface. (I agree)
+
 Mental model of git: it's a tree
 
   root:
@@ -86,14 +119,65 @@ After instructor posts lecture 1 and 2,
 If the TA simultaneously makes changes to lecture1
 Two diverging branches:
 
-  root
-  |
-  lecture1
-  |                               \
+                          root
+                          |
+                          lecture1
+                          |       \
   lecture2 (instructor's changes)    lecture1 (TA's changes)
 
 When you check out the code, you're at a particular point in
 the tree.
+
+=== The GitHub desktop app ===
+
+Some of you may use Git via the GitHub desktop app:
+
+  https://desktop.github.com/download/
+
+OR via VSCode
+
+For shell commands, we saw that sometimes (not always) there is a
+GUI program or app that will have
+
+====> internally, the app is just calling the shell under the hood
+
+      (Same with IDEs, example: "Run" or "debug" in VSCode)
+      (show in VSCode settings)
+
+====> It may (if you are lucky) or may not have all the command line options
+      available for you in the UI.
+
+====> If something goes wrong, like a merge conflict, it goes wrong for exactly
+      the same reasons as with the shell commands, we can use the shell to
+      fix/diagnose.
+
+      Example anecdote: I worked with a student who was having trouble with Git,
+      using the Desktop app. When they pushed their changes, they were sometimes
+      not showing up. Also, sometimes files were getting modified to change
+      the newlines from linux-style newlines to Windows newlines
+      (example of platform-specific behavior!)
+      (disruptive for other collaborators)
+
+      We diagnosed these issues by running `git status` and investigating the
+      changes manually from the command line.
+
+      Turns out there were two installations of git, one via the github app and one
+      via the command line, that were not agreeing with each other, and not configured
+      the same.
+
+The UI is helpful when it works! But because it's trying to be helpful,
+it "hides" the true system state.
+
+We want to learn git (from the command line) for the same reason we want to
+learn the shell, so that we understand what is happening under the hood
+and diagnose if things are not working correctly.
+
+.
+.
+
+=== Notes on Git philosophy ===
+
+To understand Git, we need to understand its philosophy.
 
 Git is sort of the opposite of keeping everything up to date :-)
 

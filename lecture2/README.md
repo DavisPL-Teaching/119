@@ -140,13 +140,15 @@ Plan:
 
 - Loose ends from Part 4
 
-    + Finish "doing stuff"
+    + A few other examples of "doing stuff" commands
 
     + Anatomy of a shell command
 
-- Poll
+    + Composing commands
 
 - Part 5: Git
+
+    + Starting with the poll.
 
 If time, we can move to part 6: Conclusion.
 

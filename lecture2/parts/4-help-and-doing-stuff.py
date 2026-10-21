@@ -249,7 +249,7 @@ Quick Recap:
 
   Create a new empty file at <file or path>
 
-(Another example - creating a new Python module)
+Example - creating a new Python module:
 - mkdir subfolder
 - cd subfolder
 - touch mod.py
@@ -276,7 +276,7 @@ def touch(file):
 """
 === Anatomy of a shell command ===
 
-Commands are given arguments, like this:
+Commands are given **named arguments**, like this:
 
 cmd -<argument name> <argument value>
 cmd --<argument name> <argument value>
@@ -300,7 +300,8 @@ as a shortcut for a double dash plus a long argument name.
 
 We have seen some of these already.
 
-Commands also have "positional" arguments, which don't use - or -- flags
+Commands also have **positional arguments,**
+which don't use - or -- flags
 
   - cd <val>
 
@@ -387,6 +388,7 @@ Exercises:
     tzdata                    2024a                h04d1e81_0
     unicodedata2              15.1.0          py312h80987f9_0
 
+Exercises to try (SKIP)
 - ls followed by cat
   (equivalent to just ls)
 - cat followed by cd
@@ -397,7 +399,7 @@ Exercises:
   (using >)
 - (Hard) cat followed by cd into the first directory of interest
 
-Recap:
+===== Recap of Part 4 =====
 
 Help commands: see a command usage & options
 
@@ -406,10 +408,12 @@ Doing stuff commands:
   copying files, etc.
 
 Anatomy of commands:
-  cmd <val1> <val2> ... or
+Named arguments:
   cmd -<option1> <val1> -<option2> <val2> etc.
+Positional arguments:
+  cmd <val1> <val2> ... or
 
-We saw various ways of combining and composing
+Various ways of combining and composing
 different commands, which can be used for
 advanced shell programming to write arbitrary
 scripts in the shell.
