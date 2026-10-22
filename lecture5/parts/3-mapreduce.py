@@ -5,7 +5,7 @@ Part 3: MapReduce
 
 An exercise on laziness:
 
-https://forms.gle/zFjVES96i5jjnMCRA
+<form link cut>
 
 Suppose we want to do 3 tasks:
 

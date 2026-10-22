@@ -2,13 +2,12 @@
 Lecture 4: Parallelism
 
 Part 1: Motivation
-(Oct 24)
 
 === Discussion Question and Poll ===
 
 Which of the following is an accurate statement about Git's core philosophies?
 
-https://forms.gle/zB1qhdrP2xXswHMX8
+<Form link cut>
 
 ===== Introduction =====
 
@@ -200,7 +199,7 @@ print(f"Using method 2: we can handle a dataset up to size: {ram_needed} GB")
 """
 Please fill out your answers in the poll:
 
-https://forms.gle/sqGrHBdQBrykDoSdA
+<form link cut>
 
 Roughly, we can process like _____ as much data
 and then we'll a bottleneck.

@@ -10,7 +10,7 @@ Which of the following are most likely application scenarios for which latency i
 .
 .
 
-https://forms.gle/Le4NZTDEujzcqmg47
+<form link cut>
 
 === Spark Streaming ===
 

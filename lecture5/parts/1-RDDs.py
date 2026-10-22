@@ -14,7 +14,7 @@ Speedup through parallelism alone (vertical scaling) is most significantly limit
 4. The number of wire connections on the computer's motherboard
 5. The amount of RAM (memory) and disk space (storage) available
 
-https://forms.gle/LUsqdy7YYKy7JFVH6
+<form link cut>
 
 === Apache Spark (PySpark) ===
 

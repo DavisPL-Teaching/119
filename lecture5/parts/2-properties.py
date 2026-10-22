@@ -21,7 +21,7 @@ Not just about RDDs!
 
 === Discussion Question & Poll ===
 
-https://forms.gle/XqVuiQw8WFRUBku69
+<form link cut>
 
 Which of the following can NOT easily be converted into an operator over a scalable collection type?
 (Select all that apply)

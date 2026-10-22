@@ -12,7 +12,7 @@ US state, city name, population, avg temperature
 
 "Find the city with the largest temperature per unit population"
 
-https://forms.gle/VpXZ3c9Zam7SxFVi7
+<form link cut>
 
 Answer (go through together):
 

@@ -8,7 +8,7 @@ Batching vs. Streaming
 
 Which of the following are disadvantages with MapReduce and RDDs in Spark?
 
-https://forms.gle/vE4sH2LxsyHQ2evz6
+<form link cut>
 
 .
 .

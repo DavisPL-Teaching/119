@@ -299,7 +299,7 @@ Summary:
 
 === Discussion Question & Poll ===
 
-https://forms.gle/RWw7i4o5UX1xquhx7
+<form link cut>
 
 Which types of parallelism are present in the following scenario? (select all that apply)
 
@@ -545,7 +545,7 @@ lecture4/extras/dataflow-graph-example.png
 
 2. For two different ways of drawing a dataflow graph (with different delineations of tasks as nodes), could we get different types of parallelism present, based on the above? Briefly comment on why or why not.
 
-https://forms.gle/arFaFVM7DhBpuVqSA
+<form link cut>
 
 examples:
 

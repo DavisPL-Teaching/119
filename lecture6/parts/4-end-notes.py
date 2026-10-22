@@ -11,7 +11,7 @@ What type of time corresponds to each of the following scenarios?
 
 Select all that apply
 
-https://forms.gle/NCXfDV4J3ySWiyiT6
+<form link cut>
 
 === Summary ===
 

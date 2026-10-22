@@ -8,7 +8,7 @@ Wednesday, Oct 29
 (Recall definitions)
 Which of the following scenarios are parallel, concurrent, and distributed?
 
-https://forms.gle/h1u9xZwUTndhJWbk9
+<form link cut>
 
 
 
@@ -325,7 +325,7 @@ The scenario above exhibits... (select all that apply)
 - Race condition
 - Data race
 
-https://forms.gle/Ar4QKXfBmcsiU9iM9
+<form link cut>
 
 .
 .

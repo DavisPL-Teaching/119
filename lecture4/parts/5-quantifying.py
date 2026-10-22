@@ -206,7 +206,7 @@ Assume that it takes 1 ms (per row) to read in each input row, 1 ms (per row) to
 
 Q: What is the theoretical bound on the maximum speedup in the pipeline?
 
-https://forms.gle/W5NpbuZGs4Se45VCA
+<form link cut>
 
 DFG:
 

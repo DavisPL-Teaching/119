@@ -82,7 +82,7 @@ December 3
 
 === Poll ===
 
-https://forms.gle/Fov9LZ2arcLG6WUVA
+<form link cut>
 
 A dataflow graph contains two nodes, a "map" node and a "filter" node:
 
