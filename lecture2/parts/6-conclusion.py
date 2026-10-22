@@ -3,8 +3,33 @@ Lecture 2
 
 Part 6: Dangers of the Shell (and a few miscellaneous topics).
 
-We covered this part briefly at the end of Wednesday, October 22.
+Poll:
+Which of the following is an accurate statement about Git's core philosophies?
 
+<Options cut>
+
+https://forms.gle/fwVsuLuDDDAkaX7s7
+
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+
+"""
+
+
+"""
 Finishing up the shell:
 
 === Dangers of the shell ===

@@ -153,3 +153,17 @@ Plan:
 If time, we can move to part 6: Conclusion.
 
 Questions?
+
+## Friday, October 23
+
+Reminders:
+
+- Midterm date: Friday Nov. 6
+
+Plan:
+
+- Finish Part 5
+
+- Part 6: Conclusions.
+
+    + Starting with the poll.
