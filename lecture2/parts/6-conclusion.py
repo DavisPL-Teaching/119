@@ -5,6 +5,7 @@ Part 6: Dangers of the Shell (and a few miscellaneous topics).
 
 Poll:
 Which of the following is an accurate statement about Git's core philosophies?
+(Select all that apply)
 
 <Options cut>
 

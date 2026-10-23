@@ -162,6 +162,11 @@ Reminders:
 
 - Midterm date: Friday Nov. 6
 
+- OH today: 415-5pm (or a bit after)
+
+    Planned in person, but I can also take questions on Zoom.
+    Let me know if you would like to attend by Zoom and I will send a link.
+
 Plan:
 
 - Finish Part 5

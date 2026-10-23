@@ -310,6 +310,25 @@ When you git clone, or "git stash, git pull" the lecture notes,
 you are creating an instance of this philosophy - essentially,
 you're working on your own little branch of the tree.
 
+git wants you to work on that branch individually
+
+  -- Understanding that your changes may break others' changes
+
+  -- Understanding that not all of your changes may be meant to be
+     published for others (or useful for others)
+
+  -- Understanding that later, you will be asked to take the time to
+     determine which of your changes are important or worth keeping.
+
+Some additional suggestions
+(Other ways to fix this problem)
+
+  1. Check out only the files you need
+
+  2. Put your own notes in a separate file.
+     (This way, there will never be merge conflicts.)
+
+-----
 In that context, we can explain some of the additional commands and why
 and what they do.
 
