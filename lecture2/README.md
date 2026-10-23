@@ -156,6 +156,8 @@ Questions?
 
 ## Friday, October 23
 
+This is the last day of Lecture 2 on the shell!
+
 Reminders:
 
 - Midterm date: Friday Nov. 6
@@ -167,3 +169,9 @@ Plan:
 - Part 6: Conclusions.
 
     + Starting with the poll.
+
+- If we happen to have some extra time: we can start the next lecture.
+
+  --> We will skip Lecture 3 and go on directly to Lecture 4.
+
+Questions?

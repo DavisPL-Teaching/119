@@ -3,12 +3,6 @@ Lecture 4: Parallelism
 
 Part 1: Motivation
 
-=== Discussion Question and Poll ===
-
-Which of the following is an accurate statement about Git's core philosophies?
-
-<Form link cut>
-
 ===== Introduction =====
 
 So far, we know how to set up a basic working data processing pipeline
@@ -28,6 +22,9 @@ So far (in Lecture 1 / HW1), we have been building our pipelines in Pandas
 - Pandas can efficiently representing data in memory as a DataFrame
 
 - Pandas uses vectorization - you studied this a little in HW1 part 2
+
+and we have learned how to execute and combine these pipelines
+-- including with other software components -- via the Shell.
 
 The next thing we need to do is **scale** our application.
 
@@ -73,7 +70,7 @@ Some facts:
     https://www.kdnuggets.com/2023/07/gpt4-details-leaked.html
     https://en.wikipedia.org/wiki/GPT-4
 
-(And the next generation of models have taken even more)
+(The next generation of models have taken orders of magnitude more)
 
 Contrast:
 

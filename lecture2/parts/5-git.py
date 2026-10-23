@@ -218,9 +218,41 @@ Recap of what we talked about today:
 --- where we ended for Oct 21.
 ------------------------------
 
-=== Notes on Git philosophy ===
+Oct 23
 
-To understand Git, we need to understand its philosophy.
+There was some confusion last time about Git, in particular:
+
+  why it is difficult to maintain your own notes or changes
+  while keeping up with the official published changes?
+
+  - Some of you are using the lecture notes to add your own notes to the lecture materials
+
+  - Then when you do a git stash; git pull -- your changes are lost!
+
+    (Not really lost - they are actually hidden away and can be brought back.)
+
+    (Try: git stash pop. But even that can result in a conflict!)
+
+  - That's very frustrating! You may be wondering why is this the case?
+
+      ---> I mentioned Git is like a tree data structure!
+           This is why we get things like merge conflicts.
+           (Two different branches of the tree.)
+
+           But this doesn't fully explain it.
+
+           **Why** is Git a tree data structure?
+
+  To really understand Git, we need to understand its core philosophy.
+
+  Spoiler: There is really no solution! :-)
+  Instead:
+  Git will ask us to adopt a more "Zen" attitude when it comes to changes in
+  between versions -- in exchange, we get a robust system which faithfully
+  tracks all possible versions of a software, simultaneously, without losing
+  any of those changes.
+
+=== Notes on Git philosophy ===
 
 Git is sort of the opposite of keeping everything up to date :-)
 
@@ -269,11 +301,17 @@ Corollaries:
     ======> You only need a "local view" or local window into
             the tree, which contains a copy of some of the changes.
 
+  - Each individual should be **deliberate** about what changes they share with
+    everyone else, and why! (And that these don't break others' code.)
+
+      (We will come back to more on this point shortly.)
+
 When you git clone, or "git stash, git pull" the lecture notes,
 you are creating an instance of this philosophy - essentially,
 you're working on your own little branch of the tree.
 
-In that context:
+In that context, we can explain some of the additional commands and why
+and what they do.
 
   First two lines of git status: where I am in the tree
 
@@ -322,6 +360,10 @@ and try to shove the two things together.
 
   Sometimes it works, sometimes it doesn't and you have to debug.
 
+  === Problems with a merge ===
+
+  Merge issues are not just about merge conflicts.
+
   Two things could fail:
 
   1. Git could not know how to merge the changes
@@ -333,9 +375,22 @@ and try to shove the two things together.
      Two conflicting features, one feature breaks someone else's
      unit test, etc.
 
-(Related commands -- not as worried about:)
+=== Other commands ===
+(SKIP)
+
+Other commands related to the above -- not as worried about:
 - git fetch
 - git checkout
+
+===== Git workflow =====
+
+Once we have accepted that git will **not** sync our changes and prefers
+that each collaborator have their own copy of the changes,
+we need to develop our workflow.
+
+  ---> We still want to share our code with others!
+
+  ---> BUT: we want to be very deliberate about what code we share.
 
 For sharing/publishing your own changes
 (a common sequence of three to run):
@@ -361,8 +416,8 @@ To publish your code to the main branch
   Magic sequence of 3 commands:
   git add, git commit, git push.
 
-This is a multi-step process because git wants you to
-be deliberate about all changes.
+This is a multi-step process because git wants you to be deliberate about all
+changes!
 
   git add = what changes you want
 
@@ -370,9 +425,15 @@ be deliberate about all changes.
 
   git push = publish it.
 
-git add, git commit = your local branch only
+(It's supposed to be kind of difficult! We need to tell git / our collaborators which changes
+  are worth sharing, or safe to share, or both.)
 
-git push = shares it publicly.
+Back on the tree view:
+
+  git add, git commit = your local branch only
+
+  git push = shares it publicly. "Push" the branch back to the main trunk and have that
+  be the new trunk.
 
 =========================================
 
