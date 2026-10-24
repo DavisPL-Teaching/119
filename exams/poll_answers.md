@@ -63,3 +63,9 @@ Oct 21:
 
 Oct 23:
 B, E, and F.
+
+Oct 26:
+
+Oct 28:
+
+Oct 30:

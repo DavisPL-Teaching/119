@@ -109,6 +109,7 @@ we are typically looking to increase the throughput of the application.
 Disdavantage of Pandas: does not scale!
 
 - Wes McKinney, the creator of Pandas:
+
     "my rule of thumb for pandas is that you should have 5 to 10 times as much RAM as the size of your dataset"
 
     https://wesmckinney.com/blog/apache-arrow-pandas-internals/
@@ -126,16 +127,7 @@ My answer: 18 GB
 Next time at the start of class, we'll poll the class for various
 answers and figure out how large of a dataset we could handle in Pandas.
 
-Recap:
-
-- We went over midterm topics
-- We saw some motivation for why you might want to scale your application
-- We defined scalability and types of scalability (running on more data vs. running more often)
-- Pandas does not scale in this sense.
-
------ Where we ended for today -----
-
-(Finishing up)
+----------
 
 Recall: statement from Wes McKinney
 
@@ -196,14 +188,40 @@ print(f"Using method 2: we can handle a dataset up to size: {ram_needed} GB")
 """
 Please fill out your answers in the poll:
 
-<form link cut>
+https://forms.gle/PBWziKmMahEmbkti7
+
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
 
 Roughly, we can process like _____ as much data
 and then we'll a bottleneck.
 
 population.csv from HW1: 1.5 MB
 
-According to the class average, we could go up to 1000x the population
+According to the class average, we could go up to ___ the population
 and still handle it with Pandas, beyond that we will run out of space,
 according to McKinney's statement.
+
+=== Recap ===
+
+...
+
 """

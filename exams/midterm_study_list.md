@@ -1,7 +1,6 @@
 # Midterm Study List
 
 Study list of topics for the midterm.
-**This is a study list from Fall 2025. It has not yet been updated for Fall Quarter 2026.**
 
 You should know all of the following concepts, but I won't test you on syntax.
 - For example, you won't be asked to write code on the exam,
@@ -27,12 +26,17 @@ You should know all of the following concepts, but I won't test you on syntax.
 
     + Relation between ETL and dataflow graphs
 
-- Coding practices: Python classes, functions, modules, unit tests
+- Coding practices:
+
+    + Advantages of Python classes, functions, modules, unit tests
+
+    + Exploration stage, development stage, production stage
 
 - Performance:
 
-  Latency and throughput:
-  concepts, definitions, formulas and how to calculate them
+  Latency and throughput
+
+  Concepts, definitions, formulas and how to calculate them
 
 - Pandas: what a DataFrame is and basic properties
 
@@ -40,7 +44,7 @@ You should know all of the following concepts, but I won't test you on syntax.
 
   (DataFrame = table)
 
-- Also know:
+#### Also know (explored on HW1):
 
   + Know a little bit about data validation: things that can go wrong in your input!
 
@@ -50,7 +54,14 @@ You should know all of the following concepts, but I won't test you on syntax.
     I might ask you what step(s) you might do to explore a dataset
     after reading it in to Python or Pandas
 
-  + Know the following term: vectorization
+      USEFUL:
+      .head()
+      .sample(10)
+      .columns
+      .shape
+      type(df)
+
+  + Vectorization (This was explored on the HW)
 
 ## Lecture 2 (the Shell)
 
@@ -62,9 +73,12 @@ You should know all of the following concepts, but I won't test you on syntax.
 
     (current working directory, file system, environment variables)
 
-- Basic command purposes (I won't test you on syntax!)
+- Basic command purposes
   ls, cd, cat, git, python3, echo, man, mkdir, touch, open, rm, cp
   $PATH, $PWD
+
+  I won't test you on syntax! With the following exception: you should
+  know positional arguments vs. named arguments.
 
 - shell commands can be run from Python and vice versa
 
@@ -76,29 +90,35 @@ You should know all of the following concepts, but I won't test you on syntax.
 
 - named arguments vs. positional arguments
 
-- Git, philoslophy of git
+- Git, philosophy of git
 
 - dangers of the shell, file deletion, concept of "ambient authority"
 
+----------------------------
+**Currently: We have covered up to here**
+
+Lecture 4 section will be updated (as needed) following the lectures.
+I expect that Parts 1-4 will be covered on the midterm.
+
 ## Lecture 4 (Parallelism)
 
-Part 1:
+Motivation:
 
 - Scaling: scaling in input data or # of tasks; Pandas does not scale
 
-Part 2:
+Parallelism:
 
 - Definitions of parallelism, concurrency, and distribution;
   how to identify these in tasks; conveyer belt analogy
 
 - Should be able to give an example scenario using these terms, or an example
-  scenario satisfying soem of parallelism, concurrency, and distribution but not
+  scenario satisfying some of parallelism, concurrency, and distribution but not
   the others
 
 - How parallelism speeds up a pipeline; be able to estimate how fast a program would take given some assumptions about how long it takes to process each item and how
 it is parallelized
 
-Part 3:
+Concurrency:
 
 - Know terminology: Concurrency, race condition, data race, undefined behavior, contention, deadlock, consistency, nondeterminism
 
@@ -109,7 +129,7 @@ Part 3:
 - Why we avoid concurrency in data pipelines: difficult to program with; no one
   should write any program with data races in it.
 
-Part 4:
+Types of parallelism:
 
 - Motivation: is parallelism present? how much parallelism?
   Want to parallelize without writing concurrent code ourselves
