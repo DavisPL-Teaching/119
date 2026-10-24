@@ -62,3 +62,4 @@ Oct 21:
 3) Correct answers: C, D, E, F
 
 Oct 23:
+B, E, and F.
