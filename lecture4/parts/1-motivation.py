@@ -25,7 +25,7 @@ for a project:
 
 In Lecture 1 / HW1, we have been building our pipelines in Pandas
 
-- Pandas can efficiently representing data in memory as a DataFrame
+- Pandas can efficiently represent data in memory as a DataFrame
 
 - Pandas uses vectorization - you studied this a little in HW1 part 2
 
@@ -33,6 +33,13 @@ In Lecture 1 / HW1, we have been building our pipelines in Pandas
 "exploration stage, development stage, deployment stage"
 There is a little bit of content on this in Lecture 3,
 which we skipped, but which you may review on your own time if you like.)
+
+    On first opening up a new dataset:
+    .head()
+    .describe()
+    .sample(10)
+    type(df)
+    df.shape
 
 Pandas is great, as long as we are working on a single machine
 and relatively small datasets.
@@ -69,8 +76,13 @@ Questions we might ask:
 - How likely would it be that you want to scale for a toy project?
   For an industry project?
 
+    A: More likely for industry project, but could be both!
+
 - Is scaling something you should consider at exploration time, at development time, or
   at deployment time?
+
+    Most likely after you already have a working version of your pipeline
+    (deployment time) - but can be good to keep in mind at all stages.
 
 - What advantages would scaling have on an ML training pipeline?
   On an ML model serving pipeline?
@@ -93,7 +105,7 @@ Some facts:
 
 Contrast:
 
-    our population dataset in HW1 is roughly 60,000 lines and roughly 1.6 MB on disk.'
+    our population dataset in HW1 is roughly 60,000 lines and roughly 1.6 MB on disk.
 
     Over 1 million times less data than the amount of tokens for GPT-4!
 
@@ -133,7 +145,7 @@ Disdavantage of Pandas: does not scale!
 
     https://wesmckinney.com/blog/apache-arrow-pandas-internals/
 
-Exercise:
+Exercise and activity:
 
     Check how much RAM your personal laptop has.
     According to McKinney's estimate, how much how large of a dataset in population.csv
@@ -185,87 +197,88 @@ Then, please fill out your answers in the following poll:
 
 https://forms.gle/PBWziKmMahEmbkti7
 
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
+Method 1: 8, 17, 17, 16, 15, 19, 8, 17, 17, 16, 16, 8, 18, 16, 16, 8, 17, 8, 16, 16
 
-Answers from last year:
+Method 2: 8, 31, 16, 14, 16, 14, 18, 8, 16, 16, 16, 16, 8, 18, 16, 16, 8, 16, 8, 16, 16
 
-Method 1:
-    8.5, 8.6, 17.1, 15, 17.1, 16.5, 17.1
-
-Method 2:
-    8, 8, 16, 7.62, 15.61, 14.45, 15.4, 7.82, 16, 15.3, 31.6
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
 """
 
-# method1 = [8.5, 8.6, 17.1, 15, 17.1, 16.5, 17.1]
-# method2 = [8, 8, 16, 7.62, 15.61, 14.45, 15.4, 7.82, 16, 15.3, 31.6]
+method1 = [8, 17, 17, 16, 15, 19, 8, 17, 17, 16, 16, 8, 18, 16, 16, 8, 17, 8, 16, 16]
+method2 = [8, 31, 16, 14, 16, 14, 18, 8, 16, 16, 16, 16, 8, 18, 16, 16, 8, 16, 8, 16, 16]
 
-# average1 = sum(method1) / len(method1)
-# average2 = sum(method2) / len(method2)
+average1 = sum(method1) / len(method1)
+average2 = sum(method2) / len(method2)
 
-# print(f"method 1 avg: {average1}", f"method 2 avg: {average2}")
+print(f"method 1 avg: {average1}", f"method 2 avg: {average2}")
 
-# ram_needed = average2 / 10
+ram_needed_1 = average1 / 10
 
-# print(f"Using method 2: we can handle a dataset up to size: {ram_needed} GB")
+ram_needed_2 = average2 / 10
+
+print(f"Using method 1: we can handle a dataset up to size: {ram_needed_1} GB")
+
+print(f"Using method 2: we can handle a dataset up to size: {ram_needed_2} GB")
 
 """
 
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
 
-Roughly, we can process like _____ as much data
-and then we'll a bottleneck.
+Roughly, we can process up to 1.5 GB of data
+and then we'll hit a bottleneck.
 
-population.csv from HW1: 1.5 MB
+population.csv from HW1: 1.6 MB
 
-According to the class average, we could go up to ___ the population
+According to the class average, we could go up to 1000x the population
 and still handle it with Pandas, beyond that we will run out of space,
 according to McKinney's statement.
 
 === Recap ===
 
-...
+We motivated the limits of data processing on a single machine,
+and why you might want to **scale** your application
+
+    - We defined *scaling:* ability of a pipeline to handle
+      an increasing amount of work
+
+        1. Run on more data
+
+        2. Run more often.
+
+    - Scaling is most important to consider after a prototype
+      version of a pipeline is deployed; but can also be useful
+      to consider at all three stages of pipeline development
+      (exploration time, design time, deployment time)
+
+    - We motivated that scaling can be useful for example for
+      large scale ML applications
+
+    - We did an exercise based on Wes McKinney's statement about
+      Pandas:
+
+        RAM needed = 10 x size of dataset.
 
 """

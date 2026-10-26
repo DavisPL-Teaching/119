@@ -10,7 +10,7 @@ Announcements:
 
     Format:
 
-    + Cheat sheet, single sided
+    + Cheat sheet, typed or handwritten, single sided
 
     + Roughly: 10 questions, 8 MC/short answer, 2 free response
 
@@ -18,13 +18,13 @@ Announcements:
 
     + Time length is limited to class time
 
-        Please try to arrive early!
-
-    + A sample exam (from last year) will be released sometime next week
+        Please try to arrive early! Try to arrive 10 mins befoer
 
     Studying:
 
     + Review the polls! `exams/poll_answers.md`
+
+    + A sample exam (from a previous year) will be released later today
 
     + Study guide: `exams/midterm_study_list.md`
 
@@ -41,7 +41,7 @@ Plan for today:
 
 - Motivation: scaling your application
 
-- Along the way: do the poll
+    - Along the way: activity and poll
 
 - Key definitions: parallel, concurrent, and distributed computing
 

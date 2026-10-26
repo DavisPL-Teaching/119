@@ -32,6 +32,7 @@ with a sequential version of the code!)
     Scalability! But at what COST?
     https://www.usenix.org/system/files/conference/hotos15/hotos15-paper-mcsherry.pdf
 
+(SKIP)
 Q: can I think of sequential computing like a monolithic application,
 and parallel computing like microservices?
 
@@ -55,11 +56,24 @@ def average_numbers(N):
     return sum / count
 
 # Uncomment to run:
-# N = 200_000_000
-# result = average_numbers(N)
-# print(f"Result: {result}")
+N = 200_000_000
+result = average_numbers(N)
+print(f"Result: {result}")
 
-# baseline (Sequential performance) is at 9.07s
+# Total: 8.96s
+# baseline (Sequential performance)!
+
+# GOAL (for next time):
+# Scale our application by adding parallelism (multiple workers and/or CPUs)
+# to get it faster than 8.96 s.
+# "Time to beat".
+# Similar concept to HW1, where we compared the throughput/latency against a baseline.
+
+"""
+Where we ended for Oct 26
+-----------------------------------------
+"""
+
 
 # From the command line:
 # time python3 lecture.py
