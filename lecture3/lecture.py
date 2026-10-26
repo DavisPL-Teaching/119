@@ -1,5 +1,10 @@
 """
-Lecture 3: Data operators in Pandas
+SKIPPED
+
+Lecture 3: Data operators and data validation in Pandas
+
+**This material was skipped in Fall 2025 and Fall 2026.**
+We will move directly to Lecture 4.
 
 === What is an operator? ===
 
