@@ -5,26 +5,39 @@ Part 1: Motivation
 
 ===== Introduction =====
 
-So far, we know how to set up a basic working data processing pipeline
-for our project:
+So far, we should know how to set up a basic working data processing pipeline
+for a project:
 
-- We have a prototype of the input, processing, and output stages
-  and we can think about our pipeline as a dataflow graph (Lecture 1)
+- We can develop a basic prototype of a pipeline -- thought of as a dataflow
+  graph in Python (Lecture 1)
+
+    nodes = processing stages; edges = data connections
+
+    input, processing, and output stages
+
+- We have used Pandas to write the nodes in our dataflow graph (Lecture 1, HW1 Parts 1 and 2)
 
 - We have used scripts and shell commands to download any necessary
-  data, dependencies, and set up any other system configuration (Lecture 2)
-  (running these automatically if needed, see HW1 part 3)
+  data, dependencies, set up any other system configuration (Lecture 2, HW1 part 3),
+  and connect different components of our pipeline together
 
-How did we build our pipeline?
+=== Pandas ===
 
-So far (in Lecture 1 / HW1), we have been building our pipelines in Pandas
+In Lecture 1 / HW1, we have been building our pipelines in Pandas
 
 - Pandas can efficiently representing data in memory as a DataFrame
 
 - Pandas uses vectorization - you studied this a little in HW1 part 2
 
-and we have learned how to execute and combine these pipelines
--- including with other software components -- via the Shell.
+(Pandas is also good for data validation. Remember:
+"exploration stage, development stage, deployment stage"
+There is a little bit of content on this in Lecture 3,
+which we skipped, but which you may review on your own time if you like.)
+
+Pandas is great, as long as we are working on a single machine
+and relatively small datasets.
+
+(Recall: 10,000 data points, 10,000,000 data points, 10,000,000,000 data points example from Lecture 0)
 
 The next thing we need to do is **scale** our application.
 
@@ -56,9 +69,15 @@ Questions we might ask:
 - How likely would it be that you want to scale for a toy project?
   For an industry project?
 
-  A: probably more likely for an industry project.
+- Is scaling something you should consider at exploration time, at development time, or
+  at deployment time?
 
 - What advantages would scaling have on an ML training pipeline?
+  On an ML model serving pipeline?
+
+    (NOTE:
+     ML training = calculating loss function, updating your weights of your model, etc.
+     ML model serving = running your model on new inputs or user queries, without updating it.)
 
 === An example: GPT-4 ===
 
@@ -162,9 +181,37 @@ print("Amount of RAM on this machine (method 2):")
 get_ram_2()
 
 """
-Poll:
+Then, please fill out your answers in the following poll:
 
-Answers:
+https://forms.gle/PBWziKmMahEmbkti7
+
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+
+Answers from last year:
 
 Method 1:
     8.5, 8.6, 17.1, 15, 17.1, 16.5, 17.1
@@ -173,22 +220,19 @@ Method 2:
     8, 8, 16, 7.62, 15.61, 14.45, 15.4, 7.82, 16, 15.3, 31.6
 """
 
-method1 = [8.5, 8.6, 17.1, 15, 17.1, 16.5, 17.1]
-method2 = [8, 8, 16, 7.62, 15.61, 14.45, 15.4, 7.82, 16, 15.3, 31.6]
+# method1 = [8.5, 8.6, 17.1, 15, 17.1, 16.5, 17.1]
+# method2 = [8, 8, 16, 7.62, 15.61, 14.45, 15.4, 7.82, 16, 15.3, 31.6]
 
-average1 = sum(method1) / len(method1)
-average2 = sum(method2) / len(method2)
+# average1 = sum(method1) / len(method1)
+# average2 = sum(method2) / len(method2)
 
-print(f"method 1 avg: {average1}", f"method 2 avg: {average2}")
+# print(f"method 1 avg: {average1}", f"method 2 avg: {average2}")
 
-ram_needed = average2 / 10
+# ram_needed = average2 / 10
 
-print(f"Using method 2: we can handle a dataset up to size: {ram_needed} GB")
+# print(f"Using method 2: we can handle a dataset up to size: {ram_needed} GB")
 
 """
-Please fill out your answers in the poll:
-
-https://forms.gle/PBWziKmMahEmbkti7
 
 .
 .

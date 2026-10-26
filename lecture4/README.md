@@ -30,8 +30,10 @@ Announcements:
 
         Contains up to Lecture 1, 2, so far
 
-        More topics will be added next week, and I will go over
-        the list of topics on Monday.
+        More topics will be added from Lecture 4:
+        Exam will cover Lectures 1, 2, and first 4 days of Lecture 4 (through next Monday Nov. 2)
+
+        I will go over the full list of topics next Monday.
 
     + Please ask questions at the OHs, discussion sections, and Piazza!
 
