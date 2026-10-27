@@ -1,5 +1,5 @@
 """
-Part 2: Definitions and Parallel/Concurrent Distinction
+Part 2: Definitions and Parallel/Concurrent/Distributed Distinction
 
 Parallel computing: speeding up our pipeline by doing more than
 one thing at a time!
@@ -73,7 +73,6 @@ print(f"Result: {result}")
 Where we ended for Oct 26
 -----------------------------------------
 """
-
 
 # From the command line:
 # time python3 lecture.py
@@ -209,22 +208,8 @@ Concurrency is when there are multiple tasks happening that might overlap or con
 
 - If the workers are working on different conveyer belts ... then operations won't conflict!
 
------ Where we ended for today -----
-
------------------------------
-
-Oct 29
-(Finishing up a few things)
-
-Recap:
-
-- Once our pipeline is working sequentially, we want to figure
-  out how to **scale** to more data and more frequent updates
-
-- We talked about parallelism: multiple workers working at once
-
 - Conveyer belt analogy:
-    parallel = multiple workers working at the samt eim.
+    parallel = multiple workers working at the same time.
 
 === Related definitions and sneak peak ===
 

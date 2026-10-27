@@ -18,7 +18,7 @@ Announcements:
 
     + Time length is limited to class time
 
-        Please try to arrive early! Try to arrive 10 mins befoer
+        Please try to arrive early! Try to arrive 10 mins before
 
     Studying:
 
@@ -44,5 +44,21 @@ Plan for today:
     - Along the way: activity and poll
 
 - Key definitions: parallel, concurrent, and distributed computing
+
+Questions?
+
+## Wednesday, October 28
+
+Reminders:
+
+- Midterm: Fri, Nov. 6
+
+Plan:
+
+- Continuing: Parallelism
+
+    Part 2: Introduction to Parallelism
+
+    Part 3: Concurrency.
 
 Questions?
