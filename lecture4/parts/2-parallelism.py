@@ -154,7 +154,8 @@ def average_numbers_parallel():
 # CPU usage
 
 """
-New result: roughly half the time! (Twice as fast)
+If this worked correctly:
+Our new result should be in roughly half the time! (Twice as fast)
 
 Not exactly twice as fast - why?
 
@@ -167,6 +168,9 @@ Not exactly twice as fast - why?
 
 We've successfully achieved parallelism!
 We have two workers running at the same time.
+
+Returning to the definition of parallelism:
+and how it differs from concurrency and distribution.
 
 === What is parallelism? ===
 
@@ -211,7 +215,7 @@ Concurrency is when there are multiple tasks happening that might overlap or con
 - Conveyer belt analogy:
     parallel = multiple workers working at the same time.
 
-=== Related definitions and sneak peak ===
+=== What is distribution? ===
 
 Difference between parallelism & concurrency & distribution:
 

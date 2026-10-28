@@ -1,6 +1,45 @@
 """
 Part 4: Parallelism Types
 
+=== A difficult question & Poll ===
+
+1.
+Two workers, threads, or processes are accessing the same shared memory variable "x". Each worker increments the variable 100 times:
+
+    for i in range(100):
+        x += 1
+
+What are possible values of x at the end of the program?
+
+If it helps: think of x += 1 as a read followed by a write, i.e.
+    temp = x + 1
+    x = temp
+
+You may assume that the programming language we are in executes all the workers concurrently (i.e., interleaving the operations in some way).
+You may ignore any possible "undefined behavior".
+(I will comment on this briefly after the poll how this would look in a language like C or Rust)
+
+2.
+The scenario above exhibits... (select all that apply)
+- Concurrency
+- Parallelism
+- Distribution
+- Contention
+- Deadlock
+- Race condition
+- Data race
+
+<form link cut>
+
+.
+.
+.
+.
+
+
+Walk through...
+see Concurrency_Poll_Walkthrough.md for info from last year.
+
 ===== Back to parallelism! ======
 
 Now that we know about concurrency and distribution,

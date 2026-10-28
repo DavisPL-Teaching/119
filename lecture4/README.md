@@ -55,10 +55,16 @@ Reminders:
 
 Plan:
 
-- Continuing: Parallelism
+- Continuing: Part 2: Parallelism
 
-    Part 2: Introduction to Parallelism
+    Parallel code example
 
-    Part 3: Concurrency.
+    Difference between parallelism, concurrency, and distribution
+
+- Part 3: Concurrency.
+
+    Starting with a practice question on the poll
+
+    Coding example.
 
 Questions?
