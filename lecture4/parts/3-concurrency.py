@@ -8,6 +8,17 @@ For each of the following scenarios, select whether it is parallel, concurrent, 
 
 https://forms.gle/iiSr5en4fSyNKM336
 
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+
 === Outline ===
 
 - Last part: parallel example

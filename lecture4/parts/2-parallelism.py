@@ -56,9 +56,9 @@ def average_numbers(N):
     return sum / count
 
 # Uncomment to run:
-N = 200_000_000
-result = average_numbers(N)
-print(f"Result: {result}")
+# N = 200_000_000
+# result = average_numbers(N)
+# print(f"Result: {result}")
 
 # Total: 8.96s
 # baseline (Sequential performance)!
@@ -145,10 +145,10 @@ def average_numbers_parallel():
     print(f"Computation finished")
 
 # Uncomment to run
-# N = 200_000_000
-# if __name__ == '__main__':
-#     freeze_support() # another boilerplate line to ignore
-#     average_numbers_parallel()
+N = 200_000_000
+if __name__ == '__main__':
+    freeze_support() # another boilerplate line to ignore
+    average_numbers_parallel()
 
 # time python3 lecture.py: 5.2s
 # CPU usage
@@ -161,6 +161,8 @@ Not exactly twice as fast - why?
 
     One reason is because of the additional boilerplate required
     to run multiple workers and combine the results.
+
+You may also notice:
 
     We actually didn't combine the results!
     (We should add the results from worker1 and worker2)

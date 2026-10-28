@@ -53,6 +53,13 @@ Reminders:
 
 - Midterm: Fri, Nov. 6
 
+    Today (and next week) discussion sections will conduct practice questions
+    (from the practice midterm) and midterm review!
+
+    Please attend (or if you missed today, take a look at the discussion recording).
+
+    Resources: in `exams/`
+
 Plan:
 
 - Continuing: Part 2: Parallelism
