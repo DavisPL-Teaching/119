@@ -29,13 +29,16 @@ The scenario above exhibits... (select all that apply)
 - Race condition
 - Data race
 
-<form link cut>
+https://forms.gle/J3QUq9Eeeeuy1WiN7
 
 .
 .
 .
 .
-
+.
+.
+.
+.
 
 Walk through...
 see Concurrency_Poll_Walkthrough.md for info from last year.
@@ -242,9 +245,7 @@ Any time there are two nodes which don't depend on each other, that's task paral
 
 ----
 
-Recap:
-
-(I will post on Piazza about midterm topics / plan)
+Recap so far
 
 In the poll, we talked about how programs with concurrency can have many different
 wildly different behaviors due to interleaved reads and writes
@@ -260,8 +261,6 @@ the dataflow graph:
 2. Data Parallelism -- exists at a single node when that task can be performed on different elements of the input data set (or sets) at that node in parallel.
 
 ----
-
-***** Resuming here for Monday, Nov 3 *****
 
 Recall example so far:
 task parallelism

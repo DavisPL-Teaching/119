@@ -75,3 +75,19 @@ Plan:
     Coding example.
 
 Questions?
+
+## Friday, October 30
+
+Reminders:
+
+- Midterm: Fri, Nov. 6
+
+Plan:
+
+- Part 3: Concurrency
+
+- Poll
+
+- Part 4: Types of Parallelism.
+
+Questions?

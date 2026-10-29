@@ -288,13 +288,17 @@ So that we avoid any of the above issues.
 - Nondeterminism:
   Multiple executions of the same code give different answers.
 
-=== Additional exercises (skip for time) ===
+=== Additional exercise (SKIP) ===
 
 Exercise:
 Modify the example to add up a shared list instead of an iterator.
 Write a version that uses (i) shared reads to the list and (ii) shared writes
 to the list (for example popping off elements as they are used).
 What happens?
+
+=== Poll ===
+
+(Do the poll - in 4-types.py)
 
 === Recap from this lecture ===
 
