@@ -1,0 +1,17 @@
+Correct behavior:
+$ python3 3-concurrency.py
+Worker 1 result: 12497500 5000
+Worker 2 result: 37497500 5000
+Average: 49995000.0 / 10000.0 = 4999.5
+
+Bad runs:
+$ python3 3-concurrency.py
+Worker 2 result: 374999750000 500000
+Worker 1 result: 124999750000 500000
+Average: 124999750000.0 / 500000.0 = 249999.5
+Computation finished
+
+$ python3 3-concurrency.py
+Worker 1 result: 12497500 5000
+Worker 2 result: 37497500 5000
+Average: 37497500.0 / 5000.0 = 7499.5

@@ -15,7 +15,8 @@ If it helps: think of x += 1 as a read followed by a write, i.e.
     temp = x + 1
     x = temp
 
-You may assume that the programming language we are in executes all the workers concurrently (i.e., interleaving the operations in some way).
+You may assume that the programming language we are working in
+executes all the workers concurrently (i.e., interleaving the operations in some way).
 You may ignore any possible "undefined behavior".
 (I will comment on this briefly after the poll how this would look in a language like C or Rust)
 
@@ -39,9 +40,15 @@ https://forms.gle/J3QUq9Eeeeuy1WiN7
 .
 .
 .
+.
+.
+.
+.
+.
 
 Walk through...
-see Concurrency_Poll_Walkthrough.md for info from last year.
+see Concurrency_Poll_Walkthrough.md for a walkthrough
+and data-race-example.py for executable code for this example.
 
 ===== Back to parallelism! ======
 

@@ -57,8 +57,9 @@ def average_numbers(N):
 
 # Uncomment to run:
 # N = 200_000_000
-# result = average_numbers(N)
-# print(f"Result: {result}")
+# if __name__ == '__main__':
+#     result = average_numbers(N)
+#     print(f"Result: {result}")
 
 # Total: 8.96s
 # baseline (Sequential performance)!
@@ -70,8 +71,7 @@ def average_numbers(N):
 # Similar concept to HW1, where we compared the throughput/latency against a baseline.
 
 """
-Where we ended for Oct 26
------------------------------------------
+----- Where we ended for Oct 26
 """
 
 # From the command line:
@@ -145,10 +145,10 @@ def average_numbers_parallel():
     print(f"Computation finished")
 
 # Uncomment to run
-N = 200_000_000
-if __name__ == '__main__':
-    freeze_support() # another boilerplate line to ignore
-    average_numbers_parallel()
+# N = 200_000_000
+# if __name__ == '__main__':
+#     freeze_support() # another boilerplate line to ignore
+#     average_numbers_parallel()
 
 # time python3 lecture.py: 5.2s
 # CPU usage

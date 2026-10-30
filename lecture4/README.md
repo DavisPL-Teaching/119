@@ -78,15 +78,39 @@ Questions?
 
 ## Friday, October 30
 
+Announcements:
+
+- HW1 grades released!
+
+    + There were a few mistakes in the autograder, thank you to those of you who pointed these out.
+      You may have noticed an update in your autograder score and your scpres should be updated in Canvas.
+
+    + A short note about packaging up your code for others
+
+        Why this is important
+
+        Tips:
+
+            Remove unneeded files like .git/, .pytest_cache, __pycache__, etc,
+
+            Keep needed data files like data/2019.csv
+
+            Try downloading your code on a new user account or machine,
+            running it locally and seeing if it works.
+
 Reminders:
 
 - Midterm: Fri, Nov. 6
+
+    + Discussion section Weds.: Midterm Review
+
+    + OH: Today 415, Monday 415
 
 Plan:
 
 - Part 3: Concurrency
 
-- Poll
+- Poll: Strange behavior of concurrent workers/threads
 
 - Part 4: Types of Parallelism.
 

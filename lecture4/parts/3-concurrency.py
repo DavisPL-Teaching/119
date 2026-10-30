@@ -19,6 +19,8 @@ https://forms.gle/iiSr5en4fSyNKM336
 .
 .
 
+----- Where we ended for Oct 28
+
 === Outline ===
 
 - Last part: parallel example
@@ -33,12 +35,13 @@ Recall our example above average_numbers_in_parallel.
 
 No concurrency! (Why?)
 
-Exercises:
-Modify our example to keep track of an output.
+Let's modify our example to add concurrency:
+a shared memory data structure to keep track of and combine the two outputs.
 """
 
+### *** IGNORE ***
+### Boilerplate from before
 from multiprocessing import Process, freeze_support
-
 def run_in_parallel(*tasks):
     running_tasks = [Process(target=task) for task in tasks]
     for running_task in running_tasks:
@@ -54,28 +57,28 @@ from multiprocessing import Array
 
 # new argument: results array
 # results: a shared array of length 4
-def worker3(results):
+def worker1(results):
     sum = 0
     count = 0
     for i in range(N // 2):
         sum += i
         count += 1
 
-    print(f"Worker 3 result: {sum} {count}")
+    print(f"Worker 1 result: {sum} {count}")
     # Save the results in the shared results array
     results[0] = sum + results[0]
     results[1] += count
 
-def worker4(results):
+def worker2(results):
     sum = 0
     count = 0
     for i in range(N // 2, N):
         sum += i
         count += 1
 
-    print(f"Worker 4 result: {sum} {count}")
+    print(f"Worker 2 result: {sum} {count}")
     # Save the results in the shared results array
-    results[2] = sum + results[0]
+    results[2] = sum + results[2]
     results[3] += count
 
 def average_numbers_concurrent():
@@ -90,8 +93,8 @@ def average_numbers_concurrent():
     results[3] = 0
 
     # Like run_in_parallel but with added code to handle arguments
-    p1 = Process(target=worker3, args=(results,))
-    p2 = Process(target=worker4, args=(results,))
+    p1 = Process(target=worker1, args=(results,))
+    p2 = Process(target=worker2, args=(results,))
     p1.start()
     p2.start()
     p1.join()
@@ -106,14 +109,12 @@ def average_numbers_concurrent():
 
 # Uncomment to run
 # Define N -- modify here as needed
-# N = 1_000_000
+# N = 10_000_000
 # if __name__ == "__main__":
 #     freeze_support()
 #     average_numbers_concurrent()
 
 """
-Now we don't just have parallelism, we have concurrency
-
 Questions:
 
 What do you think would happen if we modified the example so that both
@@ -135,13 +136,16 @@ processes access the same elements of the array?
 .
 .
 .
+
+If nothing happens: lower N and try again.
+
 .
 .
 .
 .
 .
 
-Spoiler: it seems to work!
+Spoiler: it seems to work! ....
 ... But it doesn't actually work in general
 ... we just get lucky most of the time.
 ... Very very rarely, worker3 will read the value, worker4 will read it,
@@ -215,6 +219,24 @@ def average_numbers_racey():
 """
 Does something go wrong?
 
+(We have the same problem as before and a new problem)
+
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+
     Contention:
 
     Multiple workers, threads, or processes trying to access the same data at the
@@ -281,7 +303,7 @@ So that we avoid any of the above issues.
   (Similar to an infinite loop)
 
 - Consistency
-  The ability of parallel and concurent code to behave as if it were
+  The ability of parallel and concurrent code to behave as if it were
   sequential code.
   You want the same answers as if you just ran the code sequentially.
 
