@@ -24,7 +24,9 @@ https://forms.gle/iiSr5en4fSyNKM336
 === Outline ===
 
 - Last part: parallel example
-- This part: concurrent + distributed examples
+- This part: concurrent examples
+
+Coming up:
 - Parallel thinking, types of parallelism, and quantifying
   the amount of parallelism available
 - Measuring scaling & types of scaling
@@ -37,6 +39,8 @@ No concurrency! (Why?)
 
 Let's modify our example to add concurrency:
 a shared memory data structure to keep track of and combine the two outputs.
+
+Shared memory will allow the workers to communicate!
 """
 
 ### *** IGNORE ***
@@ -78,8 +82,8 @@ def worker2(results):
 
     print(f"Worker 2 result: {sum} {count}")
     # Save the results in the shared results array
-    results[2] = sum + results[2]
-    results[3] += count
+    results[0] = sum + results[0]
+    results[1] += count
 
 def average_numbers_concurrent():
     # Create a shared results array
@@ -109,12 +113,16 @@ def average_numbers_concurrent():
 
 # Uncomment to run
 # Define N -- modify here as needed
-# N = 10_000_000
+# N = 1_000_000
 # if __name__ == "__main__":
 #     freeze_support()
 #     average_numbers_concurrent()
 
 """
+It worked!
+We were able to run 2 workers, have the 2 workers compute in parallel,
+and combine their results at the end to match the sequential code.
+
 Questions:
 
 What do you think would happen if we modified the example so that both
@@ -159,6 +167,13 @@ Definition of a race condition:
     potentially conflicting operations occur --
         "who wins the race"
 
+This is bad!
+
+    It's especially bad because it tends to be very rare in practice!
+
+    Horror stories: bugs that only show up on 1 in 10,000 or 1 in a
+    million runs of your application
+
 What do you think would happen if we modified the example to use the shared
 results list directly for each worker's local variables?
 (Let's try it)
@@ -190,7 +205,7 @@ def average_numbers_racey():
     # i = integer, d = double (we use d here because the integers suffer from overflow)
     results = Array('d', range(2))
 
-    # Iniitalize our shared array
+    # Initalize our shared array
     results[0] = 0
     results[1] = 0
 
@@ -255,7 +270,8 @@ Does something go wrong?
 Definition:
 
     A "data race" is a particular race condition where a read and
-    a write happens to the same memory location at the same time.
+    a write happens to the same memory location at the same time
+    OR two writes to the same memory location at the same time.
 
     On most architectures, a data race results in random/arbitrary/
     nondeterministic behavior.
@@ -275,6 +291,8 @@ generally speaking, we want different workers to be working on
 - different steps in the pipeline
 - producing output in different places or to different output files
 
+As much as possible, avoid concurrency or introduce it only where needed.
+
 So that we avoid any of the above issues.
 
 === Terminology ===
@@ -284,8 +302,8 @@ So that we avoid any of the above issues.
   (which one completes it first) affects the final outcome
 
 - Data race
-  A particular race condition where a read and a write happen at the same
-  time and in the same memory location
+  A particular race condition where a read and a write (or two writes)
+  happen at the same time and in the same memory location
 
   (Data races only exist in concurrent applications)
 

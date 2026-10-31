@@ -83,7 +83,7 @@ Announcements:
 - HW1 grades released!
 
     + There were a few mistakes in the autograder, thank you to those of you who pointed these out.
-      You may have noticed an update in your autograder score and your scpres should be updated in Canvas.
+      You may have noticed an update in your autograder score and your scores should be updated in Canvas.
 
     + A short note about packaging up your code for others
 
@@ -106,11 +106,21 @@ Reminders:
 
     + OH: Today 415, Monday 415
 
+      Come prepared with polls/practice midterm questions you would like to go over.
+
 Plan:
 
 - Part 3: Concurrency
 
+    + Programming example
+
+    + Things that can go wrong
+
+    + Vocabulary/terminology to know
+
 - Poll: Strange behavior of concurrent workers/threads
+
+If we have extra time:
 
 - Part 4: Types of Parallelism.
 

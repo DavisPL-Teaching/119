@@ -75,3 +75,11 @@ Oct 28:
 4. Concurrent + Distributed
 5. Parallel + Distributed
 6. Parallel + Concurrent + Distributed
+
+Oct 30:
+1. Any value between 2 and 200 (inclusive).
+If you said between 0 and 200 that is also close (would be worth a point).
+
+2. AB D FGH
+Concurrency, Parallelism, Contention, Race Condition, Data Race -
+and Spooky Halloween Vibes, because data races are scary!! :-)
