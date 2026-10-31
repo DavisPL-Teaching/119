@@ -200,7 +200,7 @@ def average_numbers_task_parallelism():
 #     average_numbers_task_parallelism()
 
 """
-**pictoral model** (dataflow graph)
+dataflow graph:
 
     (input1) --> (sum)
                          --> (compute average)
@@ -246,31 +246,9 @@ Any time there are two nodes which don't depend on each other, that's task paral
 
     ----> i.e. same task, different data points
 
-    Summarize here:
-    Task parallelism = different tasks on same/different data points
-    Data parallelism = same task on different data points.
-
-----
-
-Recap so far
-
-In the poll, we talked about how programs with concurrency can have many different
-wildly different behaviors due to interleaved reads and writes
-
-We'd like to write programs which avoid this issue and benefit from parallelism,
-but we don't want to write any concurrent code ourselves
-
-We talked about two types of parallelism with examples and how to identify them in
-the dataflow graph:
-
-1. Task Parallelism -- exists between two nodes when there is a path from one to the other
-
-2. Data Parallelism -- exists at a single node when that task can be performed on different elements of the input data set (or sets) at that node in parallel.
-
-----
-
-Recall example so far:
-task parallelism
+Summary so far:
+Task parallelism = different tasks on same/different data points
+Data parallelism = same task on different data points.
 
 Do we need another example for data parallelism?
 
@@ -344,7 +322,7 @@ Summary:
 
 === Discussion Question & Poll ===
 
-<form link cut>
+https://forms.gle/1sWwWtH4msGTAvdU9
 
 Which types of parallelism are present in the following scenario? (select all that apply)
 
@@ -355,7 +333,7 @@ A Python script is written to complete the following 3 tasks:
 
 A. Data parallelism
 B. Task parallelism
-C. Pipeline parallelism (please note: will not appear on the midterm)
+C. Pipeline parallelism
 
 (For each one: be specific about which of task(s) 1-3 is has parallelism)
 
@@ -556,93 +534,23 @@ For this reason, data parallelism is the main focus of most
 parallel and distributed data processing frameworks.
 (Again, looking forward to lecture 5).
 
-=== Poll and an important note about dataflow graphs ===
+=== Recap ===
 
-(Nov 7 poll)
+----
+(UPDATE)
+In the poll, we talked about how programs with concurrency can have many different
+wildly different behaviors due to interleaved reads and writes
 
-An important note about identifying parallelism in dataflow graphs!
+We'd like to write programs which avoid this issue and benefit from parallelism,
+but we don't want to write any concurrent code ourselves
 
-- Data parallelism:
+We talked about three types of parallelism with examples and how to identify them in
+the dataflow graph:
 
-    Running the same task on different data points
+1. Task Parallelism -- exists between two nodes when there is a path from one to the other
 
-- Task parallelism
+2. Data Parallelism -- exists at a single node when that task can be performed on different elements of the input data set (or sets) at that node in parallel.
 
-    Running two different tasks on same or different data points
-
-- Pipeline parallelism
-
-    When feeding the output of one task to another, having the second
-    task process the partial results of the first task while the first
-    task is still running.
-
-How do we connect these types of parallelism to this concept of
-dataflow graphs?
-
-    Note: the word "task" as referring to a node in the dataflow graph.
-
-    Different nodes in the graph = different tasks
-
-For this poll, you may find it helpful to review the dataflow graph example that is drawn at:
-lecture4/extras/dataflow-graph-example.png
-
-1. For each type of parallelism that can be present in a dataflow graph, does it occur at a single node, or between a pair of two nodes?
-
-2. For two different ways of drawing a dataflow graph (with different delineations of tasks as nodes), could we get different types of parallelism present, based on the above? Briefly comment on why or why not.
-
-<form link cut>
-
-examples:
-
-    1. load employee dataset
-
-    2. strip the spaces from employee names, followed by extracting the first/given name
-
-    grouping both parts of task 2 as a single task as numbered above:
-
-    (load) -> (strip and extract)
-
-    then (strip and extract) has data parallelism,
-    but no pipeline parallelism; but, if I group it as two different tasks
-
-    (there is pipeline parallelism between "load" and "strip and extract")
-
-    1. load employee dataset
-
-    2. strip the spaces from employee names
-
-    3. extract the first/given name
-
-    (load) -> (strip) -> (extract)
-
-    Now there is pipeline parallelism between (strip) and (extract)
-    and data parallelism at (strip) and data parallelism at (extract)
-
-    I can also modify my graph to turn data parallelism into task parallelism
-
-    My dataset got too large, so I split into two halves
-
-    (load dataset1) -> (strip and extract dataset1)
-
-    (load dataset2) -> (strip and extract dataset2)
-
-    Now I have four nodes!
-
-    Now there is task parallelism between "strip and extract dataset1"
-    and "strip and extract dataset2"
-
-This was tricky point
-
-If you don't want to remember the discussion above, just remember:
-
-    1. Data parallelism always exists at a single node, and I can identify
-    it by checking if that particular node/task can be run in parallel over
-    different chunks/batches of the input
-
-    2. Task parallelism always exists between any two different nodes that are
-    independent of one another
-
-    3. Pipeline parallelism always exists between any
-    two different nodes which are connected by an edge.
-
+3. Pipeline Parallelism - exists between a pair of nodes connected by an edge,
+where multiple data items are passed between the nodes.
 """

@@ -1,5 +1,6 @@
 """
 Part 6: Distribution and concluding thoughts
+(Planned for: Nov 9)
 
 === Distributed computing: some examples ===
 
@@ -83,7 +84,7 @@ Q4: can we have distribution with concurrency?
 """
 
 """
-=== Parallelizing our code in Pandas? (Skip) ===
+=== Dask: Parallelizing our code in Pandas (SKIP) ===
 
 We don't want to parallelize our code by hand.
 (why? See problems with concurrency from last week!)

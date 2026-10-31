@@ -125,3 +125,15 @@ If we have extra time:
 - Part 4: Types of Parallelism.
 
 Questions?
+
+## Monday, November 2
+
+Reminders:
+
+- Midterm this Friday!
+
+Plan:
+
+- Go over last time's poll
+
+- Types of parallelism
