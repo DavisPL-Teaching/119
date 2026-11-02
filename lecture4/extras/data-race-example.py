@@ -7,7 +7,7 @@ Also discusses the relationship between data races and UB.
 This is a subtle topic!
 TL;DR:
 
-- In Python, x could be a value between 2 and 200 using multiprocess or multiprocessing libraries (see below). This is the case that was asked about on the poll. You can try running the code below and see that values under 200 are possible.
+- In Python, x could be a value between 2 and 200 using the multiprocessing library (see below). This is the case that was asked about on the poll. You can try running the code below and see that values under 200 are possible.
 
 - In general - making no assumptions about the programming language implementation of += or the underlying architecture - data races are often considered "undefined behavior". Accounting for this undefined behavior, x could be any integer value. In a language with undefined behavior: *if there is a read and a write concurrently to the same data (or two concurrent writes), the value of that data is indeterminate.*
 

@@ -47,31 +47,34 @@ https://forms.gle/J3QUq9Eeeeuy1WiN7
 .
 
 Walk through...
-see Concurrency_Poll_Walkthrough.md for a walkthrough
+see extras/Data_Race_Poll_Walkthrough.md
 and data-race-example.py for executable code for this example.
 
 ===== Back to parallelism! ======
 
-Now that we know about concurrency and distribution,
-at this point in the lecture, let's go back
-to simple parallelism.
-Also, we will move from thinking about parallelism in general
-to how they are most used / most useful in data science.
+Now that we have learned about concurrency, our focus will move
+back to simple parallelism.
+(We will return to Distribution in Lecture 5!)
+
+Also, we will move from thinking about parallelism *in general*
+to how parallelism is most useful in data science:
+how to identify and exploit parallelism in your own pipelines and projects.s
 
 Goals:
+
+    - We want the benefits from parallelism (fast results and more efficient computations)
+      + we want fast results
+        (not waiting 2 hours or 2 days to get a query result)
+      + we want deployed pipelines to not
+        crash due to overloading, causing permanently lost data or resources
 
     - We want to think about parallelism at a higher-level than
       individual workers and processes
 
       Simply: is it parallel? how much parallelism?
 
-    - We want massively parallel computations
-      + we want fast results
-        (not waiting 2 hours or 2 days to get a query result)
-      + we want deployed pipelines to not
-        waste money and resources
-
     - We want to avoid thinking about concurrency
+
         (why?: concurrency comes with lots of pains,
          including data races, contention, etc.)
         + we can do this by relying on libraries that
@@ -81,16 +84,7 @@ Goals:
             reading and writing to the same data at the
             same time.
 
-    - We want to distribute data and computations
-        (why?)
-        parallelization happens on a single machine,
-        distributed code enables us to scale even further.
-
-        + But even when the dataset is distributed, we
-          don't want to worry about concurrency and implementation
-          details.
-
-Of course, priorities are important:
+We should still keep in mind the lessons from parts/1-motivation.py and 2-parallelism.py:
 
     - We still want to prototype using a sequential implementation first.
 
@@ -105,43 +99,67 @@ Of course, priorities are important:
 === Parallel thinking in data science ===
 
 We've written our pipeline:
-Q1: Is it parallel?
-Q2: How much parallelism?
+
+    Q1: Is it parallel?
+
+    Q2: How much parallelism?
 
 About Q1:
 
-We often think about parallelism by dividing it into three types:
+We can understand parallelism by dividing it into three types:
 
 If you want to know if a program is parallel, you should be looking
-for one of three types of parallelism; I'll show that all three can
-be viewed by looking at the dataflow graph.
+for one of three types.
+I'll also demonstrate that all three can be viewed directly by
+looking at the dataflow graph.
 
-1. Task parallelism
+For each type of parallelism we will go over:
 
-    Different tasks can be done in parallel.
+1. The definition
+2. Example of a pipeline where it is present
+3. Example code
+4. How to identify it in the dataflow graph.
 
-    ----> i.e. different task, potentially same data points
+===== 1. Task parallelism =====
 
-    ----> the two tasks aren't dependent on each other.
+A pipeline has *task parallelism* if
+different tasks can be done in parallel.
 
-    Example 1: You have an SQL query where you want
-    to compute the employee with the highest salary
-    and the employee with the lowest salary.
+----> i.e. different task, same or different data points
 
-    You might realize that you can compute highest
-    with one query, and lowest with a separate query,
-    and these two queries can be done in parallel.
+----> the two tasks aren't dependent on each other.
 
-    Example 2: Going back to our running example,
-    avg. of the first 200,000,000 integers
-    we could compute the sum with one worker,
-    and the count with the other worker.
-    That's task parallelism.
+Example 1: You have an SQL query where you want
+to compute the employee with the highest salary
+and the employee with the lowest salary.
+
+You might realize that you can compute highest
+with one query, and lowest with a separate query,
+and these two queries can be done in parallel.
+
+Dataflow graph (DFG):
+
+                            ---> Find Highest Salary
+    Load Employee Salaries
+                            ---> Find Lowest Salary
+
+Example 2: Going back to our running example,
+avg. of the first 200,000,000 integers
+we could compute the sum with one worker,
+and the count with the other worker.
+That's task parallelism!
+
+DFG:
+
+    (input1) --> (sum)
+                         --> (compute average)
+    (input2) --> (count)
 
 Exercise:
-Write a version of our average_numbers pipeline that exploits task parallelism.
+Write a version of our average_numbers pipeline that exploits task parallelism,
+based on the above dataflow graph.
 
-We will start with a skeleton of our code from the concurrent example.
+(The code is based off of a skeleton of our concurrent code example)
 """
 
 from multiprocessing import Process, freeze_support
@@ -194,57 +212,75 @@ def average_numbers_task_parallelism():
 
 # Uncomment to run
 # Redefine N again
-# N = 100_000_000
+# N = 200_000_000
 # if __name__ == "__main__":
 #     freeze_support()
 #     average_numbers_task_parallelism()
 
 """
-dataflow graph:
+### IN THE DATAFLOW GRAPH:
 
-    (input1) --> (sum)
-                         --> (compute average)
-    (input2) --> (count)
+        ---> (Task1) --->
 
-Any time there are two nodes which don't depend on each other, that's task parallelism.
+
+                        ---> (Task2) ---->
+
+Any time there are two nodes which don't depend on each other, there is
+**task parallelism** between these two nodes.
 """
 
 """
-2. Data parallelism
+===== 2. Data parallelism =====
 
-    This is the most important one
+This is the most important one.
 
-    Different parts of your dataset can be processed in parallel.
+A pipeline has *data parallelism* if
+the same task can be done in parallel on different
+parts of your dataset.
 
-    Example 1: imagine an SQL query where you need to match
-    the employee name with their salary
+Example 1: imagine an task where you need to match
+the employee name with their salary.
+Tasks:
+1. Load employee salaries
+2. Load employee names
+3. Match salaries to names
 
-    Different rows in the input: I can match one employee
-    name totally independently from another employee name --
-    these tasks can be done in parallel!
-    That's data parallelism.
-
-    But I claim that this is not yet visible in the dataflow graph!
+DFG:
 
     (load input employee database) ->
-                                      (match employee to salary) -> (print output)
+                                        (match employee to salary)
     (load salary database)         ->
 
-    Data parallelism is present at the level of an individual node (task) in the
-    graph: it tells me that different inputs to that node can be processed in parallel.
+Different rows in the input: I can match one employee
+name totally independently from another employee name --
+these tasks can be done in parallel!
+That's data parallelism.
 
-    The (match employee to salary) node in our case can benefit from data parallelism.
+But how can we see this in the dataflow graph?
 
-    Example 2: In our running example, we were adding up
-    the numbers between 1 and 20,000,000.
-    We notice that we can add up the numbers between
-    1 and 10,000,000 and the numbers betweeen
-    10,000,001 and 20,000,000 separately!
-    That's data parallelism.
+    (load input employee database) ->
+                                        (match employee to salary) -> (print output)
+    (load salary database)         ->
 
-    We can add up different numbers from the input dataset in parallel.
+Data parallelism is present at the level of an individual node (task) in the
+graph: it tells me that different inputs to that node can be processed in parallel.
 
-    ----> i.e. same task, different data points
+In this case, it is present at:
+
+    (match employee to salary) node
+
+It is also present at all other nodes!
+
+Example 2: In our running example, we were adding up
+the numbers between 1 and 20,000,000.
+We notice that we can add up the numbers between
+1 and 10,000,000 and the numbers betweeen
+10,000,001 and 20,000,000 separately!
+That's data parallelism.
+
+We can add up different numbers from the input dataset in parallel.
+
+----> i.e. same task, different data points
 
 Summary so far:
 Task parallelism = different tasks on same/different data points
@@ -253,7 +289,6 @@ Data parallelism = same task on different data points.
 Do we need another example for data parallelism?
 
 No, because we had a data parallelism example in part 2 (2-parallelism.py).
-
 """
 
 def average_numbers_task_parallelism():
@@ -261,51 +296,85 @@ def average_numbers_task_parallelism():
     pass
 
 """
-3. Pipeline parallelism
+### IN THE DATAFLOW GRAPH:
 
-    (The last type of parallelism is the most strange)
-    It's that if two tasks are done in sequence,
-    we can still benefit (surprisingly) from parallelism!
+Data parallelism is present at an individual node (task),
+**if** that task can be done in parallel on different chunks or sections of its input.
 
-    (load dataset) --> (task 1) ---[interm output 1]---> (task 2) ---[interm output 2]---> (save output)
+        ---[input]---> (Task) ---[output] --->
 
-    Example: Take our dataset of employees, for each employee
-    name, strip the spaces from the name, then extract the first
-    name, then extract the last letter of the first name,
-    and save that to an output data frame.
+===== 3. Pipeline parallelism =====
 
-    This is a pipeline of tasks:
+The last type of parallelism, and also the strangest!
+
+Imagine that two tasks are done in sequence,
+so there's no task parallelism between them - and there's
+no data parallelism.
+
+I claim that even in this case,
+we can still benefit (surprisingly) from parallelism!
+
+Example: Take our dataset of employees, for each employee
+name, strip the spaces from the name, then extract the first
+name, then extract the last letter of the first name,
+and save that to an output data frame.
+
+DFG:
+
+    (load dataset) --> (strip spaces) --> (extract first name) --> (extract last letter) --> (save output)
+
+This is a pipeline of tasks:
     -> I have to strip the spaces before I extract the first name
     -> I have to extract the first name before I can get the last letter
     -> I have to get the last letter before I can save it to the output data frame
 
+More abstractly:
+
     (dataset) --> task 1 --> task 2 --> task 3 --> task 4
 
-    It doesn't seem like there's any parallelism here!
-    But there is.
+It doesn't seem like there's any parallelism here!
+But there is.
 
-                  task 1     task 2     task 3     task 4
-    input/row 1:    1          2          3          4
-    input/row 2:    2          3          4          5
-    input/row 3:    3          4          5          6
+                task 1     task 2     task 3     task 4
+input/row 1:    1          2          3          4
+input/row 2:    2          3          4          5
+input/row 3:    3          4          5          6
 
-    Overall:
-        If we had done this sequentially, would have required 3 * 4 = 12 timesteps
+Overall:
 
-        But! we were able to do it in 6 timesteps
+    If we had done this sequentially, would have required 3 * 4 = 12 timesteps
 
-        And we were able to do that all while doing all 4 tasks in order.
+    But! we were able to do it in 6 timesteps
 
-    That's pipeline parallelism!
+    And we were able to do that all while doing all 4 tasks in order.
 
-Visual aid!
+Side note: this is also how your CPU works to make code go super fast :-)
+https://en.wikipedia.org/wiki/Instruction_pipelining
 
-How do we identify pipeline parallelism in a dataflow graph?
+That's pipeline parallelism!
+
+Coding example: SKIP (will revisit below).
+
+### IN THE DATAFLOW GRAPH:
+
+Pipeline parallelism is present any time there are two tasks, connected by an edge;
+and the second task can begin computing before the first task has completed.
+
+        .... ----> (TASK1) ----> (TASK2) ----> ....
+
+====== Review: Identifying parallelism in the dataflow graph =====
+
+You can use the dataflow graph reliably to identify all types of parallelism!
+
+Review: How?
 
     Draw out the tasks your pipeline as a dataflow graph
-    (recall how we did this in Lecture 1):
+    (recall how we did this in Lecture 1 and above examples)
+    (make sure you have 1 node in your dataflow graph per task!)
 
     (load dataset) -> (calculate a new column) -> (send an email to each student)
+
+Then:
 
     Data parallelism exists if a single node in the pipeline can
     be done in parallel over its inputs
@@ -315,62 +384,18 @@ How do we identify pipeline parallelism in a dataflow graph?
     Pipeline parallelism exists if there are two nodes that can be run in parallel with an arrow between them.
 
 Summary:
-    two nodes without any path = task parallelism
     1 node with processing different inputs in parallel = data par.
-    two nodes with an edge = pipeline parallelism, as long as the second task can begin
+    2 nodes without any path = task parallelism
+    2 nodes with an edge = pipeline parallelism, as long as the second task can begin
     processing the outputs as soon as they are produced, before the first task completes.
 
-=== Discussion Question & Poll ===
+-----------------
+#### POLL -- do the poll here (if not done yet).
+See 4-polls.py.
+-----------------
 
-https://forms.gle/1sWwWtH4msGTAvdU9
-
-Which types of parallelism are present in the following scenario? (select all that apply)
-
-A Python script is written to complete the following 3 tasks:
-1. load a dataset into Pandas: students.csv, with 100 rows
-2. calculate a new column which is the total course load for each student; this is the sum of several other columns
-3. send an email to each student with their total course load
-
-A. Data parallelism
-B. Task parallelism
-C. Pipeline parallelism
-
-(For each one: be specific about which of task(s) 1-3 is has parallelism)
-
-Answers:
-There is data parallelism + pipeline parallelism, but no task parallelism
-
-Let's draw our dataflow graph:
-
-We are given an example with 3 tasks, so we should have three nodes
-
-(1) Load the dataset
-(2) Calculate the new column
-(3) Send the email
-
-Edges:
-(1) -> (2)
-and from (2) -> (3)
-
-    Dataflow graph:
-    (1) -> (2) -> (3)
-
-    Task parallelism requires two nodes that don't have a path from one to
-    the other.
-
-    Pipeline parallelism is present - from (1) -> (2) and from (2) -> (3)
-
-    Data parallelism is present at nodes (1), (2), and (3).
-
-.
-.
-.
-.
-.
-
---------------------
-
-Back to pipeline parallelism example:
+Finishing the pipeline parallelism example:
+Just to give example code.
 
 Exercise:
 Write a version of our average_numbers pipeline that exploits pipeline parallelism.
@@ -465,19 +490,9 @@ to be saved into the array, we saw this in a previous example.
 """
 
 """
-(Skip)
-What do these types of parallelism look like on a real pipeline
-rather than a toy example?
-
-Data parallelism:
-
-Pipeline parallelism:
-
-Task parallelism:
-
 === Additional practice question ===
 
-(We can do this in class if time, if not I will ask the TA to do it as a practice question in discussion section)
+SKIP in class; I will ask the TA to do it as a practice question in discussion section
 
 A second practice question:
 
@@ -510,7 +525,7 @@ For this one, you might have to guess a bit as to what "Map", "Semijoin", and "D
 
 === Finishing up ===
 
-Q: Which of these is most important in the real world?
+Q: Which of the 3 types of parallelism is most important in the real world?
 (Hint: it's not a close contest)
 
 A:
@@ -537,7 +552,7 @@ parallel and distributed data processing frameworks.
 === Recap ===
 
 ----
-(UPDATE)
+(TODO: UPDATE)
 In the poll, we talked about how programs with concurrency can have many different
 wildly different behaviors due to interleaved reads and writes
 

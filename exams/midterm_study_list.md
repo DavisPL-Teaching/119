@@ -2,7 +2,12 @@
 
 Study list of topics for the midterm.
 
-You should know all of the following concepts, but I won't test you on syntax.
+**Updated on Nov 2: Covers through Lecture 4, Part 4 (Types of Parallelism).**
+**The final version of this study list will be posted after class.**
+
+You should know all of the following concepts
+
+Concepts only - I won't test you on syntax:
 - For example, you won't be asked to write code on the exam,
   but you might be asked to explain how you might to dome task in words
   or asked to calculate how much time a task would take given some
@@ -94,17 +99,13 @@ You should know all of the following concepts, but I won't test you on syntax.
 
 - dangers of the shell, file deletion, concept of "ambient authority"
 
-----------------------------
-**Currently: We have covered up to here**
-
-Lecture 4 section will be updated (as needed) following the lectures.
-I expect that Parts 1-4 will be covered on the midterm.
-
 ## Lecture 4 (Parallelism)
 
 Motivation:
 
-- Scaling: scaling in input data or # of tasks; Pandas does not scale
+- Scaling: scaling in input data or # of tasks
+
+- Pandas does not scale; 10x memory (RAM) rule.
 
 Parallelism:
 
@@ -124,7 +125,11 @@ Concurrency:
 
 - "Conflicting operations": for example, a read/write are conflicting, two writes are conflicting, two reads are not conflicting as they can both occur simultaneously (this is also part of the definition of a data race)
 
-- Know possible concurrent executions of a program: you won't be asked a scenario as complex as the poll on Oct 31. However, you might be asked about a simpler program, like one with two workers, one increments x += 1, the other implements x += 1 twice, etc.
+- Know possible concurrent executions of a program: you won't be asked a scenario as complex as the poll on Oct 31. However, you might be asked about a simpler program, like one with two workers, one increments x += 1, the other implements x += 1 twice, etc. EXAMPLE:
+
+    worker 1:             worker 2:
+    x += 1                 x += 1
+    x += 1
 
 - Why we avoid concurrency in data pipelines: difficult to program with; no one
   should write any program with data races in it.
@@ -134,6 +139,7 @@ Types of parallelism:
 - Motivation: is parallelism present? how much parallelism?
   Want to parallelize without writing concurrent code ourselves
 
-- Types of parallelism: task parallelism, data parallelism
+- Types of parallelism: task parallelism, data parallelism, pipeline parallelism
 
-- How to identify each of these in the dataflow graph.
+- How to identify each of these in the dataflow graph. SEE practice questions from
+  Nov 2 and Nov 4.
