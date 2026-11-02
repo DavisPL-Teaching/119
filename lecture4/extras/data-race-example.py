@@ -1,49 +1,30 @@
 """
-A more extended data race example - related to the Oct 31 in-class poll -
-that discusses the relationship between data races and UB.
+Data race example:
+Runnable code for the example from the Oct 30 in-class poll.
+
+Also discusses the relationship between data races and UB.
 
 This is a subtle topic!
-TL;DR: The following are both correct:
+TL;DR:
 
-- x will always between 2 and 200 in Python using multiprocess (multiprocess.Array and multiprocess.Value)
+- In Python, x could be a value between 2 and 200 using multiprocess or multiprocessing libraries (see below). This is the case that was asked about on the poll. You can try running the code below and see that values under 200 are possible.
 
-- x could be any integer value making no assumptions about the programming language implementation of += or the underlying architecture.
-
-The latter bullet (any value) is also the technically correct answer in C/C++, where data races are something called "undefined behavior", meaning that the compiler is allowed to compile your code to do something entirely different than what you said.
-(And it may depend on the compiler!)
-
-In a language with undefined behavior:
-
-    *if there is a read and a write concurrently to the same data (or two concurrent writes), the value of that data is indeterminate.*
+- In general - making no assumptions about the programming language implementation of += or the underlying architecture - data races are often considered "undefined behavior". Accounting for this undefined behavior, x could be any integer value. In a language with undefined behavior: *if there is a read and a write concurrently to the same data (or two concurrent writes), the value of that data is indeterminate.*
 
 Longer discussion:
 
 Try running the example! What happens?
 
-As some of you suspected, in our Python implementation (using multiprocess), it happens to be the case that:
-
-- when run, the result is a value between 100 and 200 in all test runs
+- We generally get a value between 100 and 200 in all test runs
   (often 10 or 20 for the N = 10 case -- sometimes some value in between!)
 
-- we do observe a data race
-  (if there were no data race, all += 1s would happen, and the value would always end up at 200)
+- However! Values between 2 and 100 are also technically possible. It's very rare
+  to see these on a test run for statistical reasons - in fact I ran this code
+  dozens of times and I still have not been able to observe this behavior on a real
+  run. However, it is still technically possible.
 
-So why did I say that x can be *any* value?
-
-This has to do with what assumptions we are making about how Python represents integers
--- for example, assuming that it consistently handles reads and writes to integers (+= consistently).
-This assumption is very dangerous! It is generally *not* true when using operations that aren't designed to be safely called in a concurrent programming context, such as big integers.
-(A Python integer is not just a single byte, it contains multiple bytes! That makes it something called a big integer. It may be the case that a read and a write to a Python integer at the same time don't just execute one after the other, but actually completely invalidate that integer, by modifying the different bytes in different ways -- or even, moving the integer somewhere else in memory.)
-
-This actually occurs and is not just a hypothetical:
-
-    - It will occur in Python when using data structures more than just a single byte, if not protected by a shared lock
-
-    - It will occur in any data structure implementation in C, C++, or Java or any implementation that stores raw pointers in memory.
-
-That's why the way I want you to think about data races in this class
-is with the "simplified view" above.
-That is, data races cause data to be invalidated and it could represent any value after the race occurs.
+- We do observe a data race in this code
+  (if there were no data race, all += 1s would happen, and the value would always end up at 200).
 
 Further reading:
 
