@@ -317,5 +317,5 @@ Given T and S...
 
     latency >= S,
 
-    if S is computed in the way that we have computed above.
+    if S is computed in the way that we have described above.
 """

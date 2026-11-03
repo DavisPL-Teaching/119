@@ -171,3 +171,35 @@ Plan:
       SEE: `exams/midterm_study_list.md`.
 
 Questions?
+
+## Weds., November 4
+
+Reminders:
+
+- Midterm Friday!
+
+    Arrive 10min early, bring single-sided cheat sheet, bring a pen or #2 pencil
+
+    Study list & Practice midterm:
+    https://piazza.com/class/ms5m0v40uh8613/post/65
+
+    Resources:
+    exams/midterm_study_list.md
+    exams/poll_answers.md
+
+Plan:
+
+- If you have prepared any topics or poll questions to go over, happy to go over these
+  (first ~20 mins of class or so)
+
+- Finish Part 4: Pipeline parallelism
+
+- Poll
+
+Then continue with:
+
+- Quantifying parallelism and Amdahl's Law.
+
+Reminder, today's topics (pipeline parallelism + Amdahl's Law) will not be covered on midterm.
+
+Any questions?
