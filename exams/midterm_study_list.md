@@ -2,7 +2,7 @@
 
 Study list of topics for the midterm.
 
-**Updated on Nov 2: Covers through Lecture 4, Part 4 (Types of Parallelism).**
+**Updated on Nov 2: Covers through Lecture 4, Part 4 (Types of Parallelism),** except pipeline parallelism.
 
 You should know all of the following concepts
 
@@ -143,4 +143,8 @@ Types of parallelism:
 - How to identify each of these in the dataflow graph. SEE practice questions from
   Nov 2 and Nov 4.
 
-NOT COVERED: pipeline parallelism (& how to identify it)
+### Not covered on the exam:
+
+Pipeline parallelism, and how to identify it in the dataflow graph,
+will not appear on the exam.
+Only the first two types of parallelism will be covered.
