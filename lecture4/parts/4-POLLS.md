@@ -69,7 +69,7 @@ An important note about identifying parallelism in dataflow graphs!
 
     Running two different tasks on same or different data points
 
-- Pipeline parallelism
+- Pipeline parallelism (Not covered on midterm)
 
     When feeding the output of one task to another, having the second
     task process the partial results of the first task while the first
@@ -91,7 +91,18 @@ lecture4/extras/dataflow-graph-example.png
 
 2. For two different ways of drawing a dataflow graph (with different delineations of tasks as nodes), could we get different types of parallelism present, based on the above? Briefly comment on why or why not.
 
-<form link cut>
+https://forms.gle/uvW8BxdD2nACy9Sk7
+
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
 
 examples:
 
@@ -131,8 +142,6 @@ examples:
 
     Now there is task parallelism between "strip and extract dataset1"
     and "strip and extract dataset2"
-
-This was tricky point
 
 If you don't want to remember the discussion above, just remember:
 
