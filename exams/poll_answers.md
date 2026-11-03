@@ -83,3 +83,15 @@ If you said between 0 and 200 that is also close (would be worth a point).
 2. AB D FGH
 Concurrency, Parallelism, Contention, Race Condition, Data Race -
 and Spooky Halloween Vibes, because data races are scary!! :-)
+
+Nov 2:
+Data parallelism at tasks 1, 2, and 3
+No task parallelism
+Pipeline parallelism between nodes (1, 2) or (2, 3).
+NOTE: Pipeline parallelism will not appear on the midterm.
+
+Nov 4:
+1. Data parallelism: **single node**
+Task parallelism: **between a pair of nodes**
+Pipeline parallelism: **between a pair of nodes**
+NOTE: Pipeline parallelism will not appear on the midterm.

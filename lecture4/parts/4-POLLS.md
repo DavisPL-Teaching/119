@@ -16,7 +16,6 @@ A Python script is written to complete the following 3 tasks:
 
 A. Data parallelism
 B. Task parallelism
-C. Pipeline parallelism
 
 For each type of parallelism present:
 Give a specific example node/task or pair of nodes/tasks(s) for which the parallelism is present.
@@ -43,6 +42,18 @@ Give a specific example node/task or pair of nodes/tasks(s) for which the parall
 .
 
 Answers:
+
+Data parallelism - yes, at tasks 1, 2, and 3 (any of them works)
+Task parallelism - no
+
+Based on this set of three tasks -
+let's start by drawing the DFG -
+
+    (1) --> (2) --> (3)
+
+    no task parallelism - no pair of tasks where there is no path frmo one to the other
+
+    data parallelism - examine at each individual node.
 
 --------------------
 

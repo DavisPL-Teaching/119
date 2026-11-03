@@ -1,3 +1,37 @@
+Clarifying questions:
+
+    x += 1
+    ^^^^^ read followed by a write!
+    x = x + 1
+
+think of it as 2 statements:
+
+    temp = read from x
+    write temp + 1 into x
+
+    ^^^
+    temp = x
+    x = temp + 1
+
+    Simpler example:
+
+        worker 1:            worker 2:
+        x += 1               x += 1
+
+        read(x)              read(x)
+        write(x + 1)         write(x + 1)
+
+    values you can end: 1, or 2
+
+    How to get 1?
+
+    worker1: read 0
+    worker2: read 0
+    worker1: write 0 + 1 = 1
+    worker2: write 0 + 1 = 1
+
+    end result: 1
+
 Can we get the value 200?
 A: Yes, if for example worker1 increments 100 times, then worker 2 increments 100 time (no interleaving)
 
@@ -42,6 +76,13 @@ Very scary!
 
 A simple program with a data race turned out to be extremely counterintuitive
 to think about.
+
+    - I won't ask about an example this complex on the midterm, but I might
+      ask about something simpler like
+
+        worker1                  worker2
+        x += 1                    x += 1
+        x += 1
 
 Concurrent programming is very hard! It's better if we can write code in a way
 that *exposes* parallelism but not concurrency - tasks that are parallel run in parallel,

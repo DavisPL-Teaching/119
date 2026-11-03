@@ -132,11 +132,14 @@ Reminders:
 
 - Midterm this Friday!
 
+  Arrive early!
+
   Today will be the last day of material covered on the midterm.
 
   Weds. Discussion section: midterm review
 
-  Weds. start of class: I will be happy to go over any topics or polls
+  Weds. continue material; however:
+  start of class: I will be happy to go over any topics or polls
   people want to review at the start of class, please come
   prepared!
   Wednesday's poll will also be an extra practice question
@@ -150,11 +153,21 @@ Plan:
 
 - Last remaining topic - Part 4: Types of parallelism
 
+    + 3 types:
+
+        * Task Parallelism
+
+        * Data Parallelism
+
+        * Pipeline parallelism
+
     + Last ~20 mins of class: do the poll (separated out in `parts/4-POLLS.md`)
 
     + There are two of these polls, we will do one of them today and the other Wednesday
 
     + If there is time, last ~10 mins of class: go over topics for midterm.
-      I will post the final study list of topics for your own review after class.
+      I will post the study list of topics for your own review after class.
 
       SEE: `exams/midterm_study_list.md`.
+
+Questions?

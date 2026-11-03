@@ -3,7 +3,6 @@
 Study list of topics for the midterm.
 
 **Updated on Nov 2: Covers through Lecture 4, Part 4 (Types of Parallelism).**
-**The final version of this study list will be posted after class.**
 
 You should know all of the following concepts
 
@@ -139,7 +138,9 @@ Types of parallelism:
 - Motivation: is parallelism present? how much parallelism?
   Want to parallelize without writing concurrent code ourselves
 
-- Types of parallelism: task parallelism, data parallelism, pipeline parallelism
+- Types of parallelism: task parallelism, data parallelism
 
 - How to identify each of these in the dataflow graph. SEE practice questions from
   Nov 2 and Nov 4.
+
+NOT COVERED: pipeline parallelism (& how to identify it)

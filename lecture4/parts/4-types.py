@@ -58,7 +58,7 @@ back to simple parallelism.
 
 Also, we will move from thinking about parallelism *in general*
 to how parallelism is most useful in data science:
-how to identify and exploit parallelism in your own pipelines and projects.s
+how to identify and exploit parallelism in your own pipelines and projects.
 
 Goals:
 
@@ -212,10 +212,10 @@ def average_numbers_task_parallelism():
 
 # Uncomment to run
 # Redefine N again
-# N = 200_000_000
-# if __name__ == "__main__":
-#     freeze_support()
-#     average_numbers_task_parallelism()
+N = 200_000_000
+if __name__ == "__main__":
+    freeze_support()
+    average_numbers_task_parallelism()
 
 """
 ### IN THE DATAFLOW GRAPH:
@@ -259,7 +259,7 @@ That's data parallelism.
 But how can we see this in the dataflow graph?
 
     (load input employee database) ->
-                                        (match employee to salary) -> (print output)
+                                        (match employee to salary)
     (load salary database)         ->
 
 Data parallelism is present at the level of an individual node (task) in the
@@ -303,7 +303,7 @@ Data parallelism is present at an individual node (task),
 
         ---[input]---> (Task) ---[output] --->
 
-===== 3. Pipeline parallelism =====
+===== 3. Pipeline parallelism (SKIP) =====
 
 The last type of parallelism, and also the strangest!
 
@@ -391,7 +391,7 @@ Summary:
 
 -----------------
 #### POLL -- do the poll here (if not done yet).
-See 4-polls.py.
+See 4-POLLS.md
 -----------------
 
 Finishing the pipeline parallelism example:
