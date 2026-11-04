@@ -2,11 +2,7 @@
 """
 Part 5: Quantifying Parallelism and Amdahl's Law.
 
-Planned for: Nov 4.
-
-POLL:
-Another types of parallelism practice question.
-See 4-POLLS.md.
+Planned for: Nov 4 or Nov. 9.
 """
 
 """

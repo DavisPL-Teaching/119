@@ -176,9 +176,10 @@ Questions?
 
 Reminders:
 
-- Midterm Friday!
+- Midterm Friday in class!
 
-    Arrive 10min early, bring single-sided cheat sheet, bring a pen or #2 pencil
+    Important:
+        Arrive 10min early, bring single-sided cheat sheet, bring a pen or #2 pencil.
 
     Study list & Practice midterm:
     https://piazza.com/class/ms5m0v40uh8613/post/65
@@ -189,17 +190,22 @@ Reminders:
 
 Plan:
 
-- If you have prepared any topics or poll questions to go over, happy to go over these
-  (first ~20 mins of class or so)
+- Questions or topics to go over for the midterm
 
 - Finish Part 4: Pipeline parallelism
 
-- Poll
+- Do the poll (this was posted ahead of time)
 
-Then continue with:
+If time, continue with:
 
-- Quantifying parallelism and Amdahl's Law.
+- Quantifying parallelism
 
-Reminder, today's topics (pipeline parallelism + Amdahl's Law) will not be covered on midterm.
+- Amdahl's Law.
 
-Any questions?
+Reminder, **today's topics (pipeline parallelism + Amdahl's Law) will not be covered on midterm.**
+
+#### Questions or topics for the midterm
+
+On Monday, I asked you to come prepared with any topics or poll questions you would like
+to go over.
+We can spend some time going over these (first ~20 mins of class or so).

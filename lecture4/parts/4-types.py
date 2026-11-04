@@ -303,7 +303,9 @@ Data parallelism is present at an individual node (task),
 
         ---[input]---> (Task) ---[output] --->
 
-===== 3. Pipeline parallelism (SKIP) =====
+-------------------- Resuming here for Nov. 4 -------------------------
+
+===== 3. Pipeline parallelism (Not On Midterm) =====
 
 The last type of parallelism, and also the strangest!
 
@@ -478,7 +480,7 @@ And it illustrates the basic idea of pipeline parallelism.
 
 --------------------
 
-BUT: there is 1 potential problem here, does anyone see it?
+BUT: there is 1 potential problem here (a bit tricky to spot)
 
 Remember that read + a write to the same memory at the same time
 is dangerous. (That's called a data race)
@@ -490,9 +492,9 @@ to be saved into the array, we saw this in a previous example.
 """
 
 """
-=== Additional practice question ===
+=== Additional practice question (SKIP) ===
 
-SKIP in class; I will ask the TA to do it as a practice question in discussion section
+SKIP in class. You can use this as another practice midterm question.
 
 A second practice question:
 
@@ -523,6 +525,11 @@ For this one, you might have to guess a bit as to what "Map", "Semijoin", and "D
 .
 .
 
+=== Second poll ===
+
+I posted this poll ahead of time.
+See 4-POLLS.md
+
 === Finishing up ===
 
 Q: Which of the 3 types of parallelism is most important in the real world?
@@ -549,15 +556,15 @@ For this reason, data parallelism is the main focus of most
 parallel and distributed data processing frameworks.
 (Again, looking forward to lecture 5).
 
-=== Recap ===
+=== RECAP ===
 
-----
-(TODO: UPDATE)
-In the poll, we talked about how programs with concurrency can have many different
+In this part:
+
+In the poll: we talked about how programs with concurrency can have many different
 wildly different behaviors due to interleaved reads and writes
 
 We'd like to write programs which avoid this issue and benefit from parallelism,
-but we don't want to write any concurrent code ourselves
+but we don't want to write any concurrent code ourselves.
 
 We talked about three types of parallelism with examples and how to identify them in
 the dataflow graph:
@@ -568,4 +575,6 @@ the dataflow graph:
 
 3. Pipeline Parallelism - exists between a pair of nodes connected by an edge,
 where multiple data items are passed between the nodes.
+
+Two poll questions practicing this topic.
 """
