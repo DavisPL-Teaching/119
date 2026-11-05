@@ -230,3 +230,17 @@ Q: Data parallelism vs. task parallelism
 
         Load in input dataset students.csv
         Load in input dataset classes.csv
+
+## Monday, November 9
+
+Announcements:
+
+- Midterm grading in progress
+
+Today: finish up parallelism.
+
+- Quantifying Parallelism: How much parallelism is present?
+
+- Amdahl's Law
+
+- Distributed code and conclusions.
