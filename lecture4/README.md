@@ -179,7 +179,9 @@ Reminders:
 - Midterm Friday in class!
 
     Important:
-        Arrive 10min early, bring single-sided cheat sheet, bring a pen or #2 pencil.
+        Arrive 10min early
+        bring single-sided cheat sheet (handwritten or typed)
+        bring a pen or #2 pencil.
 
     Study list & Practice midterm:
     https://piazza.com/class/ms5m0v40uh8613/post/65
@@ -198,7 +200,7 @@ Plan:
 
 If time, continue with:
 
-- Quantifying parallelism
+- Part 5: Quantifying parallelism
 
 - Amdahl's Law.
 
@@ -209,3 +211,22 @@ Reminder, **today's topics (pipeline parallelism + Amdahl's Law) will not be cov
 On Monday, I asked you to come prepared with any topics or poll questions you would like
 to go over.
 We can spend some time going over these (first ~20 mins of class or so).
+
+Q: Data parallelism vs. task parallelism
+
+    Data parallelism: same task, different data
+                      ^^^^^^^^^ tasks in pipeline (dataflow graph)
+
+            Present at a single node
+
+    Task parallelism: different task, same or different data
+
+            Present between a pair of nodes
+
+    Example:
+
+        Load in input dataset students.csv, calculate total number
+        of students
+
+        Load in input dataset students.csv
+        Load in input dataset classes.csv

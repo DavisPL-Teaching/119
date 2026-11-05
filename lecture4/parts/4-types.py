@@ -212,10 +212,10 @@ def average_numbers_task_parallelism():
 
 # Uncomment to run
 # Redefine N again
-N = 200_000_000
-if __name__ == "__main__":
-    freeze_support()
-    average_numbers_task_parallelism()
+# N = 200_000_000
+# if __name__ == "__main__":
+#     freeze_support()
+#     average_numbers_task_parallelism()
 
 """
 ### IN THE DATAFLOW GRAPH:
@@ -312,6 +312,8 @@ The last type of parallelism, and also the strangest!
 Imagine that two tasks are done in sequence,
 so there's no task parallelism between them - and there's
 no data parallelism.
+
+    (Task1) ---> (Task2)
 
 I claim that even in this case,
 we can still benefit (surprisingly) from parallelism!
@@ -469,6 +471,8 @@ def average_numbers_pipeline_parallelism():
     print("Computation finished.")
 
 # Uncomment to run
+# note! not fast for higher numbers - this particular impl of this
+# is not efficient for other reasons (see below).
 # N = 1_000_000
 # if __name__ == "__main__":
 #     freeze_support()
@@ -569,7 +573,7 @@ but we don't want to write any concurrent code ourselves.
 We talked about three types of parallelism with examples and how to identify them in
 the dataflow graph:
 
-1. Task Parallelism -- exists between two nodes when there is a path from one to the other
+1. Task Parallelism -- exists between two nodes when there is NOT a path from one to the other
 
 2. Data Parallelism -- exists at a single node when that task can be performed on different elements of the input data set (or sets) at that node in parallel.
 

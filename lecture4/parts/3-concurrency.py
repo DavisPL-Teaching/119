@@ -312,7 +312,7 @@ So that we avoid any of the above issues.
   code (even miscompile it to something else entirely)
 
 - Contention
-  Reduction in performance due to competing concurrent operations
+  Significant reduction in performance due to competing concurrent operations
 
 - Deadlock
   Different threads try to access the same data at the same time in a way
