@@ -1,8 +1,7 @@
 
 """
 Part 5: Quantifying Parallelism and Amdahl's Law.
-
-Planned for: Nov 4 or Nov. 9.
+(Nov. 9)
 """
 
 """
@@ -113,35 +112,9 @@ communication overhead between threads, processes or distributed devices).
 So it's not an actual number on what speedup we will get, but it still can be a
 useful upper bound.
 
-Recap:
-
-- We reviewed 3 type of parallelism in dataflow graphs
-
-- We define speedup
-
-- We talked about estimating the "maximum speedup" in a pipeline, using
-  a law called Amdahl's Law
-
-- We saw two forms of the law:
-
-    Speedup <= 1 / (1 - p)
-
-    Speedup <= T / S
-
-    where:
-        T is running time of sequential code
-        S is running time of a bottleneck that can't be parallelized
-        p is % of code that can be parallelized
-
-        p = (T - S) / T.
-
----- where we ended for Nov 7 ----
-
-Recall formulas from last time
-
 === Example ===
 
-1. SQL query example
+SQL query example
 
 - imagine an SQL query where you need to match
   the employee name with their salary and produce a joined table
@@ -199,7 +172,8 @@ Dataflow graph:
 
 Use Amdahl's law to estimate the maximum speedup in the following scenario.
 
-As in last Monday's poll, a Python script needs to:
+Scenario is the same as in the previous in-class poll:
+A Python script needs to:
 - load a dataset into Pandas: students.csv, with 100 rows
 - calculate a new column which is the total course load for each student
 - send an email to each student with their total course load
@@ -208,7 +182,30 @@ Assume that it takes 1 ms (per row) to read in each input row, 1 ms (per row) to
 
 Q: What is the theoretical bound on the maximum speedup in the pipeline?
 
-<form link cut>
+https://forms.gle/GWeKUCC5QrV4jkJD9
+
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+
+SPOILER:
 
 DFG:
 
@@ -221,37 +218,6 @@ S = 3ms -- need to perform 3 actions in sequence for a single student - can't be
 
     300 ms / 3 ms = 100x.
 
-=== More examples and exercises ===
-(Skip - may do in discussion section)
-
-2. Let's take our data parallelism example:
-
-    We had an employee database, and tasks:
-
-    1. load employee dataset
-
-    2. strip the spaces from employee names
-
-    3. extract the first/given name
-
-    with dataflow graph:
-
-        (1) -> (2) -> (3)
-
-Again assume 1ms for each task per input row.
-What are T and S here?
-
-3. An extended version of the table join example.
-We have two tables, of employee names and employee salaries.
-We want to compute which employees make more than 1 million Euros.
-The employee salaries are listed in dollars.
-
-We are given as input the CEO name.
-We want to get the salary associated with the CEO,
-convert it from USD to Euros, and filter only the rows where the
-result is over 1 million.
-Assume all basic operations take 1 unit of time per row.
-
 === Additional notes ===
 
 Note 1:
@@ -261,7 +227,10 @@ goes to infinity.
 T = time it takes to complete with 1 worker
 S = time it takes to complete the task with a theoretically infinite number of workers and no cost of overhead when communicating between workers.
 
-**Advanced topics note:**
+    S = "Maximum speedup" case
+
+Note 2:
+**Advanced:**
 There's a version of the law that takes the number of processes into account.
 
     - basically the law would take the portion of the pipeline that *can* be parallelized, and divide it by
@@ -272,7 +241,7 @@ There's a version of the law that takes the number of processes into account.
 
     - Don't need to know this for this class.
 
-Note 2:
+Note 3:
 How Amdahl's law applies to aggregation cases.
 
 average_numbers example
@@ -284,8 +253,6 @@ Aggregation can be parallelized.
 
 For the purposes of Amdahl's law, let's think of aggregation as requiring at least 1 operation
 (1 unit of time to compute the total).
-
-Q: What does Amdahl's law say the maximum speedup for our simple average_numbers pipeline?
 
 === Connection to throughput & latency ===
 
@@ -314,4 +281,59 @@ Given T and S...
     latency >= S,
 
     if S is computed in the way that we have described above.
+
+=== Additional examples and exercises ===
+
+(SKIP - please review these on your own time)
+
+1. What does Amdahl's law say the maximum speedup for our simple average_numbers pipeline?
+
+2. Let's take our data parallelism example:
+
+    We had an employee database, and tasks:
+
+    1. load employee dataset
+
+    2. strip the spaces from employee names
+
+    3. extract the first/given name
+
+    with dataflow graph:
+
+        (1) -> (2) -> (3)
+
+Again assume 1ms for each task per input row.
+What are T and S here?
+
+3. Consider the following extended version of the table join example.
+We have two tables, of employee names and employee salaries.
+We want to compute which employees make more than 1 million Euros.
+The employee salaries are listed in dollars.
+
+We are given as input the CEO name.
+We want to get the salary associated with the CEO,
+convert it from USD to Euros, and filter only the rows where the
+result is over 1 million.
+Assume all basic operations take 1 unit of time per row.
+
+=== Part 5 Recap ===
+
+- We define speedup
+
+- We talked about estimating the "maximum speedup" in a pipeline, using
+  a law called Amdahl's Law
+
+- We saw two forms of the law:
+
+    Speedup <= 1 / (1 - p)
+
+    Speedup <= T / S
+
+    where:
+        T is running time of sequential code
+        S is running time of a bottleneck that can't be parallelized
+        p is % of code that can be parallelized
+
+        p = (T - S) / T.
+
 """

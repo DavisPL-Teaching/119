@@ -237,10 +237,16 @@ Announcements:
 
 - Midterm grading in progress
 
-Today: finish up parallelism.
+- No Class this Wednesday (Veteran's Day)
 
-- Quantifying Parallelism: How much parallelism is present?
+Today -- finishing topics on Parallelism:
 
-- Amdahl's Law
+- Last time (Part 4): Is it parallel? (All 3 types)
+
+- This time (Part 5): Quantifying Parallelism: How much parallelism is present?
+
+    + Amdahl's Law
+
+    + Poll
 
 - Distributed code and conclusions.

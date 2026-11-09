@@ -2,28 +2,61 @@
 Part 6: Distribution and concluding thoughts
 (Planned for: Nov 9)
 
-=== Distributed computing: some examples ===
+=== Introduction ===
 
-=== What is distribution? ===
+at the start of this lecture, we introduced 3 related terms: Parallelism, Concurrency, and Distribution
 
-Distribution means that we have multiple workers and belts
-**in different physical warehouses**
-can process and fail independently.
+we have talked about parallelism
 
-The workers must be on different physical computers or physical devices.
-    (Why does it matter?)
+we have talked about concurrency
+
+    concurrency is part of the underlying system! but we want to avoid
+    thinking about it if possible (use libraries/frameworks that have
+    already solved the concurrency problems)
+
+we have talked about how to tell IF parallelism is present and HOW MUCH is present if so.
+
+What about distribution?
+
+Real pipelines are distributed!
+
+    The real world is distributed! The fact we have isolated certain pieces of code and datasets
+    to run on individual computers is an artificial limitation
+
+We will move to distributed pipelines in Lecture 5.
+
+=== A distributed code example ===
+
+Recall: Distribution = multiple devices involved.
+
+    (Think of as: multiple workers and belts **in different physical warehouses**
+    can operate and fail independently)
+
+Why does this introduce new challenges?
 
     Running on the same physical device, both workers have
     access to the same resources;
     Running on two different devices, they access different resources, and one worker could crash even if the other
     one doesn't.
-    So, it introduces new challenges.
+    If the workers try to communicate, they may be faced with communication delays,
+    out-of-order messages, dropped messages, or different clocks between the two workers.
 
-For this one, it's more difficult to simulate in Python directly.
-We can imagine that our workers are computed by an external
-server, rather than being computed locally on our machine.
+    It becomes a complex coordination problem between different devices.
 
-To give a simple instance of this, let's use ssh to connect to a remote
+BUT:
+
+    It also introduces a huge opportunity:
+    because any single physical device (even a huge beefy server machine!) only has
+    a finite number of resources, but by scaling many devices,
+    we are no longer limited by the amount of resources on one machine.
+
+    Also: coordination and overhead can be reduced to zero.
+
+    Unlocks arbitrary potential for scaling!
+
+To give a simple instance of a distributed pipeline,
+and close the loop for this lecture,
+let's use ssh to connect to a remote
 server, then use the server to compute the sum of the numbers.
 
 (You won't be able to use this code; it's connecting to my own SSH server!)
@@ -52,7 +85,8 @@ def average_numbers_distributed():
 
 # Uncomment to run
 # This won't work on your machine!
-average_numbers_distributed()
+# (Note: I have to be connected to university VPN for this to work.)
+# average_numbers_distributed()
 
 # This waits until the first connection finishes before
 # starting the next connection; but we could easily modify
@@ -82,47 +116,6 @@ Q4: can we have distribution with concurrency?
     Yes, we often do, for example when distributed workers
     communicate via passing messages to each other
 """
-
-"""
-=== Dask: Parallelizing our code in Pandas (SKIP) ===
-
-We don't want to parallelize our code by hand.
-(why? See problems with concurrency from last week!)
-
-Dask is a simple library that works quite well for parallelizing datasets
-on a single machine as a drop-in replacement for Pandas.
-"""
-
-# conda install dask or pip3 install dask
-import dask
-
-def dask_example():
-    # Example dataset
-    df = dask.datasets.timeseries()
-
-    # Dask is "lazy" -- it only generates data when you ask it to.
-    # (More on laziness later).
-    print(type(df))
-    print(df.head(5))
-
-    # Use a standard Pandas filter access
-    df2 = df[df.y > 0]
-    print(type(df2))
-    print(df2.head(5))
-
-    # Do a group by operation
-    df3 = df2.groupby("name").x.mean()
-    print(type(df3))
-    print(df3.head(5))
-
-    # Compute results -- this processes the whole dataframe
-    print(df3.compute())
-
-# If you just want parallelism on a single machine,
-# Dask is a great lightweight solution.
-
-# Uncomment to run.
-# dask_example()
 
 """
 === A final definition and end note: Vertical vs. horizontal scaling ===
@@ -155,15 +148,19 @@ more seamless performance compared to parallelism alone as it can eliminate
 many coordination overheads and contention between workers
 (see partitioning: different partitions of the database are operated entirely independently by different machines).
 
-Recap:
-
-- Finished Amdahl's law, did an example, and a practice example with the poll
-
-- Connected Amdahl's law back to latency & throughput (with two formulas)
+=== Recap: Part 6 ===
 
 - We talked about distribution; ran our same running example as a distributed pipeline over ssh
 
 - We talked about vertical vs horizontal scaling
 
 - We contrasted parallelism with distributed scaling - where we will be going next in Lecture 5.
+"""
+
+"""
+Extra material
+
+There is some extra material about parallelizing DataFrame computations using a library
+called dask.
+See extras/dask.py.
 """
