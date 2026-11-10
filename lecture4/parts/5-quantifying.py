@@ -133,7 +133,7 @@ Q: What is the maximum speedup here?
 Dataflow graph:
 
     (load name_table) ----|
-                          |---> (join tables)
+                          |---> (join tables) -- each name with their salary
     (load salary_table) --|
 
     speedup <= (T / S)
@@ -246,8 +246,7 @@ How Amdahl's law applies to aggregation cases.
 
 average_numbers example
 
-Our average_numbers example is slightly more complex than above as it involves an aggregation
-(group-by).
+Our average_numbers example is slightly more complex than above as it involves an aggregation.
 Aggregation can be parallelized.
     (Why? What type of parallelism?)
 
@@ -320,14 +319,24 @@ Assume all basic operations take 1 unit of time per row.
 
 - We define speedup
 
+    Multiplicative factor in the improvement in the running time of a pipeline
+
+    Formula = (sequential time) / (parallel time)
+
 - We talked about estimating the "maximum speedup" in a pipeline, using
   a law called Amdahl's Law
+
+    Amdahl's law is based on computing a minimum sequential bottleneck,
+    which we called S,
+    which **cannot be parallelized**, and
+    which is a lower bound on the running time of any parallel implementation.
 
 - We saw two forms of the law:
 
     Speedup <= 1 / (1 - p)
 
     Speedup <= T / S
+               (more useful for this class)
 
     where:
         T is running time of sequential code
@@ -335,5 +344,4 @@ Assume all basic operations take 1 unit of time per row.
         p is % of code that can be parallelized
 
         p = (T - S) / T.
-
 """

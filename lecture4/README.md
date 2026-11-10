@@ -250,3 +250,5 @@ Today -- finishing topics on Parallelism:
     + Poll
 
 - Distributed code and conclusions.
+
+Questions?
