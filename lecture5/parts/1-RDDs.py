@@ -14,13 +14,24 @@ Speedup through parallelism alone (vertical scaling) is most significantly limit
 4. The number of wire connections on the computer's motherboard
 5. The amount of RAM (memory) and disk space (storage) available
 
-<form link cut>
+https://forms.gle/kF2BjiAcJBpigodC9
+
+.
+.
+.
+.
+.
 
 === Apache Spark (PySpark) ===
 
 In this lecture, we will use Apache Spark (PySpark).
 
 Spark is a parallel and distributed data processing framework.
+
+Spark is used very widely in industry to handle larger scale datasets,
+and to seamlessly manage, transfer, and process data over larger clusters!
+Some exposure to Spark will be very helpful to those of you interested
+in working in data engineering or ML engineering related jobs in industry.
 
 (Note: Spark also has APIs in several other languages, most typically
 Scala and Java. The Python version aligns best with the sorts of
@@ -39,7 +50,7 @@ python3 1-RDDs.py
 import pyspark
 
 # All spark code generally starts with the following setup code:
-# (Boiler plate code - ignore for now)
+# ("Boiler plate" code - ignore for now)
 from pyspark.sql import SparkSession
 spark = SparkSession.builder.appName("SparkExample").getOrCreate()
 sc = spark.sparkContext
@@ -47,26 +58,26 @@ sc = spark.sparkContext
 """
 Motivation: last lecture (over the last couple of weeks) we saw that:
 
-- Parallelism can exist in many forms (hard to identify and exploit!)
+- Parallelism is often present - but can be hard to identify and exploit
 
-- Concurrency can lead to a lot of trouble (naively trying to write concurrent code can lead to bugs)
+- Concurrency can lead to bugs - if naively trying to manage concurrent code
 
 - Parallelism alone (without distribution) can only scale your compute, and only by a limited amount (limited by your CPU bandwidth, # cores, and amount of RAM on your laptop!)
 
-    + e.g.: I have 800 GB available, but if I want to work with a dataset
-      bigger than that, I'm out of luck
+    + e.g.: I have 800 GB available, if I want to work with a dataset
+      bigger than that, good luck!
 
-    + e.g.: I have 16 CPU cores available, but if I want more than 16X
-      speedup, I'm out of luck
+    + e.g.: I have 16 CPU cores available, if I want more than 16X
+      speedup, good luck!
 
 We want to be able to scale pipelines automatically to larger datasets.
 How?
 
 Idea:
 
-- **Build our pipelines** at a higher level of abstraction -- build data sets and operators over data sets
+1. **Build our pipelines** at a higher level of abstraction -- build data sets and operators over data sets
 
-- **Deploy our pipelines** using a framework or library that will automatically scale and take advantage of parallel and distributed compute resources.
+2. **Deploy our pipelines** using a framework or library that will automatically scale and take advantage of parallel and distributed compute resources.
 
 Analogy: kind of like a compiler or interpreter!
     (A long time ago, people use to write all code in assembly language/
@@ -80,7 +91,7 @@ So what is that higher level abstraction?
 Spoiler:
 It's dataflow graphs!
 
-(With one additional thing)
+--- With one additional insight.
 """
 
 """
@@ -117,8 +128,9 @@ Basic scalable collection types in Spark:
 """
 
 # Uncomment to run
+
 # # RDD - scalable version of a Python set of integers
-# basic_rdd = sc.parallelize(range(0, 1_000))
+# basic_rdd = sc.parallelize(range(0, 100_000))
 
 # print(basic_rdd)
 
@@ -127,22 +139,56 @@ Basic scalable collection types in Spark:
 # filtered_rdd = mapped_rdd.filter(lambda x: x > 500)
 # result = filtered_rdd.collect()
 
+# # print the result
 # print(result)
 
 """
+(Run with python3 -i to get the Spark cluster to stay up)
+
 We can visualize our pipeline!
 
 Open up your browser to:
 http://localhost:4040/
 
+=== Did it work? ===
+
+Seems to work!
+But there's one thing left -- we haven't really measured
+that our pipeline is actually getting run in parallel.
+
+Q: Can we check that?
+
+    Activity monitor to check CPU usage
+
+    localhost:4040/ (see executors tab)
+
+    A more extended test: parallel_test.py
+
+.
+.
+.
+
+To get one thing out of the way:
+
+=== Is this distributed code? (<butterfly_meme.jpg> )===
+
+This is not really distributed!
+This is just running on my machine.
+But the point is that the same code using RDDs will automatically scale to run on a distributed
+deployment of Pyspark.
+
+Q: What does RDD stand for?
+
+RDD means Resilient Distributed Dataset.
+https://www.usenix.org/system/files/conference/nsdi12/nsdi12-final138.pdf
+
 === More examples ===
 
-Scalable collection types are just like normal collection types!
+I said: scalable collection types are just like normal collection types
 
-Let's show this:
+    - Python set, dict, list, etc.
 
-Exercises:
-1.
+EXAMPLE:
 Write a function
 a) in Python
 b) in PySpark using RDDs
@@ -166,7 +212,7 @@ def ex1_python(l1):
     l3 = filter(lambda x: 100 <= x <= 999, l2)
     print(list(l3))
 
-INPUT_EXAMPLE = list(range(100))
+# INPUT_EXAMPLE = list(range(100))
 
 # ex1_python(INPUT_EXAMPLE)
 
@@ -222,26 +268,17 @@ def ex2_rdd(l1):
 # ex2_rdd(INPUT_EXAMPLE)
 
 """
-Good! But there's one thing left -- we haven't really measured
-that our pipeline is actually getting run in parallel.
+=== Other Misc. ===
 
-Q: Can we check that?
+Q: Can we use time 1-RDDs.py to measure the code?
 
-    Test: parallel_test.py
-
-A: Tools:
-
-    time (doesn't work)
-
-    Activity monitor
-
-    localhost:4040
-    (see Executors tab)
+    Lots of overhead! Spark takes some time to set up a local cluster
+    of workers and run everything.
 
 Q: what is localhost? What is going on behind the scenes?
 
-A: Spark is running a local cluster on our machine to schedule and run
-   tasks (batch jobs).
+Spark is running a local cluster on our machine to schedule and run
+tasks (batch jobs).
 
 Q: Why do we need sc.context?
 
@@ -249,14 +286,9 @@ A:
 Not locally using Python compute, so any operation we do
 needs to get submitted and run as a job through the cluster.
 
-Q: What does RDD stand for?
-
-RDD means Resilient Distributed Dataset.
-https://www.usenix.org/system/files/conference/nsdi12/nsdi12-final138.pdf
-
 === That's Just Data Parallelism! (TM) ===
 
-Yes, the following is a punchline:
+The following is a punchline:
 
     scalable collection type == data parallelism.
 

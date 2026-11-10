@@ -25,6 +25,8 @@ Real pipelines are distributed!
 
 We will move to distributed pipelines in Lecture 5.
 
+-------- Where we stopped for 11/9 --------
+
 === A distributed code example ===
 
 Recall: Distribution = multiple devices involved.
@@ -93,7 +95,7 @@ def average_numbers_distributed():
 # the code to make them both run in parallel.
 
 """
-Questions:
+Questions (REVIEW)
 
 Q1: can we have distribution without parallelism?
 

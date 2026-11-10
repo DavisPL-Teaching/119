@@ -1,106 +1,58 @@
 # Lecture 5: Distributed Pipelines
 
-## Nov 12
+## Friday, Nov 13
+
+(Happy Friday the 13th!)
 
 Announcements:
 
-- HW2 now available! (Early release)
+- Midterm grades released!
+
+    See https://piazza.com/class/ms5m0v40uh8613/post/77
+
+    Curve: set to 80.5. (This was set to the 3rd highest score, which means a couple of you get extra credit, and it raises the median from a 76% to an 80%.)
+
+    If you did not do as well as you hoped, don't worry!
+    Please focus on studying the questions you missed and hopefully you will be able to do better
+    on the final.
+
+    Please come to office hours, come after class, etc. to get help with studying or do go over questions that you missed.
+
+    Some of you are very behind on the in-class polls. I will sync these again this weekend.
+    Please go back and make up the in-class polls, this will help some of your grades.
+
+    Grading notes: We generally tried to be very generous with partial credit,
+    especially in Q10. Some questions are a little less generous with partial credit.
+
+    Regrade requests:
+    Open for 1 week (until Wednesday 11:59pm).
+
+- HW2 now available (Early release)
 
     https://github.com/DavisPL-Teaching/119-hw2
 
-    Due Monday, Nov 24
+    Due: Monday, Nov 23, 11:59pm
 
-    Some minor changes possible before Monday, will be announced on Piazza
+    Covers material from Lecture 5, you are welcome to get started early.
 
-Plan:
-
-- Start with poll
-
-- Lecture 5, part 1: introduction to distributed pipelines and PySpark.
-
-Questions?
-
-## Friday, November 14
-
-Announcements:
-
-- HW2 due Nov 24
-
-  I made a few clarifications based on fixes from last year!
-  Please pull to get the latest.
-
-  + [Diff 1](https://github.com/DavisPL-Teaching/119-hw2/commit/f81558e317fbe427367da3b4c5828265ab4085be)
-
-  + [Diff 2](https://github.com/DavisPL-Teaching/119-hw2/commit/7e6beaab93cdf1f30ea1fbc55535c2db9f99208a)
+- OH today: postponed to 430pm-530pm.
 
 Plan:
 
-- Poll
+- Loose ends in Lecture 5: part 6
 
-- Lecture 5, part 2: Properties of RDDs
+    + One remaining definition: Vertical vs. Horizontal scaling
 
-- (If time) continue to Lecture 6, part 3: MapReduce.
+- Introduction to distributed pipelines
 
-Questions?
+    + Poll
 
-## Monday, Nov 17
+    + Scalable collection types
 
-Reminders:
+    + RDDs.
 
-- HW2 due Nov 24 (1 week from today)
+Questions
 
-  OH: today 415pm, Friday 11am, Monday 24th 4:15pm
-
-Plan:
-
-- Finish loose ends from Lecture 5, part 2
-
-- Poll
-
-- Part 3: introduction to MapReduce.
-
-Questions?
-
-## Wednesday, Nov 19
-
-Announcements and reminders:
-
-- HW2 due Monday (in 5 days)
-
-  Partial autograder is now available!
-  Try it out ahead of time
-
-  It will give you a preliminary score out of a maximum of 28.
-  (Currently 38 - will be updated after this evening, will be 28.)
-
-- ICYMI:
-
-  + `github_help.md` file for setting up your own Git repo!
-
-  + `hints.md` has hints for some problems.
-
-- Some extra MapReduce material in `extras/` - some of this is covered as part of your homework
-
-Plan:
-
-- Part 4: Data Partitioning
-
-- (If time) Part 5 on DataFrames
-
-Any questions?
-
-## Friday, Nov 21st
-
-Reminders:
-
-- HW2 due on Monday 11:59pm
-
-Plan:
-
-- Narrow and wide operators (finishing up Part 4)
-
-- Poll
-
-- DataFrames (finishing up part 5 - this will be covered relatively briefly)
-
-- Part 6: end note on disadvantages of Spark.
+- Any questions about HW2
+    or you would like to go over from the midterm?
+    (or plan for today)
