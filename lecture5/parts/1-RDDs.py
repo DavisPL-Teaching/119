@@ -1,7 +1,7 @@
 """
 Lecture 5: Distributed Pipelines
 
-Part 1: Introduction to Spark: Scalable collection types and RDDs
+Part 1: Introduction to Spark: Scalable collection types, and RDDs
 
 === Poll ===
 
@@ -91,7 +91,8 @@ So what is that higher level abstraction?
 Spoiler:
 It's dataflow graphs!
 
---- With one additional insight.
+But:
+There is one additional insight we need before this can work.
 """
 
 """
@@ -129,18 +130,18 @@ Basic scalable collection types in Spark:
 
 # Uncomment to run
 
-# # RDD - scalable version of a Python set of integers
-# basic_rdd = sc.parallelize(range(0, 100_000))
+# RDD - scalable version of a Python set of integers
+basic_rdd = sc.parallelize(range(0, 1_000))
 
-# print(basic_rdd)
+print(basic_rdd)
 
-# # --- run some commands on the RDD ---
-# mapped_rdd = basic_rdd.map(lambda x: x + 2)
-# filtered_rdd = mapped_rdd.filter(lambda x: x > 500)
-# result = filtered_rdd.collect()
+# --- run some commands on the RDD ---
+mapped_rdd = basic_rdd.map(lambda x: x + 2)
+filtered_rdd = mapped_rdd.filter(lambda x: x > 500)
+result = filtered_rdd.collect()
 
-# # print the result
-# print(result)
+# print the result
+print(result)
 
 """
 (Run with python3 -i to get the Spark cluster to stay up)
@@ -149,6 +150,32 @@ We can visualize our pipeline!
 
 Open up your browser to:
 http://localhost:4040/
+
+------------------------------------------------
+Quick recap:
+
+- We talked about how scaling is limited on a single machine
+    (by the amount of cmopute - CPUs - and memory - RAM - available on that machine)
+    (see: Pandas does not scale)
+
+- We talked about vertical vs. horizontal scaling
+    Vertical: scale "up" the amt of resources on 1 machine
+    Horizontal: scale "out" across multiple machines
+
+- We introduced PySpark with a "hello world" example and ran it
+
+    + Showed how to view/inspect what Spark is doing via the live dashboard
+
+- We talked about scalable collection types
+
+    + behaves like a collection type + automatically scales via both parallel + distributed workers
+
+    + RDDs are the basic scalable collection type available in PySpark
+
+    + This will be the key to having an automatic distributed implementation for aribtrary
+        data processing jobs.
+
+----- where we ended for Nov 13
 
 === Did it work? ===
 

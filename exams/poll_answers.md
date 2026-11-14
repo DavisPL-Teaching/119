@@ -95,3 +95,14 @@ Nov 4:
 Task parallelism: **between a pair of nodes**
 Pipeline parallelism: **between a pair of nodes**
 NOTE: Pipeline parallelism will not appear on the midterm.
+
+Nov 9:
+T = 300 ms
+S = 3 ms
+Speedup <= T / S = 100x.
+Maximum speedup is 100x
+(same as the # of data items - this is not a coincidence)
+(note: no units.)
+
+Nov 13:
+C and E: CPU cores & RAM available
