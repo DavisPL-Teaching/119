@@ -58,7 +58,7 @@ Questions
     or you would like to go over from the midterm?
     (or plan for today)
 
-Midterm:
+###### Going over midterm questions
 
 Q9c
 
@@ -92,3 +92,41 @@ Q7
 
     Concurrent: because of communication, the devices are sending their data to the central laptop, we assume that if there is communication between
     nodes then there is a possibility of conflicting or overlapping operations.
+
+## Monday, November 16
+
+week 9 of the quarter! There are only 3 weeks left of classes.
+
+Reminders:
+
+- HW2 due in 1 week, 11/23 11:59pm
+
+- TA OH today, 415-6pm
+
+- Reviewing the midterm questions -
+  BTW, I put the questions we reviewed at the start of last time above,
+  so that you can review the answers there.
+  The hardest questions were Q9(c) and Q10(c).
+  Only 42% of you got 9c and only 2 fully correct solutions to 10c.
+
+Plan:
+
+- Finish part 1 on RDDs:
+
+    + Note on PySpark and distributed deployment
+
+    + Further coding examples Python types vs. scalable collection types
+
+    + RDDs = data parallelism
+
+    + Looking ahead
+
+- Part 2: Properties of RDDs:
+
+    + Poll
+
+    + Properties:
+      RDDs are *scalable, (data-)parallel, lazy, immutable, partitioned, and fault-tolerant.*
+      (What do these mean)
+
+    + Along the way: chemistry dataset for a running example.

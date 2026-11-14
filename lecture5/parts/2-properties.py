@@ -21,7 +21,7 @@ Not just about RDDs!
 
 === Discussion Question & Poll ===
 
-<form link cut>
+https://forms.gle/aosvwj6JzUSL3nvr7
 
 Which of the following can NOT easily be converted into an operator over a scalable collection type?
 (Select all that apply)
@@ -71,10 +71,9 @@ Which of the following can NOT easily be converted into an operator over a scala
 .
 .
 
-Answers:
-5, 6, and 8
+Some comments:
 
-Takeaway: These are just about data parallelism
+These are really just about data parallelism.
 Think about splitting the dataset in half
 5, 6: if split in half, two adjacent points in the path might end up in different halves
 8: similar reason, 7 can be done technically as avg velocity = (final point - begin point) / (total time).
