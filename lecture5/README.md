@@ -97,6 +97,8 @@ Q7
 
 week 9 of the quarter! There are only 3 weeks left of classes.
 
+Hope everyone is staying dry.
+
 Reminders:
 
 - HW2 due in 1 week, 11/23 11:59pm
@@ -114,6 +116,8 @@ Reminders:
 Looking ahead:
 
 - There will be no further HWs (following HW2).
+
+- All in-class polls due by last day of class (Friday, Dec 4 11:59pm)
 
 - Final exam: Friday December 11, 10:30am-12:30pm
   (Last day of finals period)

@@ -133,7 +133,7 @@ Basic scalable collection types in Spark:
 # RDD - scalable version of a Python set of integers
 basic_rdd = sc.parallelize(range(0, 1_000))
 
-print(basic_rdd)
+# print(basic_rdd)
 
 # --- run some commands on the RDD ---
 mapped_rdd = basic_rdd.map(lambda x: x + 2)
@@ -141,7 +141,7 @@ filtered_rdd = mapped_rdd.filter(lambda x: x > 500)
 result = filtered_rdd.collect()
 
 # print the result
-print(result)
+# print(result)
 
 """
 (Run with python3 -i to get the Spark cluster to stay up)
@@ -296,6 +296,7 @@ def ex2_rdd(l1):
 
 """
 === Other Misc. ===
+(SKIP)
 
 Q: Can we use time 1-RDDs.py to measure the code?
 
@@ -332,27 +333,23 @@ be parallelized and distributed automatically in a framework like PySpark?
 
 === Summary ===
 
-We saw scalable collection types
-(with some initial RDD examples)
-
 Scalable collection types are just like normal collection types,
 but they behave (behind the scenes) like they work in parallel!
 
-They do this by automatically exploiting data parallelism.
+They do this by automatically exploiting data parallelism,
+both vertical and horizontal scaling are performed automatically.
 
-Behind the scenes, both vertical scaling and horizontal scaling
-can be performed automatically by the underlying data processing
-engine (in our case, Spark).
-
-This depends on the engine to do its job well -- for the most part,
+This depends on the data processing engine (in our case, Spark)
+to do its job well -- for the most part,
 we will assume in this class that the engine does a better job than
 we do, but we will get to some limitations later on.
 
-Many other data processing engines exist...
-(to name a few, Hadoop, Google Cloud Dataflow, Materialize, Storm, Flink)
-(we will discuss more later on and the technology behind these.)
+Many other data processing engines exist:
+Hadoop, Google Cloud Dataflow, Materialize, Storm, Flink, etc.
+(we will discuss more later on for some of these.)
 
-=== Plan for remaining parts ===
+=== Outline of remaining parts ===
+(SKIP)
 
 Overall plan for Lecture 5:
 

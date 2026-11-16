@@ -267,8 +267,6 @@ Dataflow graph:
 
 === Visualizing the dataflow graph ===
 
-All distributed pipelines can be viewed as dataflow graphs.
-
 What is the connection between RDDs and dataflow graphs?
 
 Q: let's draw the above as a dataflow graph using ASCII art.
