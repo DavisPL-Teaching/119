@@ -106,8 +106,17 @@ Reminders:
 - Reviewing the midterm questions -
   BTW, I put the questions we reviewed at the start of last time above,
   so that you can review the answers there.
+
+  Some notes:
   The hardest questions were Q9(c) and Q10(c).
   Only 42% of you got 9c and only 2 fully correct solutions to 10c.
+
+Looking ahead:
+
+- There will be no further HWs (following HW2).
+
+- Final exam: Friday December 11, 10:30am-12:30pm
+  (Last day of finals period)
 
 Plan:
 
@@ -129,4 +138,4 @@ Plan:
       RDDs are *scalable, (data-)parallel, lazy, immutable, partitioned, and fault-tolerant.*
       (What do these mean)
 
-    + Along the way: chemistry dataset for a running example.
+    + Chemistry dataset: New dataset for our running examples.

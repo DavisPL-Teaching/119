@@ -73,8 +73,8 @@ Which of the following can NOT easily be converted into an operator over a scala
 
 Some comments:
 
-These are really just about data parallelism.
 Think about splitting the dataset in half
+These are similar to questions about data parallelism.
 5, 6: if split in half, two adjacent points in the path might end up in different halves
 8: similar reason, 7 can be done technically as avg velocity = (final point - begin point) / (total time).
 
