@@ -321,6 +321,8 @@ Can we view this more programmatically?
 
 Unfortunately the visualization capabilities of RDDs are a bit limited.
 Two ways for now:
+Both of these are not super helpful due to various optimizations
+and tracking that Spark is performing under the hood.
 
 - Go to localhost:4040/
 - .toDebugString()
@@ -333,19 +335,9 @@ There is a better way available when we get to DataFrames.
 # Try .toDebugString()
 
 """
-We saw: Laziness in RDDs
-
-We worked through a chemistry dataset example -- transformations and actions
-
-We will pick this up on Monday.
-
-***** Where we ended for today *****
-
-=== Additional properties: ===
+Second property:
 
 ===== Immutability =====
-
-Let's illustrate this:
 
 Exercise: try this:
 - Create an RDD

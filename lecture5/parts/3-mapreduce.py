@@ -5,7 +5,7 @@ Part 3: MapReduce
 
 An exercise on laziness:
 
-<form link cut>
+https://forms.gle/tSPBZHSCWnLoyFDb7
 
 Suppose we want to do 3 tasks:
 
@@ -38,21 +38,7 @@ Assume there is no parallelism.
 .
 .
 
-If 1, 2, 3 are NOT lazy: 100,000 + 100,000 + 5 = 200,005 steps (200,005 ms),
-    that's a lot of compute!
-
-If 1, 2 are lazy:
-
-    - 1 does no computation (yet)
-    - 2 does no computation (yet)
-    - 3 says, "I need 5 answers"
-        + 3 talks back to 2, "I need 5 answers"
-        + 2 talks back to 1, "I need 5 answers"
-        + 1 will compute the first 5 data points (5 steps / 5 ms)
-        + 2 will compute the first 5 v / ||v|| (5 steps / 5 ms)
-        + 3 will print out the 5 answers (5 ms)
-
-    Total time: 5ms + 5ms + 5ms = 15ms.
+Workthrough: see `extra/laziness_poll_result.txt`
 
 === MapReduce ===
 

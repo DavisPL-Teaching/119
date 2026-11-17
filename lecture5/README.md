@@ -143,3 +143,24 @@ Plan:
     + Chemistry dataset: New dataset for our running examples.
 
 Questions?
+
+## Wednesday, November 18
+
+Reminders:
+
+- HW2 due: Monday 11/23 11:59pm
+
+- Final exam: Friday December 11, 10:30am-12:30pm
+  (Last day of finals period)
+
+Plan:
+
+- Continue Part 2: Properties of RDDs
+
+    + Laziness: Transformations vs. actions
+
+    + Immutability, partitioning, fault-tolerant
+
+- Poll question: an exercise on laziness
+
+- Part 3: MapReduce.
