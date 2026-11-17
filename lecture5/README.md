@@ -97,11 +97,20 @@ Q7
 
 week 9 of the quarter! There are only 3 weeks left of classes.
 
-Hope everyone is staying dry.
+(It's hailing outside! Hope everyone is staying dry.)
 
-Reminders:
+Looking ahead:
 
 - HW2 due in 1 week, 11/23 11:59pm
+
+- There will be no further HWs (following HW2).
+
+- All in-class polls due by last day of class (Friday, Dec 4 11:59pm)
+
+- Final exam: Friday December 11, 10:30am-12:30pm
+  (Last day of finals period)
+
+Reminders:
 
 - TA OH today, 415-6pm
 
@@ -113,15 +122,6 @@ Reminders:
   The hardest questions were Q9(c) and Q10(c).
   Only 42% of you got 9c and only 2 fully correct solutions to 10c.
 
-Looking ahead:
-
-- There will be no further HWs (following HW2).
-
-- All in-class polls due by last day of class (Friday, Dec 4 11:59pm)
-
-- Final exam: Friday December 11, 10:30am-12:30pm
-  (Last day of finals period)
-
 Plan:
 
 - Finish part 1 on RDDs:
@@ -132,8 +132,6 @@ Plan:
 
     + RDDs = data parallelism
 
-    + Looking ahead
-
 - Part 2: Properties of RDDs:
 
     + Poll
@@ -143,3 +141,5 @@ Plan:
       (What do these mean)
 
     + Chemistry dataset: New dataset for our running examples.
+
+Questions?

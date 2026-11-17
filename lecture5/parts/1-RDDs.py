@@ -133,7 +133,7 @@ Basic scalable collection types in Spark:
 # RDD - scalable version of a Python set of integers
 basic_rdd = sc.parallelize(range(0, 1_000))
 
-# print(basic_rdd)
+print(basic_rdd)
 
 # --- run some commands on the RDD ---
 mapped_rdd = basic_rdd.map(lambda x: x + 2)
@@ -141,7 +141,7 @@ filtered_rdd = mapped_rdd.filter(lambda x: x > 500)
 result = filtered_rdd.collect()
 
 # print the result
-# print(result)
+print(result)
 
 """
 (Run with python3 -i to get the Spark cluster to stay up)
@@ -261,6 +261,7 @@ def ex1_rdd(list):
 
 """
 2.
+(SKIP)
 Write a function
 a) in Python
 b) in PySpark using RDDs
@@ -324,7 +325,7 @@ They are really the same thing.
 
 Task, pipeline parallelism are limited by the # of nodes in the graph!
 Data parallelism = arbitrary scaling, so it's what enables scalable
-collectiont types.
+collection types.
 
 Brings us to: how can we tell from looking at a dataflow graph if it can
 be parallelized and distributed automatically in a framework like PySpark?

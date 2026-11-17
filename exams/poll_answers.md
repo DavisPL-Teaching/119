@@ -106,3 +106,6 @@ Maximum speedup is 100x
 
 Nov 13:
 C and E: CPU cores & RAM available
+
+Nov 16:
+5, 6, and 8

@@ -87,7 +87,6 @@ What is laziness?
     you ask for them, as much as possible.
 
     Spark is lazy and does the above.
-    (Dask does the same thing -- we saw a very brief example)
 
 First, a running example.
 
@@ -148,6 +147,9 @@ def fluorine_carbon_ratio(data):
     # Compute ratio
     rdd3 = rdd2.map(lambda x: x[9] / x[6])
 
+    # Print out the full data
+    print(f"{rdd3.collect()}")
+
     # Compute avg
     stats = rdd3.stats()
     ans = stats.mean()
@@ -164,12 +166,33 @@ def fluorine_carbon_ratio(data):
     # return rdd1, rdd2, rdd3
 
 # Uncomment to run
-# fluorine_carbon_ratio(CHEM_DATA)
+fluorine_carbon_ratio(CHEM_DATA)
 
 # Uncomment to run with -i
 # rdd1, rdd2, rdd3 = fluorine_carbon_ratio(CHEM_DATA)
 
 """
+OUTPUT:
+[0.0, 0.0, 1.875]
+Stats: (count: 3, mean: 0.625, stdev: 0.8838834764831844, max: 1.875, min: 0.0)
+
+HW question:
+If you are curious - why are we seeing this output?
+
+----
+
+Recap:
+
+- We talked about scalable collection types = data parallelism
+
+    Poll practice question: practicing identifying whether a data processing
+    task can be easily re-written using scalable collection types
+
+    We introduced a new example for this part based on a chemistry dataset
+    and F-C ratios as a proxy for human health risk.
+
+----
+
 In Spark, and in particular on RDDs,
 operators are divided into *transformations* and *actions.*
 
@@ -256,7 +279,8 @@ You can that at any intermediate stage.
 # rdd3.distinct().collect()
 
 """
-Dataflow graph:
+
+=== Visualizing the dataflow graph ===
 
                                     -> (stats)
 (load inpput) -> (filter) -> (map)
@@ -264,8 +288,6 @@ Dataflow graph:
 
                  ^^^^^^^^^^^transformations
                                         ^^^^^^^^^ actions
-
-=== Visualizing the dataflow graph ===
 
 What is the connection between RDDs and dataflow graphs?
 
@@ -275,10 +297,6 @@ Q: let's draw the above as a dataflow graph using ASCII art.
 
     Tasks: Operators that were done on the RDD
     Arrows: dependencies from one operator to another
-
-    Our dataflow graph:
-
-    *** FILL OUT ***
 
     Each task computes a new RDD based on the old RDD.
 
@@ -303,7 +321,6 @@ Can we view this more programmatically?
 
 Unfortunately the visualization capabilities of RDDs are a bit limited.
 Two ways for now:
-Both of these are not super helpful and don't give precise information.
 
 - Go to localhost:4040/
 - .toDebugString()
