@@ -146,21 +146,27 @@ Questions?
 
 ## Wednesday, November 18
 
-Reminders:
+(It's raining again... (-: )
 
-- HW2 due: Monday 11/23 11:59pm
+Announcements:
+
+- HW2 deadline extension: I will move to Tuesday 11:59pm.
+
+  We will talk about MapReduce today.
+
+Reminders:
 
 - Final exam: Friday December 11, 10:30am-12:30pm
   (Last day of finals period)
 
 Plan:
 
-- Continue Part 2: Properties of RDDs
+- We will start today with Part 3: MapReduce
+
+- Return back to Part 2: Properties of RDDs
 
     + Laziness: Transformations vs. actions
 
     + Immutability, partitioning, fault-tolerant
 
-- Poll question: an exercise on laziness
-
-- Part 3: MapReduce.
+- Then come back to the poll question: an exercise on laziness.

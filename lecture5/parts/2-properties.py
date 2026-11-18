@@ -191,7 +191,8 @@ Recap:
     We introduced a new example for this part based on a chemistry dataset
     and F-C ratios as a proxy for human health risk.
 
-----
+----- ended here for 11/16 -----
+--------------------------------------
 
 In Spark, and in particular on RDDs,
 operators are divided into *transformations* and *actions.*
@@ -279,6 +280,7 @@ You can that at any intermediate stage.
 # rdd3.distinct().collect()
 
 """
+****** SKIP from here to the end
 
 === Visualizing the dataflow graph ===
 

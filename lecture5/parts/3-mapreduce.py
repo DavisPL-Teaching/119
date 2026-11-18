@@ -1,44 +1,13 @@
 """
 Part 3: MapReduce
 
-=== Discussion Question & Poll ===
+(NOTE: starting with Part 3 today, finishing Part 2 after.)
 
-An exercise on laziness:
+We have talked about how to view **data sets** for the purposes of distributed pipelines:
+what we need is the idea of a Scalable Collection Type.
 
-https://forms.gle/tSPBZHSCWnLoyFDb7
-
-Suppose we want to do 3 tasks:
-
-1. Generate 100,000 random data points (vectors v)
-2. Map each data point v to a normalized vector v / ||v||
-3. Print the first 5 answers
-
-As a dataflow graph:
-(1) ---> (2) ---> (3)
-
-We want to know which of 1, 2, 3 should be lazy, and which should be evaluated right away.
-
-Which tasks should be executed lazily if we want to get the answer in the most efficient way?
-
-Bonus (optional):
-If we assume that all operators take 1 ms per input that they process, how long would the pipeline take in the optimal case?
-
-Assume that creating the dataflow graph itself doesn't take any time, only evaluating it takes time.
-
-Assume there is no parallelism.
-
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-
-Workthrough: see `extra/laziness_poll_result.txt`
+What we need now is a way to view **operators** for the purposes of distributed pipelines.
+What is the distributed equivalent of an operator?
 
 === MapReduce ===
 
@@ -138,9 +107,9 @@ sc = spark.sparkContext
 Chemistry dataset again, with a few more entries:
 """
 
-# Re-defining from earlier in the file
+# Re-defining from Part 2
 # (and adding a couple more molecules)
-CHEM_DATA_2 = {
+CHEM_DATA = {
     # H20
     "water": [0, 2, 0, 0, 0, 0, 0, 0, 1, 0, 0],
     # N2
@@ -211,7 +180,7 @@ def get_total_hydrogens(data):
     print(f"Result: {res2}")
 
 # Uncomment to run
-# get_total_hydrogens(CHEM_DATA_2)
+# get_total_hydrogens(CHEM_DATA)
 # (Count by hand to check)
 # 16 :checkmark:
 
@@ -224,13 +193,6 @@ def get_total_hydrogens(data):
 # Many MapReduce implementations work this way.
 
 """
-map is the quintessential lazy operator (transformation)
-
-reduce is the quintessential not-lazy operator (action)
-
-In general, most "row-level" operations are transformation, and most
-aggregations are actions
-
 === Some history ===
 
 MapReduce was originally created by
@@ -243,16 +205,17 @@ Here is the original paper:
     https://dl.acm.org/doi/pdf/10.1145/1327452.1327492
 
 (BTW, this paper is very famous. Probably one of the most cited papers ever with
-almost 25,000 citations (last I checked))
+over 25,000 citations on Google Scholar.)
 
 Blog article: "The Friendship That Made Google Huge"
 
-    "Coding together at the same computer, Jeff Dean and Sanjay Ghemawat changed the course of the company—and the Internet."
+    "Coding together at the same computer, Jeff Dean and Sanjay Ghemawat changed the course of the
+    company—and the Internet."
     https://www.newyorker.com/magazine/2018/12/10/the-friendship-that-made-google-huge
 
 === Fully general case ===
 
-This is only very slightly simplified. Two things to make it general:
+This is slightly simplified. Two things to make it general:
 
 (You will do the general case as part of HW2!)
 
@@ -303,6 +266,8 @@ which is covered on the homework:
 
 Recap:
 
+    (UPDATE)
+
     We reviewed laziness and saw immutability for PySpark RDDs & operators
 
     We introduced MapReduce: a simplified model for writing distributed pipelines
@@ -324,11 +289,99 @@ Idea for generalizing:
         + For each key K2, it will aggregate all the rows of that key, and produce
           one answer per key.
 
-=== Additional exercises ===
+=== Returning to Part 2 ===
 
-(Depending on extra time)
+At this point, we will return and complete the rest of Part 2.
+
+************
+
+************
+
+************
+
+====== ************ After finishing Part 2 ************ =======
+
+************
+
+    ***  We will return to this part and the following poll after finishing Part 2. ***
+
+************
+
+
+Note!
+
+map is the quintessential lazy operator (transformation)
+
+reduce is the quintessential not-lazy operator (action)
+
+In general, most "row-level" operations are transformation, and most
+aggregations are actions
+
+=== Discussion Question & Poll ===
+
+An exercise on laziness:
+
+https://forms.gle/tSPBZHSCWnLoyFDb7
+
+Suppose we want to do 3 tasks:
+
+1. Generate 100,000 random data points (vectors v)
+2. Map each data point v to a normalized vector v / ||v||
+3. Print the first 5 answers
+
+As a dataflow graph:
+(1) ---> (2) ---> (3)
+
+We want to know which of 1, 2, 3 should be lazy, and which should be evaluated right away.
+
+Which tasks should be executed lazily if we want to get the answer in the most efficient way?
+
+Bonus (optional):
+If we assume that all operators take 1 ms per input that they process, how long would the pipeline take in the optimal case?
+
+Assume that creating the dataflow graph itself doesn't take any time, only evaluating it takes time.
+
+Assume there is no parallelism.
+
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+
+SPOILER
+
+Workthrough: see `extra/laziness_poll_result.txt`
+
+=== Additional exercises ===
+(SKIP)
 
 Some additional MapReduce exercises in extras/exercises.py.
 
-Cut material that will appear as part of HW2 in extras/cut.py
+Cut material that will appear as part of HW2 in extras/cut.py.
 """
