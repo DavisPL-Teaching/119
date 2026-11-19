@@ -28,18 +28,37 @@ Also equivalent to reduce (but needs an initial value)
 https://spark.apache.org/docs/latest/api/python/reference/api/pyspark.RDD.fold.html
 
 In fact, a MapReduce pipeline is the simplest possible pipeline
-you can create, with just two stages!
+you can create, with just three tasks:
 It's a dataflow graph with just three nodes:
 
     (input) ---> (map) ---> (reduce).
+
+=== Some history ===
+
+MapReduce was originally created by
+Jeffrey Dean and Sanjay Ghemawat at Google to simplify the large-scale data processing jobs that
+engineers were running on Google clusters.
+
+Here is the original paper:
+
+    MapReduce: Simplified Data Processing on Large Clusters
+    https://dl.acm.org/doi/pdf/10.1145/1327452.1327492
+
+(BTW, this paper is very famous. Probably one of the most cited papers ever with
+over 25,000 citations on Google Scholar.)
+
+Blog article: "The Friendship That Made Google Huge"
+
+    "Coding together at the same computer, Jeff Dean and Sanjay Ghemawat changed the course of the
+    company—and the Internet."
+    https://www.newyorker.com/magazine/2018/12/10/the-friendship-that-made-google-huge
 
 The kind of amazing thing is that essentially all operators on distributed
 pipelines can be reduced down to this simple form,
 called a MapReduce job.
     (Insight of original MapReduce paper coming out of Google)
 
-(Sometimes you might you need more than one MapReduce job to get some computations
-done.)
+(Sometimes you might you need more than one MapReduce job to get some computations done.)
 
 === Definitions ===
 
@@ -63,14 +82,14 @@ I want the total population over all cities.
 
 If I wanted to do this as MapReduce:
 
-Map: do nothing, on each input row x, return x
-    lambda x: x
+Map: do nothing, on each input row x, return the population of row x
+    as an integer:
 
-    If input x was a row insetad of a integer, you could do
-    lambda x: x["population"]
+        lambda x: x["population"]
 
 Reduce: if I have two outputs x and y, return x + y
-    lambda x, y: x + y.
+
+        lambda x, y: x + y.
 
 The MapReduce computation will repeatedly apply the reduce function
 until there is no more reducing to do.
@@ -84,7 +103,8 @@ until there is no more reducing to do.
         map: Row -> Integer
         reduce: Integer x Integer -> Integer
 
-We have actually been writing MapReduce pipelines all along!
+Our previous example from Part 2 is also a MapReduce function!
+
 In our CHEM_DATA example:
 - map stage: we apply a local computation to each input row: in our case,
   we wanted to get the number of fluorines / num carbons for all rows which
@@ -130,7 +150,13 @@ CHEM_DATA = {
     "Fluoromethane": [0, 3, 0, 0, 0, 0, 1, 0, 0, 1, 0],
     # C6 F6
     "Hexafluorobenzene": [0, 0, 0, 0, 0, 0, 6, 0, 0, 6, 0],
+    # Add your own chemicals here ...
 }
+
+# TASK:
+# Compute the total number of hydrogens across all chemicals in our dataset.
+
+# First: defining our map and reduce functions:
 
 def map(rdd, f):
     """
@@ -177,10 +203,16 @@ def get_total_hydrogens(data):
     # Two total #s of hydrogens: take them out, add them up, put them back
     res2 = reduce(res1, lambda x, y: x + y)
 
+    # def add(x, y):
+    #     return x + y
+
     print(f"Result: {res2}")
+
+    return res1, res2
 
 # Uncomment to run
 # get_total_hydrogens(CHEM_DATA)
+
 # (Count by hand to check)
 # 16 :checkmark:
 
@@ -193,25 +225,10 @@ def get_total_hydrogens(data):
 # Many MapReduce implementations work this way.
 
 """
-=== Some history ===
+That's MapReduce (simple version)
 
-MapReduce was originally created by
-Jeffrey Dean and Sanjay Ghemawat at Google to simplify the large-scale data processing jobs that
-engineers were running on Google clusters.
-
-Here is the original paper:
-
-    MapReduce: Simplified Data Processing on Large Clusters
-    https://dl.acm.org/doi/pdf/10.1145/1327452.1327492
-
-(BTW, this paper is very famous. Probably one of the most cited papers ever with
-over 25,000 citations on Google Scholar.)
-
-Blog article: "The Friendship That Made Google Huge"
-
-    "Coding together at the same computer, Jeff Dean and Sanjay Ghemawat changed the course of the
-    company—and the Internet."
-    https://www.newyorker.com/magazine/2018/12/10/the-friendship-that-made-google-huge
+There is a practice question on MapReduce, that we will do
+at the start of class next time.
 
 === Fully general case ===
 
@@ -262,32 +279,9 @@ which is covered on the homework:
     reduce: (K2, list(T2)) -> list(T2)
 
     ---> map computes 0 or more answer
-    ---> reduce computes one answer per key (value of type K2)
+    ---> reduce computes 0 or more answers per key (value of type K2)
 
-Recap:
-
-    (UPDATE)
-
-    We reviewed laziness and saw immutability for PySpark RDDs & operators
-
-    We introduced MapReduce: a simplified model for writing distributed pipelines
-
-    MapReduce features two operators, map and reduce
-
-    We saw a simplified form of both
-
-    - Map: apply a function f to each input row, producing exactly one output row
-
-    - Reduce: repeatedly apply a reduce function to pairs of output rows, until
-      there is only one output row left.
-
-Idea for generalizing:
-    - Map stage will produce zero or more intermediate output rows
-        (instead of exactly one)
-
-    - Reduce stage will work by key:
-        + For each key K2, it will aggregate all the rows of that key, and produce
-          one answer per key.
+---------
 
 === Returning to Part 2 ===
 
@@ -306,7 +300,6 @@ At this point, we will return and complete the rest of Part 2.
     ***  We will return to this part and the following poll after finishing Part 2. ***
 
 ************
-
 
 Note!
 
@@ -336,7 +329,7 @@ We want to know which of 1, 2, 3 should be lazy, and which should be evaluated r
 
 Which tasks should be executed lazily if we want to get the answer in the most efficient way?
 
-Bonus (optional):
+Bonus question:
 If we assume that all operators take 1 ms per input that they process, how long would the pipeline take in the optimal case?
 
 Assume that creating the dataflow graph itself doesn't take any time, only evaluating it takes time.
@@ -378,10 +371,73 @@ SPOILER
 
 Workthrough: see `extra/laziness_poll_result.txt`
 
+=== Recap ===
+
+- Motivation for MapReduce:
+
+    + argued can express all/general distributed computations
+
+    + Only 2 operators
+
+- We introduced the simple form of MapReduce:
+
+    map: f: T1 -> T2
+
+    reduce: T2 x T2 -> T2
+
+- We talked about limitations of the simple model, and how to generalize this:
+
+    1. Allow zero or more outputs
+
+    2. Attach keys to everything (K1, T1), (K2, T2)
+
+    You will do this on your HW
+
+- We finished talking about laziness
+
+    Transformations = lazy, produce output an RDD
+
+    Actions = not lazy, produce output a result
+
+    map = quintessential example of a transformation
+
+    reduce = quintessential example of an action
+
+- We got some practice with laziness on the poll, that we will go over next time.
+
 === Additional exercises ===
 (SKIP)
 
 Some additional MapReduce exercises in extras/exercises.py.
 
 Cut material that will appear as part of HW2 in extras/cut.py.
+
+------
+
+
+Recap:
+
+    (UPDATE)
+
+    We reviewed laziness and saw immutability for PySpark RDDs & operators
+
+    We introduced MapReduce: a simplified model for writing distributed pipelines
+
+    MapReduce features two operators, map and reduce
+
+    We saw a simplified form of both
+
+    - Map: apply a function f to each input row, producing exactly one output row
+
+    - Reduce: repeatedly apply a reduce function to pairs of output rows, until
+      there is only one output row left.
+
+Idea for generalizing:
+    - Map stage will produce zero or more intermediate output rows
+        (instead of exactly one)
+
+    - Reduce stage will work by key:
+        + For each key K2, it will aggregate all the rows of that key, and produce
+          one answer per key.
+
 """

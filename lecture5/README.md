@@ -170,3 +170,5 @@ Plan:
     + Immutability, partitioning, fault-tolerant
 
 - Then come back to the poll question: an exercise on laziness.
+
+Questions?

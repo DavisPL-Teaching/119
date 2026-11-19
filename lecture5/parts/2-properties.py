@@ -204,10 +204,18 @@ Action: compute an answer
 
 In other words...
 
-Terminology (this comes from programming language design):
-    (e.g. Haskell is lazy)
-Transformations are also called "lazy" operators
-and actions are not lazy (also called "eager" operators)
+    Transformation = Lazy -- not doing any work yet
+
+            (Internally: Spark will construct the DFG, without evaluating it)
+
+    Action = "Eager" = not Lazy
+
+            (Internally: Spark will run a job to compute the answer for the DFG).
+
+    Terminology (this comes from programming language design):
+        (e.g. Haskell is lazy)
+    Transformations are also called "lazy" operators
+    and actions are not lazy (also called "eager" operators)
 
 How can we determine which of the above are transformations and which are actions?
 
@@ -246,7 +254,7 @@ Conjectures?
 
 - If you're pipelining the output, you could save memory!
   (operator1) --> (operator2)
-  Doing operator1, then operator2 is ineficient (lots of stuff stored in memory)
+  Doing operator1, then operator2 is inefficient (lots of stuff stored in memory)
   (and we didn't anything in parallel)
   Doing them both at once allows Spark to optimize the pair of them together.
 
@@ -285,7 +293,7 @@ You can that at any intermediate stage.
 === Visualizing the dataflow graph ===
 
                                     -> (stats)
-(load inpput) -> (filter) -> (map)
+(load input) -> (filter) -> (map)
                                     -> (mean)
 
                  ^^^^^^^^^^^transformations
