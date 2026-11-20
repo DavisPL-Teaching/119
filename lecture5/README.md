@@ -194,7 +194,7 @@ Plan:
 
     + Fault tolerance (brief)
 
-- No loose ends on Part 3 (however, please see extra practice questions in `extras/exercises.py`.)
+- We are done with Part 3 (however, please see extra practice questions in `extras/exercises.py`.)
 
     + Also: poll today will be a practice question on MapReduce
 
