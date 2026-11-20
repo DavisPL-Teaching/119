@@ -109,3 +109,9 @@ C and E: CPU cores & RAM available
 
 Nov 16:
 5, 6, and 8
+Note that, depending on assumptions about how regular the timestamps are or if the input data is sorted by row #, it may be possible to make these data-parallel also.
+But it is definitely not very straightforward compared to the others.
+
+Nov 18:
+1: Lazy, 2: Lazy, 3: Not Lazy
+Bonus: 5ms + 5ms + 5ms = 15 ms.

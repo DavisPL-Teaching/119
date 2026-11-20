@@ -1,0 +1,102 @@
+Answer (go through together):
+
+Map stage:
+
+    What to do:
+    For each input row, map that input row to ....
+
+    f: T1 -> T2
+
+Reduce:
+
+    Describe what to do for a pair of output rows
+
+    f: T2 x T2 -> T2
+
+What are the types?
+Map: for each item of type T1, output an item of type T2
+
+- T1
+
+- T2
+
+After the map stage, what info do we need?
+
+    - don't need the state
+
+    - DO need the city
+
+    - Do need the ratio: (avg temperature) / population
+
+Idea for map stage (in words):
+
+    For each row, return the ordered pair
+
+        (city, (avg temp) / (population))
+
+Reduce stage:
+
+Take a pair of output rows, and return one output row.
+
+    Find the max of the two output rows! Since we are
+    trying to find the maximum average temperature.
+
+    Reduce stage input? Two rows:
+
+        (city1, (avg temp1) / (population1))
+
+        (city2, (avg temp2) / (population2))
+
+    Or if you like:
+
+        (city1, ratio1)
+
+        (city2, ratio2)
+
+    We must return something of the form:
+
+        (city3, ratio3)
+
+    We know that ratio3 should be max(ratio1, ratio2)
+
+    We see which of ratio1 and ratio2 is bigger
+
+    What should do for city3?
+    --> We should pick whichever city was accompanied by
+        the bigger ratio
+
+    Pseudocode:
+
+        if ratio1 < ratio2:
+
+            return (city2, ratio2)
+
+        else:
+
+            return (city1, ratio1)
+
+What was T1 and what was T2?
+
+    input: US state, city name, population, avg temperature
+    T1 = (string, string, integer, float)
+
+    T2 = (string, float)
+
+The tricky thing is that reduce must be of the form
+
+    T2 x T2 -> T2
+
+=== Comment ===
+
+What seemed like a simple/easy idea
+(calculate avg for each row, calculate max of the avgs)
+gets slightly more tricky when we have to figure out exactly
+what to use for the types T1 and T2,
+and in particular our T2 needs not just the avg, but the city name.
+
+Moral: figure out the data that you need, and write down
+explicitly the types T1 and T2.
+
+You can't go back to the original dataset in your map stage!
+Your map stage must therefore return all information you
+need as part of the type T2.

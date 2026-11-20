@@ -369,7 +369,7 @@ Assume there is no parallelism.
 
 SPOILER
 
-Workthrough: see `extra/laziness_poll_result.txt`
+Workthrough: see `extra/laziness_poll_workthrough.txt`
 
 === Recap ===
 
@@ -411,33 +411,4 @@ Workthrough: see `extra/laziness_poll_result.txt`
 Some additional MapReduce exercises in extras/exercises.py.
 
 Cut material that will appear as part of HW2 in extras/cut.py.
-
-------
-
-
-Recap:
-
-    (UPDATE)
-
-    We reviewed laziness and saw immutability for PySpark RDDs & operators
-
-    We introduced MapReduce: a simplified model for writing distributed pipelines
-
-    MapReduce features two operators, map and reduce
-
-    We saw a simplified form of both
-
-    - Map: apply a function f to each input row, producing exactly one output row
-
-    - Reduce: repeatedly apply a reduce function to pairs of output rows, until
-      there is only one output row left.
-
-Idea for generalizing:
-    - Map stage will produce zero or more intermediate output rows
-        (instead of exactly one)
-
-    - Reduce stage will work by key:
-        + For each key K2, it will aggregate all the rows of that key, and produce
-          one answer per key.
-
 """

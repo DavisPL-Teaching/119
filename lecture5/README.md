@@ -172,3 +172,38 @@ Plan:
 - Then come back to the poll question: an exercise on laziness.
 
 Questions?
+
+## Friday, November 20
+
+Reminders:
+
+- HW2 deadline is now Tuesday 11:59pm.
+
+- Final exam: Friday December 11, 10:30am-12:30pm
+  (Last day of finals period)
+
+Plan:
+
+- Loose ends on Part 2
+
+    + Go over poll from last time
+
+    + Laziness
+
+    + Immutability
+
+    + Fault tolerance (brief)
+
+- No loose ends on Part 3 (however, please see extra practice questions in `extras/exercises.py`.)
+
+    + Also: poll today will be a practice question on MapReduce
+
+- Part 4, Data Partitioning:
+
+    + Why do RDDs work? data partitioning
+
+    + Problems with data partitioning (and an anecdote)
+
+    + Example code for our chem dataset
+
+    + Wide vs. Narrow operators.
