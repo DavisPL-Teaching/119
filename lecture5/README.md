@@ -211,3 +211,35 @@ Plan:
     + Wide vs. Narrow operators.
 
 Questions?
+
+## Monday, November 23
+
+Reminders:
+
+- HW2 due tomorrow! Please drop by TA OH today
+
+Plan:
+
+- Go over MapReduce poll
+
+    And some points about MapReduce
+
+    Some practice questions
+
+- Part 4, Data Partitioning:
+
+    + Why do RDDs work? data partitioning
+
+    + Problems with data partitioning (and an anecdote)
+
+    + Example code for our chem dataset
+
+    + Wide vs. Narrow operators.
+
+- Poll question: practice on Wide vs. Narrow
+
+- Part 5: DataFrames (Briefly)
+
+- Part 6: Latency & Throughput, Revisited (Briefly)
+
+Questions?

@@ -5,7 +5,7 @@ In the interest of time, we will cover this part relatively briefly.
 
 === Discussion Question & Poll ===
 
-<form link cut>
+https://forms.gle/9s7VhhzxPBYKnqLM7
 
 Consider the following scenario where a temperature dataset is partitioned in Spark across several locations. Which of the following tasks on the input dataset can be done with a narrow operator, and which will require a wide operator?
 
