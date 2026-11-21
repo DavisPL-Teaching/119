@@ -30,6 +30,33 @@ https://forms.gle/kKnTypA2XUiurFxk9
 .
 .
 
+Simple form of MapReduce!
+
+    map: Describe how to take 1 input row, produce 1 output row
+
+        - Input: 1 row
+        - Output: return avg temp / population for that row
+            (city name, avg temp / population for that row)
+
+        map: T1 -> T2
+
+        T1: input row
+        T2: pair of a city name and a floating point or real number
+
+    reduce: Describe how to take 2 output rows, replace with 1 output row
+
+        reduce: T2 x T2 -> T2
+
+        Take 2 real numbers, return 1
+
+        Take as input:
+            (city name 1, real number 1)
+            (city name 2, real number 2)
+
+        Optional HW question over the weekend:
+        How to return output (not just the maximum function)
+        not that we have pairs instead of just real numbers.
+
 SPOILER: workthrough in `extras/map_reduce_poll_workthrough.txt`
 
 --------------------------------------

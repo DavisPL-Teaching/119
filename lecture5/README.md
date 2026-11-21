@@ -179,6 +179,8 @@ Reminders:
 
 - HW2 deadline is now Tuesday 11:59pm.
 
+- OH: today 415pm, TA OH: Monday 430
+
 - Final exam: Friday December 11, 10:30am-12:30pm
   (Last day of finals period)
 
@@ -207,3 +209,5 @@ Plan:
     + Example code for our chem dataset
 
     + Wide vs. Narrow operators.
+
+Questions?

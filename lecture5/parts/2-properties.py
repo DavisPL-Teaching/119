@@ -288,8 +288,6 @@ You can that at any intermediate stage.
 # rdd3.distinct().collect()
 
 """
-****** SKIP from here to the end
-
 === Visualizing the dataflow graph ===
 
                                     -> (stats)
@@ -376,6 +374,52 @@ Recall: def. of distribution, why faults are a particular concern
 
     Multiple warehouses running separate computations
 
+    Fault = Something goes wrong between 1 or affecting some subset of the workers,
+        but not necessarily all workers
+
+    The more computers/devices involved in a computation - the more likely that one of them
+        will have some problem!
+
+        ===> With sufficiently many machines, it even becomes statistically improbable that
+            there is *no* fault during the execution of a distributed pipeline.
+
+    Types of faults:
+
+        1. Node fault
+        1 warehouse goes down (for example, a computer or device crashes),
+            but other warehouses don't
+
+        2. Message or network fault:
+            One worker sends a message to another worker, and that worker either
+            doesn't receive it, or receives it after a long/considerable delay
+
+        3. Byzantine fault
+            One worker "goes rogue" and does arbitrary behavior, for example
+            - sending message it wasn't supposed to
+            - recording data it wasn't supposed to
+            - doing computations it wasn't supposed to
+
+            Dealing with Byzantine faults tends to be much harder than dealing with the
+            other two.
+
+            Byzantine faults are especially relevant for computer security.
+
+    Fault-tolerance = The ability of a system to behave in the presence of faults
+        as if the faults did not occur, or to recover gracefully
+
+    Spark handles some failures automatically
+        (some subset of node failures and message/network faults)
+
+    Does not handle byzantine faults
+
+    We will generally assume that Spark handles faults for us so we don't need to worry about it.
+
+    Immutability is helpful!
+
+    .
+    .
+    .
+
     Part of the problem of running distributed code is that one
     warehouse (machine) can fail, while another warehouse (machine) is
     still running.
@@ -406,4 +450,15 @@ We saw that all computations over RDDs are really dataflow graphs.
 
 RDDs are: scalable, (data-)parallel, lazy, immutable, partitioned, and fault-tolerant.
                                                       ^^^part 4
+
+We talked a little bit about fault-tolerance:
+
+    Why faults matter in a distributed system
+
+    Types of faults: node faults, message/network faults, and Byzantine faults
+
+    One way to protect against faults is to build in some redundancy
+
+    Immutability helps by allowing us to go back to a previous version of the data if
+    some of our computation fails.
 """
