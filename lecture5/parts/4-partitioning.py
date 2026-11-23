@@ -60,6 +60,15 @@ Simple form of MapReduce!
 SPOILER: workthrough in `extras/map_reduce_poll_workthrough.txt`
 
 --------------------------------------
+Starting here for Nov 23
+
+First, going over solution and a couple of suggestions from last time's poll.
+
+
+
+
+
+
 
 === Revisiting RDDs ===
 
@@ -69,10 +78,11 @@ MapReduce has taught us that for general distributed data processing, we only ne
 
 2. a way of combining results (from different distributed nodes or parallel workers) to get a final answer
 
-But even the combining results part is done "per key" in general! This helps immensely
-as it means that even this stage can be done in a data-parallel way.
+But even the combining results part is done "per key" in general!
+(See, the "general" version of MapReduce on the homework)
+This helps immensely as it ensures that even this stage can be done in a data-parallel way.
 
-This brings us to our last property of RDDs (an important one!): Partitioning!
+This brings us to our last property of RDDs (an important one!): Partitioning.
 """
 
 # Boilerplate and dataset from previous part
@@ -153,12 +163,12 @@ def show_partitions(data, num_partitions=None):
 
 """
 What numbers did we get?
-- I got 12 -- my machine has 12 cores
+- I got 12 -- my machine has 12 cores, Spark knows to do one per core
 
 Other people got?
-- 8
-- 8
-- 8
+-
+-
+-
 
 In this case, all partitions are on the same machine (my laptop),
 but in general they could be split accross several machines.
@@ -194,8 +204,8 @@ A friend of mine who worked as a data/ML engineer told me the following story:
 
     2 hours to look at the first 10 rows of a table in dataproc!
 
-    turned out there was a formula to calculate the size of the partitions --
-    5 rows in each partition, 1 billion partitions.
+    turned out there was a formula somewhere in the code to calculate the size of the partitions --
+    it was coming out to 5 rows in each partition, 1 billion partitions.
 
     spent a day optimizing this and then it took 1 minute to do the same thing!
 
@@ -207,7 +217,11 @@ Run
     show_partitions(CHEM_DATA, 1000)
 
     show_partitions(CHEM_DATA, 10000)
+"""
 
+# Try it out here
+
+"""
 What happens?
 
 Moral of the story:
@@ -220,47 +234,17 @@ If the number of partitions created is wildly off from the
 size of the data set (too small or too large), it could have severe impacts
 on performance.
 
-----> Side note: Even worse, partitioning might affect the
-      outputs that you get. This shouldn't happen unless you wrote your pipeline
-      incorrectly (but happy to talk more about this if there is time in a lecture
-      at some point!).
+----> Even worse: partitioning might affect the
+      outputs that you get! This shouldn't happen unless you wrote your pipeline
+      incorrectly! It is a real phenomenon though.
+      I am happy to talk more about this if anyone is interested to learn more.
 
-Review Q:
-Why does partitioning affect pipeline scheduling and performance?
+----
 
-A:
-It controls the amount of data parallelism in the pipeline
-Too little data parallelism, and we don't benefit from parallelism
-Too much, and we might have severe/large overheads from creating and managing all the partitions.
+One note from a question from last year:
 
-Recap:
-
-- we did a practice MapReduce question on the poll
-
-    + think about what intermediate output you need to store in order to
-      compute a query
-
-    + think about what the types T1 and T2 need to be
-      (without keys, reduce must always be a function taking two items of type T2
-       and returning a single item of type T2)
-
-- we saw that RDDs implement data parallelism via partitioning
-
-    + we saw that one can set and view the number of partitions
-
-    + generally in an ideal world, we would not worry about the # of partitions
-
-      however, having too few or too many partitions can severely impact
-      pipeline performance.
-
-------------------
-
-(picking up here on Friday, Nov 21)
-
-One note from after class last time!
-
-Partitioning = Sharding.
-It's the same concept.
+    Partitioning = Sharding.
+    It's the same concept.
 
 === Two types of operators (again) ===
 
@@ -309,10 +293,8 @@ Image:
     narrow_wide.png
     (Credit: LinkedIn)
 
-"""
-
-"""
 === Example operators ===
+(SKIP)
 
 All operators fit into this dichotomy:
 - Mapper-style operators are local, narrow, and usually lazy
@@ -333,9 +315,39 @@ Wide:
 - globally unique / distinct elements
 - anything where you need to communicate across partitions.
 
-"""
+=== Review ===
 
-"""
+Q: Why does partitioning affect pipeline scheduling and performance?
+
+A:
+It controls the amount of data parallelism in the pipeline
+Too little data parallelism, and we don't benefit from parallelism
+Too much, and we might have severe/large overheads from creating and managing all the partitions.
+
+=== Recap ===
+
+(UPDATE)
+
+- we did a practice MapReduce question on the poll
+
+    + think about what intermediate output you need to store in order to
+      compute a query
+
+    + think about what the types T1 and T2 need to be
+      (without keys, reduce must always be a function taking two items of type T2
+       and returning a single item of type T2)
+
+- we saw that RDDs implement data parallelism via partitioning
+
+    + we saw that one can set and view the number of partitions
+
+    + generally in an ideal world, we would not worry about the # of partitions
+
+      however, having too few or too many partitions can severely impact
+      pipeline performance.
+
+------------------
+
 === Other miscellaneous partitioning-related operations ===
 (Skip for time)
 

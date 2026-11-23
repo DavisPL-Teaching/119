@@ -1,7 +1,7 @@
 """
 Part 5: DataFrames
 
-In the interest of time, we will cover this part relatively briefly.
+In the interest of time, we will cover this part only briefly.
 
 === Discussion Question & Poll ===
 

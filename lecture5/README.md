@@ -214,13 +214,15 @@ Questions?
 
 ## Monday, November 23
 
+Happy Thanksgiving week!
+
 Reminders:
 
 - HW2 due tomorrow! Please drop by TA OH today
 
 Plan:
 
-- Go over MapReduce poll
+- Finish going over MapReduce poll
 
     And some points about MapReduce
 
@@ -236,7 +238,7 @@ Plan:
 
     + Wide vs. Narrow operators.
 
-- Poll question: practice on Wide vs. Narrow
+- Poll question: practice on Wide vs. Narrow operators
 
 - Part 5: DataFrames (Briefly)
 
