@@ -218,7 +218,7 @@ Happy Thanksgiving week!
 
 Reminders:
 
-- HW2 due tomorrow! Please drop by TA OH today
+- HW2 due tomorrow. Please drop by TA OH today
 
 Plan:
 

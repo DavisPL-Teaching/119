@@ -67,8 +67,45 @@ First, going over solution and a couple of suggestions from last time's poll.
 
 
 
+Some points on how to approach these MapReduce problems.
 
+- Think about what needs to be "extracted" from each row (which fields, quantities etc.),
+  then how to combine data across these different rows
 
+- It helps to think about what T1, T2 are! This can take some practice.
+  Final answer has to be a T2
+
+- Make sure you describe Map as INPUT: one row OUTPUT: one row. (or zero or more, for general)
+
+    Make sure you describe Reduce as INPUT: two rows.
+
+- Simple vs. general form:
+
+    General: map produces a list
+
+        Just return a list with one element.
+
+        If you need to filter out rows, use Map to produce a list of **zero** elements.
+
+        Example/Exercise: Given a dataset of books wit
+
+            Book Name
+            Book length (in pages)
+            Language code (EN, ES, FR, ZH etc.)
+
+        Calculate the total # of pages => can be done with simple
+        calculate the toatal # of pages for English books only =>
+            requires filtering
+
+    General: map produces (key, value) pairs, reduce reduces a pair of values **per key**.
+
+        Used whenever you have partitioning in the output!
+
+    Example/Exercise:
+
+.
+.
+.
 
 === Revisiting RDDs ===
 
