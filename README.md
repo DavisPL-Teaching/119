@@ -1,4 +1,4 @@
-# ECS 119: Data Processing Pipelines - Fall Quarter 2025
+# ECS 119: Data Processing Pipelines
 
 ## Contents
 

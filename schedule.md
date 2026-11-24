@@ -1,6 +1,7 @@
-# ECS 119 Tentative Course Schedule - Fall 2025
+# ECS 119 Tentative Course Schedule
 
-**Schedule from a previous iteration of the course -- Fall 2025**
+**This is a schedule from a previous iteration of the course.**
+It should give you a general idea of the rough timeline and topics covered.
 
 ## Section 1: Data Processing Basics
 
@@ -53,7 +54,6 @@
 ## Notes
 
 [^1]: Possible additional topics (depending on time and preference):
-cloud computing;
 data validation and integrity;
 data cleaning;
 missing data;
