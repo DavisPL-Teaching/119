@@ -8,7 +8,7 @@ Batching vs. Streaming
 
 Which of the following are disadvantages with MapReduce and RDDs in Spark?
 
-<form link cut>
+https://forms.gle/Ewwn1KiXUDrNcziM8
 
 .
 .
@@ -129,7 +129,7 @@ This means that any orders that come into our Amazon.com server
 will have to wait for the batch of orders to complete
 before seeing any results.
 
-Customers will experience increased latency as a result.
+Customers of our app will experience increased latency as a result.
 
 ===== Generalizing latency =====
 

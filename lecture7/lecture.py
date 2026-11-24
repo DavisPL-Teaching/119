@@ -381,7 +381,7 @@ And just for fun:
 
     https://www.youtube.com/watch?v=y8OnoxKotPQ
 
-The general takehome point is that microservices are good for convenience
+The general take-home point is that microservices are good for convenience
 and separation of concerns, but can introduce complexity
 into your application and performance overheads.
 Sometimes, just managing your own compute is faster and better.

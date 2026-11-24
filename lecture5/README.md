@@ -257,3 +257,19 @@ Questions?
     Not too concerned with these, label them clearly in some way
 
     Clearly label inputs/outputs
+
+## Wednesday, November 25
+
+Plan:
+
+Finish Lecture 5:
+
+- Part 5: DataFrames (Briefly)
+
+- Part 6: Latency & Throughput, Revisited (Briefly).
+
+We will move on to Lecture 6 with any remaining time:
+
+- Poll
+
+- Streaming pipelines.

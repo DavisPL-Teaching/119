@@ -125,8 +125,10 @@ def ex_dataframe(data):
 
     # We could continue this example further (showing other Pandas operation equivalents).
 
+    return df5.collect()
+
 # Uncomment to run
-# ex_dataframe(CHEM_DATA)
+ex_dataframe(CHEM_DATA)
 
 """
 Notes:
