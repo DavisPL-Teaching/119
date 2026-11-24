@@ -379,8 +379,6 @@ Too much, and we might have severe/large overheads from creating and managing al
 
 === Recap ===
 
-(UPDATE)
-
 - we did a practice MapReduce question on the poll
 
     + think about what intermediate output you need to store in order to
