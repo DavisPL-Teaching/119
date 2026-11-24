@@ -57,6 +57,18 @@ Simple form of MapReduce!
         How to return output (not just the maximum function)
         not that we have pairs instead of just real numbers.
 
+        Answer:
+        Use the max function on the numbers
+
+            max(real number 1, real number 2)
+
+        **keep** the corresponding city name as well
+        (if the max was real number 1, keep city name 1, if it was real
+        number 2, keep city name 2)
+
+        return:
+            (city_name that we kept, maximum)
+
 SPOILER: workthrough in `extras/map_reduce_poll_workthrough.txt`
 
 --------------------------------------
@@ -64,44 +76,51 @@ Starting here for Nov 23
 
 First, going over solution and a couple of suggestions from last time's poll.
 
+Some miscellaneous suggestions
+on how to approach these MapReduce problems.
 
+1. For Map: Think about what needs to be "extracted" from each row (which fields, quantities etc.),
+  For Reduce: think about how to combine data across these different rows
 
-
-Some points on how to approach these MapReduce problems.
-
-- Think about what needs to be "extracted" from each row (which fields, quantities etc.),
-  then how to combine data across these different rows
-
-- It helps to think about what T1, T2 are! This can take some practice.
+2. It helps to think about what T1, T2 are! This can take some practice.
   Final answer has to be a T2
 
-- Make sure you describe Map as INPUT: one row OUTPUT: one row. (or zero or more, for general)
+3. Make sure you describe Map as INPUT: one row OUTPUT: one row. (or zero or more, for general)
 
-    Make sure you describe Reduce as INPUT: two rows.
+    Make sure you describe Reduce as INPUT: two rows, output one row
 
-- Simple vs. general form:
+4. Simple vs. general form:
 
-    General: map produces a list
+    General: map produces a list of zero or more elements
+
+            map: T1 -> List of (K2, T2) key-value pairs
 
         Just return a list with one element.
 
-        If you need to filter out rows, use Map to produce a list of **zero** elements.
+        If you need to filter out rows, or produce multiple rows,
+        use Map to produce a list of **zero** elements or more than one.
 
-        Example/Exercise: Given a dataset of books wit
+        Example/Exercise: Given a dataset of books with
 
             Book Name
             Book length (in pages)
             Language code (EN, ES, FR, ZH etc.)
 
         Calculate the total # of pages => can be done with simple
-        calculate the toatal # of pages for English books only =>
+        Calculate the total # of pages for English books only =>
             requires filtering
 
     General: map produces (key, value) pairs, reduce reduces a pair of values **per key**.
 
-        Used whenever you have partitioning in the output!
+        Useful whenever I want to produce one value **per key** in the output.
 
-    Example/Exercise:
+        Example/Exercise:
+
+            Same dataset as above.
+
+            Calculate the total # of pages **per language**
+
+        Hint that we need keys
 
 .
 .
@@ -117,7 +136,7 @@ MapReduce has taught us that for general distributed data processing, we only ne
 
 But even the combining results part is done "per key" in general!
 (See, the "general" version of MapReduce on the homework)
-This helps immensely as it ensures that even this stage can be done in a data-parallel way.
+This helps immensely as it helps to ensures that this stage can be done in a data-parallel way.
 
 This brings us to our last property of RDDs (an important one!): Partitioning.
 """
@@ -154,7 +173,7 @@ CHEM_DATA = {
 """
 === Partitioning ===
 
-Whenever we consruct an RDD, under the hood it is going to be partitioned
+Whenever we construct an RDD, under the hood it is going to be partitioned
 into several chunks or subsets of the data; these could be all stored on the same machine,
 or they could be stored on separate distributed machines.
 
@@ -202,13 +221,8 @@ def show_partitions(data, num_partitions=None):
 What numbers did we get?
 - I got 12 -- my machine has 12 cores, Spark knows to do one per core
 
-Other people got?
--
--
--
-
 In this case, all partitions are on the same machine (my laptop),
-but in general they could be split accross several machines.
+but in general they could be split across several machines.
 """
 
 """
@@ -221,7 +235,7 @@ Syntax:
 
 # Exercise: using the number of partitions as an optional parameter, print:
 # show_partitions(CHEM_DATA, 1)
-# show_partitions(CHEM_DATA, 5)
+show_partitions(CHEM_DATA, 5)
 # show_partitions(CHEM_DATA, 10)
 
 """
@@ -255,6 +269,8 @@ Run
 
     show_partitions(CHEM_DATA, 10000)
 """
+
+# show_partitions(CHEM_DATA, 10_000)
 
 # Try it out here
 

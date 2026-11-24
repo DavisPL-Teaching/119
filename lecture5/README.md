@@ -245,3 +245,15 @@ Plan:
 - Part 6: Latency & Throughput, Revisited (Briefly)
 
 Questions?
+
+- A note on dataflow graphs (part 2);
+
+    If you have two different parts of your pipeline that share the same
+    computation, only draw it as the same nodes in your graph if the
+    input/output data is also identical.
+
+- Node labels
+
+    Not too concerned with these, label them clearly in some way
+
+    Clearly label inputs/outputs
