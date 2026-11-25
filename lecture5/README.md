@@ -260,16 +260,22 @@ Questions?
 
 ## Wednesday, November 25
 
+Happy Thanksgiving week!
+
 Plan:
 
-Finish Lecture 5:
+- Go over last time's poll
 
-- Part 5: DataFrames (Briefly)
+- Finish Lecture 5:
 
-- Part 6: Latency & Throughput, Revisited
+    + Part 5: DataFrames (Briefly)
 
-We will move on to Lecture 6 with the remaining time:
+    + Part 6: Latency & Throughput, Revisited
 
-- Poll
+- We will move on to Lecture 6 with the remaining time:
 
-- Streaming pipelines.
+    + Poll
+
+    + Streaming pipelines.
+
+Questions?

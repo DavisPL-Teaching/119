@@ -34,6 +34,9 @@ It is partitioned into one dataset per US state (50 partitions total).
 .
 .
 
+Poll notes:
+
+
 ==================
 
 We said that PySpark supports at least two scalable collection types.
