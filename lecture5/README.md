@@ -266,9 +266,9 @@ Finish Lecture 5:
 
 - Part 5: DataFrames (Briefly)
 
-- Part 6: Latency & Throughput, Revisited (Briefly).
+- Part 6: Latency & Throughput, Revisited
 
-We will move on to Lecture 6 with any remaining time:
+We will move on to Lecture 6 with the remaining time:
 
 - Poll
 

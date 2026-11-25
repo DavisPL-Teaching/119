@@ -8,6 +8,8 @@ Batching vs. Streaming
 
 Which of the following are disadvantages with MapReduce and RDDs in Spark?
 
+<Options cut>
+
 https://forms.gle/Ewwn1KiXUDrNcziM8
 
 .
@@ -39,9 +41,9 @@ Terminology:
 
 Let's start with an example to illustrate the problem with latency in Spark.
 
-Imagine we are running something like Amazon.com. Orders are coming in through
+Imagine we are running our own shopping website like Amazon.com. Orders are coming in through
 the website to our backend data pipeline and they will be used to process orders and
-update Amazon's database of how many items it has
+update our database of how many items it has
 (as well as other metadata associated with items).
 
 Let's start with our boilerplate code as always:
@@ -89,6 +91,8 @@ def process_orders_batch(orders):
     # For each order, to simulate processing, let's sleep for a second,
     # then put one order in the output per input quantity.
 
+    # orders_rdd.foreach(lambda x: print("START TIME:", time.time()))
+
     def expand_order(order):
         return [(order["order_number"], order["item"])] * order["qty"]
 
@@ -100,8 +104,10 @@ def process_orders_batch(orders):
     output = orders_rdd.flatMap(expand_order).map(process_order)
 
     # Ignore this for now
-    output.foreach(lambda x: print(f"Processing order... {x}"))
+    # output.foreach(lambda x: print(f"Processing order... {x}"))
     # Be able to complete processing of each order here.
+
+    # output.foreach(lambda x: print("END TIME:", time.time()))
 
     # Return the result
     result = output.collect()
@@ -125,15 +131,28 @@ we call the .collect() at the end
 
 (Actually, they get processed when we call .foreach)
 
-This means that any orders that come into our Amazon.com server
+Let's uncomment the code to measure the start and end of the pipeline above
+("Uncomment to measure time") above.
+What happens?
+
+Latency: (FILL IN)
+
+(!) The latency of any individual item is the same as the latency of the whole pipeline!
+
+This is called the "batch processing" model.
+MapReduce and Spark are both batch processors.
+
+Orders are grouped into "batches" and processed all as one group.
+
+This means that any orders that come into our server
 will have to wait for the batch of orders to complete
 before seeing any results.
 
 Customers of our app will experience increased latency as a result.
 
-===== Generalizing latency =====
+===== Revisiting: definition of latency =====
 
-How to measure latency?
+How to define latency?
 
 On Homework 1 and earlier in the course,
 we limited the input dataset to just one item.
@@ -142,28 +161,77 @@ In our case, we have 6 orders, so we would limit the input dataset to just 1 ord
 Then we would use the formula:
     latency = (end_time - start_time)
 
-(Try it above)
-
-We get that the latency is 5.24 seconds.
+(as above)
 
 This is a simplified model!
 It's like saying, to measure how long it takes for an order in a restaurant,
 let's just limit the number of customers allowed in the restaurant to 1,
 and see how long it takes to complete their order.
 
-Problem with this?
+Problems with this?
+
     - If your restaurant is busy, it might be harder to process orders on time.
       We might want to know how long it takes to process orders during a
       busy time, not just when there's nothing else going on.
-    - Not every order would take the same length! Some orders might take
-      longer than others
 
-What we did on HW1 is an optimistic case; it's assuming that other orders
-coming in don't intefere with the one that we're measuring.
+      (In other words, multiple orders could interfere with each other - resulting in things
+       slowing down)
+
+    - Not every order would take the same length! Some orders might take
+      longer than others.
 
 Main point: In general, just looking at an input dataset of 1 item is not sufficient.
 
-=== A more general formula ===
+Exercise:
+Can we modify our pipeline above to give some sense of the latency each item is processed?
+
+Let's try to apply our formula to the shopping application.
+We have to pick an item X to measure latency for.
+
+(Basically we have to consider where to insert:
+start_time = time.time()
+complete_time = time.time())
+"""
+
+# (Try modifying above, uncommenting, then re-run)
+
+"""
+Problem?
+
+There's no way to truly track this for individual items,
+because Spark operators are "lazy" at only run on the whole
+dataset at `.collect()` time.
+
+Conclusion:
+This pipeline is not set up in such a way to measure the progress of
+individual items.
+I have to collect all orders, put them through the system,
+and collect all outputs, before I can see the results.
+
+=== From batch to streaming ===
+
+How can we do better?
+
+Uncomment the output.foreach line above that we ignored.
+
+We get to see the results come out as items are processed!
+
+We want to **actually process them** at this point, instead of waiting for the
+whole thing to finish.
+
+That's what we're trying to do going forward, and the Spark Streaming
+API will make this easier.
+
+Sneak peak: 2-microbatching.py has an example of a true streaming pipeline:
+
+- orders come in in real time
+
+- orders are processed and the results are collected in real time -- we don't
+  have to wait for the entire pipeline to finish processing.
+"""
+
+"""
+===== General formula for latency =====
 
 Let's generalize latency to a pipeline with more than one item
 
@@ -186,83 +254,13 @@ The fully general formula is:
 
 What does latency mean for our real-world example?
 
-    - latency_X ==> it's the time taken to process some Amazon.com user's order.
+    - latency_X ==> it's the time taken to process some user's order.
+    (Like an amazon.com user)
     the actual thing the user cares about.
 
-This is all great! But there will be a problem.
-
-Let's try to apply our formula to the Amazon.com application.
-We have to pick an item X to measure latency for.
-
-We can use time.time() to get the time.
-
-Try uncommenting the code to measure the start and end of the pipeline above
-("Uncomment to measure time") above.
-What happens?
-
-We see a latency of 13.27 s
-
-Problem:
-The latency of each single item is the same as the running time of the entire
-pipeline!
-"""
-
-"""
-Basically we have to consider where to insert:
-start_time = time.time()
-complete_time = time.time()
-
-But there's no way to truly track this for individual items,
-because Spark operators are "lazy" at only run on the whole
-dataset at `.collect()` time.
-
-Conclusion:
-This pipeline is not set up in such a way to measure the progress of
-individual items.
-I have to collect all orders, put them through the system,
-and collect all outputs, before I can see the results.
-
-(!) The latency of any individual item X, is the same as the latency of the whole pipeline!
-
-This is called the "batch processing" model.
-MapReduce and Spark are both batch processors.
-
-Orders are grouped into "batches" and processed all as one group.
-"""
-
-# Uncomment
-# result = process_orders_batch(orders)
-# print(result)
-# latency = TODO
-# print(f"Latency: {latency} seconds")
-
-"""
-(Think about it in terms of the real-world scenario)
-
-    Basically it was like the scenario 1 in the endnote
-    to lecture 5.
-
-    We want to do more like scenario 2, instead.
-
-=== From batch to streaming ===
-
-How can we do better?
-
-Main idea to fix it:
-Try uncommenting the "output.foreach" line above that we ignored.
-This is basicaly the first step to fixing our pipeline.
-
-We get to see the results come out as items are processed!
-
-That's what we're trying to do going forward, and the Spark Streaming
-API will make this easier.
-
-Sneak peak: 2-microbatching.py has an example of a true streaming pipeline:
-
-- orders come in in real time
-
-- orders are processed and the results are collected in real time -- we don't
-  have to wait for the entire pipeline to finish processing.
+This is all great!
+But it doesn't quite work for plain Spark, for the reasons discussed above.
+So we will see a "true streaming" example in Part 2.
 
 === Important definitions ===
 
@@ -316,6 +314,8 @@ we haven't talked about how time.time() works or how we are actually measuring
 time (this will come up in part 3).
 
 === Recap & key points ===
+
+(UPDATE)
 
 - Latency-critical, real-time, or streaming applications are those for which we are looking for low latency (typically, sub-second or even millisecond response times).
 

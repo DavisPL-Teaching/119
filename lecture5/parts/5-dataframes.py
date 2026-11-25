@@ -120,15 +120,26 @@ def ex_dataframe(data):
 
     # This is the equiv of Pandas: df3["H + C"] = df3["H"] + df3["C"]
 
-    # Uncomment to debug:
+    df = df5
+
+    # Uncomment to inspect:
     # breakpoint()
+
+    # Try running:
+    # df.show()
+    # df.head()
+    # df.count()
+    # df.drop("chemical").summary("min", "25%", "50%", "75%", "max").show()
+    # df.collect()
 
     # We could continue this example further (showing other Pandas operation equivalents).
 
-    return df5.collect()
+    # print(df5)
+    # return df5.collect()
 
 # Uncomment to run
-ex_dataframe(CHEM_DATA)
+# Uncomment breakpoint above to inspect
+# ex_dataframe(CHEM_DATA)
 
 """
 Notes:
