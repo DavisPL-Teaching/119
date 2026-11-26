@@ -7,6 +7,7 @@ Batching vs. Streaming
 === Poll ===
 
 Which of the following are disadvantages with MapReduce and RDDs in Spark?
+(Select all that apply)
 
 <Options cut>
 
@@ -43,8 +44,8 @@ Let's start with an example to illustrate the problem with latency in Spark.
 
 Imagine we are running our own shopping website like Amazon.com. Orders are coming in through
 the website to our backend data pipeline and they will be used to process orders and
-update our database of how many items it has
-(as well as other metadata associated with items).
+update our database of how many items we have in our inventory
+(as well as other metadata associated with those items).
 
 Let's start with our boilerplate code as always:
 """
@@ -62,15 +63,15 @@ Here's a toy example dataset which conveys the main idea:
 
 # ***** everything comes in here *****
 # Uncomment to measure latency
-# start_time = time.time()
+start_time = time.time()
 
 orders = [
-    {"order_number": 1, "item": "Apple", "timestamp": "2024-11-24 10:00:00", "qty": 2},
-    {"order_number": 2, "item": "Banana", "timestamp": "2024-11-24 10:01:00", "qty": 3},
-    {"order_number": 3, "item": "Orange", "timestamp": "2024-11-24 10:02:00", "qty": 1},
-    {"order_number": 4, "item": "Apple", "timestamp": "2024-11-24 10:03:00", "qty": 2},
-    {"order_number": 5, "item": "Banana", "timestamp": "2024-11-24 10:04:00", "qty": 1},
-    {"order_number": 6, "item": "Orange", "timestamp": "2024-11-24 10:05:00", "qty": 1},
+    {"order_number": 1, "item": "Apple", "timestamp": "2026-11-25 10:00:00", "qty": 2},
+    {"order_number": 2, "item": "Banana", "timestamp": "2026-11-25 10:01:00", "qty": 3},
+    {"order_number": 3, "item": "Orange", "timestamp": "2026-11-25 10:02:00", "qty": 1},
+    {"order_number": 4, "item": "Apple", "timestamp": "2026-11-25 10:03:00", "qty": 2},
+    {"order_number": 5, "item": "Banana", "timestamp": "2026-11-25 10:04:00", "qty": 1},
+    {"order_number": 6, "item": "Orange", "timestamp": "2026-11-25 10:05:00", "qty": 1},
 ]
 
 """
@@ -115,13 +116,13 @@ def process_orders_batch(orders):
     return result
 
 # Uncomment to run
-# result = process_orders_batch(orders)
-# print(result)
+result = process_orders_batch(orders)
+print(result)
 # ***** everything is finished here *****
 
 # Uncomment to measure latency
-# end_time = time.time()
-# print(f"Latency for item X = {end_time - start_time}")
+end_time = time.time()
+print(f"Latency for item X = {end_time - start_time}")
 
 """
 Everything works so far!
@@ -136,6 +137,8 @@ Let's uncomment the code to measure the start and end of the pipeline above
 What happens?
 
 Latency: (FILL IN)
+
+      7.2 seconds
 
 (!) The latency of any individual item is the same as the latency of the whole pipeline!
 
@@ -261,6 +264,29 @@ What does latency mean for our real-world example?
 This is all great!
 But it doesn't quite work for plain Spark, for the reasons discussed above.
 So we will see a "true streaming" example in Part 2.
+
+=== Recap ===
+
+(We went over a brief overview of some of the above -- we may revisit a couple of things from the above discussion next time)
+
+Today:
+
+- We saw that Spark has a second scalable collection type: DataFrames
+
+  (nicer to work with, prints out like a table)
+
+- We saw the main limitation of Spark: Spark = batch processing, only optimizes for
+  throughput, doesn't optimize for latency
+
+- We will introduce streaming frameworks (or real-time processing), such as Spark Streaming
+  to handle latency-critical applications
+
+- We saw briefly a little bit about how we will need to generalize the definition of latency
+  to correctly account for individual item latency and average latency in such applications.
+
+.
+.
+.
 
 === Important definitions ===
 

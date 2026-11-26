@@ -127,3 +127,6 @@ Reduce stage: for (city1, ratio1), (city2, ratio2), return (city3, ratio3) where
 Nov 23:
 Narrow: 1, 4, 5, 7
 Wide: 2, 3, 6
+
+Nov 25:
+C and I only: "They are not optimized for latency" and "Reduce functions may be applied out-of-order"

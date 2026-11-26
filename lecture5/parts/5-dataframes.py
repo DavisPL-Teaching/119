@@ -36,6 +36,14 @@ It is partitioned into one dataset per US state (50 partitions total).
 
 Poll notes:
 
+- If we can do the transformation on a row-by-row basis
+    (adding one to each temp),
+    it will definitely be narrow
+
+- Check how the data is partitioned!
+  (In this case, by state)
+  There are examples of the same city names in different
+  states (example, Portland OR and Portland ME)
 
 ==================
 
@@ -126,7 +134,7 @@ def ex_dataframe(data):
     df = df5
 
     # Uncomment to inspect:
-    # breakpoint()
+    breakpoint()
 
     # Try running:
     # df.show()
@@ -142,7 +150,7 @@ def ex_dataframe(data):
 
 # Uncomment to run
 # Uncomment breakpoint above to inspect
-# ex_dataframe(CHEM_DATA)
+ex_dataframe(CHEM_DATA)
 
 """
 Notes:

@@ -55,6 +55,7 @@ on each individual item. We don't get some results sooner and some results later
 Grouping together items (via lazy transformations) helps optimize the pipeline, but it
 *doesn't* necessarily help get results as soon as possible when they're needed.
 (in fact it does the opposite - remember laziness poll/example)
+
 That's why there is a tradeoff between throughput and latency.
 
 === Summary: where we are going next ===
@@ -63,10 +64,10 @@ So that's where we're going next:
 talking about applications where you might want your pipeline to respond in real time to data that
 is coming in.
 
-Data processing for low-latency applications is known as "streaming" or "stream processing"
+Data processing for "low-latency" applications is known as "streaming" or "stream processing"
 (also synonymous with "real-time" data processing)
 
-And systems for this case are known as "stream processing applications".
+And systems/frameworks for this case are known as "stream processing systems" (or frameworks).
 
 Aim for: typically, sub-second, sometimes milliseconds latency.
 
